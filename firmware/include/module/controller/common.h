@@ -51,7 +51,7 @@
 #define WAIT_UNTIL(cond) \
     do                   \
     {                    \
-    } while (!(cond))
+    } while (cond)
 
 /**
  * @brief 8-bit register

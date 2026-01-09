@@ -47,3 +47,8 @@ void ADC_init(byte_t reference, byte_t prescaler, byte_t result);
 unsigned int ADC_read(byte_t channel);
 
 #endif // VEMAR_ADC_H
+
+/**
+ * @file adc.h
+ * @brief ADC manipulation
+ */

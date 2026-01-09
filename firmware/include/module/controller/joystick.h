@@ -2,7 +2,6 @@
 #define VEMAR_JOYSTICK_H
 
 #include "common.h"
-#include "adc.h"
 
 // Joystick Analog selection for X and Y
 #define JOYSTICK_ANALOG_0 0 ///< Mapped to PC0
@@ -49,5 +48,5 @@ void JOYSTICK_read(struct joystick *joy, byte_t x, byte_t y, byte_t btn);
 
 /**
  * @file joystick.h
- * @brief Joystick
+ * @brief Joystick manipulation
  */

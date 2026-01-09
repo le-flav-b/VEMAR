@@ -1,3 +1,6 @@
+#include <avr/io.h>
+#include <util/delay.h>
+
 #include "joystick.h"
 
 int main()
@@ -30,5 +33,6 @@ int main()
             Serial.println("Button not pressed");
         }
 #endif
+        _delay_ms(1000);
     }
 }
