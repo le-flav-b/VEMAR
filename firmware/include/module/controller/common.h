@@ -1,6 +1,8 @@
 #ifndef VEMAR_COMMON_H
 #define VEMAR_COMMON_H
 
+#include <avr/io.h>
+
 /**
  * @brief Create a bitmask with a single bit set to `1` at the position
  * specified by the parameter `n`
@@ -46,12 +48,12 @@
 
 /**
  * @brief Loop until the condition `cond` is satisfied
- * @param cond Condition to satisfy
+ * @param cond Condition to end the loop
  */
 #define WAIT_UNTIL(cond) \
     do                   \
     {                    \
-    } while (cond)
+    } while (!(cond))
 
 /**
  * @brief 8-bit register

@@ -1,6 +1,7 @@
 #include <avr/io.h>
 
 #include "joystick.h"
+#include "adc.h"
 
 void JOYSTICK_init(byte_t x, byte_t y, byte_t btn)
 {

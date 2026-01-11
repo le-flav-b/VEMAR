@@ -28,8 +28,174 @@
 #define ADC_CHANNEL_3 0x03 ///< ADC3
 #define ADC_CHANNEL_4 0x04 ///< ADC4
 #define ADC_CHANNEL_5 0x05 ///< ADC5
-#define ADC_CHANNEL_6 0x06 ///< ADC6
-#define ADC_CHANNEL_7 0x07 ///< ADC7
+
+#define ADC_MASK_REFERENCE 0xC0
+#define ADC_MASK_PRESCALER 0x07
+#define ADC_MASK_RESULT 0x20
+#define ADC_MASK_CHANNEL 0x0F
+
+/**
+ * @brief Enable ADC
+ *
+ * @details
+ * Writing this bit to one enables the ADC.
+ */
+inline void ADC_enable(void) { BIT_set(ADCSRA, BIT(ADEN)); }
+
+/**
+ * @brief Disable ADC
+ * @details
+ * By writing it to zero, the ADC is turned off. Turning the ADC off while
+ * a conversion is in progress, will terminate this conversion.
+ */
+inline void ADC_disable(void) { BIT_clear(ADCSRA, BIT(ADEN)); }
+
+/**
+ * @brief Start ADC conversion
+ * @details
+ * In single conversion mode, write this bit to one to start each conversion.
+ * In free running mode, write this bit to one to start the first conversion.
+ * The first conversion after `ADSC` has been written after the ADC has been
+ * enabled, or if `ADSC` is written at the same time as the ADC is enabled,
+ * will take 25 ADC clock cycles instead of the normal 13.
+ * This first conversion performs initialization of the ADC.
+ *
+ * `ADSC` will read as one as long as a conversion is in progress.
+ * When the conversion is complete, it returns to zero.
+ * Writing zero to this bit has no effect.
+ */
+inline void ADC_start_conversion(void) { BIT_set(ADCSRA, BIT(ADSC)); }
+
+/**
+ * @brief Set ADC reference voltage
+ * @param reference Voltage reference
+ * - ADC_REFERENCE_AREF
+ * - ADC_REFERENCE_AVCC
+ * - ADC_REFERENCE_INTERN
+ *
+ * @details
+ * These bits select the voltage reference for the ADC.
+ * If these bits are changed during a conversion, the change will not go in
+ * effect until this conversion is complete (`ADIF` in `ADCSRA` is set).
+ * The iunternal voltage reference options may not be used if an external
+ * reference voltage is being applied to the `AREF` pin.
+ */
+inline void ADC_set_reference(byte_t reference) {
+    BIT_write(ADMUX, reference, ADC_MASK_REFERENCE);
+}
+
+/**
+ * @brief Set ADC Left Adjust Result
+ * @param result ADC Left Adjust Result
+ * - ADC_RESULT_10
+ * - ADC_RESULT_8
+ *
+ * @details
+ * The `ADLAR` bit affects the presentation of the ADC conversion result in
+ * the ADC data register. Write one to the `ADLAR` to left adjust the result.
+ * Otherwise, the result is right adjusted. Changing the `ADLAR` bit will affect
+ * the ADC data register immediately, regardless of any ongoing conversion.
+ */
+inline void ADC_set_result(byte_t result) {
+    BIT_write(ADMUX, result, ADC_MASK_RESULT);
+}
+
+/**
+ * @brief Set ADC channel
+ * @param channel ADC channel
+ * - ADC_CHANNEL_0
+ * - ADC_CHANNEL_1
+ * - ADC_CHANNEL_2
+ * - ADC_CHANNEL_3
+ * - ADC_CHANNEL_4
+ * - ADC_CHANNEL_5
+ *
+ * @details
+ * The value of theses bits selects which analog inputs are connected to the ADC.
+ * If these bits are changed during a conversion, the change will not go
+ * in effect until this conversion is complete (`ADIF` in `ADCSRA` is set).
+ */
+inline void ADC_set_channel(byte_t channel) {
+    BIT_write(ADMUX, channel, ADC_MASK_CHANNEL);
+}
+
+/**
+ * @brief Enable ADC interrupt
+ * @details
+ * When this bit written to `1` and the I-bit in `SREG` is set,
+ * the ADC conversion complete interrupt is activated.
+ */
+inline void ADC_enable_interrupt(void) {
+    BIT_set(ADCSRA, BIT(ADIE));
+}
+
+/**
+ * @brief Disable ADC interrupt
+ */
+inline void ADC_disable_interrupt(void) {
+    BIT_clear(ADCSRA, BIT(ADIE));
+}
+
+/**
+ * @brief Set ADC prescaler
+ * @param prescaler ADC prescaler
+ * - ADC_PRESCALER_2
+ * - ADC_PRESCALER_4
+ * - ADC_PRESCALER_8
+ * - ADC_PRESCALER_16
+ * - ADC_PRESCALER_32
+ * - ADC_PRESCALER_64
+ * - ADC_PRESCALER_128
+ *
+ * @details
+ * These bits determine the division factor between the system clock frequency
+ * and the input clock to the ADC.
+ */
+inline void ADC_set_prescaler(byte_t prescaler) {
+    BIT_write(ADCSRA, prescaler, ADC_MASK_PRESCALER);
+}
+
+/**
+ * @brief Disable ADC channel
+ * @param channel ADC channel
+ * - ADC_CHANNEL_0
+ * - ADC_CHANNEL_1
+ * - ADC_CHANNEL_2
+ * - ADC_CHANNEL_3
+ * - ADC_CHANNEL_4
+ * - ADC_CHANNEL_5
+ *
+ * @details
+ * When this bit is written logic `1`, the digital input buffer on
+ * the corresponding ADC pin disabled. The corresponding PIN regiester bit
+ * will always read as `0` when this bit is set. When an analog signal
+ * is applied to then ADC[5:0] pin and the digital input from this pin
+ * is not needed, this should be written logic `1` to reduce power consumption
+ * in the digital input buffer.
+ */
+
+inline void ADC_disable_channel(byte_t channel) {
+    BIT_set(DIDR0, BIT(channel));
+}
+
+/**
+ * @brief Enable ADC channel
+ * @param channel ADC channel
+ * - ADC_CHANNEL_0
+ * - ADC_CHANNEL_1
+ * - ADC_CHANNEL_2
+ * - ADC_CHANNEL_3
+ * - ADC_CHANNEL_4
+ * - ADC_CHANNEL_5
+ */
+inline void ADC_enable_channel(byte_t channel) {
+    BIT_clear(DIDR0, BIT(channel));
+}
+
+/**
+ * @brief Reset all ADC registers to default values
+ */
+void ADC_reset(void);
 
 /**
  * @brief Initialize ADC (Analog-to-Digital Converter)
@@ -51,4 +217,20 @@ unsigned int ADC_read(byte_t channel);
 /**
  * @file adc.h
  * @brief ADC manipulation
+ */
+
+/**
+ * @page page_adc ADC
+ * @brief ADC (Analog-to-Digital Converter) module
+ *
+ * @section sec_adc_init Initialization
+ * - Enable ADC
+ * - Set ADC reference voltage
+ * - Set ADC prescaler
+ * - Set ADC result
+ * - Enable ADC channel
+ * - Set ADC channel
+ * - Start conversion
+ * - Wait for conversion to complete
+ * - Read ADC result
  */

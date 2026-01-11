@@ -1,5 +1,5 @@
 NAME		=	joy
-FREQUENCY	?=	16000000
+FREQUENCY	?=	16000000UL
 BAUDRATE	?=	115200
 PORT		?=	/dev/ttyUSB0
 PROGRAMMER	?=	arduino
@@ -37,7 +37,9 @@ AVRFLAGS	=	-p $(MCU) \
 
 SOURCES		=	main.c \
 				adc.c \
-				joystick.c
+				joystick.c \
+				uart.c \
+				spi.c
 
 BUILD_DIR	=	build
 
