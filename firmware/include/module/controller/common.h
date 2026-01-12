@@ -60,9 +60,13 @@
  */
 typedef unsigned char byte_t;
 
+typedef unsigned char bool_t;
+
 #endif // VEMAR_COMMON
 
 /**
  * @file common.h
  * @brief Bit operations
+ * @author Christian Hugon
+ * @version 0.0.1
  */

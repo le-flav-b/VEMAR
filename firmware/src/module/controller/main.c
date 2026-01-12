@@ -8,12 +8,12 @@
 
 int main()
 {
-    UART_init(115200, UART_SERIAL_8N1);
-	UART_println("Hello, World!");
-	while (1)
+    UART_init(UART_BAUDRATE_115200, UART_FORMAT_8N1);
+    UART_println("Hello, World!");
+    while (1)
     {
-		volatile char data = UART_receive();
-		UART_transmit(data);
+        volatile char data = UART_receive();
+        UART_transmit(data);
     }
 }
 

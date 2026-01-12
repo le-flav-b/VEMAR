@@ -22,9 +22,12 @@
  */
 typedef struct joystick
 {
-    unsigned int x;       ///< Value on X axis
-    unsigned int y;       ///< Value on Y axis
-    unsigned char button; ///< State of the button
+    unsigned int x; ///< Value on X axis
+    unsigned int y; ///< Value on Y axis
+    struct
+    {
+        unsigned char pressed; ///< State of the button
+    } button;                  ///< Button
 } joystick_t;
 
 /**
@@ -49,4 +52,6 @@ void JOYSTICK_read(struct joystick *joy, byte_t x, byte_t y, byte_t btn);
 /**
  * @file joystick.h
  * @brief Joystick manipulation
+ * @author Christian Hugon
+ * @version 0.0.1
  */
