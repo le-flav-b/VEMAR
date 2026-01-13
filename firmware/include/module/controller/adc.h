@@ -3,12 +3,27 @@
 
 #include "common.h"
 
-// ADC Reference Voltage Settings
+/**
+ * @defgroup adc_reference ADC Reference Voltage
+ * @brief Available reference voltage selections for ADC
+ * @see ADC_set_reference
+ * @see ADC_init
+ * @{
+ */
 #define ADC_REFERENCE_AREF 0x00   ///< AREF, internal VREF turned off
 #define ADC_REFERENCE_AVCC 0x40   ///< AVCC with external capacitor at AREF pin
 #define ADC_REFERENCE_INTERN 0xC0 ///< Internal 1.1V Voltage Reference
+/**
+ * @}
+ */
 
-// ADC Prescaler Settings
+/**
+ * @defgroup adc_prescaler ADC Prescaler
+ * @brief Available prescaler selections for ADC
+ * @see ADC_set_prescaler
+ * @see ADC_init
+ * @{
+ */
 #define ADC_PRESCALER_2 0x01   ///< ADC Prescaler 2
 #define ADC_PRESCALER_4 0x02   ///< ADC Prescaler 4
 #define ADC_PRESCALER_8 0x03   ///< ADC Prescaler 8
@@ -16,23 +31,53 @@
 #define ADC_PRESCALER_32 0x05  ///< ADC Prescaler 32
 #define ADC_PRESCALER_64 0x06  ///< ADC Prescaler 64
 #define ADC_PRESCALER_128 0x07 ///< ADC Prescaler 128
+/**
+ * @}
+ */
 
-// ADC Left Adjust Result Settings
+/**
+ * @defgroup adc_result ADC Left Adjust Result
+ * @brief 10-bit or 8-bit result for ADC
+ * @see ADC_set_result
+ * @see ADC_init
+ * @{
+ */
 #define ADC_RESULT_10 0x00 ///< ADC 10-bit result
 #define ADC_RESULT_8 0x20  ///< ADC 8-bit result
+/**
+ * @}
+ */
 
-// ADC Channel Selections
+/**
+ * @defgroup adc_channel ADC Channel
+ * @brief Available channel selections for ADC
+ * @see ADC_set_channel
+ * @see ADC_enable_channel
+ * @see ADC_disable_channel
+ * @see ADC_read
+ * @{
+ */
 #define ADC_CHANNEL_0 0x00 ///< ADC0
 #define ADC_CHANNEL_1 0x01 ///< ADC1
 #define ADC_CHANNEL_2 0x02 ///< ADC2
 #define ADC_CHANNEL_3 0x03 ///< ADC3
 #define ADC_CHANNEL_4 0x04 ///< ADC4
 #define ADC_CHANNEL_5 0x05 ///< ADC5
+/**
+ * @}
+ */
 
+/**
+ * @{
+ * @brief ADC Masks for internal use
+ */
 #define ADC_MASK_REFERENCE 0xC0
 #define ADC_MASK_PRESCALER 0x07
 #define ADC_MASK_RESULT 0x20
 #define ADC_MASK_CHANNEL 0x0F
+/**
+ * @}
+ */
 
 //------------------------------------------------------------------------------
 // ADMUX --- ADC Multiplexer Selection Register
@@ -78,17 +123,11 @@ inline void ADC_set_result(byte_t result)
 /**
  * @brief Set ADC channel
  * @param channel ADC channel
- * - ADC_CHANNEL_0
- * - ADC_CHANNEL_1
- * - ADC_CHANNEL_2
- * - ADC_CHANNEL_3
- * - ADC_CHANNEL_4
- * - ADC_CHANNEL_5
- *
  * @details
  * The value of `MUX[3:0]` selects which analog inputs are connected to the ADC.
  * If these bits are changed during a conversion, the change will not go
  * in effect until this conversion is complete (`ADIF` in `ADCSRA` is set).
+ * @see adc_channel
  */
 inline void ADC_set_channel(byte_t channel)
 {
@@ -191,17 +230,10 @@ inline void ADC_disable_interrupt(void)
 /**
  * @brief Set ADC prescaler
  * @param prescaler ADC prescaler
- * - ADC_PRESCALER_2
- * - ADC_PRESCALER_4
- * - ADC_PRESCALER_8
- * - ADC_PRESCALER_16
- * - ADC_PRESCALER_32
- * - ADC_PRESCALER_64
- * - ADC_PRESCALER_128
- *
  * @details
  * The ADPS[2:0] bits determine the division factor between the system clock
  * frequency and the input clock to the ADC.
+ * @see adc_prescaler
  */
 inline void ADC_set_prescaler(byte_t prescaler)
 {
@@ -217,7 +249,7 @@ inline void ADC_set_prescaler(byte_t prescaler)
  * When ADC conversion is complete, the result is found in `ADCL` and `ADCH`.
  * When `ADCL` is read, the ADC Data Register is not updated until ADCH is read.
  * Consequently, if the result is left adjusted and no more than 8-bit precision
- * is required, it is sufficient to read `ADCH. Otherwise, `ADCL` must be read
+ * is required, it is sufficient to read `ADCH`. Otherwise, `ADCL` must be read
  * first, then `ADCH`.
  * The `ADLAR` bit in `ADMUX`, and the MUXn bits in `ADMUX` affect the way
  * the result is read from the register.
@@ -275,12 +307,7 @@ inline void ADC_disable_channel(byte_t channel)
 /**
  * @brief Enable ADC channel
  * @param channel ADC channel
- * - ADC_CHANNEL_0
- * - ADC_CHANNEL_1
- * - ADC_CHANNEL_2
- * - ADC_CHANNEL_3
- * - ADC_CHANNEL_4
- * - ADC_CHANNEL_5
+ * @see adc_channel
  */
 inline void ADC_enable_channel(byte_t channel)
 {
@@ -300,6 +327,9 @@ void ADC_reset(void);
  * @param reference Voltage reference
  * @param prescaler Prescaler
  * @param result ADC Left Adjust Result, 8-bit or 10-bit result
+ * @see adc_reference
+ * @see adc_prescaler
+ * @see adc_result
  */
 void ADC_init(byte_t reference, byte_t prescaler, byte_t result);
 
@@ -307,6 +337,7 @@ void ADC_init(byte_t reference, byte_t prescaler, byte_t result);
  * @brief Start conversion, and return the converted value
  * @param channel Analog channel for the conversion
  * @return Result of the conversion
+ * @see adc_channel
  */
 unsigned int ADC_read(byte_t channel);
 

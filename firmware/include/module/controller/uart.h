@@ -6,44 +6,64 @@
 /// Equation for calculating `UBRR` value (Asynchronous Double Speed mode)
 #define UART_UBRR(baud) (F_CPU / 8UL / baud - 1)
 
+/**
+ * @defgroup uart_baudrate UART Baud Rate
+ * @brief Available baud rate selections for UART
+ * @see UART_init
+ * @{
+ */
 #define UART_BAUDRATE_9600 UART_UBRR(9600UL)     ///< Baud rate 9600
 #define UART_BAUDRATE_115200 UART_UBRR(115200UL) ///< Baud rate 115200
+/**
+ * @}
+ */
 
 /**
- * @brief UART frame format: UART_FORMAT_<bits><parity><stop>
- * * bits: data bits (5, 6, 7, 8)
- * * parity: parity mode (none, even, odd)
- * * stop: stop bits (1, 2)
+ * @defgroup uart_format UART Frame Format
+ * @brief Available frame format for UART
+ * @details
+ * UART_FORMAT_&lt;bits&gt;&lt;parity&gt;&lt;stop&gt;
+ * - __bits__: data bits (5, 6, 7, 8)
+ * - __parity__: parity mode (none, even, odd)
+ * - __stop__: stop bits (1, 2)
+ *
+ * @see UART_init
+ * @{
  */
-#define UART_FORMAT_5N1 0x00
-#define UART_FORMAT_6N1 0x02
-#define UART_FORMAT_7N1 0x04
-#define UART_FORMAT_8N1 0x06
-#define UART_FORMAT_5N2 0x08
-#define UART_FORMAT_6N2 0x0A
-#define UART_FORMAT_7N2 0x0C
-#define UART_FORMAT_8N2 0x0E
-#define UART_FORMAT_5E1 0x20
-#define UART_FORMAT_6E1 0x22
-#define UART_FORMAT_7E1 0x24
-#define UART_FORMAT_8E1 0x26
-#define UART_FORMAT_5E2 0x28
-#define UART_FORMAT_6E2 0x2A
-#define UART_FORMAT_7E2 0x2C
-#define UART_FORMAT_8E2 0x2E
-#define UART_FORMAT_5O1 0x30
-#define UART_FORMAT_6O1 0x32
-#define UART_FORMAT_7O1 0x34
-#define UART_FORMAT_8O1 0x36
-#define UART_FORMAT_5O2 0x38
-#define UART_FORMAT_6O2 0x3A
-#define UART_FORMAT_7O2 0x3C
-#define UART_FORMAT_8O2 0x3E
+#define UART_FORMAT_5N1 0x00 ///< 5 Data bits, no parity, 1 Stop bit
+#define UART_FORMAT_6N1 0x02 ///< 6 Data bits, no parity, 1 Stop bit
+#define UART_FORMAT_7N1 0x04 ///< 7 Data bits, no parity, 1 Stop bit
+#define UART_FORMAT_8N1 0x06 ///< 8 Data bits, no parity, 1 Stop bit
+#define UART_FORMAT_5N2 0x08 ///< 5 Data bits, no parity, 2 Stop bit
+#define UART_FORMAT_6N2 0x0A ///< 6 Data bits, no parity, 2 Stop bit
+#define UART_FORMAT_7N2 0x0C ///< 7 Data bits, no parity, 2 Stop bit
+#define UART_FORMAT_8N2 0x0E ///< 8 Data bits, no parity, 2 Stop bit
+#define UART_FORMAT_5E1 0x20 ///< 5 Data bits, even parity, 1 Stop bit
+#define UART_FORMAT_6E1 0x22 ///< 6 Data bits, even parity, 1 Stop bit
+#define UART_FORMAT_7E1 0x24 ///< 7 Data bits, even parity, 1 Stop bit
+#define UART_FORMAT_8E1 0x26 ///< 8 Data bits, even parity, 1 Stop bit
+#define UART_FORMAT_5E2 0x28 ///< 5 Data bits, even parity, 2 Stop bit
+#define UART_FORMAT_6E2 0x2A ///< 6 Data bits, even parity, 2 Stop bit
+#define UART_FORMAT_7E2 0x2C ///< 7 Data bits, even parity, 2 Stop bit
+#define UART_FORMAT_8E2 0x2E ///< 8 Data bits, even parity, 2 Stop bit
+#define UART_FORMAT_5O1 0x30 ///< 5 Data bits, odd parity, 1 Stop bit
+#define UART_FORMAT_6O1 0x32 ///< 6 Data bits, odd parity, 1 Stop bit
+#define UART_FORMAT_7O1 0x34 ///< 7 Data bits, odd parity, 1 Stop bit
+#define UART_FORMAT_8O1 0x36 ///< 8 Data bits, odd parity, 1 Stop bit
+#define UART_FORMAT_5O2 0x38 ///< 5 Data bits, odd parity, 2 Stop bit
+#define UART_FORMAT_6O2 0x3A ///< 6 Data bits, odd parity, 2 Stop bit
+#define UART_FORMAT_7O2 0x3C ///< 7 Data bits, odd parity, 2 Stop bit
+#define UART_FORMAT_8O2 0x3E ///< 8 Data bits, odd parity, 2 Stop bit
+/**
+ * @}
+ */
 
 /**
  * @brief UART initialization
- * @param baudrate UART baud rate
- * @param format UART format format, use UART_FORMAT_8N1 as default
+ * @param baudrate UART baud rate.
+ * @param format UART format, it is advised to use UART_FORMAT_8N1 as default.
+ * @see uart_baudrate
+ * @see uart_format
  */
 void UART_init(unsigned long baudrate, byte_t format);
 

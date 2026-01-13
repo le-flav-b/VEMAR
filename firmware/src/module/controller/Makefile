@@ -5,10 +5,10 @@ PORT		?=	/dev/ttyUSB0
 PROGRAMMER	?=	arduino
 MCU			?=	atmega328p
 
-CC			=	avr-gcc
-OBJCOPY		=	avr-objcopy
-AVRDUDE		=	avrdude
-RM			?=	rm -f
+CC			:=	avr-gcc
+OBJCOPY		:=	avr-objcopy
+AVRDUDE		:=	avrdude
+RM			:=	rm -f
 
 INCLUDE		=	../../../include/module/controller
 
@@ -33,7 +33,9 @@ LDFLAGS		=	-Os \
 AVRFLAGS	=	-p $(MCU) \
 				-c $(PROGRAMMER) \
 				-b $(BAUDRATE) \
-				-P $(PORT) 
+				-P $(PORT) \
+				-v \
+				-D
 
 SOURCES		=	main.c \
 				adc.c \
@@ -53,7 +55,7 @@ all: hex flash
 hex: $(FILE_BIN)
 
 flash: $(FILE_HEX)
-	$(AVRDUDE) $(AVRFLAGS) -D -U flash:w:$<
+	$(AVRDUDE) $(AVRFLAGS) -U flash:w:$<:i
 
 clean:
 	$(RM) $(OBJECTS)

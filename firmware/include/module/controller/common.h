@@ -47,7 +47,7 @@
 #define BIT_write(reg, value, mask) (reg = ((value) | (reg & ~(mask))))
 
 /**
- * @brief Loop until the condition `cond` is satisfied
+ * @brief Loop until the specific condition is met.
  * @param cond Condition to end the loop
  */
 #define WAIT_UNTIL(cond) \
@@ -60,6 +60,9 @@
  */
 typedef unsigned char byte_t;
 
+/**
+ * @brief Boolean type
+ */
 typedef unsigned char bool_t;
 
 #endif // VEMAR_COMMON

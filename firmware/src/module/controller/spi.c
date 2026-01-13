@@ -5,29 +5,16 @@
 #define SPI_MISO 0x10 ///< SPI Master Input Slave Output
 #define SPI_SCK 0x20  ///< SPI Clock Input
 
-void SPI_master_init(byte_t clock)
+void SPI_master_init(byte_t order, byte_t mode, byte_t clock)
 {
-    // Set MOSI, SCK output, all others input
+    // MOSI, SCK as output
     BIT_set(DDRB, SPI_MOSI);
     BIT_set(DDRB, SPI_SCK);
     BIT_set(DDRB, SPI_SS);
     BIT_clear(DDRB, SPI_MISO);
-    SPI_enable();
-    // SPI_enable_master();
-    SPI_set_mode(SPI_MODE_MASTER);
-    SPI_set_clock(clock);
-}
 
-void SPI_slave_init(void)
-{
-    // Set MISO output, all others input
-    BIT_set(DDRB, SPI_MISO);
-    BIT_clear(DDRB, SPI_MOSI);
-    BIT_clear(DDRB, SPI_SCK);
-    BIT_clear(DDRB, SPI_SS);
-    SPI_enable();
-    SPI_set_mode(SPI_MODE_SLAVE);
-    // SPI_enable_slave();
+    // Enable SPI, set as Master
+    SPCR = (BIT(SPE) | BIT(MSTR) | (order) | (mode) | (clock));
 }
 
 void SPI_master_transmit(byte_t data)
@@ -39,12 +26,6 @@ void SPI_master_transmit(byte_t data)
 byte_t SPI_master_receive(void)
 {
     SPDR = 0xFF; // Dummy data
-    WAIT_UNTIL(BIT_read(SPSR, BIT(SPIF)));
-    return SPDR;
-}
-
-byte_t SPI_slave_receive(void)
-{
     WAIT_UNTIL(BIT_read(SPSR, BIT(SPIF)));
     return SPDR;
 }
