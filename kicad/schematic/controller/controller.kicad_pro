@@ -613,6 +613,14 @@
     [
       "beaf00ba-d60c-407c-adfe-9d518bae0b16",
       "Root"
+    ],
+    [
+      "9ee852fa-0889-4353-9e40-a4372248f1f0",
+      "Transceiver"
+    ],
+    [
+      "cc1add63-85b7-48c9-bd2f-968906ef3f97",
+      "Display"
     ]
   ],
   "text_variables": {}
