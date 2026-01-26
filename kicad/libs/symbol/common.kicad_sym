@@ -281,6 +281,144 @@
 		)
 		(embedded_fonts no)
 	)
+	(symbol "Capacitor_Electrolytic"
+		(pin_numbers
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "C"
+			(at 0 3.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "F"
+			(at 0 -3.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Electrolytic Capacitor"
+			(at 0 -5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "Capacitor_Electrolytic_0_1"
+			(rectangle
+				(start -0.762 2.032)
+				(end -0.254 -2.032)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "Capacitor_Electrolytic_1_1"
+			(polyline
+				(pts
+					(xy -2.286 1.524) (xy -1.27 1.524)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy -1.778 1.016) (xy -1.778 2.032)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(rectangle
+				(start 0.254 2.032)
+				(end 0.762 -2.032)
+				(stroke
+					(width 0)
+					(type solid)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(pin passive line
+				(at -2.54 0 0)
+				(length 1.75)
+				(name "~"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 2.54 0 180)
+				(length 1.75)
+				(name "~"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
 	(symbol "Crystal"
 		(pin_numbers
 			(hide yes)
@@ -608,7 +746,7 @@
 			)
 		)
 		(property "Value" "Diode"
-			(at 0 0 0)
+			(at 0 -2.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -635,7 +773,7 @@
 			)
 		)
 		(property "Description" "Diode"
-			(at 0 -4.5 0)
+			(at 0 -4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -665,7 +803,7 @@
 					(type solid)
 				)
 				(fill
-					(type none)
+					(type outline)
 				)
 			)
 			(pin passive line
