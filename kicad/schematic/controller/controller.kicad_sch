@@ -785,7 +785,7 @@
 							)
 						)
 					)
-					(number "2"
+					(number "3"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -4755,7 +4755,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:SW_Tactile12x12"
 			(at 176.53 99.06 0)
 			(effects
 				(font
@@ -4782,7 +4782,7 @@
 				(hide yes)
 			)
 		)
-		(pin "2"
+		(pin "3"
 			(uuid "ee3bea69-91dd-48b5-ab6c-120f2d1c3214")
 		)
 		(pin "1"
@@ -5291,7 +5291,7 @@
 				)
 			)
 		)
-		(property "Value" "SW_Push"
+		(property "Value" "Reset"
 			(at 35.56 52.8 0)
 			(effects
 				(font
@@ -5300,7 +5300,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:SW_Tactile06x06"
 			(at 35.56 50.8 0)
 			(effects
 				(font
@@ -5327,7 +5327,7 @@
 				(hide yes)
 			)
 		)
-		(pin "2"
+		(pin "3"
 			(uuid "96c854d8-0020-43c6-b75f-db1cc01cb2c9")
 		)
 		(pin "1"
@@ -5699,7 +5699,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "connector:Pin_01x06"
 			(at 135.89 34.29 0)
 			(effects
 				(font
@@ -5846,7 +5846,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "connector:Pin_01x06"
 			(at 200.66 73.66 0)
 			(effects
 				(font
@@ -6436,7 +6436,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:SW_Toggle"
 			(at 151.13 125.73 0)
 			(effects
 				(font
@@ -6645,7 +6645,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:SW_Tactile12x12"
 			(at 165.1 99.06 0)
 			(effects
 				(font
@@ -6675,7 +6675,7 @@
 		(pin "1"
 			(uuid "856351d5-7349-4994-ad5d-3ba7efcda25b")
 		)
-		(pin "2"
+		(pin "3"
 			(uuid "603121ba-608f-455f-bc71-6f16c37a6a81")
 		)
 		(instances
@@ -7247,7 +7247,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:RV_45"
 			(at 36.83 114.3 0)
 			(effects
 				(font
@@ -7565,7 +7565,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:Crystal_3225"
 			(at 140.97 76.2 0)
 			(effects
 				(font

@@ -3912,7 +3912,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:Crystal_3225"
 			(at 106.68 93.98 0)
 			(effects
 				(font
