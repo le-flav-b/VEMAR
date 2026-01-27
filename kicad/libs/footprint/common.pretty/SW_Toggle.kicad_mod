@@ -1,0 +1,171 @@
+(footprint "SW_Toggle"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -2.5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "2172c231-5cf1-49b5-942b-c8cdcaaca450")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "SW_Toggle"
+		(at 0 5.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "712bd24c-5383-4ac3-a572-5f9c8630697f")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://www.sunrom.com/download/717.pdf"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "dd13601b-6a26-4d00-8d69-dbf33acc0e1f")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "b607e0ea-68d1-4834-950d-5739698ad080")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_rect
+		(start -6.7 -4.05)
+		(end 6.7 4.05)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "fa7587ec-6eb8-4240-aaad-61adf6ee39e0")
+	)
+	(fp_rect
+		(start -7.25 -4.5)
+		(end 7.25 4.5)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "438d6d6d-7196-4b37-a7c5-981f8a671ddf")
+	)
+	(fp_rect
+		(start -6.6 -3.95)
+		(end 6.6 3.95)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "25963624-3ec5-4e2a-8022-991dfe2640ea")
+	)
+	(fp_rect
+		(start -5.1 -1)
+		(end -4.3 1)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "ad70cc79-62e5-46fd-a7ed-0a5aa798f0b6")
+	)
+	(fp_rect
+		(start -0.4 -1)
+		(end 0.4 1)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "6b3eac94-13b8-4f55-b0d3-4a92f528a2a0")
+	)
+	(fp_rect
+		(start 4.3 -1)
+		(end 5.1 1)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "e8927970-d53e-470e-b1f3-b2cd69366abc")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 7 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "f28f4c29-d940-4a1e-8cc6-16c4c3fa900d")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole rect
+		(at -4.7 0)
+		(size 2 3.2)
+		(drill oval 1 2.4)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "530a6e00-b755-4748-9bcf-24121a61ef7c")
+	)
+	(pad "2" thru_hole oval
+		(at 0 0)
+		(size 2 3.2)
+		(drill oval 1.2 2.4)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "72c520de-5350-49c2-af3e-cd9e9311352d")
+	)
+	(pad "3" thru_hole oval
+		(at 4.7 0)
+		(size 2 3.2)
+		(drill oval 1 2.4)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "18799545-ac2a-4032-8c4c-1c7d14c25b9b")
+	)
+	(embedded_fonts no)
+	(model "${VEMAR_MODEL_DIR}/common/Toggle_SW_Blue_R0.step"
+		(offset
+			(xyz 6.5 -4 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 -90)
+		)
+	)
+)
