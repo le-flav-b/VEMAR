@@ -1,0 +1,173 @@
+(footprint "Pin_01x06"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -2.5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "965c620c-19c6-4d20-95d2-332e671227bd")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "Pin_01x06"
+		(at 0 15.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "0f9f0fdd-65fe-4f46-b16e-93f894372da4")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "baac1f32-612a-4c52-b11c-14a90f29310a")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "cb173345-e2fd-4604-baef-24487a88aa06")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_rect
+		(start -1.37 -1.37)
+		(end 1.37 1.37)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "8ac5b847-b3e6-4da6-8412-a151fa23819b")
+	)
+	(fp_rect
+		(start -1.37 -1.37)
+		(end 1.37 14.07)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "b7ff4908-caad-4049-baae-dc6235aa139b")
+	)
+	(fp_rect
+		(start -1.75 -1.9)
+		(end 1.75 14.6)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "37ccd4fa-7eda-4d43-ac44-ea6c65d2a8b8")
+	)
+	(fp_rect
+		(start -1.27 -1.27)
+		(end 1.27 13.97)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "9ae875a6-cdf0-4212-9e88-a1be01a7d54e")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 17 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "e44b0e5b-f17d-4b6d-afdd-f67f70db6b25")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole rect
+		(at 0 0 270)
+		(size 1.8 1.8)
+		(drill 1.02)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "615a2c60-272d-4d19-ae88-fbe65882cc1c")
+	)
+	(pad "2" thru_hole circle
+		(at 0 2.54 270)
+		(size 1.8 1.8)
+		(drill 1.02)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "9ea3c7cd-e2bc-4f0e-861b-eba40e0e7911")
+	)
+	(pad "3" thru_hole circle
+		(at 0 5.08 270)
+		(size 1.8 1.8)
+		(drill 1.02)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "9160cc26-3681-4d5c-ae43-ef571c8c8771")
+	)
+	(pad "4" thru_hole circle
+		(at 0 7.62 270)
+		(size 1.8 1.8)
+		(drill 1.02)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "86a9c654-3477-437e-bc74-6f93f7a99c73")
+	)
+	(pad "5" thru_hole circle
+		(at 0 10.16 270)
+		(size 1.8 1.8)
+		(drill 1.02)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "c3f54ed3-4982-45dd-b3c1-0d537bb77b90")
+	)
+	(pad "6" thru_hole circle
+		(at 0 12.7 270)
+		(size 1.8 1.8)
+		(drill 1.02)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "51aaff3d-363d-4e0b-b26c-3609cd8cefd3")
+	)
+	(embedded_fonts no)
+	(model "${VEMAR_MODEL_DIR}/connector/PinHeader_1x06_P2.54mm_Vertical.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

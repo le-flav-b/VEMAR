@@ -1,0 +1,189 @@
+(footprint "SW_Tactile06x06"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "69cecc27-dd42-4588-a77c-c284892008d4")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "SW_Tactile06x06"
+		(at 0 5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "17ea2d79-4e2d-4d9a-a8ef-9f40b46ab962")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d317c15a-53d5-484c-8ee7-d500fe05e05c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "51688389-972f-4dcb-8bde-b6005eb666ff")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -3.1 -1)
+		(end -3.1 1)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "a5e8a2ea-edd6-4bd9-8f42-013096a757b3")
+	)
+	(fp_line
+		(start -2 -3.1)
+		(end 2 -3.1)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "67888238-e2e5-4366-8e24-d5c44e27b91c")
+	)
+	(fp_line
+		(start -2 0)
+		(end 2 0)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "75264287-ec46-40f3-8560-6bc46c60aa07")
+	)
+	(fp_line
+		(start -2 3.1)
+		(end 2 3.1)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "8052a270-ff93-4a96-bb00-f952c029871f")
+	)
+	(fp_line
+		(start 3.1 -1)
+		(end 3.1 1)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "71819d19-806a-48d3-96cf-443da9a8cb16")
+	)
+	(fp_rect
+		(start -4.5 -3.75)
+		(end 4.5 3.75)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "ade9b402-8205-439a-9dda-5e5f814de585")
+	)
+	(fp_rect
+		(start -3 -3)
+		(end 3 3)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "fb23a893-9c1d-4ae5-a5a5-7f419612f510")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 7 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "ff44bab5-302a-47f4-914e-f0086b61fc89")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole circle
+		(at -3.25 -2.25)
+		(size 1.6 1.6)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(thermal_bridge_angle 90)
+		(uuid "554ee581-25e8-4587-9a1b-43907982a02c")
+	)
+	(pad "2" thru_hole circle
+		(at 3.25 -2.25)
+		(size 1.6 1.6)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(thermal_bridge_angle 90)
+		(uuid "0bafac1a-5631-45c8-b2a8-12d8f3d30ea8")
+	)
+	(pad "3" thru_hole circle
+		(at -3.25 2.25)
+		(size 1.6 1.6)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(thermal_bridge_angle 90)
+		(uuid "f59c3aad-35da-461d-a650-59fb6a372455")
+	)
+	(pad "4" thru_hole circle
+		(at 3.25 2.25)
+		(size 1.6 1.6)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(thermal_bridge_angle 90)
+		(uuid "3add8ef5-fd60-402f-92d1-66a9fcc64a62")
+	)
+	(embedded_fonts no)
+	(model "${KICAD9_3DMODEL_DIR}/Button_Switch_THT.3dshapes/SW_PUSH_6mm.step"
+		(offset
+			(xyz -3 2.5 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 -0)
+		)
+	)
+)
