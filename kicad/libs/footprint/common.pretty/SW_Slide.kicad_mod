@@ -1,0 +1,215 @@
+(footprint "SW_Slide"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -4 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "e4ff1a45-9395-4052-aa51-6111507a7b85")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "SW_Slide"
+		(at 0 5.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "6db2c331-1d47-49e9-b253-91dbb80b7818")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://www.mouser.fr/datasheet/3/6118/1/slw_874744_6a_ra_n_d.pdf"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "10d02c24-8054-49ea-b644-b8f6b896ff54")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "2cb68d68-4356-4d1b-b1b0-891eda0d0ab2")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -4.45 -2.6)
+		(end -4.45 -1.6)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "e103121f-a432-4125-932b-a4c8b2f73ac3")
+	)
+	(fp_line
+		(start -4.45 -2.6)
+		(end 4.45 -2.6)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "0c2651fd-fb67-40d3-8f36-3b9783b5c837")
+	)
+	(fp_line
+		(start -4.45 2.3)
+		(end -4.45 1.7)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "22a247f6-d92b-4391-b15f-a4b697d5ee5e")
+	)
+	(fp_line
+		(start 4.45 -2.6)
+		(end 4.45 -1.6)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "72173fdd-e9e2-40ab-954a-fca7388d0b09")
+	)
+	(fp_line
+		(start 4.45 2.3)
+		(end -4.45 2.3)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "867e47cf-8270-4d89-b7f2-61c8d9ec5e3b")
+	)
+	(fp_line
+		(start 4.45 2.3)
+		(end 4.45 1.7)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "0f83c1b5-ff80-428f-8c11-3970d542fbce")
+	)
+	(fp_rect
+		(start -5.5 -3.1)
+		(end 5.5 4.4)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "db46a08b-6032-492d-98ac-79b9ae186805")
+	)
+	(fp_rect
+		(start -4.35 -2.5)
+		(end 4.35 2.2)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "592de72a-1b92-4157-9df8-216aeeba5e73")
+	)
+	(fp_rect
+		(start -4.35 -2.5)
+		(end 4.35 3.3)
+		(stroke
+			(width 0.1)
+			(type dot)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "43226056-cc97-42c0-8597-4951817e7d9a")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 7 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "9c8fa442-80f2-4a1a-9f12-7171ddd0311b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole roundrect
+		(at 2 3.3)
+		(size 1.4 1.4)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(roundrect_rratio 0.15)
+		(uuid "b427e77e-7dfe-4233-9abf-7dffc14760aa")
+	)
+	(pad "2" thru_hole circle
+		(at 0 3.3)
+		(size 1.4 1.4)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "4322bcb6-138b-495e-96a2-87077373b7f5")
+	)
+	(pad "3" thru_hole circle
+		(at -2 3.3)
+		(size 1.4 1.4)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "294d4e9d-c08f-49f3-8705-9e459696e31e")
+	)
+	(pad "4" thru_hole oval
+		(at -4.15 0)
+		(size 1.5 2.5)
+		(drill oval 0.7 1.7)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "02b81c42-0850-4fec-9a1c-ca2b818647fb")
+	)
+	(pad "5" thru_hole oval
+		(at 4.15 0)
+		(size 1.5 2.5)
+		(drill oval 0.7 1.7)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "1183800d-e590-4f3e-b509-bcc6ca9df73f")
+	)
+	(embedded_fonts no)
+	(model "${VEMAR_MODEL_DIR}/common/SLW-874744-6A-RA-N-D.step"
+		(offset
+			(xyz -0.5 -0.5 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -90 -0 180)
+		)
+	)
+)

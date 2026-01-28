@@ -1,0 +1,131 @@
+(footprint "AMS1117-SOT223"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "2e65d09e-e206-48ea-9ec1-475f41c2db55")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "AMS1117-SOT223"
+		(at 0 5.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "f1d0be3c-ca89-4592-bdff-1e4fa6153ba9")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "http://www.advanced-monolithic.com/pdf/ds1117.pdf"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "3d880ead-2009-4e37-973e-cfeca06f0502")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "Small Outline Transistor 223"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "167bc6eb-7d70-41ca-a741-a204ba7d4fbd")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_rect
+		(start -3.455 -1.955)
+		(end 3.455 1.955)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "961e9439-eddb-4ef4-9a11-08edc774d38f")
+	)
+	(fp_rect
+		(start -4 -4.5)
+		(end 4 4.5)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "729d3bf0-e58b-47f9-ae07-41d9bdbff881")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 7 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "1af4a36c-58bc-4a47-990f-e5449c954818")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd roundrect
+		(at -2.3 3.1)
+		(size 1 1.6)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.25)
+		(uuid "33c742f0-b9cc-4b87-b666-1969fc968b3a")
+	)
+	(pad "2" smd roundrect
+		(at 0 3.1)
+		(size 1 1.6)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.25)
+		(uuid "1c685c89-d219-4b9b-8730-ec5c68f40212")
+	)
+	(pad "3" smd roundrect
+		(at 2.3 3.1)
+		(size 1 1.6)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.25)
+		(uuid "c3190030-da82-4594-aebf-3044920e7af9")
+	)
+	(pad "4" smd roundrect
+		(at 0 -3.2)
+		(size 3.3 1.8)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "69bb4d67-832a-4e69-ad37-2b8953b8b323")
+	)
+	(embedded_fonts no)
+	(model "${VEMAR_MODEL_DIR}/regulator/AMS1117-5.0.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 90 -180 -180)
+		)
+	)
+)
