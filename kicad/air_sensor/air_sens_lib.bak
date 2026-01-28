@@ -2659,7 +2659,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "U"
-			(at 0 0 0)
+			(at 13.462 17.526 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2703,8 +2703,8 @@
 		)
 		(symbol "PCA9306_0_1"
 			(rectangle
-				(start 10.16 1.27)
-				(end -10.16 20.32)
+				(start -10.16 50.8)
+				(end 10.16 31.75)
 				(stroke
 					(width 0)
 					(type default)
@@ -2715,44 +2715,8 @@
 			)
 		)
 		(symbol "PCA9306_1_1"
-			(pin power_in line
-				(at -12.7 16.51 0)
-				(length 2.54)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at -12.7 12.7 0)
-				(length 2.54)
-				(name "VREF1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
 			(pin bidirectional line
-				(at -12.7 8.89 0)
+				(at -12.7 39.37 0)
 				(length 2.54)
 				(name "SCL1"
 					(effects
@@ -2770,7 +2734,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at -12.7 5.08 0)
+				(at -12.7 35.56 0)
 				(length 2.54)
 				(name "SDA1"
 					(effects
@@ -2787,17 +2751,17 @@
 					)
 				)
 			)
-			(pin input line
-				(at 12.7 16.51 180)
+			(pin power_in line
+				(at -6.35 53.34 270)
 				(length 2.54)
-				(name "EN"
+				(name "VREF1"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "8"
+				(number "2"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2806,7 +2770,25 @@
 				)
 			)
 			(pin power_in line
-				(at 12.7 12.7 180)
+				(at 0 29.21 90)
+				(length 2.54)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 3.81 53.34 270)
 				(length 2.54)
 				(name "VREF2"
 					(effects
@@ -2823,8 +2805,26 @@
 					)
 				)
 			)
+			(pin input line
+				(at 7.62 53.34 270)
+				(length 2.54)
+				(name "EN"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "8"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 			(pin bidirectional line
-				(at 12.7 8.89 180)
+				(at 12.7 39.37 180)
 				(length 2.54)
 				(name "SCL2"
 					(effects
@@ -2842,7 +2842,7 @@
 				)
 			)
 			(pin bidirectional line
-				(at 12.7 5.08 180)
+				(at 12.7 35.56 180)
 				(length 2.54)
 				(name "SDA2"
 					(effects
