@@ -2338,72 +2338,6 @@
 		)
 	)
 	(symbol
-		(lib_id "pwr:PWR_FLAG")
-		(at 266.7 149.86 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board no)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "471e9044-a6f7-418a-931a-ab4d3b2a6cfc")
-		(property "Reference" "#FLAG03"
-			(at 266.7 145.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "PWR_FLAG"
-			(at 266.7 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 266.7 149.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 266.7 149.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power Flag"
-			(at 266.7 162.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "92fa860a-01be-451a-81c9-d3467546813d")
-		)
-		(instances
-			(project "controller"
-				(path "/beaf00ba-d60c-407c-adfe-9d518bae0b16/c4e35d3f-6040-4882-878d-1a95fa713f03"
-					(reference "#FLAG03")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "pwr:GND")
 		(at 148.59 109.22 0)
 		(unit 1)
@@ -2769,7 +2703,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "common:SW_Slide"
+		(property "Footprint" "switch:SW_Slide9.1x3.5"
 			(at 85.09 68.58 0)
 			(effects
 				(font
@@ -2949,72 +2883,6 @@
 	)
 	(symbol
 		(lib_id "pwr:GND")
-		(at 266.7 154.94 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board no)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b2fe27c0-5c18-49f6-a228-b62c1c99e32b")
-		(property "Reference" "#GND048"
-			(at 266.7 141.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 266.7 158.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 266.7 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 266.7 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Ground"
-			(at 266.7 159.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "06a08cb8-74ed-40e2-9e72-86df13db50d7")
-		)
-		(instances
-			(project "controller"
-				(path "/beaf00ba-d60c-407c-adfe-9d518bae0b16/c4e35d3f-6040-4882-878d-1a95fa713f03"
-					(reference "#GND048")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "pwr:GND")
 		(at 116.84 109.22 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -3074,6 +2942,204 @@
 			(project ""
 				(path "/beaf00ba-d60c-407c-adfe-9d518bae0b16/c4e35d3f-6040-4882-878d-1a95fa713f03"
 					(reference "#GND05")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "pwr:PWR_FLAG")
+		(at 266.7 149.86 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b9a5526d-0501-49c2-a912-ebfea574e429")
+		(property "Reference" "#FLAG02"
+			(at 266.7 145.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 266.7 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 266.7 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 266.7 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power Flag"
+			(at 266.7 162.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "33910a26-40fb-45b2-9600-8a1854fa00ac")
+		)
+		(instances
+			(project ""
+				(path "/beaf00ba-d60c-407c-adfe-9d518bae0b16/c4e35d3f-6040-4882-878d-1a95fa713f03"
+					(reference "#FLAG02")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "pwr:GND")
+		(at 266.7 154.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "bb32088c-41b3-4111-900c-1784506c4174")
+		(property "Reference" "#GND015"
+			(at 266.7 141.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 266.7 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 266.7 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 266.7 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Ground"
+			(at 266.7 159.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "cc2fe1e8-9259-460f-a6e0-c9db6b40a840")
+		)
+		(instances
+			(project ""
+				(path "/beaf00ba-d60c-407c-adfe-9d518bae0b16/c4e35d3f-6040-4882-878d-1a95fa713f03"
+					(reference "#GND015")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "pwr:GND")
+		(at 76.2 83.82 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c5e7c24c-287e-4e2a-a0f7-a4af9a3ee777")
+		(property "Reference" "#GND012"
+			(at 76.2 70.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 76.2 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 76.2 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 76.2 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Ground"
+			(at 76.2 88.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6f6a46c1-eb60-4f05-bc2d-34f20da3706f")
+		)
+		(instances
+			(project ""
+				(path "/beaf00ba-d60c-407c-adfe-9d518bae0b16/c4e35d3f-6040-4882-878d-1a95fa713f03"
+					(reference "#GND012")
 					(unit 1)
 				)
 			)
@@ -3276,72 +3342,6 @@
 			(project ""
 				(path "/beaf00ba-d60c-407c-adfe-9d518bae0b16/c4e35d3f-6040-4882-878d-1a95fa713f03"
 					(reference "#3.3V01")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "pwr:GND")
-		(at 76.2 83.82 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board no)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "dfcbb0b6-85c9-4c74-a1a3-79a30cc53da0")
-		(property "Reference" "#GND012"
-			(at 76.2 70.82 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 76.2 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 76.2 83.82 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 76.2 83.82 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Ground"
-			(at 76.2 88.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "591e1f41-ed98-4214-b5e2-a4333855b30f")
-		)
-		(instances
-			(project ""
-				(path "/beaf00ba-d60c-407c-adfe-9d518bae0b16/c4e35d3f-6040-4882-878d-1a95fa713f03"
-					(reference "#GND012")
 					(unit 1)
 				)
 			)
