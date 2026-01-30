@@ -1,4 +1,4 @@
-27175845934057236
+27179385705541464
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -107343,7 +107343,7 @@ AO_03
 
 0
 3
-0
+2
 air_sens_foots
 ATtiny1614
 
@@ -107408,6 +107408,13 @@ SDS011
 7
 7
 air_sens_foots
+SDS011_MOUNT
+
+
+0
+4
+4
+air_sens_foots
 SD_SLOT
 
 5033981892 
@@ -107435,6 +107442,13 @@ crys_osc_smd3225_4
 0
 4
 4
+air_sens_foots
+mounting_hole
+
+
+0
+1
+0
 common
 C_0603
 

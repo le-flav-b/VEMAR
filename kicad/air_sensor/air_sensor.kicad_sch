@@ -2509,6 +2509,36 @@
 			(embedded_fonts no)
 		)
 	)
+	(text "electrolytic"
+		(exclude_from_sim no)
+		(at 165.354 46.99 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "03a915c3-cd5b-460f-83c8-5df660d5ac51")
+	)
+	(text "electrolytic"
+		(exclude_from_sim no)
+		(at 238.252 47.244 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "0b509e85-d021-43e3-983d-38222ea35604")
+	)
+	(text "0805 C's"
+		(exclude_from_sim no)
+		(at 119.38 57.658 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "1240ddf7-b1ac-4883-a4f6-4b66ead49014")
+	)
 	(text "5V @ 3A"
 		(exclude_from_sim no)
 		(at 81.28 28.448 0)
@@ -2549,6 +2579,16 @@
 		)
 		(uuid "980995fa-2e05-49ec-b733-b0efc950fd64")
 	)
+	(text "0603 ceramic"
+		(exclude_from_sim no)
+		(at 56.134 38.1 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "9c6f652d-b8e8-4a9f-a232-6999295eb2e4")
+	)
 	(text "3V3 @ 1A"
 		(exclude_from_sim no)
 		(at 221.234 15.24 0)
@@ -2558,6 +2598,16 @@
 			)
 		)
 		(uuid "9d77579a-d895-4f9c-925e-833a7f224272")
+	)
+	(text "0805 ceramic"
+		(exclude_from_sim no)
+		(at 33.274 50.292 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "d616cdd9-8143-40f1-9fe9-4ec09fa8646c")
 	)
 	(junction
 		(at 213.36 104.14)
@@ -2600,6 +2650,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "5db1d808-758f-467b-a3c0-2d71dc104f78")
+	)
+	(junction
+		(at 223.52 104.14)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "63d25638-d9ca-4811-beaf-f0c146a9bda7")
 	)
 	(junction
 		(at 59.69 66.04)
@@ -2686,6 +2742,12 @@
 		(uuid "b57046a6-038a-4c28-8441-22ed67fca54e")
 	)
 	(junction
+		(at 45.72 119.38)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b9684241-c01a-4c12-9a25-c8ecdd8fecf8")
+	)
+	(junction
 		(at 139.7 127)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2726,12 +2788,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d7214210-8d1c-4a68-968a-619310dd132b")
-	)
-	(junction
-		(at 223.52 106.68)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "db79bd54-723f-4e01-922b-ed364c762874")
 	)
 	(junction
 		(at 116.84 46.99)
@@ -2880,16 +2936,6 @@
 			(type default)
 		)
 		(uuid "0bc25b49-27f3-458a-a9cf-e705a4c4f397")
-	)
-	(wire
-		(pts
-			(xy 223.52 106.68) (xy 223.52 110.49)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0e3b3440-b643-44ea-940f-0bfcfd89669a")
 	)
 	(wire
 		(pts
@@ -3163,7 +3209,7 @@
 	)
 	(wire
 		(pts
-			(xy 223.52 97.79) (xy 223.52 106.68)
+			(xy 223.52 97.79) (xy 223.52 104.14)
 		)
 		(stroke
 			(width 0)
@@ -3423,16 +3469,6 @@
 	)
 	(wire
 		(pts
-			(xy 53.34 119.38) (xy 63.5 119.38)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8245164e-4707-42d2-af08-d6215c9e8b81")
-	)
-	(wire
-		(pts
 			(xy 109.22 127) (xy 111.76 127)
 		)
 		(stroke
@@ -3503,6 +3539,16 @@
 	)
 	(wire
 		(pts
+			(xy 236.22 104.14) (xy 236.22 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "96417385-73bc-4fad-87bc-b75b1e906dfb")
+	)
+	(wire
+		(pts
 			(xy 43.18 43.18) (xy 40.64 43.18)
 		)
 		(stroke
@@ -3523,7 +3569,7 @@
 	)
 	(wire
 		(pts
-			(xy 198.12 57.15) (xy 198.12 59.69)
+			(xy 198.12 57.15) (xy 198.12 63.5)
 		)
 		(stroke
 			(width 0)
@@ -3603,7 +3649,7 @@
 	)
 	(wire
 		(pts
-			(xy 232.41 106.68) (xy 236.22 106.68)
+			(xy 232.41 104.14) (xy 236.22 104.14)
 		)
 		(stroke
 			(width 0)
@@ -3773,6 +3819,16 @@
 	)
 	(wire
 		(pts
+			(xy 223.52 104.14) (xy 223.52 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d3a192c7-fbe9-4ea2-99a1-b3222e071c20")
+	)
+	(wire
+		(pts
 			(xy 208.28 38.1) (xy 223.52 38.1)
 		)
 		(stroke
@@ -3813,7 +3869,17 @@
 	)
 	(wire
 		(pts
-			(xy 227.33 106.68) (xy 223.52 106.68)
+			(xy 45.72 119.38) (xy 63.5 119.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e02e0d00-840b-44de-8543-c4b387e608a2")
+	)
+	(wire
+		(pts
+			(xy 227.33 104.14) (xy 223.52 104.14)
 		)
 		(stroke
 			(width 0)
@@ -4121,7 +4187,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:R_0603"
 			(at 194.31 128.27 0)
 			(effects
 				(font
@@ -4257,7 +4323,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:R_0603"
 			(at 223.52 93.98 0)
 			(effects
 				(font
@@ -4300,6 +4366,73 @@
 		)
 	)
 	(symbol
+		(lib_id "pwr:PWR_FLAG")
+		(at 220.98 110.49 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1123fa44-36c4-48bd-91cf-689686bdc3b3")
+		(property "Reference" "#FLAG03"
+			(at 216.48 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 218.44 110.4899 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 220.98 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 220.98 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power Flag"
+			(at 233.48 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "bc62eb89-d7cd-4079-81ea-ced18df3f915")
+		)
+		(instances
+			(project ""
+				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
+					(reference "#FLAG03")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "common:Resistor")
 		(at 144.78 78.74 90)
 		(unit 1)
@@ -4327,7 +4460,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:R_0603"
 			(at 144.78 78.74 0)
 			(effects
 				(font
@@ -4395,7 +4528,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:D_SOD123"
 			(at 198.12 25.4 0)
 			(effects
 				(font
@@ -4432,72 +4565,6 @@
 			(project ""
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "D1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "pwr:PWR_FLAG")
-		(at 120.65 191.77 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board no)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "20af47aa-b811-4e28-8a6b-dce5231fdde0")
-		(property "Reference" "#FLAG03"
-			(at 120.65 196.27 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "PWR_FLAG"
-			(at 120.65 195.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 120.65 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 120.65 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power Flag"
-			(at 120.65 179.27 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "a193b269-af44-4c87-bbb9-a64ea3ffcdb2")
-		)
-		(instances
-			(project "air_sensor"
-				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
-					(reference "#FLAG03")
 					(unit 1)
 				)
 			)
@@ -4597,7 +4664,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:R_0603"
 			(at 245.11 128.27 0)
 			(effects
 				(font
@@ -4666,7 +4733,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:C_0805"
 			(at 127 49.53 0)
 			(effects
 				(font
@@ -4867,7 +4934,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "air_sens_foots:PCA9306"
 			(at 219.71 167.64 0)
 			(effects
 				(font
@@ -5021,7 +5088,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:C_0603"
 			(at 134.62 64.77 0)
 			(effects
 				(font
@@ -5352,7 +5419,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:C_0603"
 			(at 203.2 104.14 0)
 			(effects
 				(font
@@ -5553,7 +5620,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:C_Elec_SMD_5x5.4"
 			(at 172.72 44.45 0)
 			(effects
 				(font
@@ -5621,7 +5688,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:L_CHILISIN_5.5X5.2"
 			(at 106.68 46.99 0)
 			(effects
 				(font
@@ -5689,7 +5756,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:C_0603"
 			(at 132.08 138.1252 0)
 			(effects
 				(font
@@ -5985,7 +6052,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:C_0805"
 			(at 43.18 48.26 0)
 			(effects
 				(font
@@ -6055,7 +6122,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:R_0603"
 			(at 59.69 58.42 0)
 			(effects
 				(font
@@ -6328,7 +6395,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:R_0603"
 			(at 252.73 124.46 0)
 			(effects
 				(font
@@ -6397,7 +6464,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:R_0603"
 			(at 144.78 64.77 0)
 			(effects
 				(font
@@ -6467,7 +6534,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:R_0603"
 			(at 223.52 53.34 0)
 			(effects
 				(font
@@ -6536,7 +6603,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:C_0805"
 			(at 116.84 49.53 0)
 			(effects
 				(font
@@ -6573,6 +6640,72 @@
 			(project ""
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "C7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "pwr:GND")
+		(at 45.72 129.54 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "78d4634e-257e-4b02-b895-e98cef4b76a8")
+		(property "Reference" "#GND043"
+			(at 45.72 116.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 45.72 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 45.72 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 45.72 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Ground"
+			(at 45.72 134.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f2edf919-5547-4884-bc9a-6071f3681e4c")
+		)
+		(instances
+			(project ""
+				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
+					(reference "#GND043")
 					(unit 1)
 				)
 			)
@@ -6679,7 +6812,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:C_0603"
 			(at 53.34 48.26 0)
 			(effects
 				(font
@@ -6789,7 +6922,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 49.53 119.38 270)
+		(at 45.72 123.19 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6798,23 +6931,25 @@
 		(fields_autoplaced yes)
 		(uuid "941fde5a-bb90-4d90-9f7d-9c9f27f2de35")
 		(property "Reference" "C3"
-			(at 49.53 111.76 90)
+			(at 49.53 121.9199 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "100nF"
-			(at 49.53 114.3 90)
+			(at 49.53 124.4599 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Footprint" ""
-			(at 45.72 120.3452 0)
+		(property "Footprint" "common:C_0603"
+			(at 46.6852 127 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6823,7 +6958,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 49.53 119.38 0)
+			(at 45.72 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6832,7 +6967,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 49.53 119.38 0)
+			(at 45.72 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6847,7 +6982,7 @@
 			(uuid "afd0aff2-9f66-4135-b8f1-5b893b822bad")
 		)
 		(instances
-			(project ""
+			(project "air_sensor"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "C3")
 					(unit 1)
@@ -6916,72 +7051,6 @@
 			(project ""
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#12V01")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "pwr:+3.3V")
-		(at 120.65 186.69 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board no)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9e5f60f5-2d81-41f0-b117-adb66dece292")
-		(property "Reference" "#3V021"
-			(at 120.65 181.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "3V3"
-			(at 120.65 182.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 120.65 186.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 120.65 186.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "+3.3V"
-			(at 120.65 199.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "914fe4a5-54b0-4fef-8e09-f25e83b51367")
-		)
-		(instances
-			(project ""
-				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
-					(reference "#3V021")
 					(unit 1)
 				)
 			)
@@ -7081,7 +7150,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:R_0603"
 			(at 186.69 124.46 0)
 			(effects
 				(font
@@ -7214,7 +7283,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:C_0603"
 			(at 97.79 43.18 0)
 			(effects
 				(font
@@ -7350,7 +7419,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:R_0603"
 			(at 59.69 72.39 0)
 			(effects
 				(font
@@ -7411,7 +7480,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "22uF"
 			(at 227.33 46.9899 90)
 			(effects
 				(font
@@ -7420,7 +7489,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:C_Elec_SMD_5x5.4"
 			(at 223.52 45.72 0)
 			(effects
 				(font
@@ -7662,7 +7731,7 @@
 	)
 	(symbol
 		(lib_id "common:Capacitor")
-		(at 229.87 106.68 0)
+		(at 229.87 104.14 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7671,7 +7740,7 @@
 		(fields_autoplaced yes)
 		(uuid "d27a4c35-7de1-49c0-9063-59184541c40d")
 		(property "Reference" "C10"
-			(at 229.87 100.33 0)
+			(at 229.87 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7679,15 +7748,15 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 229.87 102.87 0)
+			(at 229.87 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" ""
-			(at 229.87 106.68 0)
+		(property "Footprint" "common:C_0603"
+			(at 229.87 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7696,7 +7765,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 229.87 106.68 0)
+			(at 229.87 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7705,7 +7774,7 @@
 			)
 		)
 		(property "Description" "Unpolarized Capacitor"
-			(at 229.87 112.18 0)
+			(at 229.87 109.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7928,7 +7997,7 @@
 	)
 	(symbol
 		(lib_id "pwr:GND")
-		(at 198.12 62.23 0)
+		(at 198.12 66.04 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -7937,7 +8006,7 @@
 		(fields_autoplaced yes)
 		(uuid "f0f7f483-c496-4502-b4ec-167da7d22731")
 		(property "Reference" "#GND020"
-			(at 198.12 49.23 0)
+			(at 198.12 53.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7946,7 +8015,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 198.12 66.04 0)
+			(at 198.12 69.85 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7954,7 +8023,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 198.12 62.23 0)
+			(at 198.12 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7963,7 +8032,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 198.12 62.23 0)
+			(at 198.12 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7972,7 +8041,7 @@
 			)
 		)
 		(property "Description" "Ground"
-			(at 198.12 66.73 0)
+			(at 198.12 70.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8150,7 +8219,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:C_0603"
 			(at 132.08 119.0752 0)
 			(effects
 				(font
@@ -8218,7 +8287,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "air_sens_foots:TPS54302"
 			(at 81.28 55.88 0)
 			(effects
 				(font
@@ -8299,7 +8368,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "common:C_0603"
 			(at 184.15 44.45 0)
 			(effects
 				(font
