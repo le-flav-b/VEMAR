@@ -1,4 +1,4 @@
-(footprint "AO_03"
+(footprint "mounting_hole"
 	(version 20241229)
 	(generator "pcbnew")
 	(generator_version "9.0")
@@ -7,7 +7,7 @@
 		(at 0 -0.5 0)
 		(unlocked yes)
 		(layer "F.SilkS")
-		(uuid "6c697f3c-a838-40b7-b6d7-847a4b29f920")
+		(uuid "dc2e2346-9c01-4c81-b6c5-ab1257857149")
 		(effects
 			(font
 				(size 1 1)
@@ -15,11 +15,11 @@
 			)
 		)
 	)
-	(property "Value" "AO_03"
+	(property "Value" "mounting_hole"
 		(at 0 1 0)
 		(unlocked yes)
 		(layer "F.Fab")
-		(uuid "d6b82ffe-6680-4154-ac7e-3ebef8ce5f43")
+		(uuid "c45f177b-96f2-498d-8cd1-b98dceb6aae4")
 		(effects
 			(font
 				(size 1 1)
@@ -32,7 +32,7 @@
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "1fae27ac-9d1c-4d64-86ab-9375e136b012")
+		(uuid "234f84fc-c9d3-410d-89f1-cb81c7581b01")
 		(effects
 			(font
 				(size 1 1)
@@ -45,7 +45,7 @@
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "4e8e5902-c55a-4885-8440-13baa57b729d")
+		(uuid "49adac6e-a1de-4788-9763-fc6778508a41")
 		(effects
 			(font
 				(size 1 1)
@@ -54,22 +54,11 @@
 		)
 	)
 	(attr smd)
-	(fp_circle
-		(center 0 -3.7)
-		(end 10.1 -3.7)
-		(stroke
-			(width 0.05)
-			(type solid)
-		)
-		(fill no)
-		(layer "F.CrtYd")
-		(uuid "f89e4a96-3689-4f6b-b2c5-b019c38253c3")
-	)
 	(fp_text user "${REFERENCE}"
 		(at 0 2.5 0)
 		(unlocked yes)
 		(layer "F.Fab")
-		(uuid "ed87ea84-1cb4-414b-b6a2-ca1a0ac791dd")
+		(uuid "018d4030-1c7f-4bff-8dae-c25764330692")
 		(effects
 			(font
 				(size 1 1)
@@ -78,28 +67,12 @@
 		)
 	)
 	(pad "" thru_hole circle
-		(at 6.6 -3.6)
-		(size 3 3)
-		(drill 1.7)
+		(at 0.1 -9.7)
+		(size 4.5 4.5)
+		(drill 3.2)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
-		(uuid "7724d94b-feb0-415f-a709-2c09946b0629")
-	)
-	(pad "1" thru_hole circle
-		(at -0.1 -10.3)
-		(size 3 3)
-		(drill 1.7)
-		(layers "*.Cu" "*.Mask")
-		(remove_unused_layers no)
-		(uuid "91960fc5-a19c-43e8-a215-a1309bbf4fc3")
-	)
-	(pad "2" thru_hole circle
-		(at -6.8 -3.6)
-		(size 3 3)
-		(drill 1.7)
-		(layers "*.Cu" "*.Mask")
-		(remove_unused_layers no)
-		(uuid "835142e7-3bf1-4630-ac32-18c651975c09")
+		(uuid "560d1a86-171b-4396-8cb6-5bc419c5cc17")
 	)
 	(embedded_fonts no)
 )

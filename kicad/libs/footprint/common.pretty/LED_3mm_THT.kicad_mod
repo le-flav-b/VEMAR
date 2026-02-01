@@ -1,4 +1,4 @@
-(footprint "AO_03"
+(footprint "LED_3mm_THT"
 	(version 20241229)
 	(generator "pcbnew")
 	(generator_version "9.0")
@@ -7,7 +7,7 @@
 		(at 0 -0.5 0)
 		(unlocked yes)
 		(layer "F.SilkS")
-		(uuid "6c697f3c-a838-40b7-b6d7-847a4b29f920")
+		(uuid "99d103f2-3163-4312-b7f5-36708f996cde")
 		(effects
 			(font
 				(size 1 1)
@@ -15,11 +15,11 @@
 			)
 		)
 	)
-	(property "Value" "AO_03"
+	(property "Value" "LED_3mm_THT"
 		(at 0 1 0)
 		(unlocked yes)
 		(layer "F.Fab")
-		(uuid "d6b82ffe-6680-4154-ac7e-3ebef8ce5f43")
+		(uuid "a0056c54-3b74-4737-9879-2f718f15f2f0")
 		(effects
 			(font
 				(size 1 1)
@@ -32,7 +32,7 @@
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "1fae27ac-9d1c-4d64-86ab-9375e136b012")
+		(uuid "009a1744-f3bf-4f30-918c-ba85771e6e2d")
 		(effects
 			(font
 				(size 1 1)
@@ -45,7 +45,7 @@
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "4e8e5902-c55a-4885-8440-13baa57b729d")
+		(uuid "0d9fd692-2baf-4854-af9c-78686126a540")
 		(effects
 			(font
 				(size 1 1)
@@ -53,23 +53,23 @@
 			)
 		)
 	)
-	(attr smd)
-	(fp_circle
-		(center 0 -3.7)
-		(end 10.1 -3.7)
+	(attr through_hole)
+	(fp_rect
+		(start -2.3 -3.9)
+		(end 2.2 -2)
 		(stroke
 			(width 0.05)
-			(type solid)
+			(type default)
 		)
 		(fill no)
 		(layer "F.CrtYd")
-		(uuid "f89e4a96-3689-4f6b-b2c5-b019c38253c3")
+		(uuid "5efba260-ef91-4e7c-80b2-990c89dc96db")
 	)
 	(fp_text user "${REFERENCE}"
 		(at 0 2.5 0)
 		(unlocked yes)
 		(layer "F.Fab")
-		(uuid "ed87ea84-1cb4-414b-b6a2-ca1a0ac791dd")
+		(uuid "0c00a85d-dfe0-4d8f-8743-b0cfd0b4b1df")
 		(effects
 			(font
 				(size 1 1)
@@ -77,29 +77,22 @@
 			)
 		)
 	)
-	(pad "" thru_hole circle
-		(at 6.6 -3.6)
-		(size 3 3)
-		(drill 1.7)
+	(pad "1" thru_hole roundrect
+		(at -1.34 -3)
+		(size 1.5 1.5)
+		(drill 0.8)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
-		(uuid "7724d94b-feb0-415f-a709-2c09946b0629")
-	)
-	(pad "1" thru_hole circle
-		(at -0.1 -10.3)
-		(size 3 3)
-		(drill 1.7)
-		(layers "*.Cu" "*.Mask")
-		(remove_unused_layers no)
-		(uuid "91960fc5-a19c-43e8-a215-a1309bbf4fc3")
+		(roundrect_rratio 0.1666666667)
+		(uuid "1edf73ea-f6b3-41c3-a429-d8e90230239b")
 	)
 	(pad "2" thru_hole circle
-		(at -6.8 -3.6)
-		(size 3 3)
-		(drill 1.7)
+		(at 1.2 -3)
+		(size 1.5 1.5)
+		(drill 0.8)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
-		(uuid "835142e7-3bf1-4630-ac32-18c651975c09")
+		(uuid "72dbcf98-deff-491a-a973-0ca1594b2f45")
 	)
 	(embedded_fonts no)
 )
