@@ -2763,7 +2763,7 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "0805"
+	(text "1206"
 		(exclude_from_sim no)
 		(at 71.12 148.082 0)
 		(effects
@@ -7488,7 +7488,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "common:C_0805"
+		(property "Footprint" "common:C_1206"
 			(at 77.47 147.32 0)
 			(effects
 				(font
