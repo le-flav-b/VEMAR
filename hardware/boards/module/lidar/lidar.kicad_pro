@@ -408,6 +408,15 @@
     "subpart_first_id": 65,
     "subpart_id_separator": 0
   },
-  "sheets": [],
+  "sheets": [
+    [
+      "ddbee91c-d870-4cea-baff-6659bab9b5fd",
+      "Root"
+    ],
+    [
+      "afa486be-e6c0-40a7-9a30-0e6f3429f7ee",
+      "Accelerometer"
+    ]
+  ],
   "text_variables": {}
 }
