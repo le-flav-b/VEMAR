@@ -7,7 +7,7 @@
 		(at 0 -2 0)
 		(unlocked yes)
 		(layer "F.SilkS")
-		(uuid "e634aaf0-f4fb-402c-88e7-e28958d74d48")
+		(uuid "6fedbd01-5033-45f9-b7a3-558f9f8a9633")
 		(effects
 			(font
 				(size 1 1)
@@ -19,7 +19,7 @@
 		(at 0 2 0)
 		(unlocked yes)
 		(layer "F.Fab")
-		(uuid "c8246886-754a-4176-b69c-ae7111a8ce34")
+		(uuid "0a33389d-a198-47be-8363-12409e24199f")
 		(effects
 			(font
 				(size 1 1)
@@ -32,7 +32,7 @@
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "b988c3ba-f181-4500-98fc-f4bc46f4a98d")
+		(uuid "8b5dd493-4c79-4d0b-bba1-19556615ed90")
 		(effects
 			(font
 				(size 1 1)
@@ -45,7 +45,7 @@
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "8cb6b02c-0d4a-42d8-8be2-13abe6757930")
+		(uuid "3817627b-4c96-419f-aea1-9dc3a7d5cc3f")
 		(effects
 			(font
 				(size 1 1)
@@ -195,4 +195,15 @@
 		(uuid "8ba1158f-5549-42ab-b66b-c491c8d36580")
 	)
 	(embedded_fonts no)
+	(model "${KICAD9_3DMODEL_DIR}/Diode_SMD.3dshapes/D_SOD-123F.wrl"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 )

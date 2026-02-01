@@ -1,0 +1,109 @@
+(footprint "LDO3V3"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -0.5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "2846c566-df0a-439a-b982-0a7fda5cbfd3")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "LDO3V3"
+		(at 0 1 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "38ed351f-0ad8-48c7-ba20-1710d7a8a65a")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "2c43126f-3500-440a-857a-162de0f35fb9")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "6588a9e3-2085-4cd1-a792-2d4c53c5ee8c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_rect
+		(start -4.9 -12.1)
+		(end 5 -2)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "11fe9989-de78-419e-9db6-1d4d5be6f4e4")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 2.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "5da996cb-ee1f-48a2-ab0c-9ac726074a56")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "" smd roundrect
+		(at 0 -10.3 90)
+		(size 2 3.8)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "7be173fc-0ee0-44d4-8f84-92bcd5815f63")
+	)
+	(pad "1" smd roundrect
+		(at -2.3 -4 90)
+		(size 2 1.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "9caab25c-6376-443f-8350-0a46ce93e6d7")
+	)
+	(pad "2" smd roundrect
+		(at 0 -4 90)
+		(size 2 1.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "40c792c8-f91a-44ed-8edc-2664f55a425a")
+	)
+	(pad "3" smd roundrect
+		(at 2.3 -4 90)
+		(size 2 1.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "5b2e77ef-fb3a-4642-a98c-7065e91b2f05")
+	)
+	(embedded_fonts no)
+)

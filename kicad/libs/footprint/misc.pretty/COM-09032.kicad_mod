@@ -179,4 +179,15 @@
 		(uuid "ab654576-0bea-46af-bef9-7ce2d4f41528")
 	)
 	(embedded_fonts no)
+	(model "${VEMAR_MODEL_DIR}/COM-09032--3DModel-STEP-56544.STEP"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 90 180 -0)
+		)
+	)
 )

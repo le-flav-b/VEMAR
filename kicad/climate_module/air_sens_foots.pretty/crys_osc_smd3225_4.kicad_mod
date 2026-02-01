@@ -1,0 +1,131 @@
+(footprint "crys_osc_smd3225_4"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "YSX321SL"
+		(at 0.3 2.95 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "2a27fc0a-7a32-45ed-89b7-48d7f5a134e5")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "crys_osc_smd3225_4"
+		(at 0.23 4.27 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "28b51bbe-e7de-4261-824e-49b65ad47e79")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "55f45368-035d-4de0-bea5-43e7d1f5df60")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "60dbb6b7-9d5a-42f0-98f5-a8a0185569ff")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_rect
+		(start -2.045 -1.725)
+		(end 2.045 1.725)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "39084602-6b4d-4d9e-bb85-4dd059881863")
+	)
+	(fp_rect
+		(start -1.6 -1.26)
+		(end 1.6 1.24)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "3264e747-790b-4f27-af67-c34cc9fb2752")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0.3 5.95 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "d1b76d0c-67d8-4117-a988-469c6a784a83")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd roundrect
+		(at -1.1 0.85)
+		(size 1.4 1.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "d01ed006-41cc-4d3d-a613-795fd6a49bc7")
+	)
+	(pad "2" smd roundrect
+		(at 1.1 0.85)
+		(size 1.4 1.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "8f2a68b2-1a40-4cbc-8b2a-eeff9ff5b1c0")
+	)
+	(pad "3" smd roundrect
+		(at 1.1 -0.85)
+		(size 1.4 1.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "e732a917-0311-4442-a1bb-fb3652c861bb")
+	)
+	(pad "4" smd roundrect
+		(at -1.1 -0.85)
+		(size 1.4 1.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "47c787a9-23bc-4e74-9576-353cddaf79b2")
+	)
+	(embedded_fonts no)
+	(model "${KICAD9_3DMODEL_DIR}/Crystal.3dshapes/Crystal_SMD_3225-4Pin_3.2x2.5mm.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)
