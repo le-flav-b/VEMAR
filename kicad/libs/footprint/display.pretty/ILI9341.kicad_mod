@@ -334,6 +334,7 @@
 	)
 	(embedded_fonts no)
 	(model "${VEMAR_MODEL_DIR}/display/TFT_320x240.step"
+		(hide yes)
 		(offset
 			(xyz -25 -45 3)
 		)
