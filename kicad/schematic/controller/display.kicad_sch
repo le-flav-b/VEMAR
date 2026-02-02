@@ -1883,6 +1883,24 @@
 				(hide yes)
 			)
 		)
+		(property "Ext. Price" ""
+			(at 149.86 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 149.86 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "2f71ef2f-9a80-4654-9f2d-45a17bd83387")
 		)
@@ -1965,6 +1983,51 @@
 				(hide yes)
 			)
 		)
+		(property "Ext. Price" "0.07"
+			(at 151.13 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C2907113"
+			(at 151.13 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "FOJAN"
+			(at 151.13 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part" "FRC0603J102 TS"
+			(at 151.13 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Unit Price" "0.0007"
+			(at 151.13 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "ebd91b82-a1b7-44fa-85eb-7b66bc595b91")
 		)
@@ -2035,6 +2098,51 @@
 				(hide yes)
 			)
 		)
+		(property "Ext. Price" "0.09"
+			(at 219.71 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C2907022"
+			(at 219.71 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "FOJAN"
+			(at 219.71 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part" "FRC0603F2001TS"
+			(at 219.71 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Unit Price" "0.0009"
+			(at 219.71 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "96429429-a72d-41d1-b9b5-b7ec3b7562ec")
 		)
@@ -2098,6 +2206,51 @@
 		)
 		(property "Description" "Resistor"
 			(at 186.38 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Ext. Price" "0.09"
+			(at 182.88 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C2907022"
+			(at 182.88 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "FOJAN"
+			(at 182.88 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part" "FRC0603F2001TS"
+			(at 182.88 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Unit Price" "0.0009"
+			(at 182.88 102.87 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2307,6 +2460,51 @@
 				(hide yes)
 			)
 		)
+		(property "Ext. Price" "0.07"
+			(at 166.37 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C2907113"
+			(at 166.37 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "FOJAN"
+			(at 166.37 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part" "FRC0603J102 TS"
+			(at 166.37 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Unit Price" "0.0007"
+			(at 166.37 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "b60a3791-ae97-47d0-8b55-a3a47f09f7a8")
 		)
@@ -2377,6 +2575,51 @@
 				(hide yes)
 			)
 		)
+		(property "Ext. Price" "0.07"
+			(at 203.2 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C2907113"
+			(at 203.2 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "FOJAN"
+			(at 203.2 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part" "FRC0603J102 TS"
+			(at 203.2 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Unit Price" "0.0007"
+			(at 203.2 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "05d6bc35-6120-4d53-8336-ca727d1d89c9")
 		)
@@ -2440,6 +2683,51 @@
 		)
 		(property "Description" "Resistor"
 			(at 154.63 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Ext. Price" "0.09"
+			(at 151.13 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C2907022"
+			(at 151.13 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "FOJAN"
+			(at 151.13 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part" "FRC0603F2001TS"
+			(at 151.13 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Unit Price" "0.0009"
+			(at 151.13 102.87 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2575,6 +2863,24 @@
 		)
 		(property "Description" "Generic Pin 01x02"
 			(at 128.27 101.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Ext. Price" ""
+			(at 128.27 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 128.27 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2718,6 +3024,51 @@
 				(hide yes)
 			)
 		)
+		(property "Ext. Price" "0.07"
+			(at 182.88 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C2907113"
+			(at 182.88 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "FOJAN"
+			(at 182.88 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part" "FRC0603J102 TS"
+			(at 182.88 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Unit Price" "0.0007"
+			(at 182.88 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "85b85fa5-9a56-4689-862c-7c3dab25b5e7")
 		)
@@ -2781,6 +3132,51 @@
 		)
 		(property "Description" "Resistor"
 			(at 169.87 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Ext. Price" "0.09"
+			(at 166.37 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C2907022"
+			(at 166.37 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "FOJAN"
+			(at 166.37 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part" "FRC0603F2001TS"
+			(at 166.37 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Unit Price" "0.0009"
+			(at 166.37 102.87 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2858,6 +3254,51 @@
 				(hide yes)
 			)
 		)
+		(property "Ext. Price" "0.07"
+			(at 219.71 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C2907113"
+			(at 219.71 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "FOJAN"
+			(at 219.71 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part" "FRC0603J102 TS"
+			(at 219.71 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Unit Price" "0.0007"
+			(at 219.71 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "d4c3370c-515b-444a-a3fa-ff2e46648cc9")
 		)
@@ -2921,6 +3362,24 @@
 		)
 		(property "Description" "3.2 TFT SPI 240x320"
 			(at 108.458 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Ext. Price" ""
+			(at 107.95 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 107.95 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3171,6 +3630,51 @@
 		)
 		(property "Description" "Resistor"
 			(at 206.7 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Ext. Price" "0.09"
+			(at 203.2 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C2907022"
+			(at 203.2 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "FOJAN"
+			(at 203.2 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part" "FRC0603F2001TS"
+			(at 203.2 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Unit Price" "0.0009"
+			(at 203.2 102.87 90)
 			(effects
 				(font
 					(size 1.27 1.27)
