@@ -874,7 +874,7 @@
 			(exclude_from_sim no)
 			(in_bom no)
 			(on_board no)
-			(property "Reference" "#3.3V"
+			(property "Reference" "#3V3"
 				(at 0 5 0)
 				(effects
 					(font
@@ -883,7 +883,7 @@
 					(hide yes)
 				)
 			)
-			(property "Value" "+3.3V"
+			(property "Value" "3V3"
 				(at 0 3 0)
 				(effects
 					(font
@@ -995,7 +995,7 @@
 					(hide yes)
 				)
 			)
-			(property "Value" "+5V"
+			(property "Value" "5V"
 				(at 0 3 0)
 				(effects
 					(font
