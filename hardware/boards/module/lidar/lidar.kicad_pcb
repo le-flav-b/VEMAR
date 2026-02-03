@@ -169,11 +169,12 @@
 		(property "Reference" "U2"
 			(at 0 0 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "95db1140-8fb9-4f40-b601-e1a266a3a4c5")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
@@ -838,11 +839,12 @@
 		(property "Reference" "Y2"
 			(at 0 0 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "0258b862-36cb-4e49-bcb3-78e147e77fd9")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
@@ -1442,11 +1444,12 @@
 		(property "Reference" "U1"
 			(at 0 0 180)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "9569588c-3de4-4a1f-9dbb-bfff08bdd5ef")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
@@ -2873,7 +2876,7 @@
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
@@ -3143,13 +3146,14 @@
 		(descr "SOT-23, Handsoldering")
 		(tags "SOT-23")
 		(property "Reference" "Q1"
-			(at -0.08 0.0375 0)
+			(at 1.7 -1.06375 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "fd3f4f2b-6680-470b-be09-52383ae8ae08")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
@@ -3817,7 +3821,7 @@
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
@@ -4245,14 +4249,15 @@
 		(uuid "67611a60-b95c-4ec3-b586-c9f9aa0cf55f")
 		(at 149.0375 112.5875 -90)
 		(property "Reference" "Y1"
-			(at 0 0 90)
+			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "b503733f-86d5-4dae-9d4e-7ae27f519e73")
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.1)
+					(thickness 0.153)
 				)
 			)
 		)
@@ -4400,13 +4405,14 @@
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
 		(property "Value" "~"
 			(at 0 12.54 90)
 			(layer "F.Fab")
+			(hide yes)
 			(uuid "2c5c6d79-a77f-47fa-85ef-d997a937f3be")
 			(effects
 				(font
@@ -6032,7 +6038,7 @@
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
@@ -6297,7 +6303,7 @@
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
@@ -6572,7 +6578,7 @@
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
@@ -7864,7 +7870,7 @@
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
@@ -8330,7 +8336,7 @@
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
@@ -8595,7 +8601,7 @@
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
@@ -8860,7 +8866,7 @@
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
@@ -9546,7 +9552,7 @@
 			(effects
 				(font
 					(size 1 1)
-					(thickness 0.15)
+					(thickness 0.153)
 				)
 			)
 		)
