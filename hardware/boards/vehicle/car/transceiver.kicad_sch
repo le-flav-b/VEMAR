@@ -1300,7 +1300,7 @@
 				)
 			)
 			(property "Description" "2.4GHz Transceiver"
-				(at 0 -26 0)
+				(at -1.27 -26 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1449,7 +1449,7 @@
 					)
 				)
 				(pin power_in line
-					(at -3.81 -15.24 90)
+					(at -5.08 -15.24 90)
 					(length 2.54)
 					(name "VSS"
 						(effects
@@ -1485,7 +1485,7 @@
 					)
 				)
 				(pin power_in line
-					(at -1.27 -15.24 90)
+					(at -2.54 -15.24 90)
 					(length 2.54)
 					(name "VSS"
 						(effects
@@ -1521,7 +1521,7 @@
 					)
 				)
 				(pin power_in line
-					(at 1.27 -15.24 90)
+					(at 0 -15.24 90)
 					(length 2.54)
 					(name "VSS"
 						(effects
@@ -1557,7 +1557,7 @@
 					)
 				)
 				(pin power_in line
-					(at 3.81 -15.24 90)
+					(at 2.54 -15.24 90)
 					(length 2.54)
 					(name "VSS"
 						(effects
@@ -1567,6 +1567,24 @@
 						)
 					)
 					(number "20"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 5.08 -15.24 90)
+					(length 2.54)
+					(name "VSS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "21"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2065,12 +2083,6 @@
 		(uuid "0880cde3-972f-44bf-a2f2-c219798096e4")
 	)
 	(junction
-		(at 68.58 124.46)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "0bba6e57-ed22-4fca-a811-8feecd2ec2ff")
-	)
-	(junction
 		(at 151.13 101.6)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2137,16 +2149,16 @@
 		(uuid "342138aa-79cb-4f41-ba2b-42e4b54a1b0d")
 	)
 	(junction
+		(at 67.31 124.46)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3870ee73-5cff-40ad-8fe7-1afd57315bb8")
+	)
+	(junction
 		(at 233.68 109.22)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "3b7cc1f7-79e3-4312-a31f-9d6ddbe03f92")
-	)
-	(junction
-		(at 71.12 124.46)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "3caa9501-2d80-4d74-90ee-71bf25e0af56")
 	)
 	(junction
 		(at 172.72 129.54)
@@ -2179,6 +2191,12 @@
 		(uuid "54c77207-0d38-4b3b-a62c-cdad449ae9fc")
 	)
 	(junction
+		(at 69.85 124.46)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "787ad0b5-1935-4133-86e6-518a7952f860")
+	)
+	(junction
 		(at 171.45 129.54)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2191,16 +2209,16 @@
 		(uuid "8d96f468-2257-4548-87dc-0788c934db74")
 	)
 	(junction
-		(at 69.85 124.46)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "98b9a694-c42b-4e50-8fa9-4cbbcb3850c1")
-	)
-	(junction
 		(at 95.25 132.08)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "af91c9f1-c01b-4d37-bd55-2f4da903be1c")
+	)
+	(junction
+		(at 72.39 124.46)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "bd406c23-faed-4362-aa03-405855b69d9b")
 	)
 	(junction
 		(at 110.49 104.14)
@@ -2404,16 +2422,6 @@
 	)
 	(wire
 		(pts
-			(xy 69.85 124.46) (xy 71.12 124.46)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1be53811-2142-4585-b47a-ad860719c653")
-	)
-	(wire
-		(pts
 			(xy 184.15 124.46) (xy 184.15 129.54)
 		)
 		(stroke
@@ -2434,13 +2442,13 @@
 	)
 	(wire
 		(pts
-			(xy 66.04 124.46) (xy 68.58 124.46)
+			(xy 69.85 124.46) (xy 72.39 124.46)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "2669a5e2-387f-4ade-8bb1-46e435b9bcd2")
+		(uuid "224d0d46-58bd-4b64-81ee-14c580ca2c17")
 	)
 	(wire
 		(pts
@@ -2544,16 +2552,6 @@
 	)
 	(wire
 		(pts
-			(xy 71.12 124.46) (xy 73.66 124.46)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "447fea3d-cfbd-4b13-bc6f-3ea50ce05576")
-	)
-	(wire
-		(pts
 			(xy 85.09 104.14) (xy 110.49 104.14)
 		)
 		(stroke
@@ -2621,6 +2619,16 @@
 			(type default)
 		)
 		(uuid "58a505e0-dc1e-4f62-a26a-2a3d92ea1edd")
+	)
+	(wire
+		(pts
+			(xy 67.31 124.46) (xy 69.85 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "59041e50-a232-49eb-8331-5c63571447dd")
 	)
 	(wire
 		(pts
@@ -2934,6 +2942,16 @@
 	)
 	(wire
 		(pts
+			(xy 64.77 124.46) (xy 67.31 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c26b42b2-b20c-46a0-9a42-e334e5ae1a37")
+	)
+	(wire
+		(pts
 			(xy 50.8 87.63) (xy 69.85 87.63)
 		)
 		(stroke
@@ -3044,6 +3062,16 @@
 	)
 	(wire
 		(pts
+			(xy 72.39 124.46) (xy 74.93 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d73b6b4f-52e5-42ff-ba8c-66934cb02b17")
+	)
+	(wire
+		(pts
 			(xy 163.83 129.54) (xy 166.37 129.54)
 		)
 		(stroke
@@ -3071,6 +3099,16 @@
 			(type default)
 		)
 		(uuid "e19a2eb2-05bc-4df8-a3ed-35e7137b21dc")
+	)
+	(wire
+		(pts
+			(xy 69.85 124.46) (xy 69.85 125.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e2f5defb-0ca3-49d2-bc94-6104d4c00e74")
 	)
 	(wire
 		(pts
@@ -3171,16 +3209,6 @@
 			(type default)
 		)
 		(uuid "f562bb07-911f-490b-94fd-cc70154823e3")
-	)
-	(wire
-		(pts
-			(xy 68.58 124.46) (xy 69.85 124.46)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f7679cff-2edb-44d4-9344-744bd3921794")
 	)
 	(hierarchical_label "EN"
 		(shape input)
@@ -3443,7 +3471,7 @@
 	)
 	(symbol
 		(lib_id "pwr:GND")
-		(at 69.85 127 0)
+		(at 69.85 128.27 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -3452,7 +3480,7 @@
 		(fields_autoplaced yes)
 		(uuid "0f23d355-9b5d-4385-8916-45e377f3cf21")
 		(property "Reference" "#GND054"
-			(at 69.85 114 0)
+			(at 69.85 115.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3461,7 +3489,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 69.85 130.81 0)
+			(at 69.85 132.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3469,7 +3497,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 69.85 127 0)
+			(at 69.85 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3478,7 +3506,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 69.85 127 0)
+			(at 69.85 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3487,7 +3515,7 @@
 			)
 		)
 		(property "Description" "Ground"
-			(at 69.85 131.5 0)
+			(at 69.85 132.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3687,6 +3715,9 @@
 		)
 		(pin "9"
 			(uuid "625339c6-5111-42cc-941a-92be3a8c8cda")
+		)
+		(pin "21"
+			(uuid "e7b634be-52eb-4d1b-8603-2ac6050caf99")
 		)
 		(instances
 			(project "car"

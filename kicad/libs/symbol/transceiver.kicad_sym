@@ -41,7 +41,7 @@
 			)
 		)
 		(property "Description" "2.4GHz Transceiver"
-			(at 0 -26 0)
+			(at -1.27 -26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -190,7 +190,7 @@
 				)
 			)
 			(pin power_in line
-				(at -3.81 -15.24 90)
+				(at -5.08 -15.24 90)
 				(length 2.54)
 				(name "VSS"
 					(effects
@@ -226,7 +226,7 @@
 				)
 			)
 			(pin power_in line
-				(at -1.27 -15.24 90)
+				(at -2.54 -15.24 90)
 				(length 2.54)
 				(name "VSS"
 					(effects
@@ -262,7 +262,7 @@
 				)
 			)
 			(pin power_in line
-				(at 1.27 -15.24 90)
+				(at 0 -15.24 90)
 				(length 2.54)
 				(name "VSS"
 					(effects
@@ -298,7 +298,7 @@
 				)
 			)
 			(pin power_in line
-				(at 3.81 -15.24 90)
+				(at 2.54 -15.24 90)
 				(length 2.54)
 				(name "VSS"
 					(effects
@@ -308,6 +308,24 @@
 					)
 				)
 				(number "20"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 5.08 -15.24 90)
+				(length 2.54)
+				(name "VSS"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "21"
 					(effects
 						(font
 							(size 1.27 1.27)
