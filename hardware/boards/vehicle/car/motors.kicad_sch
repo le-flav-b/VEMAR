@@ -3844,91 +3844,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Diode:UF5408")
-		(at 189.23 97.79 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "120060c8-fd1c-48d7-8631-921934cc7489")
-		(property "Reference" "D8"
-			(at 189.23 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "UF5408"
-			(at 189.23 102.108 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
-			(at 189.23 102.235 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
-			(at 189.23 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
-			(at 189.23 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" "D"
-			(at 189.23 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" "1=K 2=A"
-			(at 189.23 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "1ce316d7-bec4-494d-9a75-737694fbb80c")
-		)
-		(pin "1"
-			(uuid "5ea65963-0f45-4165-82f1-2545b23cd219")
-		)
-		(instances
-			(project "car"
-				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D8")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 99.06 135.89 0)
 		(unit 1)
@@ -4063,6 +3978,91 @@
 		)
 	)
 	(symbol
+		(lib_id "Diode:UF5408")
+		(at 189.23 97.79 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1d147b59-a6eb-4c5a-a776-d4d490122263")
+		(property "Reference" "D8"
+			(at 189.23 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SS36"
+			(at 189.23 102.108 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+			(at 189.23 102.235 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 189.23 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 189.23 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "D"
+			(at 189.23 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 189.23 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "ab575990-a9db-42a8-8ba9-16c23302340a")
+		)
+		(pin "1"
+			(uuid "6b5e9729-06c5-461a-a229-1d592b0c7f18")
+		)
+		(instances
+			(project "car"
+				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
+					(reference "D8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Motor:Motor_DC")
 		(at 95.25 106.68 0)
 		(unit 1)
@@ -4126,6 +4126,91 @@
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
 					(reference "M1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Diode:UF5408")
+		(at 204.47 97.79 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2178f56a-a815-41a2-8f59-e38bc57031b4")
+		(property "Reference" "D9"
+			(at 204.47 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SS36"
+			(at 204.47 102.108 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+			(at 204.47 102.235 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 204.47 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 204.47 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "D"
+			(at 204.47 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 204.47 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "877ab38b-e92a-41eb-83a2-84f4182bdf29")
+		)
+		(pin "1"
+			(uuid "fc03833a-a9dc-4e25-9ed2-6b8e4a18c801")
+		)
+		(instances
+			(project "car"
+				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
+					(reference "D9")
 					(unit 1)
 				)
 			)
@@ -4260,91 +4345,6 @@
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
 					(reference "#PWR015")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Diode:UF5408")
-		(at 204.47 97.79 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "32d06245-8a8c-4af2-a9da-3cb30943b633")
-		(property "Reference" "D9"
-			(at 204.47 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "UF5408"
-			(at 204.47 102.108 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
-			(at 204.47 102.235 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
-			(at 204.47 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
-			(at 204.47 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" "D"
-			(at 204.47 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" "1=K 2=A"
-			(at 204.47 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "b1991c89-380d-4dbd-84da-51370761f459")
-		)
-		(pin "1"
-			(uuid "55db0df9-f86f-4ebc-a87a-d62af0a3a2b2")
-		)
-		(instances
-			(project "car"
-				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D9")
 					(unit 1)
 				)
 			)
@@ -4499,91 +4499,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Diode:UF5408")
-		(at 102.87 118.11 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "3e7871f8-d581-42d0-b283-7dda4f9f1643")
-		(property "Reference" "D7"
-			(at 102.87 113.792 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "UF5408"
-			(at 102.87 115.57 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
-			(at 102.87 122.555 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
-			(at 102.87 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
-			(at 102.87 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" "D"
-			(at 102.87 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" "1=K 2=A"
-			(at 102.87 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "1bc14626-0c92-41bb-916b-97b31652faa1")
-		)
-		(pin "1"
-			(uuid "ef44df6d-58f6-4e93-89d0-65df2acee605")
-		)
-		(instances
-			(project "car"
-				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D7")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 179.07 134.62 0)
 		(unit 1)
@@ -4669,7 +4584,7 @@
 				)
 			)
 		)
-		(property "Value" "UF5408"
+		(property "Value" "SS36"
 			(at 87.63 102.108 0)
 			(effects
 				(font
@@ -4677,7 +4592,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
+		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
 			(at 87.63 102.235 0)
 			(effects
 				(font
@@ -4686,7 +4601,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
+		(property "Datasheet" ""
 			(at 87.63 97.79 0)
 			(effects
 				(font
@@ -4695,7 +4610,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
+		(property "Description" ""
 			(at 87.63 97.79 0)
 			(effects
 				(font
@@ -5490,6 +5405,91 @@
 		)
 	)
 	(symbol
+		(lib_id "Diode:UF5408")
+		(at 189.23 118.11 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "77e6a19f-f8bf-4f56-8960-73c6d3615d19")
+		(property "Reference" "D10"
+			(at 189.23 113.792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SS36"
+			(at 189.23 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+			(at 189.23 122.555 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 189.23 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 189.23 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "D"
+			(at 189.23 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 189.23 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "3923d703-9149-4d27-a31d-c63b8ed7dfed")
+		)
+		(pin "1"
+			(uuid "62e90c81-ed8f-49a6-9cc8-6de8ddb56738")
+		)
+		(instances
+			(project "car"
+				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
+					(reference "D10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 200.66 135.89 0)
 		(unit 1)
@@ -5832,40 +5832,31 @@
 	)
 	(symbol
 		(lib_id "Diode:UF5408")
-		(at 204.47 118.11 0)
+		(at 102.87 97.79 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "89ec8396-434f-45f3-a908-d49a7b961c1b")
-		(property "Reference" "D11"
-			(at 204.47 113.792 0)
+		(uuid "894ea305-337d-43ad-a5d3-ba1d4d237a71")
+		(property "Reference" "D5"
+			(at 102.87 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "UF5408"
-			(at 204.47 115.57 0)
+		(property "Value" "SS36"
+			(at 102.87 102.108 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
-			(at 204.47 122.555 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
-			(at 204.47 118.11 0)
+		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+			(at 102.87 102.235 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5873,8 +5864,17 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
-			(at 204.47 118.11 0)
+		(property "Datasheet" ""
+			(at 102.87 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 102.87 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5883,7 +5883,7 @@
 			)
 		)
 		(property "Sim.Device" "D"
-			(at 204.47 118.11 0)
+			(at 102.87 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5892,7 +5892,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 204.47 118.11 0)
+			(at 102.87 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5901,15 +5901,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "7df01f89-4bd3-48cc-8ad0-f0bbfb6c0f9a")
+			(uuid "167dd081-7648-4a2f-8c8b-afb6107923df")
 		)
 		(pin "1"
-			(uuid "b71dcf56-102b-40c0-b09b-e338ad327a25")
+			(uuid "8c554fc8-4a5c-4d62-a4b9-b95a5e1fb6ee")
 		)
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D11")
+					(reference "D5")
 					(unit 1)
 				)
 			)
@@ -6121,6 +6121,91 @@
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
 					(reference "R22")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Diode:UF5408")
+		(at 87.63 118.11 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9cfd64d0-f655-4ef6-b0e5-5c57c7a86abf")
+		(property "Reference" "D6"
+			(at 87.63 113.792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SS36"
+			(at 87.63 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+			(at 87.63 122.555 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 87.63 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 87.63 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "D"
+			(at 87.63 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 87.63 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "dd5d768e-eb7a-4027-afa3-9ad5ea629319")
+		)
+		(pin "1"
+			(uuid "b752090e-5158-4548-a11c-676b34bb4c1e")
+		)
+		(instances
+			(project "car"
+				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
+					(reference "D6")
 					(unit 1)
 				)
 			)
@@ -6339,91 +6424,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Diode:UF5408")
-		(at 87.63 118.11 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "a7e1896b-2343-46a1-a38c-86366a5fd7de")
-		(property "Reference" "D6"
-			(at 87.63 113.792 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "UF5408"
-			(at 87.63 115.57 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
-			(at 87.63 122.555 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
-			(at 87.63 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
-			(at 87.63 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" "D"
-			(at 87.63 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" "1=K 2=A"
-			(at 87.63 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "63823134-0391-4ae0-903a-e5fbd2d24175")
-		)
-		(pin "1"
-			(uuid "a20d9319-bc9f-4ce3-85e4-5e6fcded5a34")
-		)
-		(instances
-			(project "car"
-				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D6")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 214.63 91.44 0)
 		(unit 1)
@@ -6562,6 +6562,91 @@
 		)
 	)
 	(symbol
+		(lib_id "Diode:UF5408")
+		(at 102.87 118.11 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ab210f64-1982-4bd4-a8a1-69e1b9ac86a3")
+		(property "Reference" "D7"
+			(at 102.87 113.792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SS36"
+			(at 102.87 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+			(at 102.87 122.555 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 102.87 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 102.87 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "D"
+			(at 102.87 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 102.87 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "bc5d1911-6f59-4e93-a452-6c5771525a68")
+		)
+		(pin "1"
+			(uuid "394a5a99-b5c0-4421-8421-c30d59ae7f5b")
+		)
+		(instances
+			(project "car"
+				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
+					(reference "D7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Motor:Motor_DC")
 		(at 196.85 106.68 0)
 		(unit 1)
@@ -6625,6 +6710,91 @@
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
 					(reference "M2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Diode:UF5408")
+		(at 204.47 118.11 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "aefcc359-bea2-4ebe-9d4d-4d76d6d0f5e8")
+		(property "Reference" "D11"
+			(at 204.47 113.792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SS36"
+			(at 204.47 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+			(at 204.47 122.555 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 204.47 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 204.47 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "D"
+			(at 204.47 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 204.47 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "7b1e0c7f-f2ad-4ced-879f-9e08649c7fb0")
+		)
+		(pin "1"
+			(uuid "af49bfe2-e2e3-4c39-9b51-90cfab08bcfe")
+		)
+		(instances
+			(project "car"
+				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
+					(reference "D11")
 					(unit 1)
 				)
 			)
@@ -7685,176 +7855,6 @@
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
 					(reference "#PWR035")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Diode:UF5408")
-		(at 189.23 118.11 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "f9f8a385-835b-41f6-ac80-f80680bc0e10")
-		(property "Reference" "D10"
-			(at 189.23 113.792 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "UF5408"
-			(at 189.23 115.57 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
-			(at 189.23 122.555 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
-			(at 189.23 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
-			(at 189.23 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" "D"
-			(at 189.23 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" "1=K 2=A"
-			(at 189.23 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "6359e049-bc14-4c36-9a6a-29ee73a7ec8c")
-		)
-		(pin "1"
-			(uuid "7a20c7a8-e53f-4514-8c68-89d080a0b81b")
-		)
-		(instances
-			(project "car"
-				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D10")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Diode:UF5408")
-		(at 102.87 97.79 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "ff58d83b-eb44-4a99-9932-bbb264efedc9")
-		(property "Reference" "D5"
-			(at 102.87 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "UF5408"
-			(at 102.87 102.108 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
-			(at 102.87 102.235 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
-			(at 102.87 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
-			(at 102.87 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" "D"
-			(at 102.87 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" "1=K 2=A"
-			(at 102.87 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "7f5e717d-3f59-4aaf-9aa1-d204f86a767e")
-		)
-		(pin "1"
-			(uuid "c39839f9-6f40-4a6d-886b-018476a6090c")
-		)
-		(instances
-			(project "car"
-				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D5")
 					(unit 1)
 				)
 			)
