@@ -2,6 +2,15 @@
 #define VEMAR_COMMON_H
 
 #include <avr/io.h>
+#include <util/delay.h>
+
+#ifndef F_CPU
+#define F_CPU 16000000UL
+#endif
+
+#define DEBOUNCE_TIME 30
+
+#define delay(ms) _delay_ms(ms)
 
 /**
  * @brief Create a bitmask with a single bit set to `1` at the position
@@ -51,9 +60,9 @@
  * @param cond Condition to end the loop
  */
 #define WAIT_UNTIL(cond) \
-    do                   \
-    {                    \
-    } while (!(cond))
+	do                   \
+	{                    \
+	} while (!(cond))
 
 /**
  * @brief 8-bit register

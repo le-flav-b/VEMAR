@@ -10,8 +10,8 @@
  * @see ADC_init
  * @{
  */
-#define ADC_REFERENCE_AREF 0x00   ///< AREF, internal VREF turned off
-#define ADC_REFERENCE_AVCC 0x40   ///< AVCC with external capacitor at AREF pin
+#define ADC_REFERENCE_AREF 0x00	  ///< AREF, internal VREF turned off
+#define ADC_REFERENCE_AVCC 0x40	  ///< AVCC with external capacitor at AREF pin
 #define ADC_REFERENCE_INTERN 0xC0 ///< Internal 1.1V Voltage Reference
 /**
  * @}
@@ -63,6 +63,9 @@
 #define ADC_CHANNEL_3 0x03 ///< ADC3
 #define ADC_CHANNEL_4 0x04 ///< ADC4
 #define ADC_CHANNEL_5 0x05 ///< ADC5
+
+#define ADC_CHANNEL_6 0x06 ///< ADC6
+#define ADC_CHANNEL_7 0x07 ///< ADC7
 /**
  * @}
  */
@@ -100,7 +103,7 @@
  */
 inline void ADC_set_reference(byte_t reference)
 {
-    BIT_write(ADMUX, reference, ADC_MASK_REFERENCE);
+	BIT_write(ADMUX, reference, ADC_MASK_REFERENCE);
 }
 
 /**
@@ -117,7 +120,7 @@ inline void ADC_set_reference(byte_t reference)
  */
 inline void ADC_set_result(byte_t result)
 {
-    BIT_write(ADMUX, result, ADC_MASK_RESULT);
+	BIT_write(ADMUX, result, ADC_MASK_RESULT);
 }
 
 /**
@@ -131,7 +134,7 @@ inline void ADC_set_result(byte_t result)
  */
 inline void ADC_set_channel(byte_t channel)
 {
-    BIT_write(ADMUX, channel, ADC_MASK_CHANNEL);
+	BIT_write(ADMUX, channel, ADC_MASK_CHANNEL);
 }
 
 //------------------------------------------------------------------------------
@@ -147,7 +150,7 @@ inline void ADC_set_channel(byte_t channel)
  */
 inline void ADC_enable(void)
 {
-    BIT_set(ADCSRA, BIT(ADEN));
+	BIT_set(ADCSRA, BIT(ADEN));
 }
 
 /**
@@ -158,7 +161,7 @@ inline void ADC_enable(void)
  */
 inline void ADC_disable(void)
 {
-    BIT_clear(ADCSRA, BIT(ADEN));
+	BIT_clear(ADCSRA, BIT(ADEN));
 }
 
 /**
@@ -177,11 +180,11 @@ inline void ADC_disable(void)
  */
 inline void ADC_start_conversion(void)
 {
-    BIT_set(ADCSRA, BIT(ADSC));
+	BIT_set(ADCSRA, BIT(ADSC));
 }
 
 /**
- * @brief Enable ADC Aut Trigger
+ * @brief Enable ADC Auto Trigger
  * @details
  * When `ADATE` bit is written to `1`, Auto Triggering of the ADC is enabled.
  * The ADC will start a conversion on a positive edge of the selected trigger
@@ -190,7 +193,16 @@ inline void ADC_start_conversion(void)
  */
 inline void ADC_enable_autotrigger(void)
 {
-    BIT_set(ADCSRA, BIT(ADATE));
+	BIT_set(ADCSRA, BIT(ADATE));
+}
+
+/**
+ * @brief Disable ADC Auto Trigger
+ * @see ADC_enable_autotrigger
+ */
+inline void ADC_disable_autotrigger(void)
+{
+	BIT_clear(ADCSRA, BIT(ADATE));
 }
 
 /**
@@ -205,7 +217,7 @@ inline void ADC_enable_autotrigger(void)
  */
 inline bool_t ADC_is_conversion_complete(void)
 {
-    return (BIT_read(ADCSRA, BIT(ADIF)));
+	return (BIT_read(ADCSRA, BIT(ADIF)));
 }
 
 /**
@@ -216,7 +228,7 @@ inline bool_t ADC_is_conversion_complete(void)
  */
 inline void ADC_enable_interrupt(void)
 {
-    BIT_set(ADCSRA, BIT(ADIE));
+	BIT_set(ADCSRA, BIT(ADIE));
 }
 
 /**
@@ -224,7 +236,7 @@ inline void ADC_enable_interrupt(void)
  */
 inline void ADC_disable_interrupt(void)
 {
-    BIT_clear(ADCSRA, BIT(ADIE));
+	BIT_clear(ADCSRA, BIT(ADIE));
 }
 
 /**
@@ -237,7 +249,7 @@ inline void ADC_disable_interrupt(void)
  */
 inline void ADC_set_prescaler(byte_t prescaler)
 {
-    BIT_write(ADCSRA, prescaler, ADC_MASK_PRESCALER);
+	BIT_write(ADCSRA, prescaler, ADC_MASK_PRESCALER);
 }
 
 //------------------------------------------------------------------------------
@@ -256,19 +268,7 @@ inline void ADC_set_prescaler(byte_t prescaler)
  * If `ADLAR` is set, the result is left adjusted.
  * If `ADLAR is cleared (default), the result is right adjusted.
  */
-inline unsigned int ADC_data(void)
-{
-    unsigned int result;
-    if (BIT_read(ADMUX, BIT(ADLAR)))
-    {
-        result = ADCH;
-    } // if left adjusted (ADLAR = 1)
-    else {
-        result = ADCL;
-        result = result | (ADCH << 8);
-    } // if right adjusted
-    return result;
-}
+unsigned int ADC_data(void);
 
 //------------------------------------------------------------------------------
 // ADCSRB --- ADC Control and Status Register B
@@ -301,7 +301,7 @@ inline unsigned int ADC_data(void)
 
 inline void ADC_disable_channel(byte_t channel)
 {
-    BIT_set(DIDR0, BIT(channel));
+	BIT_set(DIDR0, BIT(channel));
 }
 
 /**
@@ -311,7 +311,7 @@ inline void ADC_disable_channel(byte_t channel)
  */
 inline void ADC_enable_channel(byte_t channel)
 {
-    BIT_clear(DIDR0, BIT(channel));
+		BIT_clear(DIDR0, BIT(channel));
 }
 
 //------------------------------------------------------------------------------
