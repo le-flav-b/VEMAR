@@ -77,8 +77,8 @@ fclean: clean
 rebuild: fclean all
 
 $(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
-	@$(ECHO) -n $(COLOR_LOG) "Building OBJ file: '$@'" $(COLOR_RESET)
-	@$(CC) $(CFLAGS) -o $@ -c $<
+	@$(ECHO) $(COLOR_LOG) "Building OBJ file: '$@'" $(COLOR_RESET)
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(BUILD_DIR):
 	$(MKDIR) $@

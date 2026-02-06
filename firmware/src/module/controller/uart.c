@@ -1,31 +1,24 @@
-#include <avr/io.h>
-
 #include "uart.h"
 
-void UART_init(unsigned long baudrate, byte_t format)
+#define UART_MASK_INTERRUPT 0xE0
+
+void UART_init(unsigned long baudrate, uart_format_t format, uart_mode_t mode)
 {
-    // unsigned int baud_ubrr = (unsigned int)(F_CPU / 8UL / baudrate - 1);
-    UBRR0H = (byte_t)(baudrate >> 8); // 4 most significant bits
-    UBRR0L = (byte_t)(baudrate);      // 8 least significant bits
+	UART_set_baudrate(baudrate);
+	UART_set_format(format);
+	UART_enable_double_speed();
 
-    // UBRR0H = (byte_t)(baud_ubrr >> 8); // 4 most significant bits
-    // UBRR0L = (byte_t)(baud_ubrr);      // 8 least significant bits
-    UCSR0A = BIT(U2X0); // enable double speed
-
-    UCSR0B = (BIT(RXEN0) | BIT(TXEN0)); // enable receiver and transmitter
-    UCSR0C = format;                    // set serial configuration
+	UCSR0B = (byte_t)mode; // enable transmitter and/or receiver
 }
 
 void UART_transmit(byte_t data)
 {
-    // WAIT_UNTIL((UCSR0A & BIT(UDRE0))); // wait until data register is empty
     WAIT_UNTIL(UART_is_data_empty());
     UDR0 = data;
 }
 
 byte_t UART_receive(void)
 {
-    // WAIT_UNTIL((UCSR0A & BIT(RXC0))); // wait until data is received
     WAIT_UNTIL(UART_is_rx_complete());
     return UDR0;
 }
@@ -34,7 +27,6 @@ void UART_flush(void)
 {
     byte_t dummy;
 
-    // while (BIT_read(UCSR0A, BIT(RXC0)))
     while (UART_is_rx_complete())
     {
         dummy = UDR0;
@@ -42,18 +34,29 @@ void UART_flush(void)
     } // while RXC0 flag is set
 }
 
-void UART_print(const char *str)
+void UART_enable_interrupt(uart_interrupt_t interrupt)
 {
-    while ('\0' != *str)
-    {
-        UART_transmit(*str);
-        ++str;
-    } // while not null-terminating character
+	BIT_write(UCSR0B, interrupt, 0xE0);
 }
 
-void UART_println(const char *str)
-{
-    UART_print(str);
-    UART_transmit('\r');
-    UART_transmit('\n');
-}
+extern inline void UART_set_baudrate(unsigned long baudrate);
+extern inline void UART_set_format(uart_format_t format);
+extern inline void UART_enable_double_speed(void);
+
+extern inline void UART_enable_transmitter(void);
+extern inline void UART_disable_transmitter(void);
+
+extern inline void UART_enable_receiver(void);
+extern inline void UART_disable_receiver(void);
+
+extern inline bool_t UART_is_rx_complete(void);
+extern inline bool_t UART_is_tx_complete(void);
+extern inline bool_t UART_has_frame_error(void);
+
+extern inline void UART_enable_rxci(void);
+extern inline void UART_disable_rxci(void);
+
+extern inline void UART_enable_txci(void);
+extern inline void UART_disable_txci(void);
+
+extern inline bool_t UART_is_data_empty(void);
