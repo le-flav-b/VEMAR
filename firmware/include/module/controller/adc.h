@@ -331,7 +331,9 @@ void ADC_reset(void);
  * @see adc_prescaler
  * @see adc_result
  */
-void ADC_init(byte_t reference, byte_t prescaler, byte_t result);
+// void ADC_init(byte_t reference, byte_t prescaler, byte_t result);
+void ADC_init(void);
+
 
 /**
  * @brief Start conversion, and return the converted value

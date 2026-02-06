@@ -8,19 +8,28 @@ void ADC_reset(void)
 	// DIDR0 = 0x3F; // Digital Input Disable Register
 }
 
-void ADC_init(byte_t reference, byte_t prescaler, byte_t result)
+void ADC_init(void)
 {
 	ADC_reset();
 	ADC_enable();
-	ADC_set_reference(reference);
-	ADC_set_prescaler(prescaler);
-	ADC_set_result(result);
-
-	// BIT_set(ADCSRA, BIT(ADEN));                       // enable ADC
-	// BIT_write(ADMUX, reference, ADC_MASK_REFERENCE); // write bits [7:6]
-	// BIT_write(ADCSRA, prescaler, ADC_MASK_PRESCALER); // write bits [2:0]
-	// BIT_write(ADMUX, result, ADC_MASK_RESULT);        // Write bit 5
+	ADC_set_reference(ADC_REFERENCE_AVCC);
+	ADC_set_prescaler(ADC_PRESCALER_64);
+	ADC_set_result(ADC_RESULT_10);
 }
+
+// void ADC_init(byte_t reference, byte_t prescaler, byte_t result)
+// {
+// 	ADC_reset();
+// 	ADC_enable();
+// 	ADC_set_reference(reference);
+// 	ADC_set_prescaler(prescaler);
+// 	ADC_set_result(result);
+
+// 	// BIT_set(ADCSRA, BIT(ADEN));                       // enable ADC
+// 	// BIT_write(ADMUX, reference, ADC_MASK_REFERENCE); // write bits [7:6]
+// 	// BIT_write(ADCSRA, prescaler, ADC_MASK_PRESCALER); // write bits [2:0]
+// 	// BIT_write(ADMUX, result, ADC_MASK_RESULT);        // Write bit 5
+// }
 
 inline unsigned int ADC_data(void)
 {

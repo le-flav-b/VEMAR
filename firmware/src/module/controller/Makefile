@@ -1,4 +1,5 @@
-SYSTEM		= $(shell uname -s)
+SHELL		:=	/bin/zsh
+SYSTEM		:=	$(shell uname -s)
 
 NAME		=	libvemar.a
 FREQUENCY	?=	16000000UL
@@ -16,7 +17,8 @@ AR			:=	avr-ar rcs
 OBJCOPY		:=	avr-objcopy
 AVRDUDE		:=	avrdude
 RM			:=	rm -f
-SCREEN		:=	screen
+ECHO		:=	echo
+MKDIR		:=	mkdir -p
 
 INCLUDE		=	../../../include/module/controller
 
@@ -32,12 +34,6 @@ CFLAGS		=	-Wall \
 				-DF_CPU=$(FREQUENCY) \
 				-I$(INCLUDE)
 
-# LDFLAGS		=	-Os \
-# 				-mmcu=$(MCU) \
-# 				-ffunction-sections \
-# 				-fdata-sections \
-# 				-Wl,--gc-sections
-
 AVRFLAGS	=	-p $(MCU) \
 				-c $(PROGRAMMER) \
 				-b $(BAUDRATE) \
@@ -46,14 +42,10 @@ AVRFLAGS	=	-p $(MCU) \
 				-D
 
 SOURCES		=	main.c \
+				gpio.c \
 				adc.c \
-				joystick.c \
 				uart.c \
-				spi.c \
-				print.c \
-				pin.c \
-				button.c \
-				led.c
+				serial.c
 
 BUILD_DIR	=	build
 
@@ -62,10 +54,18 @@ OBJECTS		=	$(addprefix $(BUILD_DIR)/, $(SOURCES:.c=.o))
 FILE_HEX	=	$(addsuffix .hex, $(NAME))
 FILE_BIN	=	$(addsuffix .bin, $(NAME))
 
+COLOR_LOG	=	"\033[96m\033[1m"
+COLOR_RESET	=	"\033[0m"
+
+.PHONY: all
+
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
+	@$(ECHO) $(COLOR_LOG) "Generating static library: '$@'" $(COLOR_RESET)
 	$(AR) $@ $^
+
+.PHONY: clean fclean rebuild
 
 clean:
 	$(RM) $(OBJECTS)
@@ -77,9 +77,8 @@ fclean: clean
 rebuild: fclean all
 
 $(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
-	$(CC) $(CFLAGS) -o $@ -c $<
+	@$(ECHO) -n $(COLOR_LOG) "Building OBJ file: '$@'" $(COLOR_RESET)
+	@$(CC) $(CFLAGS) -o $@ -c $<
 
 $(BUILD_DIR):
-	mkdir -p $@
-
-.PHONY: all hex flash clean fclean rebuild
+	$(MKDIR) $@
