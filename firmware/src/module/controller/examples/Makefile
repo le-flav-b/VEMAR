@@ -1,7 +1,13 @@
 SHELL		:= /bin/zsh
 SYSTEM		:= $(shell uname -s)
 
-NAME		=	blink button serial analog
+NAME		=	blink \
+				button \
+				toggle \
+				serial \
+				analog \
+				joystick
+
 FREQUENCY	?=	16000000UL
 BAUDRATE	?=	115200
 PORT		?=	/dev/ttyUSB0
@@ -123,4 +129,6 @@ lib:
 blink: blink.hex
 analog: analog.hex
 button: button.hex
+toggle: toggle.hex
 serial: serial.hex
+joystick: joystick.hex

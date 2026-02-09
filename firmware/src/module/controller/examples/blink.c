@@ -1,7 +1,10 @@
 //------------------------------------------------------------------------------
 // blink.c
 //
-// Connect an LED and a Resistor to pin PB5
+// Make LED blink
+//
+// Requirements:
+// - Connect an LED and a Resistor to pin PB5
 //------------------------------------------------------------------------------
 
 #include "led.h"

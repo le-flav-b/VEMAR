@@ -1,3 +1,12 @@
+//------------------------------------------------------------------------------
+// serial.c
+//
+// Interact with the terminal
+//
+// Requirements:
+// - Use `screen` program to start serial communication
+//------------------------------------------------------------------------------
+
 #include "serial.h"
 
 char name[32];
