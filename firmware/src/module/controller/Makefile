@@ -45,7 +45,8 @@ SOURCES		=	main.c \
 				gpio.c \
 				adc.c \
 				uart.c \
-				serial.c
+				serial.c \
+				joystick.c
 
 BUILD_DIR	=	build
 

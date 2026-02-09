@@ -14,7 +14,7 @@
 
 // convert analog pin to adc channel
 #define ANALOG_TO_ADC_CHANNEL(pin) \
-	((pin) & 0x0F)
+    ((pin) & 0x0F)
 
 /**
  * | Bit 1 | Bit 0 | Description |
@@ -34,24 +34,24 @@
 
 pin_state_t PIN_read(pin_t pin)
 {
-	return (BIT_read(REG_PIN(pin), REG_SHIFT(pin, 1)));
+    return (BIT_read(REG_PIN(pin), REG_SHIFT(pin, 1)));
 }
 
 void PIN_write(pin_t pin, pin_state_t state)
 {
-	BIT_write(REG_PORT(pin), REG_SHIFT(pin, state), REG_SHIFT(pin, 1));
+    BIT_write(REG_PORT(pin), REG_SHIFT(pin, state), REG_SHIFT(pin, 1));
 }
 
 void PIN_toggle(pin_t pin)
 {
-	BIT_write(REG_PIN(pin), REG_SHIFT(pin, 1), REG_SHIFT(pin, 1));
+    BIT_write(REG_PIN(pin), REG_SHIFT(pin, 1), REG_SHIFT(pin, 1));
 }
 
 void PIN_mode(pin_t pin, pin_mode_t mode)
 {
-	BIT_write(REG_DDR(pin), REG_SHIFT(pin, mode), REG_SHIFT(pin, 1));
-	// enable pull-up resistor / set output high
-	BIT_write(REG_PORT(pin), REG_SHIFT(pin, 1), REG_SHIFT(pin, 1));
+    BIT_write(REG_DDR(pin), REG_SHIFT(pin, mode), REG_SHIFT(pin, 1));
+    // enable pull-up resistor / set output high
+    BIT_write(REG_PORT(pin), REG_SHIFT(pin, 1), REG_SHIFT(pin, 1));
 }
 
 //------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ bool_t BUTTON_is_active(button_t *button)
                    (PIN_LOW == PIN_read(button->pin));
 
     BIT_write(button->flags, state, BUTTON_MASK_STATE); // update the state
-    delay(DEBOUNCE_TIME);                            // debouncing
+    delay(DEBOUNCE_TIME);                               // debouncing
 
     switch (button->flags & BUTTON_MASK_TRIGGER)
     {
@@ -108,15 +108,15 @@ bool_t BUTTON_is_active(button_t *button)
 
 analog_t ANALOG_new(pin_t pin)
 {
-	analog_t retval = {.pin = pin};
+    analog_t retval = {.pin = pin};
 
-	ADC_enable_channel(ANALOG_TO_ADC_CHANNEL(pin));
-	return (retval);
+    ADC_enable_channel(ANALOG_TO_ADC_CHANNEL(pin));
+    return (retval);
 }
 
 unsigned int ANALOG_read(analog_t analog)
 {
-	return (ADC_read(ANALOG_TO_ADC_CHANNEL(analog.pin)));
+    return (ADC_read(ANALOG_TO_ADC_CHANNEL(analog.pin)));
 }
 
 //------------------------------------------------------------------------------
