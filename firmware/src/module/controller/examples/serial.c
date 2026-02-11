@@ -19,13 +19,13 @@ void setup(void)
 
 void loop(void)
 {
-    SERIAL_print("Enter your name: ", str);
-    SERIAL_scan(name, str);
-    SERIAL_print("Hello ", str);
-    SERIAL_println(name, str);
+    SERIAL_print(str, "Enter your name: ");
+    SERIAL_scan(str, name);
+    SERIAL_print(str, "Hello ");
+    SERIAL_println(str, name);
 
-    SERIAL_print("Enter a number: ", str);
-    SERIAL_scan(&nb, int);
-    SERIAL_print("Your number is ", str);
-    SERIAL_println(nb, int);
+    SERIAL_print(str, "Enter a number: ");
+    SERIAL_scan(int, &nb);
+    SERIAL_print(str, "Your number is ");
+    SERIAL_println(int, nb);
 }

@@ -74,6 +74,14 @@ typedef unsigned char byte_t;
  */
 typedef unsigned char bool_t;
 
+/**
+ * @brief
+ */
+typedef unsigned char length_t;
+
+#define LENGTH_MIN 0
+#define LENGTH_MAX 0xFF
+
 #endif // VEMAR_COMMON
 
 /**

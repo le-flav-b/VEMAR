@@ -16,18 +16,22 @@
 
 char serial_buffer[SERIAL_BUFFER_SIZE];
 
-static void SERIAL_print_base(unsigned long nbr, byte_t radix)
+static void SERIAL_print_base(unsigned long nbr, byte_t radix, byte_t len)
 {
-    if (0 == nbr)
+    if ((0 == nbr) && (1 == len))
     {
         UART_transmit((byte_t)SERIAL_BASE_STRING[0]);
         return;
     }
     byte_t pos = (nbr % radix);
     nbr /= radix;
-    if (0 < nbr)
+    if (1 < len)
     {
-        SERIAL_print_base(nbr, radix);
+        SERIAL_print_base(nbr, radix, len - 1);
+    }
+    else if (0 < nbr)
+    {
+        SERIAL_print_base(nbr, radix, len);
     }
     UART_transmit((byte_t)SERIAL_BASE_STRING[pos]);
 }
@@ -35,11 +39,6 @@ static void SERIAL_print_base(unsigned long nbr, byte_t radix)
 void SERIAL_init(void)
 {
     UART_init(UART_BAUDRATE_115200, UART_8N1, UART_TX | UART_RX);
-    // UART_set_baudrate(UART_BAUDRATE_115200);
-    // UART_set_format(UART_FORMAT_8N1);
-    // UART_enable_transmitter();
-    // UART_enable_receiver();
-    // UART_enable_double_speed();
 }
 
 void SERIAL_print_char(char ch)
@@ -53,17 +52,17 @@ void SERIAL_print_int(int nbr)
     {
         UART_transmit((byte_t)'-');
         SERIAL_print_base(ULONG_MAX - (unsigned long)nbr + 1UL,
-                          SERIAL_BASE_DECIMAL);
+                          SERIAL_BASE_DECIMAL, 1);
     }
     else
     {
-        SERIAL_print_base((unsigned long)(nbr), SERIAL_BASE_DECIMAL);
+        SERIAL_print_base((unsigned long)(nbr), SERIAL_BASE_DECIMAL, 1);
     }
 }
 
 void SERIAL_print_uint(unsigned int nbr)
 {
-    SERIAL_print_base(nbr, SERIAL_BASE_DECIMAL);
+    SERIAL_print_base(nbr, SERIAL_BASE_DECIMAL, 1);
 }
 
 void SERIAL_print_long(long nbr)
@@ -72,22 +71,22 @@ void SERIAL_print_long(long nbr)
     {
         UART_transmit((byte_t)'-');
         SERIAL_print_base(ULONG_MAX - (unsigned long)nbr + 1UL,
-                          SERIAL_BASE_DECIMAL);
+                          SERIAL_BASE_DECIMAL, 1);
     }
     else
     {
-        SERIAL_print_base((unsigned long)nbr, SERIAL_BASE_DECIMAL);
+        SERIAL_print_base((unsigned long)nbr, SERIAL_BASE_DECIMAL, 1);
     }
 }
 
 void SERIAL_print_ulong(unsigned long nbr)
 {
-    SERIAL_print_base(nbr, SERIAL_BASE_HEXADECIMAL);
+    SERIAL_print_base(nbr, SERIAL_BASE_DECIMAL, 1);
 }
 
-void SERIAL_print_hex(unsigned long nbr)
+void SERIAL_print_hex(unsigned long nbr, length_t len)
 {
-    SERIAL_print_base(nbr, SERIAL_BASE_HEXADECIMAL);
+    SERIAL_print_base(nbr, SERIAL_BASE_HEXADECIMAL, len);
 }
 
 void SERIAL_print_str(const char *str)
@@ -140,7 +139,7 @@ static void SERIAL_scan_buffer(void)
         {
             UART_transmit(serial_buffer[pos]);
             ++pos;
-        }
+        } // if less than buffer size
     }
     serial_buffer[pos] = '\0';
 }

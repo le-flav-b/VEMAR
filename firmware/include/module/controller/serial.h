@@ -6,7 +6,6 @@
 
 /**
  * @brief Print specified value
- * @param value Value to display
  * @param type Type of the value
  * - char (single ASCII character)
  * - int/uint (signed or unsigned 16-bit number)
@@ -14,30 +13,30 @@
  * - hex (hexadecimal number)
  * - str (null-terminated string)
  */
-#define SERIAL_print(value, type) \
-    SERIAL_print_##type(value)
+#define SERIAL_print(type, ...) \
+	SERIAL_print_##type(__VA_ARGS__)
 
 /**
- * @brief Print specific value followd by line feed character
+ * @brief Print specific value followd by newline character
  *
  * @see SERIAL_print
  */
-#define SERIAL_println(value, type) \
-    SERIAL_print_##type(value);     \
-    UART_transmit('\r');            \
-    UART_transmit('\n')
+#define SERIAL_println(type, ...)     \
+	SERIAL_print_##type(__VA_ARGS__); \
+	UART_transmit('\r');              \
+	UART_transmit('\n')
 
 /**
  * @brief Convert input to specific type
- * @param value_ptr Address of the variable to store
  * @param type Type of the variable
  * - char
  * - int/uint
  * - long/ulong
  * - str
+ * @param addr Address of the variable to store
  */
-#define SERIAL_scan(value_ptr, type) \
-    SERIAL_scan_##type(value_ptr)
+#define SERIAL_scan(type, addr) \
+	SERIAL_scan_##type(addr)
 
 /**
  * @brief Initialize the Serial Communication
@@ -53,7 +52,7 @@ void SERIAL_print_int(int n);
 void SERIAL_print_uint(unsigned int n);
 void SERIAL_print_long(long n);
 void SERIAL_print_ulong(unsigned long n);
-void SERIAL_print_hex(unsigned long n);
+void SERIAL_print_hex(unsigned long n, length_t len);
 void SERIAL_print_str(const char *str);
 
 /**
