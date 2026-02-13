@@ -46,7 +46,10 @@ SOURCES		=	main.c \
 				adc.c \
 				uart.c \
 				serial.c \
-				joystick.c
+				joystick.c \
+				spi.c \
+				nrf24l01.c \
+				radio.c
 
 BUILD_DIR	=	build
 

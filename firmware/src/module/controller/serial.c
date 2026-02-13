@@ -98,6 +98,18 @@ void SERIAL_print_str(const char *str)
     }
 }
 
+void SERIAL_print_bool(bool_t bool)
+{
+    if (bool)
+    {
+        SERIAL_print_str("true");
+    }
+    else
+    {
+        SERIAL_print_str("false");
+    }
+}
+
 static void SERIAL_scan_buffer(void)
 {
     signed char pos = 0;

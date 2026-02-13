@@ -2,19 +2,24 @@
 
 void ADC_reset(void)
 {
-	ADMUX = 0x00; // ADC Multiplexer Selection Register
+	ADMUX = 0x00;  // ADC Multiplexer Selection Register
 	ADCSRA = 0x00; // ADC Control and Status Register A
 	ADCSRB = 0x00; // ADC Control and Status Register B
-	// DIDR0 = 0x3F; // Digital Input Disable Register
+				   // DIDR0 = 0x3F; // Digital Input Disable Register
 }
 
 void ADC_init(void)
 {
-	ADC_reset();
-	ADC_enable();
-	ADC_set_reference(ADC_REFERENCE_AVCC);
-	ADC_set_prescaler(ADC_PRESCALER_64);
-	ADC_set_result(ADC_RESULT_10);
+	static bool_t init = 0;
+
+	if (0 == init)
+	{
+		ADC_reset();
+		ADC_enable();
+		ADC_set_reference(ADC_REFERENCE_AVCC);
+		ADC_set_prescaler(ADC_PRESCALER_64);
+		ADC_set_result(ADC_RESULT_10);
+	}
 }
 
 // void ADC_init(byte_t reference, byte_t prescaler, byte_t result)
@@ -33,25 +38,25 @@ void ADC_init(void)
 
 inline unsigned int ADC_data(void)
 {
-    unsigned int result;
-    if (BIT_read(ADMUX, BIT(ADLAR)))
-    {
-        result = ADCH;
-    } // if left adjusted (ADLAR = 1)
-    else {
-        result = ADCL;
-        result = result | (ADCH << 8);
-    } // if right adjusted
-    return result;
+	unsigned int result;
+	if (BIT_read(ADMUX, BIT(ADLAR)))
+	{
+		result = ADCH;
+	} // if left adjusted (ADLAR = 1)
+	else
+	{
+		result = ADCL;
+		result = result | (ADCH << 8);
+	} // if right adjusted
+	return result;
 }
-
 
 unsigned int ADC_read(byte_t channel)
 {
 	ADC_set_channel(channel);
 	ADC_start_conversion();
 	WAIT_UNTIL(ADC_is_conversion_complete());
-    return ADC_data();
+	return ADC_data();
 }
 
 extern inline void ADC_set_reference(byte_t);

@@ -34,7 +34,7 @@
 
 pin_state_t PIN_read(pin_t pin)
 {
-    return (BIT_read(REG_PIN(pin), REG_SHIFT(pin, 1)));
+    return (0 != BIT_read(REG_PIN(pin), REG_SHIFT(pin, 1)));
 }
 
 void PIN_write(pin_t pin, pin_state_t state)

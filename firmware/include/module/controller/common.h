@@ -56,6 +56,20 @@
 #define BIT_write(reg, value, mask) (reg = ((value) | (reg & ~(mask))))
 
 /**
+ * @brief Check whether the specific bits of `reg` are set
+ * @param reg Register whose bits to check
+ * @param bits Bits to check
+ */
+#define BIT_is_set(reg, bits) ((reg & (bits)) == (bits))
+
+/**
+ * @brief Check whether the specific bits of `reg` are cleared
+ * @param reg Register whose bits to check
+ * @param bits Bits to check
+ */
+#define BIT_is_clear(reg, bits) ((reg & (bits)) == 0)
+
+/**
  * @brief Loop until the specific condition is met.
  * @param cond Condition to end the loop
  */

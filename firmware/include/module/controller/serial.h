@@ -54,6 +54,7 @@ void SERIAL_print_long(long n);
 void SERIAL_print_ulong(unsigned long n);
 void SERIAL_print_hex(unsigned long n, length_t len);
 void SERIAL_print_str(const char *str);
+void SERIAL_print_bool(bool_t bool);
 
 /**
  * @brief The `SERIAL_scan_` family of functions allow to retrieve specific
