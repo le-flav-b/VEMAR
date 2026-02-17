@@ -2,6 +2,15 @@
 #define VEMAR_COMMON_H
 
 #include <avr/io.h>
+#include <util/delay.h>
+
+#ifndef F_CPU
+#define F_CPU 16000000UL
+#endif
+
+#define DEBOUNCE_TIME 30
+
+#define delay(ms) _delay_ms(ms)
 
 /**
  * @brief Create a bitmask with a single bit set to `1` at the position
@@ -47,13 +56,27 @@
 #define BIT_write(reg, value, mask) (reg = ((value) | (reg & ~(mask))))
 
 /**
+ * @brief Check whether the specific bits of `reg` are set
+ * @param reg Register whose bits to check
+ * @param bits Bits to check
+ */
+#define BIT_is_set(reg, bits) ((reg & (bits)) == (bits))
+
+/**
+ * @brief Check whether the specific bits of `reg` are cleared
+ * @param reg Register whose bits to check
+ * @param bits Bits to check
+ */
+#define BIT_is_clear(reg, bits) ((reg & (bits)) == 0)
+
+/**
  * @brief Loop until the specific condition is met.
  * @param cond Condition to end the loop
  */
 #define WAIT_UNTIL(cond) \
-    do                   \
-    {                    \
-    } while (!(cond))
+	do                   \
+	{                    \
+	} while (!(cond))
 
 /**
  * @brief 8-bit register
@@ -64,6 +87,14 @@ typedef unsigned char byte_t;
  * @brief Boolean type
  */
 typedef unsigned char bool_t;
+
+/**
+ * @brief
+ */
+typedef unsigned char length_t;
+
+#define LENGTH_MIN 0
+#define LENGTH_MAX 0xFF
 
 #endif // VEMAR_COMMON
 

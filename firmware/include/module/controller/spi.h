@@ -43,7 +43,7 @@
  * @brief Available phase selections for SPI
  * @{
  */
-#define SPI_PHASE_LEADING 0x00  ///< Sample on leading edge
+#define SPI_PHASE_LEADING 0x00	///< Sample on leading edge
 #define SPI_PHASE_TRAILING 0x04 ///< Sample on trailing edge
 /**
  * @}
@@ -61,9 +61,9 @@
  * |   3  |   1  |   1  |  Setup (Falling) | Sample (Rising)  |
  * @{
  */
-#define SPI_MODE_0 (SPI_POLARITY_LEADING | SPI_PHASE_LEADING)   ///< SPI Mode 0
-#define SPI_MODE_1 (SPI_POLARITY_LEADING | SPI_PHASE_TRAILING)  ///< SPI Mode 1
-#define SPI_MODE_2 (SPI_POLARITY_TRAILING | SPI_PHASE_LEADING)  ///< SPI Mode 2
+#define SPI_MODE_0 (SPI_POLARITY_LEADING | SPI_PHASE_LEADING)	///< SPI Mode 0
+#define SPI_MODE_1 (SPI_POLARITY_LEADING | SPI_PHASE_TRAILING)	///< SPI Mode 1
+#define SPI_MODE_2 (SPI_POLARITY_TRAILING | SPI_PHASE_LEADING)	///< SPI Mode 2
 #define SPI_MODE_3 (SPI_POLARITY_TRAILING | SPI_PHASE_TRAILING) ///< SPI Mode 3
 /**
  * @}
@@ -92,7 +92,7 @@
  */
 inline void SPI_enable_interrupt(void)
 {
-    BIT_set(SPCR, BIT(SPIE));
+	BIT_set(SPCR, BIT(SPIE));
 }
 
 /**
@@ -100,7 +100,7 @@ inline void SPI_enable_interrupt(void)
  */
 inline void SPI_disable_interrupt(void)
 {
-    BIT_clear(SPCR, BIT(SPIE));
+	BIT_clear(SPCR, BIT(SPIE));
 }
 
 /**
@@ -111,7 +111,7 @@ inline void SPI_disable_interrupt(void)
  */
 inline void SPI_enable(void)
 {
-    BIT_set(SPCR, BIT(SPE));
+	BIT_set(SPCR, BIT(SPE));
 }
 
 /**
@@ -119,7 +119,7 @@ inline void SPI_enable(void)
  */
 inline void SPI_disable(void)
 {
-    BIT_clear(SPCR, BIT(SPE));
+	BIT_clear(SPCR, BIT(SPE));
 }
 
 /**
@@ -135,7 +135,7 @@ inline void SPI_disable(void)
  */
 inline void SPI_set_order(byte_t order)
 {
-    BIT_write(SPCR, order, BIT(DORD));
+	BIT_write(SPCR, order, BIT(DORD));
 }
 
 /**
@@ -144,7 +144,7 @@ inline void SPI_set_order(byte_t order)
  */
 inline void SPI_set_mode(byte_t mode)
 {
-    BIT_write(SPCR, mode, BIT(MSTR));
+	BIT_write(SPCR, mode, BIT(MSTR));
 }
 
 /**
@@ -157,7 +157,7 @@ inline void SPI_set_mode(byte_t mode)
  */
 inline void SPI_set_polarity(byte_t polarity)
 {
-    BIT_write(SPCR, polarity, BIT(CPOL));
+	BIT_write(SPCR, polarity, BIT(CPOL));
 }
 
 /**
@@ -170,7 +170,7 @@ inline void SPI_set_polarity(byte_t polarity)
  */
 inline void SPI_set_phase(byte_t phase)
 {
-    BIT_write(SPCR, phase, BIT(CPHA));
+	BIT_write(SPCR, phase, BIT(CPHA));
 }
 
 /**
@@ -183,7 +183,7 @@ inline void SPI_set_phase(byte_t phase)
  */
 inline void SPI_set_clock(byte_t clock)
 {
-    BIT_write(SPCR, clock, SPI_MASK_CLOCK);
+	BIT_write(SPCR, clock, SPI_MASK_CLOCK);
 }
 
 //------------------------------------------------------------------------------
@@ -207,7 +207,7 @@ inline void SPI_set_clock(byte_t clock)
  */
 inline bool_t SPI_is_transfert_complete(void)
 {
-    return (0 != BIT_read(SPSR, BIT(SPIF)));
+	return (0 != BIT_read(SPSR, BIT(SPIF)));
 }
 
 /**
@@ -221,39 +221,40 @@ inline bool_t SPI_is_transfert_complete(void)
  */
 inline void SPI_enable_double_speed(void)
 {
-    BIT_set(SPSR, BIT(SPI2X));
+	BIT_set(SPSR, BIT(SPI2X));
 }
 
 inline void SPI_disable_double_speed(void)
 {
-    BIT_clear(SPSR, BIT(SPI2X));
+	BIT_clear(SPSR, BIT(SPI2X));
 }
 
 //------------------------------------------------------------------------------
+// Quick configuration
 //------------------------------------------------------------------------------
 
 /**
- * @brief Initialize SPI as master
- * @param order SPI data order (LSB or MSB)
- * @param mode SPI mode
- * @param clock SPI clock divider
- * @see spi_order
- * @see spi_mode
- * @see spi_clock
+ * @brief Initialize SPI as master (MSB, Mode 0, clock 64)
  */
-void SPI_master_init(byte_t order, byte_t mode, byte_t clock);
+void SPI_init(void);
+
+void SPI_transmit(byte_t data);
 
 /**
- * @brief Transmit a byte of data
+ * @brief Transmit data
  * @param data Data to transmit
+ * @param len Size of the data to transmit
  */
-void SPI_master_transmit(byte_t data);
+void SPI_write(const byte_t *data, byte_t len);
+
+byte_t SPI_receive(void);
 
 /**
- * @brief Receive a byte of data
- * @return Received data
+ * @brief Receive data
+ * @param data Buffer to store received data
+ * @param len Size of the data to receive
  */
-byte_t SPI_master_receive(void);
+void SPI_read(byte_t *data, byte_t len);
 
 #endif // VEMAR_SPI_H
 

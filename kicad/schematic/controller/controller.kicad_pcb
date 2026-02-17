@@ -133,10 +133,10 @@
 	(net 53 "Net-(U8-TXEN)")
 	(net 54 "Net-(U8-RXEN)")
 	(net 55 "Net-(U1-PC4{slash}ADC4{slash}SDA{slash}PCINT12)")
-	(net 56 "JOY2-Y")
+	(net 56 "Net-(U1-PC5{slash}ADC5{slash}SCL{slash}PCINT13)")
 	(net 57 "JOY1-Y")
-	(net 58 "JOY2-B")
-	(net 59 "JOY2-X")
+	(net 58 "Net-(U1-ADC6)")
+	(net 59 "Net-(U1-ADC7)")
 	(net 60 "Net-(U1-PC2{slash}ADC2{slash}PCINT10)")
 	(net 61 "JOY1-B")
 	(net 62 "unconnected-(U4-SD_MOSI-Pad16)")
@@ -197,71 +197,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "0c705fea-b78d-4e0c-aeab-f5925fd20875")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.39"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e2ff34c7-4596-4a72-a9e8-13bdede14500")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C3151830"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6f399d10-9a81-4826-a2b6-38e35af7356e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "ROQANG"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e94f1b95-8eed-42a1-b203-249139efd44f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "RVT1V101M0605"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "1b3cf81f-2f16-40a5-b83e-d92533d2157e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0393"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "1642e8a4-ec94-4e5e-84b0-115cdbbecc6b")
 			(effects
 				(font
 					(size 1 1)
@@ -483,71 +418,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.22"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e6b24884-2011-48e8-ad63-517bb21b14be")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C1621"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6ad04376-5473-4748-9662-e0015405a4e0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "2475a0eb-9440-4ceb-804a-a7679f5d8567")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "CL10B472KB8NNNC"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d16d8b20-68f5-4b23-a0b2-f41411855619")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0043"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e1d593c9-84c0-4c1b-b1bf-e7665244bdcd")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/9ee852fa-0889-4353-9e40-a4372248f1f0/24dc47a7-9de2-4eec-b776-10698f42207e")
 		(sheetname "/Transceiver/")
 		(sheetfile "transceiver.kicad_sch")
@@ -684,71 +554,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "44d4c2db-c3ab-4007-b105-a30183f962e5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.19"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "a154b3ad-06e4-496a-87b4-58177e73ef6b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C33353"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "523e1778-215c-45d6-9387-31ed9b7fbc8b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4fd059e3-5f02-478f-9815-096160e9b30b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "CL10C222JB8NNNC"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8978408a-d937-4e15-b052-1f8cbdc7f4a6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0093"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "81cecfbc-3133-498e-a6f8-503af043efcc")
 			(effects
 				(font
 					(size 1 1)
@@ -899,71 +704,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.05"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "7333ab6a-11b3-4637-9736-3ef195279357")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C26413"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4e8a1248-bd3b-4ddd-ba44-f0cdd3dd3edf")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c127f902-1070-4232-8284-ad7fe919968b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "CL10A105KP8NNNC"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "cc793060-2b6a-4dfa-b9f2-36ae61b4bac5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0048"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "10039e14-1a1c-4efc-b10c-7da3dee06c70")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/9ee852fa-0889-4353-9e40-a4372248f1f0/ec34beb8-c026-4d84-b054-dbe19ea19945")
 		(sheetname "/Transceiver/")
 		(sheetfile "transceiver.kicad_sch")
@@ -1100,71 +840,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "6b811bcb-7141-4553-ae85-9a234db53db1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.35"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "1837beaa-510c-47ba-b677-306e3a26b500")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C5375816"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "cf73f158-db7e-434b-8e46-69d0b0efc04d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "CCTC"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "77343afa-e5b4-4c4b-9e1b-78d78f5657a8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "TCC0603COG0R3B500CT"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "cea1ec0e-889b-469c-8c1d-0e80bd5c2c2a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0035"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e04e95bb-bd49-4930-af3e-a431f19a1844")
 			(effects
 				(font
 					(size 1 1)
@@ -1315,71 +990,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.16"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "35d4ad6d-0e2c-4e9a-bdc0-6cbd9f602cd8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C1589"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "152c15b5-b034-4c43-a65f-33c44e3bf8c7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "1521f447-3924-4449-a646-31c76eff2a8e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "CL10B103KB8NNNC"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ac9aba65-4d93-440c-be7a-c21b94d0f83e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0031"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "670e747a-26d1-425e-94f6-82ac4886c5e9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/9ee852fa-0889-4353-9e40-a4372248f1f0/c8c80d31-0d89-47e4-a81e-7c1c97a5e05c")
 		(sheetname "/Transceiver/")
 		(sheetfile "transceiver.kicad_sch")
@@ -1523,71 +1133,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.09"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b7e5df1d-e8e3-433f-84e1-362f8390fbc1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907022"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4475a4a9-acf4-4488-bb31-8212d35511ed")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9edd6db6-1c3c-47d4-8bf5-17614bc3d0c4")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603F2001TS"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9fa26427-615e-415d-bad4-7b3ce7eff621")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0009"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4f955a1e-42e3-4f8b-b372-5870eb5db0a1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/cc1add63-85b7-48c9-bd2f-968906ef3f97/23d3c7a4-05d9-4af6-a780-f5d2305b1a09")
 		(sheetname "/Display/")
 		(sheetfile "display.kicad_sch")
@@ -1720,71 +1265,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.08"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "0726b031-e7fd-4a32-90eb-5c2689c8beb2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2906982"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "23715f6a-c2f9-4ec2-9b47-ccefd355b6db")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f55a8987-38eb-478f-bba6-f48acc25917c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603F1002TS"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9826ed65-0054-4cd1-8cb7-2f02161be91f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0008"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "012fc6dc-b966-41a2-8005-d64c00fdfa1c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/1e11fa3b-74eb-43c0-95d1-c71dfd513085")
 		(sheetname "/")
 		(sheetfile "controller.kicad_sch")
@@ -1910,71 +1390,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "4f0d7e1d-2b6a-4e96-aece-42f750664435")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.14"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "60c5d693-73e7-44c5-8cc6-c3995eba5cdf")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C1588"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e3bc8508-6751-47b0-ba0a-8821d4d01334")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d36ebd27-a997-486f-86b1-dfe0124835d9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "CL10B102KB8NNNC"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3b1a576a-d2df-4d0a-8122-b741cc88f36b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0027"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "479de9fa-9e7d-46bb-950d-d8dbcd549ac9")
 			(effects
 				(font
 					(size 1 1)
@@ -2125,71 +1540,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.07"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "74fc4b8a-27e5-4ac8-a9b8-fa47a8e9dd18")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907113"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "67a5e16a-25e6-414d-ba75-6083a758c9e3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "a206d88c-f800-410c-b4a8-25f6fd8c812c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603J102 TS"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "52adbbc6-f88b-49e8-a161-5215cea2ae5c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0007"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "a2616147-4484-4f74-b82c-ee814a607042")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/9ee852fa-0889-4353-9e40-a4372248f1f0/89e54afd-078e-47b7-ae5c-82d143e99dbf")
 		(sheetname "/Transceiver/")
 		(sheetfile "transceiver.kicad_sch")
@@ -2315,32 +1665,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "d0d6a6f1-c74c-402b-86e1-4e5a8031c038")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "05271f11-8930-46b7-9968-b89e048205d5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4b73ac0a-2ba4-4b99-ac30-439ebb52a15f")
 			(effects
 				(font
 					(size 1 1)
@@ -2514,71 +1838,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.08"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "06fc8e7e-42f4-48cb-9877-62d58433795e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2906982"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4cf78d5a-7f95-46b4-a0cb-4a11a2ebaa92")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "5e027a12-93a1-4e89-a823-b74fab630a9b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603F1002TS"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "97b04b80-47c6-4708-b7ea-4e0de2ca582a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0008"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f3296222-f6c0-414f-8181-9c3854185c0b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/7bf41c71-fa70-422a-990d-993bcbfe32ee")
 		(sheetname "/")
 		(sheetfile "controller.kicad_sch")
@@ -2704,71 +1963,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "a7c8bb9e-a09f-49a2-bd4f-64e9aeeef9a0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.12"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "00018175-2254-4818-9d70-2da3234cee68")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C599735"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3670c56c-c66d-4d2d-9fdf-1d2b5c43bdb0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "KEMET"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f68e4e18-7bb8-47d4-b6ff-a399b4f1a667")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "C0603C333K4RAC7867"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "608ebb2a-b301-485c-a99b-e91499fcfbf9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0119"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "5ec0e7a9-2553-46c2-bf3b-e04a5aedabae")
 			(effects
 				(font
 					(size 1 1)
@@ -2912,71 +2106,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "1032ba20-bb3f-4ea3-a6a8-12994b5562a7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.51"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "72ea99b1-c1b1-4464-89b9-f8c0f87a975a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C19171390"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "79b9ae35-654b-4586-a67a-f6616160f5d4")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "YONGYUTAI"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ae7cf3ca-a153-4a52-94d4-4965d878645d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "YLED0603R"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b6d6c8df-1786-4468-a6ff-9df9f4c030c1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0051"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8bde9900-f7f2-430d-ba98-11c4fbd6183c")
 			(effects
 				(font
 					(size 1 1)
@@ -3139,71 +2268,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.07"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "27a12d63-8ff4-417c-afcb-94e43f2309b0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907113"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "67f55c1c-a372-4ca3-b185-4f339a24a242")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "5f474047-c149-4f1d-9789-03a4f979a218")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603J102 TS"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "73a217f3-d392-4b43-96af-402b608f804d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0007"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e073f1eb-a18f-4469-a0d8-8e141ce75c7e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/cc1add63-85b7-48c9-bd2f-968906ef3f97/23794c78-85a5-4761-ac0f-3dd65ed5a26c")
 		(sheetname "/Display/")
 		(sheetfile "display.kicad_sch")
@@ -3336,71 +2400,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.75"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "82c26711-1d76-4118-9769-d32c4346e534")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C6949223"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d87467d1-2baf-4115-b82a-6297c6e3bc39")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "YAGEO"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4e929ed0-47ad-45ea-9d33-e24dd5fcc7a1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "PA0603FRP070R001L"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "1bb370ac-636a-458e-a678-7c995f805d2e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.1507"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d2f6b239-f57d-49fe-9548-501e79dccf09")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/9ee852fa-0889-4353-9e40-a4372248f1f0/832bee36-2898-4376-b5f9-ba49be74b94e")
 		(sheetname "/Transceiver/")
 		(sheetfile "transceiver.kicad_sch")
@@ -3526,71 +2525,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "04c09217-e739-4684-9e66-6528990ece02")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.23"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4b6d5d73-4cb5-4dc5-be19-39f99c48f21d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C376772"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "98631086-c1c5-4a3a-84e4-97a9115653f2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "CCTC"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "852dbb8c-c359-4e01-90ba-1594d7ec3cb0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "TCC0603COG1R5C500CT"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "44da6050-60e7-4f1d-85f8-8db1f8a585cb")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0023"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "857c1838-583b-4563-bf49-7f6ccb1735cd")
 			(effects
 				(font
 					(size 1 1)
@@ -3741,71 +2675,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.09"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3bb09e21-fd3a-4d09-a571-2556e1fe9eb9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907022"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "1360e866-5c9b-4061-bd5d-76518255ddb5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "06732fbb-d8bc-42d1-8cab-5849bd4f2056")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603F2001TS"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e192b08c-cfe6-489b-babb-b0085714e931")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0009"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f7fae255-0f31-4ce9-8807-f43d384094d9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/cc1add63-85b7-48c9-bd2f-968906ef3f97/d7338705-dfe3-40c1-8162-7917e3f4d361")
 		(sheetname "/Display/")
 		(sheetfile "display.kicad_sch")
@@ -3931,71 +2800,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "ec434148-fc36-4302-bb93-801a0d7ac641")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.53"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "798eb921-3585-40f2-ae40-a1394e5cbb86")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C19077684"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c96b9c58-cbcc-4df8-9721-6a77759b7013")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "Yuandi"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "92d5eece-f076-47bb-90e2-658fd35b87da")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "TS-1094TS-B3D2-T-Y"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "36fa75db-4c8f-409b-8be6-a49152ae81a6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.1068"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ff489947-3eec-4cd7-b64d-bd74d1a71184")
 			(effects
 				(font
 					(size 1 1)
@@ -4298,71 +3102,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.51"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f15fb97a-a882-4db2-bfb8-f2373fe1eaa1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C412032"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "787bcdce-c002-4de5-afad-c0bc179ba327")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "Sunltech"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "aa136411-34e7-4805-8f46-dd312c6ebd16")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "SCC1608C8N2JSP"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3285e49b-f043-4f92-a5a8-cc82da215fa9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0102"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f6f91877-9a7d-495f-a54a-e9d91695ee49")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/9ee852fa-0889-4353-9e40-a4372248f1f0/d2876338-cc82-471d-950f-4596e50c771a")
 		(sheetname "/Transceiver/")
 		(sheetfile "transceiver.kicad_sch")
@@ -4506,71 +3245,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.09"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "29bcf1cd-642a-43b4-adf9-ecdcd3e0a72d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907022"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9794a6da-9b6d-4c0e-94a2-1026be182aa9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "dd860e57-54b9-4515-a311-b7b34fcc26c1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603F2001TS"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "2e6b2c48-3388-49b3-a76e-e0c886267126")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0009"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8e00a4e3-60ff-4756-8da5-c7f7b732a098")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/cc1add63-85b7-48c9-bd2f-968906ef3f97/2953170f-4cab-4487-a7f9-7f62d2a37ce4")
 		(sheetname "/Display/")
 		(sheetfile "display.kicad_sch")
@@ -4696,32 +3370,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "0742bb72-87e6-438a-93a8-33d73f2519b2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ef39a0bf-8d31-4884-a9c3-209f757a9294")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "fdd3b382-2023-46a0-b7d6-c739614a608a")
 			(effects
 				(font
 					(size 1 1)
@@ -4899,71 +3547,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "cfd47806-681c-4e88-829d-dcd5ce8a72d9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "2.47"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3f65275c-5fe4-4925-9041-81c78b729fad")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "AliExpress"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d4fbaf19-cf09-430c-a381-ffd684c7864c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "-"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "06287933-2e08-4fb7-b566-b05d88126986")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "Hall-Effect Joysticks"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c8d78348-e07c-4257-a5cd-e987d90e52ed")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "2.47"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6bb8836f-5717-47e8-9c95-962810489af5")
 			(effects
 				(font
 					(size 1 1)
@@ -5325,7 +3908,7 @@
 				)
 			)
 		)
-		(property "Value" "Green"
+		(property "Value" "~"
 			(at 0 1.5 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -5356,71 +3939,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "be659db8-c4e9-4731-ae55-c4ace4e886fd")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.49"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e462fecd-ad61-4b7e-8e82-2ce1be41caaf")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C19273151"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "abf04e4d-8471-4dba-a684-8dae3e50b277")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "YONGYUTAI"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "789ae26d-1bf8-410e-a558-49b06cfc5b04")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "YLED0603G"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "185c3983-7df3-4d0a-a603-ce2fbcbf5e53")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0049"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "5175cab3-59fd-49b4-ba23-0bee51548fad")
 			(effects
 				(font
 					(size 1 1)
@@ -5576,71 +4094,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "210023b1-20e7-48eb-b66a-63ff93972687")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.36"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "90653144-ba8a-470e-b1c7-c4079826a219")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C49234121"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "914ea542-7e58-410a-8aa9-d3b4a099454b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "hanxia"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6a498694-2722-4391-9dba-295f2f9c6ec1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "HX-B3U-1000P-1.6N"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "79cd1e01-4a2c-4cd4-8ed4-270f98d4551e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0712"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d11c2b40-d8f3-4b30-8919-92ad712b7ede")
 			(effects
 				(font
 					(size 1 1)
@@ -5853,71 +4306,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.60"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6ae47896-595f-45ea-9bbf-88b74bc74a26")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C395082"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "2ea6c864-735e-469b-94d1-fb4755417e79")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FH"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "1c0ea3ee-2972-4507-b2bd-a6d113e29fe8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "VHF160808H2N4ST"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "10e27b50-8974-4f26-a13b-124029eee5af")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.006"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b5afafc8-bef2-47d0-aca4-306216cd55be")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/9ee852fa-0889-4353-9e40-a4372248f1f0/b0969381-a0f2-4c9d-9b73-dc0af3d6b4ed")
 		(sheetname "/Transceiver/")
 		(sheetfile "transceiver.kicad_sch")
@@ -6061,71 +4449,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.08"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ff266a30-0cba-46f6-a4af-3ccf9378547a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907128"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "a7a9a65e-6a7c-4879-896e-6a6ff89124a0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "a784755a-d485-42fd-b4ba-4096e088d74f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603J223 TS"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "648992da-d00a-42f2-9e56-ee59d0836f7f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0008"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "599aa418-8a43-43f3-a2b0-9e482a0c22a2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/9ee852fa-0889-4353-9e40-a4372248f1f0/2232c866-0184-4d67-b226-41a8c49d81b5")
 		(sheetname "/Transceiver/")
 		(sheetfile "transceiver.kicad_sch")
@@ -6251,71 +4574,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "728b617b-4cf9-4e40-9868-34e94648b521")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.23"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c0143b85-7767-4bf3-956d-09253a74372c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C5137611"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "700f87ca-0f1e-408f-b7c4-538241a0b0cb")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4fe74dba-6e4f-4af3-8634-f84722081c21")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FCC0603N1R0C500CT"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d47fe140-cd19-4b0a-a2b7-0d8bb9efb953")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0023"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ce5aaba6-6fc6-44f1-8a4c-581c7059fc2d")
 			(effects
 				(font
 					(size 1 1)
@@ -6459,71 +4717,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "16dbee0f-b302-459d-aa16-b15b19b7cf51")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.59"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "71e62d47-9ded-4263-b1a6-db7d3a7250af")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C13738"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6f69ff18-ebcc-4830-8295-cc11ff6257f9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "YXC Crystal Oscillators"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f636df0f-2bc3-4cd5-9040-3c0a5c5143dd")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "X322516MLB4SI"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9a6ed90a-d763-417d-89ba-a1c8ab7b1558")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.059"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "36420ed2-9bc4-41ff-b63c-02bd7133903a")
 			(effects
 				(font
 					(size 1 1)
@@ -6714,71 +4907,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.32"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "2f47cb33-bb36-4884-83e6-afe3e379ccd2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C347222"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "57dd3460-48c4-4ae6-9d31-940fe68095eb")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "UMW"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4a5c84bc-64fa-4306-8626-6afbd5fd3ee0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "AMS1117-3.3"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "512c4a6c-8267-431a-99aa-a2558ccb8e11")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0315"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "fc71daec-315f-4f00-9ac9-0189eff8fe41")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/c4e35d3f-6040-4882-878d-1a95fa713f03/70f43a6a-94e6-4a77-bf56-2d9cf05a6d30")
 		(sheetname "/Power Supply/")
 		(sheetfile "power.kicad_sch")
@@ -6921,32 +5049,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3d3f1ceb-c4eb-438d-b59f-aff4a983d68b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "20def8ff-8061-42c4-942f-eeda0a38a2c2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/611b17d4-a955-4c98-a42a-5bb437efbf5c")
 		(sheetname "/")
 		(sheetfile "controller.kicad_sch")
@@ -7033,7 +5135,7 @@
 			(drill 1.02)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net 59 "JOY2-X")
+			(net 58 "Net-(U1-ADC6)")
 			(pintype "passive")
 			(uuid "ab96a05b-de91-49ad-b523-4b11d594a7b7")
 		)
@@ -7043,7 +5145,7 @@
 			(drill 1.02)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net 56 "JOY2-Y")
+			(net 59 "Net-(U1-ADC7)")
 			(pintype "passive")
 			(uuid "178b83b6-6d7d-45b6-90b8-455d9431335f")
 		)
@@ -7053,7 +5155,7 @@
 			(drill 1.02)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net 58 "JOY2-B")
+			(net 56 "Net-(U1-PC5{slash}ADC5{slash}SCL{slash}PCINT13)")
 			(pintype "passive")
 			(uuid "6f83c444-ec14-49e6-8910-792f3df9767a")
 		)
@@ -7117,71 +5219,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "d54af194-58c6-4c10-89a3-5883c5b20e70")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.23"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3fb42bcb-d122-4262-9e1c-5d0e6535e4a8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C376772"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d1a4d69c-22fb-4185-9c86-7b6f49e35b44")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "CCTC"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4a4438a2-afdd-4504-b4cb-f5d772a8d5b5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "TCC0603COG1R5C500CT"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e641b46d-d898-4c40-8772-7a024c4f6d53")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0023"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e1765d64-d8b9-4db7-9ed7-61d7f8465add")
 			(effects
 				(font
 					(size 1 1)
@@ -7326,32 +5363,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "7d5ff04a-509a-45dc-afef-2cf4701022e0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "33c1e4a6-ae13-4cdf-a5c4-79c3e64caa2f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f46a84f2-2082-4f4e-bcad-9d34cd8167b6")
 			(effects
 				(font
 					(size 1 1)
@@ -7763,71 +5774,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.60"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "02e4ab53-8355-454d-a074-e81d788fb4a8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C395082"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "56064167-4b8f-4015-ad68-ffcb7193fc93")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FH"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "86192da1-63b7-49f2-9c20-035c03ae4665")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "VHF160808H2N4ST"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "07e61b50-d1c1-4750-8eae-937a443c4a09")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.006"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "fa49868e-0dbb-461d-91ee-f72aae137d71")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/9ee852fa-0889-4353-9e40-a4372248f1f0/eaa74265-8c53-438e-abab-fe698ba6a398")
 		(sheetname "/Transceiver/")
 		(sheetfile "transceiver.kicad_sch")
@@ -7964,32 +5910,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "189a0f45-e3fa-429d-826e-a2b3c92c8ac5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "fba381fd-0bb8-474d-802f-98a6fb43f823")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3d714311-8150-4886-988c-9d3c1a5494e4")
 			(effects
 				(font
 					(size 1 1)
@@ -8154,71 +6074,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.07"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ffbe0693-0515-422b-ad92-fa163c5b8a77")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907113"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ef34fbd9-abb8-454d-a356-89cd394c2c2d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "1900f60f-8ff3-4a6a-bb63-d4ea524f80dc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603J102 TS"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "0807abe3-6ca1-4b64-8756-3aa7a462bd85")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0007"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d40494ee-a1cd-4625-b0c7-676e98c49970")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/cc1add63-85b7-48c9-bd2f-968906ef3f97/59bf9d2f-abc4-4817-87d3-2ee49dc95300")
 		(sheetname "/Display/")
 		(sheetfile "display.kicad_sch")
@@ -8344,32 +6199,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "ada60165-ca10-4faa-bc2b-f36117172d39")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "01fb85df-f4d1-47d9-9135-11d5db1e870e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e70e2c8f-fcfa-4d2f-a42e-acc620570021")
 			(effects
 				(font
 					(size 1 1)
@@ -8536,71 +6365,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "7324fa09-0f51-4f18-8dce-2a74b659b964")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.53"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e3be1000-1f68-4dbb-97c4-7b8425e3eb61")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C19077684"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "685c48d8-a809-4b3f-9614-bbe35215dfe6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "Yuandi"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "627b4915-9724-4025-96be-cffc86ac0e45")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "TS-1094TS-B3D2-T-Y"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "23a2ae11-15b0-4fe7-9302-50c6d6a7e45e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.1068"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "1a8cd786-1a47-4510-948e-81906b866ed0")
 			(effects
 				(font
 					(size 1 1)
@@ -8903,71 +6667,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.57"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "772302d7-5ad7-4654-b18b-9f64455c7474")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C72505"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "55b67bfb-8fa9-42d2-8067-ed133f649f16")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "ROQANG"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "de744682-d812-4508-b391-33bf57f7c7f8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "RVT1H220M0605"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "2425478c-d4d6-42f0-ab2c-b88156f341cd")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0283"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "2a0e4ac0-d9a1-4ed3-8eea-aa1c5cb9feae")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/c4e35d3f-6040-4882-878d-1a95fa713f03/01e85939-c468-4a62-8fb0-6e5cf6c491cf")
 		(sheetname "/Power Supply/")
 		(sheetfile "power.kicad_sch")
@@ -9182,71 +6881,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "3.21"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b19f69a1-8c13-459b-9446-7d8bb4e894df")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "AliExpress"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "0c24863e-d3fe-4b2c-be9b-c92da7d106ed")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "JX"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ae0aa581-09c9-4815-ba16-34fab66d8588")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "SMA PCB"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "425e08ec-454b-488b-93f6-817f41296cc3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "3.21"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "104a8c4b-df04-4507-bb37-218b277bc30e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/9ee852fa-0889-4353-9e40-a4372248f1f0/af3af952-1874-4fb0-b71c-392235a45370")
 		(sheetname "/Transceiver/")
 		(sheetfile "transceiver.kicad_sch")
@@ -9443,32 +7077,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f64cf922-5dbe-4070-a7dd-827e2d856ede")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9f75cd52-0874-4a6b-93a0-a1468498817a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/32a559db-95e8-4d23-ac9b-408a08f30be5")
 		(sheetname "/")
 		(sheetfile "controller.kicad_sch")
@@ -9619,32 +7227,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "a53e321d-95d3-4574-ab26-07dcf6771b31")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "97c61534-4dc5-4f70-a787-513a2e48ce7c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e065f29b-2cbc-4af2-a876-70d88a7a84e8")
 			(effects
 				(font
 					(size 1 1)
@@ -9839,71 +7421,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.09"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f22dba9d-8271-4cd5-803a-f2ba5337a450")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907022"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ea47fa59-4f79-48e9-860c-566fd0da4d74")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "088f23d6-5450-4d76-b498-7d67751a51b0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603F2001TS"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "0a32c843-552b-4565-9cf1-6649657049b2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0009"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "84cef416-761b-4912-b589-d59814525d26")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/cc1add63-85b7-48c9-bd2f-968906ef3f97/93e9486f-384f-4bcf-89d4-4e190cd51636")
 		(sheetname "/Display/")
 		(sheetfile "display.kicad_sch")
@@ -10030,71 +7547,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "15e4e561-3e56-4fbb-a6ab-0dd6b15d9c95")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.59"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8b4a78cb-2db1-4ded-962d-3007db35670b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C13738"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f0dd1316-3af7-40eb-bf5f-63b8af2fe25e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "YXC Crystal Oscillators"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "df338715-6c8c-4591-b025-ba9b2130444b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "X322516MLB4SI"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "705bd677-34cd-472d-89bf-b7a00104c24f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.059"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6f59d5ae-4f0a-46c5-8b40-0722bdfbf273")
 			(effects
 				(font
 					(size 1 1)
@@ -10273,71 +7725,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.32"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9c84434f-5194-4ba2-8037-25fd3c49eb21")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C347223"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ef3abf59-15a5-450e-83b2-9168ded0d3c2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "UMW"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8bf94217-0554-4225-87d6-c922b465b62a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "AMS1117-5.0"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "74effc20-01a6-4602-a1cc-93f73645ce4b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0315"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "bfafb9a6-4911-40cc-b92c-3a5839b30c50")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/c4e35d3f-6040-4882-878d-1a95fa713f03/15443c59-704e-4f10-a090-b555e1946361")
 		(sheetname "/Power Supply/")
 		(sheetfile "power.kicad_sch")
@@ -10473,71 +7860,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "2fb9d99d-57db-4e60-8130-b0dfc7607513")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "3.49"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "db6df9e1-e642-4361-a975-3fade9d19a2d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "AliExpress"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "5da808f6-a9f3-4245-bf24-8007cb16a47c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "SWITCHES"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9f972582-178d-4c36-a536-c507fb197857")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "MST103"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c6100a35-57a2-4319-8e2e-592b66225970")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "3.49"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6e254787-deff-4a92-891d-17c3ed275e31")
 			(effects
 				(font
 					(size 1 1)
@@ -10724,71 +8046,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.07"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "41fd75a9-4de3-4dda-bd85-56a731e66a65")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907113"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4ab961e6-2b82-42f1-9e1e-48ece56a144a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "70af5269-2cdb-4013-94c9-69cc06eda7b7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603J102 TS"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9972d280-4da5-4192-9f41-f7493476f633")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0007"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8ff658c5-c6a6-4828-8f02-5fde5d795728")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/cc1add63-85b7-48c9-bd2f-968906ef3f97/9f6f3ca3-7095-472d-bd3b-42f15dfb2c8a")
 		(sheetname "/Display/")
 		(sheetfile "display.kicad_sch")
@@ -10914,71 +8171,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "83958731-4912-4766-8a17-4cd2e262c6c2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "2.05"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "60e3814c-b06a-4979-a153-d77575f5ca02")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C8791"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "45e359db-dd1d-4918-86d2-69142d0df330")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "NORDIC"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ebcf42e5-af36-43b5-bd0d-c5156249d946")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "NRF24L01P-R"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6981b9e8-cff1-4802-adec-d3f8290a220b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "2.0451"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d8fc67d5-6727-4774-8a2f-7a8f19183372")
 			(effects
 				(font
 					(size 1 1)
@@ -11349,71 +8541,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.08"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6b1f487d-973a-4e22-acb3-1d68f58c7d76")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907152"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c139126b-b475-4710-8e7c-a693e60b3a6e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "30078d9c-2d3d-4474-8303-513f1ce54cc2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603J331 TS"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "eb4a642a-4f89-48e2-a9ff-8a630785d2b9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0008"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "7fa860f1-27cc-44f5-af3c-6be190a02ace")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/927f1974-c56a-4640-be70-2284e124e155")
 		(sheetname "/")
 		(sheetfile "controller.kicad_sch")
@@ -11538,71 +8665,6 @@
 			(effects
 				(font
 					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.77"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "bfc90855-bd5b-4dac-8779-0687844e54b6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C19213"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "0b8d1cae-f57d-4dc3-921e-0f9c1aaf5a26")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "SKYWORKS"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "95a06c94-08d2-42cb-9145-b4ce705311cd")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "RFX2401C"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "784e854b-1f40-46dc-a285-9328fbef80f8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.7744"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c094fadf-0d83-4a1b-b8d5-324408a52f5e")
-			(effects
-				(font
-					(size 1 1)
 					(thickness 0.15)
 				)
 			)
@@ -12064,71 +9126,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.07"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "dabd756f-4892-4be7-89c8-eecfa9872ac3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907113"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "50c7b770-bab5-4956-9788-32902376bfaf")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c5ff8f05-cf36-4bc7-b4ce-fcc1886d7247")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603J102 TS"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "23936cfa-da9b-4adf-a3b3-3f5d80847e8c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0007"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4c8ff053-0a02-4510-8bed-afde10543fb6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/c4e35d3f-6040-4882-878d-1a95fa713f03/7c75e831-283e-4500-bb28-d0e35299f49a")
 		(sheetname "/Power Supply/")
 		(sheetfile "power.kicad_sch")
@@ -12223,7 +9220,7 @@
 				)
 			)
 		)
-		(property "Value" "12pF"
+		(property "Value" "22pF"
 			(at 0 1.5 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -12254,71 +9251,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "8a44769e-80a0-46b3-b9a8-c82f110aecf8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.27"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3bccc717-33fe-4b5d-87d6-243419802960")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C107034"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "80307673-4f42-4022-8b5d-4e52f8858652")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "YAGEO"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c5de7ba8-e56a-49b2-9886-4151183a9125")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "CC0603JRNPO9BN120"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6da58fcd-2b18-4729-88bb-771217837e21")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0027"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3c6b1d61-a25b-4121-ba6d-10e8dddf781a")
 			(effects
 				(font
 					(size 1 1)
@@ -12415,138 +9347,6 @@
 			)
 		)
 	)
-	(footprint "common:R_0603"
-		(layer "F.Cu")
-		(uuid "9aeafe04-9732-4dd9-89f2-2e4c22eb92fe")
-		(at 88.7 107.25 180)
-		(property "Reference" "R3"
-			(at 0 -1.5 0)
-			(unlocked yes)
-			(layer "F.SilkS")
-			(uuid "67562f87-0227-44e1-8f54-04efc5711a8f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Value" "10k"
-			(at 0 1.5 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(uuid "36906b07-41cc-4f5b-8862-6b2baa92bfe3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "0d229e0c-f63e-43d2-b850-e0111bac400c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8dacfe47-a9e1-4f7b-88d9-df42b2231f1f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(path "/bedd5394-82bd-4869-be75-6b12e36f61d8")
-		(sheetname "/")
-		(sheetfile "controller.kicad_sch")
-		(attr smd)
-		(fp_line
-			(start -0.2 0.5)
-			(end 0.2 0.5)
-			(stroke
-				(width 0.1)
-				(type default)
-			)
-			(layer "F.SilkS")
-			(uuid "69d4dd6b-0863-46fc-ad11-64e5f0b4a8ae")
-		)
-		(fp_line
-			(start -0.2 -0.5)
-			(end 0.2 -0.5)
-			(stroke
-				(width 0.1)
-				(type default)
-			)
-			(layer "F.SilkS")
-			(uuid "c4e74298-ab15-4f20-803e-c4363edca45d")
-		)
-		(fp_rect
-			(start -1.55 -0.75)
-			(end 1.55 0.75)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(fill no)
-			(layer "F.CrtYd")
-			(uuid "de695218-c004-4eb1-ba49-7867ce8026f9")
-		)
-		(fp_rect
-			(start -0.8 -0.4)
-			(end 0.8 0.4)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(fill no)
-			(layer "F.Fab")
-			(uuid "7d85fb9b-b1cf-4995-936b-166126f874a4")
-		)
-		(fp_text user "${REFERENCE}"
-			(at 0 3 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(uuid "5d786f54-3357-40a5-874e-6326752cea99")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(pad "1" smd roundrect
-			(at -0.8 0 180)
-			(size 0.95 1)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(roundrect_rratio 0.15)
-			(net 58 "JOY2-B")
-			(pintype "passive")
-			(uuid "73e06420-5cc6-4bc8-8f83-95354f0b2038")
-		)
-		(pad "2" smd roundrect
-			(at 0.8 0 180)
-			(size 0.95 1)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(roundrect_rratio 0.15)
-			(net 1 "+5V")
-			(pintype "passive")
-			(uuid "3851761e-a8ee-4f0e-a28d-1ee53938281d")
-		)
-		(embedded_fonts no)
-	)
 	(footprint "common:C_0603"
 		(layer "F.Cu")
 		(uuid "9d0b3969-6f75-4b66-b497-37b96fbf3c08")
@@ -12594,71 +9394,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "5b690520-615e-4383-af39-16f53a016923")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.23"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "bde64703-e017-4ac4-ad93-cf88c2fdad65")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C376772"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f05a920e-2e4e-47e4-836f-19a336074572")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "CCTC"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "5ca037a4-6fbc-48e7-a2be-6fd7bffc896a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "TCC0603COG1R5C500CT"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8c25ad06-aa3a-402b-a38c-8dca97af1221")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0023"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "226f38a4-b160-4418-b193-0e2841063123")
 			(effects
 				(font
 					(size 1 1)
@@ -12802,71 +9537,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "fe534ee1-3d63-45ea-97cb-19df0c2f9eda")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.20"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c4d8ef73-1f7d-4e42-80e6-c0b0aca3f057")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2892681"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "89bdf7c7-0cf1-48be-9343-98eed7331590")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "YONGYUTAI"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f4df1416-0028-4e03-8cf8-05f75f8643c4")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "1N4007"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8f5dc189-fe1b-40da-ba7f-e167ba755d52")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.004"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "7215e4dd-6cfd-4eb8-8c89-00972b90fc8a")
 			(effects
 				(font
 					(size 1 1)
@@ -13091,71 +9761,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.26"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "fe1a6f90-3aa0-4992-b9fb-0d528e5c2885")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C107081"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f1b6512e-232f-465c-bcd0-6f385948ba70")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "YAGEO"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e97bf710-527d-4d83-9e94-c94e82034573")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "CC0603KRX7R9BB221"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "36d954bc-1cbf-42e1-9622-c97cf102a82a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0026"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "a10d6743-f019-4030-b24e-4bdb25e8bb85")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/9ee852fa-0889-4353-9e40-a4372248f1f0/fe4dd3c2-4ac8-4802-92d0-09fd6477da82")
 		(sheetname "/Transceiver/")
 		(sheetfile "transceiver.kicad_sch")
@@ -13292,71 +9897,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "f743c2d5-6863-4cea-adf8-a2101e801030")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.57"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "39e6f4ef-6fdc-4fdb-9df5-c7fe3d39024b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C72505"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6e529285-59fb-4368-9259-e52b2608d9ef")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "ROQANG"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "73667387-eec0-4c89-9ab6-bd7b9bf2aa4b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "RVT1H220M0605"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "790aada3-1d38-4a53-a7e3-2006881b3a92")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0283"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "86173197-1f68-4ada-ac6d-b96e3d636e48")
 			(effects
 				(font
 					(size 1 1)
@@ -13578,71 +10118,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "2.47"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b681455d-a41a-4e21-ac10-7109eba46f97")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "AliExpress"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "dd7d9f32-7c51-4d39-8602-2b9b3b6cf7c1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "-"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b364aad3-796b-46f4-8dd2-0b6e7dc9ed0f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "Hall-Effect Joysticks"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "40e15cc4-cb39-4b97-aaf5-3a571944d463")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "2.47"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "957c3454-3728-408f-be04-23dd886902a1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/798acff2-8c58-468b-9de9-298d1e40c17c")
 		(sheetname "/")
 		(sheetfile "controller.kicad_sch")
@@ -13856,7 +10331,7 @@
 			(drill 0.9)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net 58 "JOY2-B")
+			(net 56 "Net-(U1-PC5{slash}ADC5{slash}SCL{slash}PCINT13)")
 			(pinfunction "SEL+")
 			(pintype "output")
 			(uuid "9e6ee273-19d5-4e5c-8043-55af20b78ef6")
@@ -13867,7 +10342,7 @@
 			(drill 0.9)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net 58 "JOY2-B")
+			(net 56 "Net-(U1-PC5{slash}ADC5{slash}SCL{slash}PCINT13)")
 			(uuid "561d756e-52e6-4e82-aea4-7126dfca0299")
 		)
 		(pad "H1" thru_hole circle
@@ -13887,7 +10362,7 @@
 			(drill 0.889)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net 59 "JOY2-X")
+			(net 58 "Net-(U1-ADC6)")
 			(pinfunction "H")
 			(pintype "output")
 			(uuid "241ca231-09a6-426c-9c7a-dc76de6b89bf")
@@ -13952,7 +10427,7 @@
 			(drill 0.889)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net 56 "JOY2-Y")
+			(net 59 "Net-(U1-ADC7)")
 			(pinfunction "V")
 			(pintype "output")
 			(uuid "09b95ec8-1b2a-45cf-8645-379b5ab3e2f6")
@@ -14028,71 +10503,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "77c66f1f-5589-4db6-bcee-c7ce321e7a1f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.40"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "0d612e0c-f289-4fb2-9dc8-fb089f4f2ed6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C964023"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "65d8c860-fa1f-42b6-a896-3112bbba1482")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "HYHONGYEX"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d603334f-95c8-409c-acee-a4ff670c4fd1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "HBLS1608-3N9S"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f4bf0b81-b9c3-4bfa-afb1-0a33206c21dc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.008"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "03cdf44f-82a6-476b-a2e7-c22bed5c36e3")
 			(effects
 				(font
 					(size 1 1)
@@ -14205,7 +10615,7 @@
 				)
 			)
 		)
-		(property "Value" "12pF"
+		(property "Value" "22pF"
 			(at 0 1.5 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -14236,71 +10646,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "06a1ca35-2d83-4d11-9f15-0ab37294aa00")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.27"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9345d594-d481-4a86-b141-f1bad5abfd48")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C107034"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "2f06b3a7-4b1d-46f5-abde-169f24758dc3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "YAGEO"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "602995d2-e53c-4310-b336-527588e3f1d1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "CC0603JRNPO9BN120"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "fff53541-1d39-4945-9be6-798dfe54e5b1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0027"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "fbdb7e19-9cc7-4022-8f36-deaed65ce4bc")
 			(effects
 				(font
 					(size 1 1)
@@ -14444,32 +10789,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "ef77023f-450c-469f-ba8b-696760039985")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "eaaf6fe7-ef50-47de-9023-4066b75e66a1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "fa440654-ada4-452a-9234-0836689b3559")
 			(effects
 				(font
 					(size 1 1)
@@ -14664,71 +10983,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.07"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "840263ab-b9db-470e-b5df-cfd5bb0f8dff")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907113"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9f3d5b17-bb41-45af-a6f6-f2912dceba50")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "0e703b7b-fc7a-41f7-b0d2-fd77e1fc60dc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603J102 TS"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e1df1c90-17ae-453a-89ef-67eaea3582ff")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0007"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "09fc3267-a499-4e23-8a8f-7e39caffa917")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/cc1add63-85b7-48c9-bd2f-968906ef3f97/616b3126-a914-4555-a314-890d8fbfd729")
 		(sheetname "/Display/")
 		(sheetfile "display.kicad_sch")
@@ -14854,71 +11108,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "39f8fd8f-ea42-41d0-aa02-c56dc04472a9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.09"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "fff82f18-cda7-44bf-a31b-0a49dbe49d05")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907022"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c4b34b99-8fd5-459f-9168-8a3256a54d1b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f026de44-4fab-4c32-8040-e9ba5f98117f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603F2001TS"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "03faa45f-bf41-4d2f-ac40-eb4606b6ff35")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0009"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ddc2d54d-b3c6-4534-b792-b25924044c2a")
 			(effects
 				(font
 					(size 1 1)
@@ -15058,71 +11247,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.07"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "fee675be-3ab1-4da9-b7b9-96a9db8ceb89")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907113"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "86a1b76b-8b03-46c4-a279-7719e5cc6f36")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c9a8b78c-cde0-43e5-8acd-2f95d8a2a7f0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603J102 TS"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9bfa25f8-5b80-472b-b6e1-ae2f910c9c80")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0007"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "a33bcad4-bba3-4061-af5b-cab6c090261e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/cc1add63-85b7-48c9-bd2f-968906ef3f97/87f70ab6-f919-4d2c-98a7-1c257dee67a5")
 		(sheetname "/Display/")
 		(sheetfile "display.kicad_sch")
@@ -15248,71 +11372,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "eb3b9af3-7644-4cdd-8ce5-b844b3873fcc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "1.35"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e11c1489-8d4e-40cf-b762-09406ce5e6a8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C17444183"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "156cefc6-0c36-493f-8924-fcabfe97b6ab")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "BOURNS"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "0105b912-35a6-42f4-b8cb-e7c9c7eaf021")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "PTA4543-2015DPB103"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "be4bc718-d486-434a-b159-9a40543b8143")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "1.3457"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4403556d-2e04-49e6-9b9a-9b6e960aa09a")
 			(effects
 				(font
 					(size 1 1)
@@ -15594,71 +11653,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.19"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "59727883-8415-4d36-8943-57327bfe3504")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C14663"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c41ba074-d1e6-49ff-96df-78008351434a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "YAGEO"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e5e8ccfd-1a57-49a6-882a-014b26a860f8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "CC0603KRX7R9BB104"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4d6e57ef-e0d3-4a73-9c20-fd16a64aadf8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0019"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b4ca9c8e-9a2f-4812-9fbb-2de39c824332")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/35dc1e62-4925-4a59-bef2-d4f6eab13e14")
 		(sheetname "/")
 		(sheetfile "controller.kicad_sch")
@@ -15802,71 +11796,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.08"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "11049b38-ec26-4ff5-8e33-e9fe8b63f51b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2906982"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "17292a8f-88ed-41d5-9180-f06b6f5547dd")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4dfee9d6-7c1e-41ab-9ec5-d8f4525b3729")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603F1002TS"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8febb696-3a11-40b9-b236-7112f6d4262b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0008"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f8bb1cff-bad2-4e36-a8ee-ec6140b490ce")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/f4d9fc41-4252-483d-87ab-fe212b225d1d")
 		(sheetname "/")
 		(sheetfile "controller.kicad_sch")
@@ -15999,71 +11928,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.08"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f5dc8dda-6164-4180-9785-3c28f7b51b31")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2906982"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d04f41d1-2fba-4755-bf00-062f0f4d301d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "1e4374d2-502e-4791-9739-b824b451d9e6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603F1002TS"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "a50d6d51-76d4-4951-bbf5-fafd9f7bedc5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0008"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b978e8a7-0af6-420d-9ded-bdce41fbd324")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/a4e27e50-93b5-4548-bd07-328f6b7daffa")
 		(sheetname "/")
 		(sheetfile "controller.kicad_sch")
@@ -16158,7 +12022,7 @@
 				)
 			)
 		)
-		(property "Value" "12pF"
+		(property "Value" "22pF"
 			(at 0 1.5 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -16189,71 +12053,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "cfb4af01-d1a6-4af3-bf48-e63f5364b06e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.27"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "39037528-0cfd-4eea-bd44-92bf3d5d0179")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C107034"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "eaba67fc-981a-45a1-8960-98a31414d8fb")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "YAGEO"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "09052131-2461-4528-ba2d-e91c7585f0a8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "CC0603JRNPO9BN120"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "615ce4ac-35bc-4901-aaf7-4abbdd63ca3f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0027"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "7df3287a-4e51-4115-8b10-53591c656cac")
 			(effects
 				(font
 					(size 1 1)
@@ -16366,7 +12165,7 @@
 				)
 			)
 		)
-		(property "Value" "12pF"
+		(property "Value" "22pF"
 			(at 0 1.5 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -16397,71 +12196,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "90c23705-ccbf-4252-a507-440e108e131d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.27"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "500717fa-48ee-4de0-bbbf-8a7dc43f10f7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C107034"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "76f7bf09-297e-4741-b60b-31e4297d44a3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "YAGEO"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ec8d15d3-0bcd-482d-b543-f6e15d0d5c64")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "CC0603JRNPO9BN120"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "a605825b-f267-4a96-9fe8-da189bd452f5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0027"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "643a9903-fdbb-41b3-aebb-051791fd07bd")
 			(effects
 				(font
 					(size 1 1)
@@ -16612,71 +12346,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.07"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "7e0d0c09-a702-4ada-b1da-74ad258b6cbc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907113"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ccc46050-1856-4651-b9c1-a73137aeff67")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "04a413cf-448a-4df3-bcf2-6925992192a1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603J102 TS"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e1ae8ffa-65a7-4228-8324-b8ec628ac0c8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0007"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "a17517fd-26ee-49fd-86a1-cb58478fc60d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/9ee852fa-0889-4353-9e40-a4372248f1f0/458a2a67-734e-4065-9b82-97d1fd412237")
 		(sheetname "/Transceiver/")
 		(sheetfile "transceiver.kicad_sch")
@@ -16755,138 +12424,6 @@
 		)
 		(embedded_fonts no)
 	)
-	(footprint "common:R_0603"
-		(layer "F.Cu")
-		(uuid "da0c2329-096c-4407-b2f2-a08c0faf0cd7")
-		(at 189.7 113.75 180)
-		(property "Reference" "R2"
-			(at 0 -1.5 0)
-			(unlocked yes)
-			(layer "F.SilkS")
-			(uuid "760ae391-e61d-4676-b4fe-8a855458d6f0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Value" "10k"
-			(at 0 1.5 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(uuid "e4ecc29b-f765-47b1-bacf-245c51972f1e")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f98eb71e-5222-4ecc-b27c-56a03307ca77")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e52a2933-25e7-4dc0-b490-9622bffe6af0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(path "/5167d3d3-dcec-401c-abca-0cf0e1e2692f")
-		(sheetname "/")
-		(sheetfile "controller.kicad_sch")
-		(attr smd)
-		(fp_line
-			(start -0.2 0.5)
-			(end 0.2 0.5)
-			(stroke
-				(width 0.1)
-				(type default)
-			)
-			(layer "F.SilkS")
-			(uuid "346e0beb-5286-4f3f-9361-32634bedec0e")
-		)
-		(fp_line
-			(start -0.2 -0.5)
-			(end 0.2 -0.5)
-			(stroke
-				(width 0.1)
-				(type default)
-			)
-			(layer "F.SilkS")
-			(uuid "01c783c0-992f-466f-a6f8-3409e388a671")
-		)
-		(fp_rect
-			(start -1.55 -0.75)
-			(end 1.55 0.75)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(fill no)
-			(layer "F.CrtYd")
-			(uuid "7eb75d44-f464-4627-a8e6-4091d636b12b")
-		)
-		(fp_rect
-			(start -0.8 -0.4)
-			(end 0.8 0.4)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(fill no)
-			(layer "F.Fab")
-			(uuid "4d58604a-6cf9-4fe7-8ebe-5af649a0f83b")
-		)
-		(fp_text user "${REFERENCE}"
-			(at 0 3 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(uuid "5271ce27-66c8-476f-976e-cb87c4bccf4b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(pad "1" smd roundrect
-			(at -0.8 0 180)
-			(size 0.95 1)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(roundrect_rratio 0.15)
-			(net 61 "JOY1-B")
-			(pintype "passive")
-			(uuid "c6d2e98c-e503-4657-a4db-01a84c35e86b")
-		)
-		(pad "2" smd roundrect
-			(at 0.8 0 180)
-			(size 0.95 1)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(roundrect_rratio 0.15)
-			(net 1 "+5V")
-			(pintype "passive")
-			(uuid "ece6be25-2928-4c7a-94bc-228c20de063a")
-		)
-		(embedded_fonts no)
-	)
 	(footprint "common:C_0603"
 		(layer "F.Cu")
 		(uuid "dbd0b508-ed48-43f2-86fa-389ee0ab7302")
@@ -16934,71 +12471,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "f79b93cf-363d-41f8-ab01-44b983705cbe")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.19"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3afa2f90-3688-4ffe-8b22-c99f874e8089")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C14663"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "58c9a479-41f3-463f-b4fe-57fcd06e16f4")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "YAGEO"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "24a81474-d955-4a2e-ac6e-101cde985a22")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "CC0603KRX7R9BB104"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "dbb83cc6-09b8-4637-b6d9-fb1f154a93fe")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0019"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9c1b807f-4372-456c-8f22-d4974dc6bf6b")
 			(effects
 				(font
 					(size 1 1)
@@ -17142,32 +12614,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "2c4f1574-84bc-4a7f-a567-3d993f5c2808")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "2ec29b5b-0ed6-44d4-b7e2-d9ee1190066a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "1607c9fd-13f8-4e6d-babc-da14a3e981c4")
 			(effects
 				(font
 					(size 1 1)
@@ -17382,71 +12828,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.08"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "863391d1-0410-4ca1-a508-f1bdaa79a48b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2906982"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "47074208-0453-4080-91d8-b951bd825126")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "a905ab73-8c4f-42a4-a59b-b4698ba15c48")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603F1002TS"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c123cd0f-3769-488a-b569-ca8185c458a3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0008"
-			(at 0 0 270)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d9c8563a-11e5-48d7-a784-b4283a830eea")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/f32542d3-5005-4c97-8c4a-4e4ce010e701")
 		(sheetname "/")
 		(sheetfile "controller.kicad_sch")
@@ -17572,71 +12953,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "5bebef80-49a2-456a-8e51-9827d4e35bd1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.26"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f408e0ab-2b9b-48a5-81c8-1dc8e1d776c0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C5252358"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "cf301c46-0ad9-4781-a855-278a3db498c9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "Chilisin"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b142ad9c-2b5a-4787-9953-7d8389fba3d4")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "BSCH001608082N7S00"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f4691477-19fc-481a-8334-5bbf90f13e49")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0128"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "814733ca-caf1-4564-be53-48135c1c45e0")
 			(effects
 				(font
 					(size 1 1)
@@ -17787,71 +13103,6 @@
 				)
 			)
 		)
-		(property "Ext. Price" "0.07"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e0645c42-2fc2-4604-815b-c859629d1133")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C2907124"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "0e105ec7-2969-43ff-9bc8-b5b3a12b74f6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "712f920e-a934-4381-a811-34e84459723c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "FRC0603J203 TS"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c71968d3-5db0-4a07-bb46-8e5344ad53d6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0007"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "29d2a3bd-1fd7-4173-83c9-2f3cfc384842")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(path "/9ee852fa-0889-4353-9e40-a4372248f1f0/79f02536-737a-48f9-8d79-f93f600452a0")
 		(sheetname "/Transceiver/")
 		(sheetfile "transceiver.kicad_sch")
@@ -17977,71 +13228,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "ad11afb1-0ecf-4587-9461-ef7498ce0601")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.23"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9b122232-4418-41c8-b1fa-91db7e05ceec")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C376772"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "545a8cdc-cb37-472a-8409-4cf40805f298")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "CCTC"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c179360d-b719-4084-b24f-7033e824c7b4")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "TCC0603COG1R5C500CT"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "2acfd1e2-96a6-4bbc-b680-3f88d20e35a8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0023"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "37b8f350-3181-4de9-8270-3c6eea06205d")
 			(effects
 				(font
 					(size 1 1)
@@ -18185,71 +13371,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "de01ffda-48f6-4786-9dec-c356140a113d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "1.72"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4eaf26b3-73d6-4d52-a2bb-982896828b01")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C14877"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "a62928fd-c92f-45ae-8f4a-ec0c0a221fdc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "MICROCHIP"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3b37b640-6ca0-4a67-b132-836713b0926b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "ATMEGA328P-AU"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "7c8744b0-8bc7-486e-a1ad-68c999be5e72")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "1.7203"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "5b961a77-e4d2-4b9b-9ab4-cdc3623fa62e")
 			(effects
 				(font
 					(size 1 1)
@@ -18571,7 +13692,7 @@
 			(size 1.55 0.55)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.15)
-			(net 59 "JOY2-X")
+			(net 58 "Net-(U1-ADC6)")
 			(pinfunction "ADC6")
 			(pintype "bidirectional")
 			(uuid "299b44bd-ac0d-487d-aec8-cedc1c5f171d")
@@ -18601,7 +13722,7 @@
 			(size 1.55 0.55)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.15)
-			(net 56 "JOY2-Y")
+			(net 59 "Net-(U1-ADC7)")
 			(pinfunction "ADC7")
 			(pintype "bidirectional")
 			(uuid "3905f927-187b-4860-92e2-8bb6e5de772f")
@@ -18661,7 +13782,7 @@
 			(size 1.55 0.55)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.15)
-			(net 58 "JOY2-B")
+			(net 56 "Net-(U1-PC5{slash}ADC5{slash}SCL{slash}PCINT13)")
 			(pinfunction "PC5/ADC5/SCL/PCINT13")
 			(pintype "bidirectional")
 			(uuid "1c72f971-d994-4b5d-b5c3-9ca01edbcc0c")
@@ -18755,71 +13876,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "c69c29d8-7555-4317-8137-66d7be3ecb76")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.23"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "2854fc24-43ee-4871-aaf0-5daec1ab5790")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C376772"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "83947dcc-ca4a-4a6a-9ab9-a81773d46ca8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "CCTC"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "34a4e5c8-b52b-4911-8cd2-b28da12c50aa")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "TCC0603COG1R5C500CT"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8bec3d22-d454-4105-a4fb-12c13f0d10b0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0023"
-			(at 0 0 90)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f187b255-10fc-4ad8-8c5f-96a7d54570b5")
 			(effects
 				(font
 					(size 1 1)
@@ -18963,71 +14019,6 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "dc7e2d42-ad60-48bc-a924-a57f6bbe2b17")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Ext. Price" "0.34"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "525dd131-4468-4756-831f-9b61b9438a98")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC Part" "C49023767"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9d3cb708-0ffa-4872-90cb-a6309a0c4f41")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "SHOU HAN"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8a25b729-626c-4bf1-8963-1976577b3392")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part" "MST-12D18G4 SPDT Slide Switch"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "56d98cdd-64eb-453f-918c-c3455d7ff507")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Unit Price" "0.0677"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "642f56c9-d6cc-48f1-9ead-88a6f9c57d7d")
 			(effects
 				(font
 					(size 1 1)
@@ -19579,14 +14570,6 @@
 		(uuid "21c6eba1-3a10-4c86-aa7d-aab151ba713e")
 	)
 	(segment
-		(start 186.45 116.7)
-		(end 188.9 119.15)
-		(width 0.8)
-		(layer "F.Cu")
-		(net 1)
-		(uuid "2264a56e-7248-41c6-8082-824e6e0d0d76")
-	)
-	(segment
 		(start 94.75 68.25)
 		(end 100.75 68.25)
 		(width 0.8)
@@ -19739,14 +14722,6 @@
 		(uuid "5677154e-966c-4804-9b12-3caaa197b33d")
 	)
 	(segment
-		(start 87.9 107.25)
-		(end 87.9 104.25)
-		(width 0.5)
-		(layer "F.Cu")
-		(net 1)
-		(uuid "57c6f14a-6968-463a-a521-49b8425d23fb")
-	)
-	(segment
 		(start 215.25 92.75)
 		(end 215.25 87.75)
 		(width 0.8)
@@ -19777,14 +14752,6 @@
 		(layer "F.Cu")
 		(net 1)
 		(uuid "6df5d6bf-5b93-4dc8-9f79-38de0f94984a")
-	)
-	(segment
-		(start 181.75 112)
-		(end 186.45 116.7)
-		(width 0.8)
-		(layer "F.Cu")
-		(net 1)
-		(uuid "6f6859bd-637d-4a27-8041-2690f1f3662a")
 	)
 	(segment
 		(start 187.1 93.1)
@@ -19843,14 +14810,6 @@
 		(uuid "9189952c-fcbf-4bc6-9724-59968aa8c158")
 	)
 	(segment
-		(start 188.9 113.75)
-		(end 188.9 119.15)
-		(width 0.5)
-		(layer "F.Cu")
-		(net 1)
-		(uuid "989621d4-8f63-41a1-b838-a20c54162c54")
-	)
-	(segment
 		(start 178.7 92.3)
 		(end 181.7 92.3)
 		(width 0.5)
@@ -19865,14 +14824,6 @@
 		(layer "F.Cu")
 		(net 1)
 		(uuid "a41510d0-2950-4ef2-8689-b9d36cac8f9f")
-	)
-	(segment
-		(start 188.9 119.15)
-		(end 191.75 122)
-		(width 0.8)
-		(layer "F.Cu")
-		(net 1)
-		(uuid "a603beff-bbe4-42ba-844c-cd0625b069d4")
 	)
 	(segment
 		(start 87.9 75.1)
@@ -19971,7 +14922,7 @@
 		(uuid "d551a5b7-cc85-4d4b-9504-305e1eab337a")
 	)
 	(segment
-		(start 191.75 122)
+		(start 181.75 112)
 		(end 207.25 137.5)
 		(width 0.8)
 		(layer "F.Cu")
@@ -25930,76 +20881,76 @@
 		(uuid "316c8a94-912e-489d-ae1d-8c53ee88092a")
 	)
 	(segment
-		(start 174.75 95.5)
-		(end 178.7 95.5)
+		(start 91.88 107.25)
+		(end 86.88 112.25)
 		(width 0.2)
 		(layer "F.Cu")
 		(net 56)
-		(uuid "0b6af5a5-9361-4901-b321-322dadf87db3")
+		(uuid "10db7cc9-493e-400a-9d8d-9a13fccb1034")
 	)
 	(segment
-		(start 169.75 100.5)
-		(end 174.75 95.5)
+		(start 86.52 121.79)
+		(end 84 119.27)
 		(width 0.2)
 		(layer "F.Cu")
 		(net 56)
-		(uuid "27e87512-f147-4cd4-a667-acd9888afc71")
+		(uuid "1603a744-f780-4955-84fc-711fd8a44c04")
 	)
 	(segment
-		(start 92.36 133.88)
-		(end 92.36 126.61)
+		(start 86.5 121.81)
+		(end 86.52 121.79)
 		(width 0.2)
 		(layer "F.Cu")
 		(net 56)
-		(uuid "350aa7a6-3a29-449c-a121-67a11fb238cb")
+		(uuid "339debe5-2ab0-43bc-ba2a-76431ecf7213")
 	)
 	(segment
-		(start 101 100.5)
-		(end 169.75 100.5)
+		(start 84 119.27)
+		(end 84 115.13)
 		(width 0.2)
 		(layer "F.Cu")
 		(net 56)
-		(uuid "51a4db3a-9872-4507-93fe-8f5fcc963682")
+		(uuid "4a38168c-1bb4-443f-9257-60040ee83b58")
 	)
 	(segment
-		(start 89.42 123.67)
-		(end 89.42 112.25)
+		(start 84 115.13)
+		(end 86.88 112.25)
 		(width 0.2)
 		(layer "F.Cu")
 		(net 56)
-		(uuid "8caf9e60-a74f-4509-9e5e-d06ce64ab641")
+		(uuid "7d288338-7c3f-454b-b448-99eac9dcff93")
 	)
 	(segment
-		(start 92.36 126.61)
-		(end 89.42 123.67)
+		(start 182.5 103.25)
+		(end 178.5 107.25)
 		(width 0.2)
 		(layer "F.Cu")
 		(net 56)
-		(uuid "fb6f68ec-d917-4cfe-9f94-65efbccf81ad")
-	)
-	(via
-		(at 101 100.5)
-		(size 0.6)
-		(drill 0.3)
-		(layers "F.Cu" "B.Cu")
-		(net 56)
-		(uuid "76365517-57af-4aaf-85e2-ff053edcca7c")
+		(uuid "7fa593d6-71f5-4d58-a771-575deeb371a9")
 	)
 	(segment
-		(start 101 100.67)
-		(end 89.42 112.25)
+		(start 178.5 107.25)
+		(end 91.88 107.25)
 		(width 0.2)
-		(layer "B.Cu")
+		(layer "F.Cu")
 		(net 56)
-		(uuid "4fffe485-f29c-4dd1-a077-ac86ca1432e3")
+		(uuid "99384370-5d6d-492c-92b6-26f175b9e76a")
 	)
 	(segment
-		(start 101 100.5)
-		(end 101 100.67)
+		(start 86.5 128.15)
+		(end 86.5 121.81)
 		(width 0.2)
-		(layer "B.Cu")
+		(layer "F.Cu")
 		(net 56)
-		(uuid "5a8e7a9e-2645-4f36-bb89-4346f417b33e")
+		(uuid "bddeb73b-1ee2-4776-bdf6-4ca8f5552a9d")
+	)
+	(segment
+		(start 182.5 98.5)
+		(end 182.5 103.25)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 56)
+		(uuid "d20806ee-b098-4444-a946-4e1fc61c9a31")
 	)
 	(segment
 		(start 176 97.75)
@@ -26106,91 +21057,11 @@
 		(uuid "a2b405fc-514b-4595-ab7f-44b10d1fe08f")
 	)
 	(segment
-		(start 91.88 107.25)
-		(end 86.88 112.25)
-		(width 0.2)
-		(layer "F.Cu")
-		(net 58)
-		(uuid "10db7cc9-493e-400a-9d8d-9a13fccb1034")
-	)
-	(segment
-		(start 86.52 121.79)
-		(end 84 119.27)
-		(width 0.2)
-		(layer "F.Cu")
-		(net 58)
-		(uuid "1603a744-f780-4955-84fc-711fd8a44c04")
-	)
-	(segment
-		(start 86.5 121.81)
-		(end 86.52 121.79)
-		(width 0.2)
-		(layer "F.Cu")
-		(net 58)
-		(uuid "339debe5-2ab0-43bc-ba2a-76431ecf7213")
-	)
-	(segment
-		(start 91.88 107.25)
-		(end 89.5 107.25)
-		(width 0.2)
-		(layer "F.Cu")
-		(net 58)
-		(uuid "48cbbd96-afe9-4d5b-8e13-58d4f4b3c554")
-	)
-	(segment
-		(start 84 119.27)
-		(end 84 115.13)
-		(width 0.2)
-		(layer "F.Cu")
-		(net 58)
-		(uuid "4a38168c-1bb4-443f-9257-60040ee83b58")
-	)
-	(segment
-		(start 84 115.13)
-		(end 86.88 112.25)
-		(width 0.2)
-		(layer "F.Cu")
-		(net 58)
-		(uuid "7d288338-7c3f-454b-b448-99eac9dcff93")
-	)
-	(segment
-		(start 182.5 103.25)
-		(end 178.5 107.25)
-		(width 0.2)
-		(layer "F.Cu")
-		(net 58)
-		(uuid "7fa593d6-71f5-4d58-a771-575deeb371a9")
-	)
-	(segment
-		(start 178.5 107.25)
-		(end 91.88 107.25)
-		(width 0.2)
-		(layer "F.Cu")
-		(net 58)
-		(uuid "99384370-5d6d-492c-92b6-26f175b9e76a")
-	)
-	(segment
-		(start 86.5 128.15)
-		(end 86.5 121.81)
-		(width 0.2)
-		(layer "F.Cu")
-		(net 58)
-		(uuid "bddeb73b-1ee2-4776-bdf6-4ca8f5552a9d")
-	)
-	(segment
-		(start 182.5 98.5)
-		(end 182.5 103.25)
-		(width 0.2)
-		(layer "F.Cu")
-		(net 58)
-		(uuid "d20806ee-b098-4444-a946-4e1fc61c9a31")
-	)
-	(segment
 		(start 172.9 93.1)
 		(end 178.7 93.1)
 		(width 0.2)
 		(layer "F.Cu")
-		(net 59)
+		(net 58)
 		(uuid "279aeb51-783e-466e-8221-847e0a7e59a8")
 	)
 	(segment
@@ -26198,7 +21069,7 @@
 		(end 166.75 99.25)
 		(width 0.2)
 		(layer "F.Cu")
-		(net 59)
+		(net 58)
 		(uuid "2f571406-1609-4b63-89b7-d756d3a1f7cc")
 	)
 	(segment
@@ -26206,7 +21077,7 @@
 		(end 97.8398 124.96)
 		(width 0.2)
 		(layer "F.Cu")
-		(net 59)
+		(net 58)
 		(uuid "7f200725-bb62-4ad9-b246-b2fe17b61f06")
 	)
 	(segment
@@ -26214,7 +21085,7 @@
 		(end 91.96 112.25)
 		(width 0.2)
 		(layer "F.Cu")
-		(net 59)
+		(net 58)
 		(uuid "ab6504e1-3972-47f4-81c4-8794d16e065e")
 	)
 	(segment
@@ -26222,7 +21093,7 @@
 		(end 172.9 93.1)
 		(width 0.2)
 		(layer "F.Cu")
-		(net 59)
+		(net 58)
 		(uuid "d683e639-c98c-4478-be6f-049eaf494995")
 	)
 	(segment
@@ -26230,7 +21101,7 @@
 		(end 91.96 119.0802)
 		(width 0.2)
 		(layer "F.Cu")
-		(net 59)
+		(net 58)
 		(uuid "f54e18bb-7b26-47df-8768-55eb47918adb")
 	)
 	(via
@@ -26238,7 +21109,7 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
-		(net 59)
+		(net 58)
 		(uuid "ebbcb44c-c9c8-4cc1-a347-8183b5d15a69")
 	)
 	(segment
@@ -26246,7 +21117,7 @@
 		(end 91.96 112.25)
 		(width 0.2)
 		(layer "B.Cu")
-		(net 59)
+		(net 58)
 		(uuid "d5fc5490-55cc-4692-9774-d85e61474738")
 	)
 	(segment
@@ -26254,8 +21125,80 @@
 		(end 92 112.25)
 		(width 0.2)
 		(layer "B.Cu")
-		(net 59)
+		(net 58)
 		(uuid "f833e470-43a2-4eba-9101-69473039257c")
+	)
+	(segment
+		(start 174.75 95.5)
+		(end 178.7 95.5)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 59)
+		(uuid "0b6af5a5-9361-4901-b321-322dadf87db3")
+	)
+	(segment
+		(start 169.75 100.5)
+		(end 174.75 95.5)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 59)
+		(uuid "27e87512-f147-4cd4-a667-acd9888afc71")
+	)
+	(segment
+		(start 92.36 133.88)
+		(end 92.36 126.61)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 59)
+		(uuid "350aa7a6-3a29-449c-a121-67a11fb238cb")
+	)
+	(segment
+		(start 101 100.5)
+		(end 169.75 100.5)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 59)
+		(uuid "51a4db3a-9872-4507-93fe-8f5fcc963682")
+	)
+	(segment
+		(start 89.42 123.67)
+		(end 89.42 112.25)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 59)
+		(uuid "8caf9e60-a74f-4509-9e5e-d06ce64ab641")
+	)
+	(segment
+		(start 92.36 126.61)
+		(end 89.42 123.67)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 59)
+		(uuid "fb6f68ec-d917-4cfe-9f94-65efbccf81ad")
+	)
+	(via
+		(at 101 100.5)
+		(size 0.6)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(net 59)
+		(uuid "76365517-57af-4aaf-85e2-ff053edcca7c")
+	)
+	(segment
+		(start 101 100.67)
+		(end 89.42 112.25)
+		(width 0.2)
+		(layer "B.Cu")
+		(net 59)
+		(uuid "4fffe485-f29c-4dd1-a077-ac86ca1432e3")
+	)
+	(segment
+		(start 101 100.5)
+		(end 101 100.67)
+		(width 0.2)
+		(layer "B.Cu")
+		(net 59)
+		(uuid "5a8e7a9e-2645-4f36-bb89-4346f417b33e")
 	)
 	(segment
 		(start 94.25 94.25)

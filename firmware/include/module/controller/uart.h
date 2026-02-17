@@ -12,60 +12,131 @@
  * @see UART_init
  * @{
  */
-#define UART_BAUDRATE_9600 UART_UBRR(9600UL)     ///< Baud rate 9600
+#define UART_BAUDRATE_9600 UART_UBRR(9600UL)	 ///< Baud rate 9600
 #define UART_BAUDRATE_115200 UART_UBRR(115200UL) ///< Baud rate 115200
 /**
  * @}
  */
 
 /**
- * @defgroup uart_format UART Frame Format
- * @brief Available frame format for UART
- * @details
+ * @brief UART Frame Format selections
+ *
  * UART_FORMAT_&lt;bits&gt;&lt;parity&gt;&lt;stop&gt;
  * - __bits__: data bits (5, 6, 7, 8)
  * - __parity__: parity mode (none, even, odd)
  * - __stop__: stop bits (1, 2)
- *
- * @see UART_init
- * @{
  */
-#define UART_FORMAT_5N1 0x00 ///< 5 Data bits, no parity, 1 Stop bit
-#define UART_FORMAT_6N1 0x02 ///< 6 Data bits, no parity, 1 Stop bit
-#define UART_FORMAT_7N1 0x04 ///< 7 Data bits, no parity, 1 Stop bit
-#define UART_FORMAT_8N1 0x06 ///< 8 Data bits, no parity, 1 Stop bit
-#define UART_FORMAT_5N2 0x08 ///< 5 Data bits, no parity, 2 Stop bit
-#define UART_FORMAT_6N2 0x0A ///< 6 Data bits, no parity, 2 Stop bit
-#define UART_FORMAT_7N2 0x0C ///< 7 Data bits, no parity, 2 Stop bit
-#define UART_FORMAT_8N2 0x0E ///< 8 Data bits, no parity, 2 Stop bit
-#define UART_FORMAT_5E1 0x20 ///< 5 Data bits, even parity, 1 Stop bit
-#define UART_FORMAT_6E1 0x22 ///< 6 Data bits, even parity, 1 Stop bit
-#define UART_FORMAT_7E1 0x24 ///< 7 Data bits, even parity, 1 Stop bit
-#define UART_FORMAT_8E1 0x26 ///< 8 Data bits, even parity, 1 Stop bit
-#define UART_FORMAT_5E2 0x28 ///< 5 Data bits, even parity, 2 Stop bit
-#define UART_FORMAT_6E2 0x2A ///< 6 Data bits, even parity, 2 Stop bit
-#define UART_FORMAT_7E2 0x2C ///< 7 Data bits, even parity, 2 Stop bit
-#define UART_FORMAT_8E2 0x2E ///< 8 Data bits, even parity, 2 Stop bit
-#define UART_FORMAT_5O1 0x30 ///< 5 Data bits, odd parity, 1 Stop bit
-#define UART_FORMAT_6O1 0x32 ///< 6 Data bits, odd parity, 1 Stop bit
-#define UART_FORMAT_7O1 0x34 ///< 7 Data bits, odd parity, 1 Stop bit
-#define UART_FORMAT_8O1 0x36 ///< 8 Data bits, odd parity, 1 Stop bit
-#define UART_FORMAT_5O2 0x38 ///< 5 Data bits, odd parity, 2 Stop bit
-#define UART_FORMAT_6O2 0x3A ///< 6 Data bits, odd parity, 2 Stop bit
-#define UART_FORMAT_7O2 0x3C ///< 7 Data bits, odd parity, 2 Stop bit
-#define UART_FORMAT_8O2 0x3E ///< 8 Data bits, odd parity, 2 Stop bit
+typedef enum vemar_uart_format
+{
+	UART_5N1 = 0x00, ///< 5 Data bits, no parity, 1 Stop bit
+	UART_6N1 = 0x02, ///< 6 Data bits, no parity, 1 Stop bit
+	UART_7N1 = 0x04, ///< 7 Data bits, no parity, 1 Stop bit
+	UART_8N1 = 0x06, ///< 8 Data bits, no parity, 1 Stop bit
+	UART_5N2 = 0x08, ///< 5 Data bits, no parity, 2 Stop bit
+	UART_6N2 = 0x0A, ///< 6 Data bits, no parity, 2 Stop bit
+	UART_7N2 = 0x0C, ///< 7 Data bits, no parity, 2 Stop bit
+	UART_8N2 = 0x0E, ///< 8 Data bits, no parity, 2 Stop bit
+	UART_5E1 = 0x20, ///< 5 Data bits, even parity, 1 Stop bit
+	UART_6E1 = 0x22, ///< 6 Data bits, even parity, 1 Stop bit
+	UART_7E1 = 0x24, ///< 7 Data bits, even parity, 1 Stop bit
+	UART_8E1 = 0x26, ///< 8 Data bits, even parity, 1 Stop bit
+	UART_5E2 = 0x28, ///< 5 Data bits, even parity, 2 Stop bit
+	UART_6E2 = 0x2A, ///< 6 Data bits, even parity, 2 Stop bit
+	UART_7E2 = 0x2C, ///< 7 Data bits, even parity, 2 Stop bit
+	UART_8E2 = 0x2E, ///< 8 Data bits, even parity, 2 Stop bit
+	UART_5O1 = 0x30, ///< 5 Data bits, odd parity, 1 Stop bit
+	UART_6O1 = 0x32, ///< 6 Data bits, odd parity, 1 Stop bit
+	UART_7O1 = 0x34, ///< 7 Data bits, odd parity, 1 Stop bit
+	UART_8O1 = 0x36, ///< 8 Data bits, odd parity, 1 Stop bit
+	UART_5O2 = 0x38, ///< 5 Data bits, odd parity, 2 Stop bit
+	UART_6O2 = 0x3A, ///< 6 Data bits, odd parity, 2 Stop bit
+	UART_7O2 = 0x3C, ///< 7 Data bits, odd parity, 2 Stop bit
+	UARTT_8O2 = 0x3E ///< 8 Data bits, odd parity, 2 Stop bit
+} uart_format_t;
+
 /**
- * @}
+ * @brief UART operation mode selection
  */
+typedef enum vemar_enum_uart_mode
+{
+	UART_TX = BIT(TXEN0), ///< Transmitter
+	UART_RX = BIT(RXEN0)  ///< Receiver
+} uart_mode_t;
+
+/**
+ * @brief UART interruption selections
+ */
+typedef enum vemar_enum_uart_interrupt
+{
+	UART_TX_COMPLETE = BIT(TXCIE0), ///< Interrupt on TX complete
+	UART_RX_COMPLETE = BIT(RXCIE0)	///< Interrupt on RX complete
+} uart_interrupt_t;
 
 /**
  * @brief UART initialization
  * @param baudrate UART baud rate.
  * @param format UART format, it is advised to use UART_FORMAT_8N1 as default.
+ * @param mode UART operation mode: transmission or reception; can be OR'ed
  * @see uart_baudrate
  * @see uart_format
  */
-void UART_init(unsigned long baudrate, byte_t format);
+void UART_init(unsigned long baudrate, uart_format_t format, uart_mode_t mode);
+
+/**
+ * @brief Set UART baud rate
+ * @param baudrate Baud rate
+ */
+inline void UART_set_baudrate(unsigned long baudrate)
+{
+	UBRR0H = (byte_t)(baudrate >> 8); // 4 most significant bits
+	UBRR0L = (byte_t)(baudrate);	  // 8 least significant bits
+}
+
+/**
+ * @brief Set UART frame format
+ * @param format Frame format
+ */
+inline void UART_set_format(uart_format_t format)
+{
+	UCSR0C = (byte_t)format;
+}
+
+/**
+ * @brief Enable UART receiver
+ */
+inline void UART_enable_receiver(void)
+{
+	BIT_set(UCSR0B, BIT(RXEN0));
+}
+
+/**
+ * @brief Disable UART receiver
+ */
+inline void UART_disable_receiver(void)
+{
+	BIT_clear(UCSR0B, BIT(RXEN0));
+}
+
+/**
+ * @brief Enable UART transmitter
+ */
+inline void UART_enable_transmitter(void)
+{
+	BIT_set(UCSR0B, BIT(TXEN0));
+}
+
+/**
+ * @brief Disable UART transmitter
+ */
+inline void UART_disable_transmitter(void)
+{
+	BIT_clear(UCSR0B, BIT(TXEN0));
+}
+
+/**
+ * @brief Enable UART 
+ */
+void UART_enable_interrupt(uart_interrupt_t interrupt);
 
 /**
  * @brief Transmit a byte of data
@@ -91,7 +162,7 @@ byte_t UART_receive(void);
  */
 inline bool_t UART_is_rx_complete(void)
 {
-    return (BIT_read(UCSR0A, BIT(RXC0)));
+	return (BIT_read(UCSR0A, BIT(RXC0)));
 }
 
 /**
@@ -107,7 +178,7 @@ inline bool_t UART_is_rx_complete(void)
  */
 inline bool_t UART_is_tx_complete(void)
 {
-    return (BIT_read(UCSR0A, BIT(TXC0)));
+	return (BIT_read(UCSR0A, BIT(TXC0)));
 }
 
 /**
@@ -121,7 +192,7 @@ inline bool_t UART_is_tx_complete(void)
  */
 inline bool_t UART_has_frame_error(void)
 {
-    return (BIT_read(UCSR0A, BIT(FE0)));
+	return (BIT_read(UCSR0A, BIT(FE0)));
 }
 
 /**
@@ -134,7 +205,7 @@ inline bool_t UART_has_frame_error(void)
  */
 inline void UART_enable_double_speed(void)
 {
-    BIT_set(UCSR0A, BIT(U2X0));
+	BIT_set(UCSR0A, BIT(U2X0));
 }
 
 /**
@@ -148,7 +219,7 @@ inline void UART_enable_double_speed(void)
  */
 inline void UART_enable_rxci(void)
 {
-    BIT_set(UCSR0B, BIT(RXCIE0));
+	BIT_set(UCSR0B, BIT(RXCIE0));
 }
 
 /**
@@ -156,7 +227,7 @@ inline void UART_enable_rxci(void)
  */
 inline void UART_disable_rxci(void)
 {
-    BIT_clear(UCSR0B, BIT(RXCIE0));
+	BIT_clear(UCSR0B, BIT(RXCIE0));
 }
 
 /**
@@ -170,7 +241,7 @@ inline void UART_disable_rxci(void)
  */
 inline void UART_enable_txci(void)
 {
-    BIT_set(UCSR0B, BIT(TXCIE0));
+	BIT_set(UCSR0B, BIT(TXCIE0));
 }
 
 /**
@@ -178,7 +249,7 @@ inline void UART_enable_txci(void)
  */
 inline void UART_disable_txci(void)
 {
-    BIT_clear(UCSR0B, BIT(TXCIE0));
+	BIT_clear(UCSR0B, BIT(TXCIE0));
 }
 
 /**
@@ -191,25 +262,13 @@ inline void UART_disable_txci(void)
  */
 inline bool_t UART_is_data_empty(void)
 {
-    return (BIT_read(UCSR0A, BIT(UDRE0)));
+	return (BIT_read(UCSR0A, BIT(UDRE0)));
 }
 
 /**
  * @brief Flush the receiver buffer
  */
 void UART_flush(void);
-
-/**
- * @brief Transmit a string
- * @param str Null-terminated string to transmit
- */
-void UART_print(const char *str);
-
-/**
- * @brief Transmit a string with newline
- * @param str Null-terminated string to transmit
- */
-void UART_println(const char *str);
 
 #endif // VEMAR_UART_H
 
@@ -230,4 +289,5 @@ void UART_println(const char *str);
  * - Setting the _baud rate_
  * - Setting _frame format_
  * - Enabling the _Transmitter_ and/or the _Receiver_ depending on the usage
+ * - Enabling the double speed (if neccessary)
  */

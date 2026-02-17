@@ -1,14 +1,24 @@
-NAME		=	joy
+SHELL		:=	/bin/zsh
+SYSTEM		:=	$(shell uname -s)
+
+NAME		=	libvemar.a
 FREQUENCY	?=	16000000UL
 BAUDRATE	?=	115200
 PORT		?=	/dev/ttyUSB0
 PROGRAMMER	?=	arduino
 MCU			?=	atmega328p
 
+ifeq ($(SYSTEM), Darwin)
+PORT		:=	/dev/tty.usbserial-1410
+endif
+
 CC			:=	avr-gcc
+AR			:=	avr-ar rcs
 OBJCOPY		:=	avr-objcopy
 AVRDUDE		:=	avrdude
 RM			:=	rm -f
+ECHO		:=	echo
+MKDIR		:=	mkdir -p
 
 INCLUDE		=	../../../include/module/controller
 
@@ -24,12 +34,6 @@ CFLAGS		=	-Wall \
 				-DF_CPU=$(FREQUENCY) \
 				-I$(INCLUDE)
 
-LDFLAGS		=	-Os \
-				-mmcu=$(MCU) \
-				-ffunction-sections \
-				-fdata-sections \
-				-Wl,--gc-sections
-
 AVRFLAGS	=	-p $(MCU) \
 				-c $(PROGRAMMER) \
 				-b $(BAUDRATE) \
@@ -38,10 +42,14 @@ AVRFLAGS	=	-p $(MCU) \
 				-D
 
 SOURCES		=	main.c \
+				gpio.c \
 				adc.c \
-				joystick.c \
 				uart.c \
-				spi.c
+				serial.c \
+				joystick.c \
+				spi.c \
+				nrf24l01.c \
+				radio.c
 
 BUILD_DIR	=	build
 
@@ -50,32 +58,31 @@ OBJECTS		=	$(addprefix $(BUILD_DIR)/, $(SOURCES:.c=.o))
 FILE_HEX	=	$(addsuffix .hex, $(NAME))
 FILE_BIN	=	$(addsuffix .bin, $(NAME))
 
-all: hex flash
+COLOR_LOG	=	"\033[96m\033[1m"
+COLOR_RESET	=	"\033[0m"
 
-hex: $(FILE_BIN)
+.PHONY: all
 
-flash: $(FILE_HEX)
-	$(AVRDUDE) $(AVRFLAGS) -U flash:w:$<:i
+all: $(NAME)
+
+$(NAME): $(OBJECTS)
+	@$(ECHO) $(COLOR_LOG) "Generating static library: '$@'" $(COLOR_RESET)
+	$(AR) $@ $^
+
+.PHONY: clean fclean rebuild
 
 clean:
 	$(RM) $(OBJECTS)
 
 fclean: clean
 	$(RM) -r $(BUILD_DIR)
-	$(RM) $(FILE_BIN) $(FILE_HEX)
+	$(RM) $(NAME)
 
-re: fclean all
-
-$(FILE_BIN): $(OBJECTS)
-	$(CC) $(LDFLAGS) -o $@ $^
-
-$(FILE_HEX): $(FILE_BIN)
-	$(OBJCOPY) -O ihex $< $@
+rebuild: fclean all
 
 $(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
+	@$(ECHO) $(COLOR_LOG) "Building OBJ file: '$@'" $(COLOR_RESET)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(BUILD_DIR):
-	mkdir -p $@
-
-.PHONY: all hex flash clean fclean re
+	$(MKDIR) $@
