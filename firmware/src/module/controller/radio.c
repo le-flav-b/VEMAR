@@ -50,7 +50,7 @@ void RADIO_init(pin_t ce, pin_t csn)
     NRF24L01_init(ce, csn);
 
     // NRF24L01_set_data_rate(NRF24L01_DR_1MBPS);
-    NRF24L01_setup(NRF24L01_1MBPS, NRF24L01_N18DBM, 1);
+    NRF24L01_setup(NRF24L01_1MBPS, NRF24L01_0DBM, 1);
     NRF24L01_set_frequency(RADIO_DEFAULT_FREQUENCY);
     NRF24L01_clear_status();
 
@@ -65,6 +65,8 @@ void RADIO_init(pin_t ce, pin_t csn)
     NRF24L01_set_retransmit(10, 5); // 10 retries with delay of 1500us
 
     NRF24L01_power_up();
+
+// NRF24L01_print();
 
     // setRetries(5, 15);
     // setDataRate(RF24_1MBPS);
@@ -130,10 +132,12 @@ void RADIO_ready_tx(void)
  */
 bool_t RADIO_read(byte_t *dst, length_t len)
 {
-    NRF24L01_mode_rx();
-    if (!NRF24L01_is_rx_empty()) {
+	NRF24L01_mode_rx();
+    // if (!NRF24L01_is_rx_empty()) {
+	if (NRF24L01_has_payload()) {
         NRF24L01_read_payload(dst, len);
-        // NRF24L01_standby();
+// SERIAL_print(char, dst[0]);
+        NRF24L01_standby();
         return (1);
     }
     // NRF24L01_standby();
@@ -143,13 +147,13 @@ bool_t RADIO_read(byte_t *dst, length_t len)
 bool_t RADIO_write(const byte_t *payload, length_t len)
 {
     NRF24L01_write_payload(payload, len);
-SERIAL_println(str, "write payload");
+// SERIAL_println(str, "write payload");
 
     NRF24L01_mode_tx();
     NRF24L01_disable();
 
-SERIAL_println(bool, NRF24L01_is_tx_empty());
-NRF24L01_debug_config();
+// SERIAL_println(bool, NRF24L01_is_tx_empty());
+// NRF24L01_debug_config();
 
 
 
@@ -159,22 +163,23 @@ NRF24L01_debug_config();
     byte_t status = 0;
     do
     {
+// SERIAL_print(str, "loop");
         status = NRF24L01_status();
 // SERIAL_print(str, "status: 0x"); SERIAL_println(hex, status, 2);
         if (BIT_is_set(status, NRF24L01_MAX_RT))
         {
-SERIAL_println(str, "max reached");
+// SERIAL_println(str, "max reached");
             break;
         } // max retransission reached
         delay(100);
     } while (BIT_is_clear(status, NRF24L01_TX_DS)); // wait transmit complete
-SERIAL_println(str, "end tx");
+// SERIAL_println(str, "end tx");
     // delay(4);
 
     // NRF24L01_clear_status();
     // NRF24L01_disable();
     NRF24L01_standby();
-    NRF24L01_debug_config();
+// NRF24L01_debug_config();
 
     if (BIT_is_set(status, NRF24L01_MAX_RT))
     {

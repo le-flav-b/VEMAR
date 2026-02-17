@@ -24,17 +24,17 @@ void setup(void)
 
 void loop()
 {
-    SERIAL_print("(X, Y) = (", str);
-    SERIAL_print(JOYSTICK_x(&joy), uint);
-    SERIAL_print(", ", str);
-    SERIAL_print(JOYSTICK_y(&joy), uint);
+    SERIAL_print(str, "(X, Y) = (");
+    SERIAL_print(uint, JOYSTICK_x(&joy));
+    SERIAL_print(str, ", ");
+    SERIAL_print(uint, JOYSTICK_y(&joy));
     if (JOYSTICK_is_pressed(&joy))
     {
-        SERIAL_println("), PRESSED", str);
+        SERIAL_println(str, "), PRESSED");
     }
     else
     {
-        SERIAL_println("), released", str);
+        SERIAL_println(str, "), released");
     }
     delay(1000);
 }

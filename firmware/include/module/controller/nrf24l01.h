@@ -163,6 +163,8 @@ void NRF24L01_mode_rx(void);
 void NRF24L01_mode_tx(void);
 void NRF24L01_standby(void);
 
+bool_t NRF24L01_has_payload(void);
+
 void NRF24L01_flush_tx(void);
 void NRF24L01_flush_rx(void);
 // void NRF24L01_activate(void);

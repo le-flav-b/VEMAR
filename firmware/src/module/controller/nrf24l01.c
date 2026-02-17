@@ -2,7 +2,7 @@
 #include "serial.h"
 #include "spi.h"
 
-#define NRF24L01_DELAY_POWERUP 1500 ///< Start up 1500us
+#define NRF24L01_DELAY_POWERUP 150 ///< Start up 150ms
 #define NRF24L01_DELAY_RX 130       ///< RX Settling for 130us
 #define NRF24L01_DELAY_TX 150       ///< TX Settling for 130us
 
@@ -150,6 +150,13 @@ void NRF24L01_init(pin_t ce, pin_t csn)
 
     delay(NRF24L01_DELAY_POWERUP); // wait for NRF24L01 to stablilize
 
+// SERIAL_print(str, "start FIFO: 0x");
+// SERIAL_println(hex, NRF24L01_get_register(FIFO_STATUS), 2);
+// NRF24L01_flush_rx();
+// NRF24L01_flush_tx();
+// SERIAL_print(str, "flush FIFO: 0x");
+// SERIAL_println(hex, NRF24L01_get_register(FIFO_STATUS), 2);
+
     // enable CRC
     NRF24L01_set_register(CONFIG, BIT(EN_CRC) | BIT(CRCO)); // enable CRC
     // byte_t crc = (BIT(EN_CRC) | BIT(CRCO));
@@ -163,6 +170,10 @@ void NRF24L01_init(pin_t ce, pin_t csn)
 
 void NRF24L01_mode_rx(void)
 {
+// byte_t status = NRF24L01_get_register(STATUS);
+// SERIAL_print(str, "STATUS: 0x");
+// SERIAL_println(hex, status, 2);
+
     // if (NRF24L01_MODE_RX == nrf24l01_mode)
     // {
         BIT_set(nrf24l01_config, BIT(PRIM_RX));
@@ -183,12 +194,13 @@ void NRF24L01_mode_tx(void)
         _delay_us(NRF24L01_DELAY_TX);
     //     nrf24l01_mode = NRF24L01_MODE_TX;
     // }
-SERIAL_print(str, "/tx CE: ");
-SERIAL_println(uint, PIN_read(nrf24l01_ce));
+// SERIAL_print(str, "/tx CE: ");
+// SERIAL_println(uint, PIN_read(nrf24l01_ce));
 }
 
 void NRF24L01_standby(void)
 {
+SERIAL_println(str, "standy");
     // if (NRF24L01_MODE_STBY1 != nrf24l01_mode)
     // {
         NRF24L01_clear_status();
@@ -285,7 +297,14 @@ void NRF24L01_flush_rx(void)
 
 bool_t NRF24L01_is_rx_empty(void)
 {
-    return (0 != (NRF24L01_get_register(FIFO_STATUS) & BIT(RX_EMPTY)));
+byte_t fifo = NRF24L01_get_register(FIFO_STATUS);
+SERIAL_print(str, "FIFO: 0x");
+SERIAL_println(hex, fifo, 2);
+
+	return (BIT_is_set(NRF24L01_get_register(FIFO_STATUS),
+		BIT(RX_EMPTY)));
+
+    // return (0 != (NRF24L01_get_register(FIFO_STATUS) & BIT(RX_EMPTY)));
 }
 
 bool_t NRF24L01_is_tx_empty(void)
@@ -301,6 +320,11 @@ bool_t NRF24L01_is_rx_full(void)
 bool_t NRF24L01_is_tx_full(void)
 {
     return (0 != (NRF24L01_get_register(FIFO_STATUS) & BIT(TX_FULL)));
+}
+
+bool_t NRF24L01_has_payload(void)
+{
+	return (BIT_is_set(NRF24L01_get_register(STATUS), NRF24L01_RX_DR));
 }
 
 void NRF24L01_read_payload(byte_t *buff, length_t len)

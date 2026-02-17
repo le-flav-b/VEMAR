@@ -1,5 +1,3 @@
-#include <stdlib.h>
-
 #include "serial.h"
 #include "radio.h"
 #include "nrf24l01.h"
@@ -9,7 +7,9 @@
 #define PIPE "11111"
 
 const byte_t addr[] = PIPE;
-const byte_t message[32] = "Hello World!";
+byte_t message[32] = "Hello world";
+
+byte_t count = 0;
 
 void setup(void)
 {
@@ -18,7 +18,7 @@ void setup(void)
 	RADIO_init(PIN_CE, PIN_CSN);
 	RADIO_set_address_tx(addr);
 
-	// RADIO_debug();
+	RADIO_debug();
 }
 
 void loop(void)
@@ -28,6 +28,8 @@ void loop(void)
 
 	if (RADIO_write(message, 32))
 	{
+		count = (count + 1) % 10;
+		message[0] = count + '0';
 		SERIAL_println(str, "Success");
 	}
 	else

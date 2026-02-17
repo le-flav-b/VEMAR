@@ -9,7 +9,9 @@ NAME		=	blink \
 				joystick \
 				spi \
 				transmitter \
-				receiver
+				receiver \
+				transmitter2 \
+				receiver2
 
 FREQUENCY	?=	16000000UL
 BAUDRATE	?=	115200
@@ -138,3 +140,5 @@ joystick: joystick.hex
 spi: spi.hex
 transmitter: transmitter.hex
 receiver: receiver.hex
+transmitter2: transmitter2.hex
+receiver2: receiver2.hex
