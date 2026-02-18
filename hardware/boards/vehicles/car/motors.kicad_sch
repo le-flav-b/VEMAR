@@ -1211,6 +1211,24 @@
 					(hide yes)
 				)
 			)
+			(property "Sim.Device" "NPN"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Sim.Pins" "1=E 2=B 3=C"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
 			(property "ki_keywords" "NPN Transistor"
 				(at 0 0 0)
 				(effects
@@ -4002,7 +4020,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
 			(at 189.23 102.235 0)
 			(effects
 				(font
@@ -4011,7 +4029,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
 			(at 189.23 97.79 0)
 			(effects
 				(font
@@ -4020,7 +4038,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
 			(at 189.23 97.79 0)
 			(effects
 				(font
@@ -4156,7 +4174,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
 			(at 204.47 102.235 0)
 			(effects
 				(font
@@ -4165,7 +4183,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
 			(at 204.47 97.79 0)
 			(effects
 				(font
@@ -4174,7 +4192,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
 			(at 204.47 97.79 0)
 			(effects
 				(font
@@ -4406,6 +4424,24 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Device" "NPN"
+			(at 91.44 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=E 2=B 3=C"
+			(at 91.44 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "ec80a5e7-3663-4059-b38b-7dc481ed4dc6")
 		)
@@ -4592,7 +4628,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
 			(at 87.63 102.235 0)
 			(effects
 				(font
@@ -4601,7 +4637,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
 			(at 87.63 97.79 0)
 			(effects
 				(font
@@ -4610,7 +4646,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
 			(at 87.63 97.79 0)
 			(effects
 				(font
@@ -5109,6 +5145,24 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Device" "NPN"
+			(at 91.44 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=E 2=B 3=C"
+			(at 91.44 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "2c0b421f-6263-4425-a71e-58b709cd1349")
 		)
@@ -5429,7 +5483,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
 			(at 189.23 122.555 0)
 			(effects
 				(font
@@ -5438,7 +5492,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
 			(at 189.23 118.11 0)
 			(effects
 				(font
@@ -5447,7 +5501,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
 			(at 189.23 118.11 0)
 			(effects
 				(font
@@ -5855,7 +5909,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
 			(at 102.87 102.235 0)
 			(effects
 				(font
@@ -5864,7 +5918,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
 			(at 102.87 97.79 0)
 			(effects
 				(font
@@ -5873,7 +5927,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
 			(at 102.87 97.79 0)
 			(effects
 				(font
@@ -6039,6 +6093,24 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Device" "NPN"
+			(at 193.04 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=E 2=B 3=C"
+			(at 193.04 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "34f002b4-d324-4103-a821-33fcb5c8c4fe")
 		)
@@ -6151,7 +6223,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
 			(at 87.63 122.555 0)
 			(effects
 				(font
@@ -6160,7 +6232,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
 			(at 87.63 118.11 0)
 			(effects
 				(font
@@ -6169,7 +6241,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
 			(at 87.63 118.11 0)
 			(effects
 				(font
@@ -6586,7 +6658,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
 			(at 102.87 122.555 0)
 			(effects
 				(font
@@ -6595,7 +6667,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
 			(at 102.87 118.11 0)
 			(effects
 				(font
@@ -6604,7 +6676,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
 			(at 102.87 118.11 0)
 			(effects
 				(font
@@ -6740,7 +6812,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
+		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
 			(at 204.47 122.555 0)
 			(effects
 				(font
@@ -6749,7 +6821,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "http://www.vishay.com/docs/88756/uf5400.pdf"
 			(at 204.47 118.11 0)
 			(effects
 				(font
@@ -6758,7 +6830,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "1000V 3A Soft Recovery Ultrafast Rectifier Diode, DO-201AD"
 			(at 204.47 118.11 0)
 			(effects
 				(font
@@ -6848,6 +6920,24 @@
 			)
 		)
 		(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, TO-92"
+			(at 193.04 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "NPN"
+			(at 193.04 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=E 2=B 3=C"
 			(at 193.04 72.39 0)
 			(effects
 				(font

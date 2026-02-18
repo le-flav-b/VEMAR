@@ -766,6 +766,33 @@
 					(hide yes)
 				)
 			)
+			(property "Sim.Device" "V"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Sim.Type" "DC"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Sim.Pins" "1=+ 2=-"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
 			(property "ki_keywords" "batt voltage-source cell"
 				(at 0 0 0)
 				(effects
@@ -1125,6 +1152,26 @@
 					(hide yes)
 				)
 			)
+			(property private "KLC_S3.3" "The rectangle is not a symbol body but a graphical element"
+				(at 0 -12.7 0)
+				(show_name)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property private "KLC_S4.1" "Some pins are on 50mil grid to make the symbol small"
+				(at 0 -15.24 0)
+				(show_name)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
 			(property "ki_keywords" "quartz ceramic resonator oscillator"
 				(at 0 0 0)
 				(effects
@@ -1205,18 +1252,6 @@
 				)
 				(polyline
 					(pts
-						(xy 0 3.556) (xy 0 3.81)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
 						(xy 0 -3.81) (xy 0 -3.556)
 					)
 					(stroke
@@ -1272,9 +1307,9 @@
 					)
 				)
 				(pin passive line
-					(at 0 5.08 270)
+					(at 0 -5.08 90)
 					(length 1.27)
-					(name "2"
+					(name "G"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1292,7 +1327,8 @@
 				(pin passive line
 					(at 0 -5.08 90)
 					(length 1.27)
-					(name "4"
+					(hide yes)
+					(name "G"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2802,6 +2838,12 @@
 		(uuid "23c8fbca-3c6c-4018-9e4d-b8419aad67fb")
 	)
 	(junction
+		(at 95.25 120.65)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "24ebb42b-393a-49b7-922d-6a28c562ddb0")
+	)
+	(junction
 		(at 218.44 36.83)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3305,6 +3347,16 @@
 	)
 	(wire
 		(pts
+			(xy 104.14 120.65) (xy 110.49 120.65)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "740ff47c-daea-46f7-8ee0-8db2656e09a7")
+	)
+	(wire
+		(pts
 			(xy 208.28 39.37) (xy 218.44 39.37)
 		)
 		(stroke
@@ -3312,16 +3364,6 @@
 			(type default)
 		)
 		(uuid "7838414e-2db4-4528-8fc0-9316a092aff8")
-	)
-	(wire
-		(pts
-			(xy 105.41 120.65) (xy 110.49 120.65)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "78702bfa-b1ef-46a2-b290-659f55d9ef4a")
 	)
 	(wire
 		(pts
@@ -3525,6 +3567,16 @@
 	)
 	(wire
 		(pts
+			(xy 104.14 102.87) (xy 95.25 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dea8ebe4-c3a7-4806-b2ab-a3ec304a85cf")
+	)
+	(wire
+		(pts
 			(xy 53.34 96.52) (xy 54.61 96.52)
 		)
 		(stroke
@@ -3532,6 +3584,16 @@
 			(type default)
 		)
 		(uuid "dfd2132d-5715-413b-a5ea-e63dac8db0eb")
+	)
+	(wire
+		(pts
+			(xy 95.25 102.87) (xy 95.25 120.65)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e0247021-2beb-4ea2-b24d-af218b62f89a")
 	)
 	(wire
 		(pts
@@ -3552,6 +3614,16 @@
 			(type default)
 		)
 		(uuid "e9244091-ad3b-4a91-9083-87602c044643")
+	)
+	(wire
+		(pts
+			(xy 104.14 120.65) (xy 104.14 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ee8699e5-964d-4cd7-ae4f-9a2f8ba69c41")
 	)
 	(wire
 		(pts
@@ -6980,6 +7052,33 @@
 			)
 		)
 		(property "Description" "Multiple-cell battery"
+			(at 38.1 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "V"
+			(at 38.1 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Type" "DC"
+			(at 38.1 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=+ 2=-"
 			(at 38.1 29.21 0)
 			(effects
 				(font

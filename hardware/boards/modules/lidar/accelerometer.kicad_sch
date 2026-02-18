@@ -2043,7 +2043,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "accelerometer:BNO055_Hand_Soldering_LGA-28_5.2x3.8mm_P0.5mm"
+		(property "Footprint" "Package_LGA:LGA-28_5.2x3.8mm_P0.5mm"
 			(at 148.59 133.35 0)
 			(effects
 				(font

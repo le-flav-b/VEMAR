@@ -2928,7 +2928,7 @@
 					)
 				)
 			)
-			(pin output line
+			(pin passive line
 				(at 8.89 11.43 90)
 				(length 2.54)
 				(name "DAT0"

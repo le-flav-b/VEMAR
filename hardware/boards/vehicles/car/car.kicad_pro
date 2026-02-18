@@ -450,7 +450,17 @@
     "pinned_footprint_libs": [
       "common"
     ],
-    "pinned_symbol_libs": []
+    "pinned_symbol_libs": [
+      "common",
+      "air_sens_lib",
+      "connector",
+      "display",
+      "microchip",
+      "misc",
+      "pwr",
+      "regulator",
+      "transceiver"
+    ]
   },
   "meta": {
     "filename": "car.kicad_pro",

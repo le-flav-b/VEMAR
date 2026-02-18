@@ -1105,6 +1105,26 @@
 					(hide yes)
 				)
 			)
+			(property private "KLC_S3.3" "The rectangle is not a symbol body but a graphical element"
+				(at 0 -12.7 0)
+				(show_name)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property private "KLC_S4.1" "Some pins are on 50mil grid to make the symbol small"
+				(at 0 -15.24 0)
+				(show_name)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
 			(property "ki_keywords" "quartz ceramic resonator oscillator"
 				(at 0 0 0)
 				(effects
@@ -1185,18 +1205,6 @@
 				)
 				(polyline
 					(pts
-						(xy 0 3.556) (xy 0 3.81)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
 						(xy 0 -3.81) (xy 0 -3.556)
 					)
 					(stroke
@@ -1252,9 +1260,9 @@
 					)
 				)
 				(pin passive line
-					(at 0 5.08 270)
+					(at 0 -5.08 90)
 					(length 1.27)
-					(name "2"
+					(name "G"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1272,7 +1280,8 @@
 				(pin passive line
 					(at 0 -5.08 90)
 					(length 1.27)
-					(name "4"
+					(hide yes)
+					(name "G"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3792,6 +3801,12 @@
 		(uuid "04f77679-5c11-41b7-9841-306d1d0a01ac")
 	)
 	(junction
+		(at 39.37 97.79)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0a6287bd-f3f7-4350-b208-a4655a1723a0")
+	)
+	(junction
 		(at 226.06 99.06)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4373,6 +4388,16 @@
 	)
 	(wire
 		(pts
+			(xy 39.37 67.31) (xy 39.37 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "644536ae-ce94-41bb-9b48-312ad1799929")
+	)
+	(wire
+		(pts
 			(xy 162.56 152.4) (xy 162.56 140.97)
 		)
 		(stroke
@@ -4400,6 +4425,16 @@
 			(type default)
 		)
 		(uuid "69f0a557-7320-4d6c-905a-ebb8f49ef53e")
+	)
+	(wire
+		(pts
+			(xy 30.48 67.31) (xy 39.37 67.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "721c2535-b389-4773-89bb-bd4b4e801a4c")
 	)
 	(wire
 		(pts
@@ -4723,13 +4758,23 @@
 	)
 	(wire
 		(pts
-			(xy 29.21 97.79) (xy 24.13 97.79)
+			(xy 24.13 97.79) (xy 30.48 97.79)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "e29a7cca-1a41-42a2-b4cb-df512b8b5ff2")
+	)
+	(wire
+		(pts
+			(xy 30.48 97.79) (xy 30.48 67.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eef7602c-d731-4fa5-ab64-b233d642fe85")
 	)
 	(wire
 		(pts
@@ -6293,7 +6338,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23_Handsoldering"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 238.76 81.915 0)
 			(effects
 				(font
