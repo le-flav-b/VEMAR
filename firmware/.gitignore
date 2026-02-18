@@ -1,1 +1,7 @@
-build
+build/
+
+*.o
+*.d
+*.a
+*.bin
+*.hex
