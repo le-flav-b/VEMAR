@@ -66,14 +66,13 @@ void RADIO_init(pin_t ce, pin_t csn)
 
     NRF24L01_power_up();
 
-// NRF24L01_print();
+    // NRF24L01_print();
 
     // setRetries(5, 15);
     // setDataRate(RF24_1MBPS);
 
     // return (retval);
 }
-
 
 // byte_t RADIO_read_register(radio_t *radio, byte_t reg)
 // {
@@ -106,7 +105,7 @@ void RADIO_ready_tx(void)
 
     // NRF24L01_enable();
 
-    _delay_us(130);     // txDelay
+    _delay_us(130); // txDelay
     // NRF24L01_flush_tx();
     NRF24L01_primary_tx();
 }
@@ -132,11 +131,12 @@ void RADIO_ready_tx(void)
  */
 bool_t RADIO_read(byte_t *dst, length_t len)
 {
-	NRF24L01_mode_rx();
+    NRF24L01_mode_rx();
     // if (!NRF24L01_is_rx_empty()) {
-	if (NRF24L01_has_payload()) {
+    if (NRF24L01_has_payload())
+    {
         NRF24L01_read_payload(dst, len);
-// SERIAL_print(char, dst[0]);
+        // SERIAL_print(char, dst[0]);
         NRF24L01_standby();
         return (1);
     }
@@ -146,16 +146,15 @@ bool_t RADIO_read(byte_t *dst, length_t len)
 
 bool_t RADIO_write(const byte_t *payload, length_t len)
 {
+    NRF24L01_disable();
     NRF24L01_write_payload(payload, len);
-// SERIAL_println(str, "write payload");
+    // SERIAL_println(str, "write payload");
 
     NRF24L01_mode_tx();
     NRF24L01_disable();
 
-// SERIAL_println(bool, NRF24L01_is_tx_empty());
-// NRF24L01_debug_config();
-
-
+    // SERIAL_println(bool, NRF24L01_is_tx_empty());
+    // NRF24L01_debug_config();
 
     // _delay_us(130);
     // _delay_us(10);
@@ -163,23 +162,23 @@ bool_t RADIO_write(const byte_t *payload, length_t len)
     byte_t status = 0;
     do
     {
-// SERIAL_print(str, "loop");
+        // SERIAL_print(str, "loop");
         status = NRF24L01_status();
-// SERIAL_print(str, "status: 0x"); SERIAL_println(hex, status, 2);
+        // SERIAL_print(str, "status: 0x"); SERIAL_println(hex, status, 2);
         if (BIT_is_set(status, NRF24L01_MAX_RT))
         {
-// SERIAL_println(str, "max reached");
+            // SERIAL_println(str, "max reached");
             break;
         } // max retransission reached
         delay(100);
     } while (BIT_is_clear(status, NRF24L01_TX_DS)); // wait transmit complete
-// SERIAL_println(str, "end tx");
+    // SERIAL_println(str, "end tx");
     // delay(4);
 
     // NRF24L01_clear_status();
     // NRF24L01_disable();
     NRF24L01_standby();
-// NRF24L01_debug_config();
+    // NRF24L01_debug_config();
 
     if (BIT_is_set(status, NRF24L01_MAX_RT))
     {

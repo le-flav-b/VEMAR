@@ -32,7 +32,7 @@ MAKE		:=	make -C
 ECHO		:=	echo
 MKDIR		:=	mkdir -p
 
-INCLUDE		=	../../../../include/module/controller
+INCLUDE		=	../../include
 
 LIBRARY_DIR	=	..
 LIBRARY		=	libvemar.a
