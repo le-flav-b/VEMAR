@@ -7,11 +7,13 @@ NAME		=	blink \
 				serial \
 				analog \
 				joystick \
+				joystick2 \
 				spi \
 				transmitter \
 				receiver \
 				transmitter2 \
-				receiver2
+				receiver2 \
+				display
 
 FREQUENCY	?=	16000000UL
 BAUDRATE	?=	115200
@@ -137,8 +139,10 @@ button: button.hex
 toggle: toggle.hex
 serial: serial.hex
 joystick: joystick.hex
+joystick2: joystick2.hex
 spi: spi.hex
 transmitter: transmitter.hex
 receiver: receiver.hex
 transmitter2: transmitter2.hex
 receiver2: receiver2.hex
+display: display.hex

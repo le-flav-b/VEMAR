@@ -11,7 +11,7 @@
  * - Port C is a 7-bit bi-directional I/O port
  * - Port D is an 8-bit bi-directional I/O port
  */
-typedef enum vemar_enum_pin
+typedef enum
 {
     PIN_PB0 = 0x00, ///< Port B 0
     PIN_PB1 = 0x01, ///< Port B 1
@@ -41,54 +41,54 @@ typedef enum vemar_enum_pin
 /**
  * @brief Pin mode selections
  */
-typedef enum vemar_enum_pin_mode
+typedef enum
 {
-    PIN_INPUT = 0, ///< Configure pin as `INPUT`
-    PIN_OUTPUT = 1 ///< Configure pin as `OUTPUT`
+    PIN_INPUT = 0, /**< Define as input pin */
+    PIN_OUTPUT = 1 /**< Define as output pin */
 } pin_mode_t;
 
 /**
  * @brief Pin state selections
  */
-typedef enum vemar_enum_pin_state
+typedef enum
 {
-    PIN_LOW = 0, ///< Set pin value to `LOW`
-    PIN_HIGH = 1 ///< Set pin value to `HIGH`
+    PIN_LOW = 0, /**< Set pin value to `LOW` */
+    PIN_HIGH = 1 /**< Set pin value to `HIGH` */
 } pin_state_t;
 
 /**
  * @brief Button mode selections
  */
-typedef enum vemar_enum_button_mode
+typedef enum
 {
-    BUTTON_ONPRESS = 0x04,   ///< Button active on press
-    BUTTON_ONRELEASE = 0x08, ///< Button active on release
-    BUTTON_ONHOLD = 0x10     ///< Button active on hold
+    BUTTON_ONPRESS = 0x04,   /**< Button active on press */
+    BUTTON_ONRELEASE = 0x08, /**< Button active on release */
+    BUTTON_ONHOLD = 0x10     /**< Button active on hold */
 } button_mode_t;
 
 /**
- * @brief Structure for LED
+ * @brief Define structure for LED
  */
-typedef struct vemar_struct_led
+typedef struct
 {
-    pin_t pin; ///< Pin of the LED
+    pin_t pin; /**< Pin of the LED */
 } led_t;
 
 /**
- * @brief Structure for Button
+ * @brief Define structure for Button
  */
-typedef struct vemar_struct_button
+typedef struct
 {
-    pin_t pin;    ///< Pin of the Button
-    byte_t flags; ///< Button flags
+    pin_t pin;    /**< Pin of the Button */
+    byte_t flags; /**< Button flags */
 } button_t;
 
 /**
- * @brief Structure for Analog
+ * @brief Define structure for Analog Input
  */
-typedef struct vemar_struct_analog
+typedef struct
 {
-    pin_t pin; ///< Pin for the Analog
+    adc_ch_t channel; /**< ADC channel of the Analog */
 } analog_t;
 
 //------------------------------------------------------------------------------
@@ -98,7 +98,9 @@ typedef struct vemar_struct_analog
 /**
  * @brief Read the state from the specified pin
  * @param pin Pin to read
- * @return `PIN_LOW` or `PIN_HIGH`
+ * @return State of the pin (`PIN_LOW` or `PIN_HIGH`)
+ * @see pin_t
+ * @see pin_state_t
  */
 pin_state_t PIN_read(pin_t pin);
 
@@ -106,19 +108,24 @@ pin_state_t PIN_read(pin_t pin);
  * @brief Write the state to the specified pin
  * @param pin Pin to write
  * @param state State of the pin
+ * @see pin_t
+ * @see pin_state_t
  */
 void PIN_write(pin_t pin, pin_state_t state);
 
 /**
  * @brief Toggle the state of the specified pin
  * @param pin Pin to toggle
+ * @see pin_t
  */
 void PIN_toggle(pin_t pin);
 
 /**
  * @brief Configure the specified pin as either input or output
  * @param pin Pin to configure
- * @param mode Mode fo the pin:
+ * @param mode Mode for the pin (`PIN_INPUT` or `PIN_OUTPUT`)
+ * @see pin_t
+ * @see pin_mode_t
  */
 void PIN_mode(pin_t pin, pin_mode_t mode);
 
@@ -129,13 +136,17 @@ void PIN_mode(pin_t pin, pin_mode_t mode);
 /**
  * @brief Instanciate a new LED
  * @param pin Pin of the LED
+ * @return LED structure
+ * @see pin_t
+ * @see led_t
  */
 led_t LED_new(pin_t pin);
 
 /**
  * @brief Check Whether an LED is turn on
  * @param led LED to check
- * @return Non-zero value if the LED is on, otherwise `0`
+ * @return `TRUE` if the LED is on, otherwise `FALSE`
+ * @see led_t
  */
 inline bool_t LED_is_on(led_t led)
 {
@@ -145,6 +156,7 @@ inline bool_t LED_is_on(led_t led)
 /**
  * @brief Turn an LED on
  * @param led LED to turn on
+ * @see led_t
  */
 inline void LED_on(led_t led)
 {
@@ -154,6 +166,7 @@ inline void LED_on(led_t led)
 /**
  * @brief Turn an LED off
  * @param led LED to turn off
+ * @see led_t
  */
 inline void LED_off(led_t led)
 {
@@ -163,6 +176,7 @@ inline void LED_off(led_t led)
 /**
  * @brief Toggle an LED
  * @param led LED to toggle
+ * @see led_t
  */
 inline void LED_toggle(led_t led)
 {
@@ -177,7 +191,8 @@ inline void LED_toggle(led_t led)
  * @brief Instanciate a new button
  * @param pin Pin of the button
  * @param mode Mode of the button
- *
+ * @return Button structure
+ * @see pin_t
  * @see button_mode_t
  */
 button_t BUTTON_new(pin_t pin, button_mode_t mode);
@@ -185,7 +200,8 @@ button_t BUTTON_new(pin_t pin, button_mode_t mode);
 /**
  * @brief Check whether the button is active
  * @param btn Button to check
- * @return Non-zero value if the button is active, otherwise `0`
+ * @return `TRUE` if the button is active, otherwise `FALSE`
+ * @see button_t
  */
 bool_t BUTTON_is_active(button_t *btn);
 
@@ -193,15 +209,25 @@ bool_t BUTTON_is_active(button_t *btn);
 // Analog
 //------------------------------------------------------------------------------
 
-analog_t ANALOG_new(pin_t pin);
+/**
+ * @brief Instanciate a new analog for reading ADC
+ * @param channel ADC channel of the analog
+ * @return Analog structure
+ */
+analog_t ANALOG_new(adc_ch_t channel);
 
-unsigned int ANALOG_read(analog_t analog);
+/**
+ * @brief Read the value of the analog
+ * @param analog Analog to read
+ * @return Value read
+ */
+uint16_t ANALOG_read(analog_t analog);
 
 #endif // VEMAR_GPIO_H
 
 /**
  * @file gpio.h
  * @brief General-Purpose Input/Output
- * @author Christian Hugon
- * @version 0.0.1
+ * @author Christian Hugon <chriss.hugon@gmail.com>
+ * @version 1.0.0
  */

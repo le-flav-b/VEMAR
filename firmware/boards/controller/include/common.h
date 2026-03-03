@@ -4,8 +4,10 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+#include "typedef.h"
+
 #ifndef F_CPU
-#define F_CPU 16000000UL
+#define F_CPU 16000000UL /**< Default CPU frequency (16MHz) */
 #endif
 
 #define DEBOUNCE_TIME 30
@@ -53,7 +55,8 @@
  * @param value Value to write
  * @param mask Mask to apply
  */
-#define BIT_write(reg, value, mask) (reg = ((value) | (reg & ~(mask))))
+#define BIT_write(reg, value, mask) \
+    (reg = (((value) & (mask)) | ((reg) & ~(mask))))
 
 /**
  * @brief Check whether the specific bits of `reg` are set
@@ -74,33 +77,15 @@
  * @param cond Condition to end the loop
  */
 #define WAIT_UNTIL(cond) \
-	do                   \
-	{                    \
-	} while (!(cond))
-
-/**
- * @brief 8-bit register
- */
-typedef unsigned char byte_t;
-
-/**
- * @brief Boolean type
- */
-typedef unsigned char bool_t;
-
-/**
- * @brief
- */
-typedef unsigned char length_t;
-
-#define LENGTH_MIN 0
-#define LENGTH_MAX 0xFF
+    do                   \
+    {                    \
+    } while (!(cond))
 
 #endif // VEMAR_COMMON
 
 /**
  * @file common.h
- * @brief Bit operations
- * @author Christian Hugon
- * @version 0.0.1
+ * @brief Common Macros and Bitwise operations
+ * @author Christian Hugon <chriss.hugon@gmail.com>
+ * @version 1.0.0
  */

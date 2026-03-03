@@ -1,80 +1,121 @@
+#include <avr/interrupt.h>
+
 #include "adc.h"
 
+typedef void (*adc_callback_t)(uint16_t);
+
+static volatile adc_callback_t g_adc_callback;
+
+//------------------------------------------------------------------------------
+// ADC_init
+//------------------------------------------------------------------------------
+void ADC_init(adc_ref_t reference, adc_bit_t resolution, adc_ps_t prescaler)
+{
+    if (!ADC_is_enabled())
+    {
+        ADMUX = reference | resolution; // set voltage referecne and resolution
+        ADCSRA = BIT(ADEN) | prescaler; // enable ADC and set prescaler
+    } // if not initialized
+}
+
+//------------------------------------------------------------------------------
+// ADC_reset
+//------------------------------------------------------------------------------
 void ADC_reset(void)
 {
-	ADMUX = 0x00;  // ADC Multiplexer Selection Register
-	ADCSRA = 0x00; // ADC Control and Status Register A
-	ADCSRB = 0x00; // ADC Control and Status Register B
-				   // DIDR0 = 0x3F; // Digital Input Disable Register
+    ADMUX = 0x00;  // ADC Multiplexer Selection Register
+    ADCSRA = 0x00; // ADC Control and Status Register A
+    ADCSRB = 0x00; // ADC Control and Status Register B
+    DIDR0 = 0x00;  // Digital Input Disable Register
 }
 
-void ADC_init(void)
+//------------------------------------------------------------------------------
+// ADC_enable_channel
+//------------------------------------------------------------------------------
+void ADC_enable_channel(adc_ch_t channel)
 {
-	static bool_t init = 0;
-
-	if (0 == init)
-	{
-		ADC_reset();
-		ADC_enable();
-		ADC_set_reference(ADC_REFERENCE_AVCC);
-		ADC_set_prescaler(ADC_PRESCALER_64);
-		ADC_set_result(ADC_RESULT_10);
-	}
+    if (ADC_CH5 >= channel)
+    {
+        BIT_clear(DDRC, BIT(channel));  // set as input
+        BIT_clear(PORTC, BIT(channel)); // disable internal Pull-up Resistor
+        BIT_set(DIDR0, BIT(channel));   // disable Digital Input Buffer
+    } // if channel 0 to 5
 }
 
-// void ADC_init(byte_t reference, byte_t prescaler, byte_t result)
-// {
-// 	ADC_reset();
-// 	ADC_enable();
-// 	ADC_set_reference(reference);
-// 	ADC_set_prescaler(prescaler);
-// 	ADC_set_result(result);
-
-// 	// BIT_set(ADCSRA, BIT(ADEN));                       // enable ADC
-// 	// BIT_write(ADMUX, reference, ADC_MASK_REFERENCE); // write bits [7:6]
-// 	// BIT_write(ADCSRA, prescaler, ADC_MASK_PRESCALER); // write bits [2:0]
-// 	// BIT_write(ADMUX, result, ADC_MASK_RESULT);        // Write bit 5
-// }
-
-inline unsigned int ADC_data(void)
+//------------------------------------------------------------------------------
+// ADC_data
+//------------------------------------------------------------------------------
+uint16_t ADC_data(void)
 {
-	unsigned int result;
-	if (BIT_read(ADMUX, BIT(ADLAR)))
-	{
-		result = ADCH;
-	} // if left adjusted (ADLAR = 1)
-	else
-	{
-		result = ADCL;
-		result = result | (ADCH << 8);
-	} // if right adjusted
-	return result;
+    uint16_t result;
+
+    if (BIT_is_set(ADMUX, BIT(ADLAR)))
+    {
+        result = ADCH;
+    } // if left adjusted (8-bit resolution)
+    else
+    {
+        result = ADCL; // need to be read first
+        result = result | (ADCH << 8);
+    } // if right adjusted (10-bit resolution)
+    return (result);
 }
 
-unsigned int ADC_read(byte_t channel)
+//------------------------------------------------------------------------------
+// ADC_read
+//------------------------------------------------------------------------------
+uint16_t ADC_read(adc_ch_t channel)
 {
-	ADC_set_channel(channel);
-	ADC_start_conversion();
-	WAIT_UNTIL(ADC_is_conversion_complete());
-	return ADC_data();
+    ADC_set_channel(channel);
+    ADC_start();
+    WAIT_UNTIL(ADC_is_complete());
+    return (ADC_data());
 }
 
-extern inline void ADC_set_reference(byte_t);
-extern inline void ADC_set_result(byte_t);
-extern inline void ADC_set_channel(byte_t);
+//------------------------------------------------------------------------------
+// ADC_attach_interrupt
+//------------------------------------------------------------------------------
+void ADC_attach_interrupt(void (*on_complete)(uint16_t))
+{
+    g_adc_callback = on_complete;
+}
+
+//------------------------------------------------------------------------------
+// ISR
+//------------------------------------------------------------------------------
+ISR(ADC_vect)
+{
+    if (NULL != g_adc_callback)
+    {
+        uint16_t res = ADC_data();
+        g_adc_callback(res);
+    }
+}
+
+//------------------------------------------------------------------------------
+// Inline Functions
+//------------------------------------------------------------------------------
+extern inline bool_t ADC_is_enabled(void);
+extern inline bool_t ADC_is_complete(void);
 
 extern inline void ADC_enable(void);
-extern inline void ADC_disable(void);
-
-extern inline void ADC_start_conversion(void);
+extern inline void ADC_enable_channel(adc_ch_t);
 extern inline void ADC_enable_autotrigger(void);
-extern inline void ADC_disable_autotrigger(void);
-
-extern inline bool_t ADC_is_conversion_complete(void);
 extern inline void ADC_enable_interrupt(void);
+
+extern inline void ADC_disable(void);
+extern inline void ADC_disable_channel(adc_ch_t);
+extern inline void ADC_disable_autotrigger(void);
 extern inline void ADC_disable_interrupt(void);
 
-extern inline void ADC_set_prescaler(byte_t);
+extern inline adc_ref_t ADC_get_reference(void);
+extern inline adc_bit_t ADC_get_resolution(void);
+extern inline adc_ps_t ADC_get_prescaler(void);
+extern inline adc_ch_t ADC_get_channel(void);
 
-extern inline void ADC_enable_channel(byte_t);
-extern inline void ADC_disable_channel(byte_t);
+extern inline void ADC_set_reference(adc_ref_t);
+extern inline void ADC_set_resolution(adc_bit_t);
+extern inline void ADC_set_prescaler(adc_ps_t);
+extern inline void ADC_set_channel(adc_ch_t);
+
+extern inline void ADC_start(void);

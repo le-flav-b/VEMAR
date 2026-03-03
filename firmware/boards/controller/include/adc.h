@@ -3,353 +3,361 @@
 
 #include "common.h"
 
+#if !defined(_DOXYGEN_)
+// Masks used by ADC, for internal use only
+#define _ADC_MASK_REFERENCE 0xC0 /**< ADMUX[7:6] */
+#define _ADC_MASK_PRESCALER 0x07 /**< ADCSRA[2:0] */
+#define _ADC_MASK_RESULT 0x20    /**< ADMUX[5] */
+#define _ADC_MASK_CHANNEL 0x0F   /**< ADMUX[3:0] */
+#define _ADC_MASK_INPUT 0x3F     /**< DIDR0[5:0] */
+#endif
+
+#define ADC_VALUE_MAX 0x3F /**< Maximum value of ADC 10-bit result */
+
+//------------------------------------------------------------------------------
+// Enumerations
+//------------------------------------------------------------------------------
+
 /**
- * @defgroup adc_reference ADC Reference Voltage
- * @brief Available reference voltage selections for ADC
+ * @brief Define the Analog Voltage Reference for the __ADC__
+ * @details
+ * This enumeration maps to the __REFS[1:0]__ bits of the __ADMUX__ register
+ * @see ADC_init
+ * @see ADC_get_reference
  * @see ADC_set_reference
- * @see ADC_init
- * @{
  */
-#define ADC_REFERENCE_AREF 0x00	  ///< AREF, internal VREF turned off
-#define ADC_REFERENCE_AVCC 0x40	  ///< AVCC with external capacitor at AREF pin
-#define ADC_REFERENCE_INTERN 0xC0 ///< Internal 1.1V Voltage Reference
-/**
- * @}
- */
+typedef enum
+{
+    ADC_AREF = 0x00,  /**< __AREF__, internal VREF turned off */
+    ADC_AVCC = 0x40,  /**< __AVCC__ with external capacitor at AREF pin */
+    ADC_INTERN = 0xC0 /**< Internal 1.1V voltage with external capacitor */
+} adc_ref_t;
 
 /**
- * @defgroup adc_prescaler ADC Prescaler
- * @brief Available prescaler selections for ADC
+ * @brief Define the presentation for the ADC conversion result
+ * @details
+ * This enumeration maps to the __ADLAR__ bit of the __ADMUX__ register
+ * @see ADC_init
+ * @see ADC_get_resolution
+ * @see ADC_set_resolution
+ */
+typedef enum
+{
+    ADC_10BIT = 0x00, /**< 10-bit result (Right Adjusted) */
+    ADC_8BIT = 0x20   /**< 8-bit result (Left Adjusted) */
+} adc_bit_t;
+
+/**
+ * @brief Define the division factor between the system clock frequency and
+ * the input clock to the __ADC__
+ * @details
+ * This enumeration maps to the __ADPS[2:0]__ of the __ADCSRA__ register
+ * @note
+ * By default, the successive approximation circuitry requires an input clock
+ * requency between 50kHz to get maximum resolution.
+ * If a lower resolution than 10 bits is needed, the input clock frequency to
+ * the ADC can be higher than 200kHz to get a higher sample rate
+ * @see ADC_init
+ * @see ADC_get_prescaler
  * @see ADC_set_prescaler
- * @see ADC_init
- * @{
  */
-#define ADC_PRESCALER_2 0x01   ///< ADC Prescaler 2
-#define ADC_PRESCALER_4 0x02   ///< ADC Prescaler 4
-#define ADC_PRESCALER_8 0x03   ///< ADC Prescaler 8
-#define ADC_PRESCALER_16 0x04  ///< ADC Prescaler 16
-#define ADC_PRESCALER_32 0x05  ///< ADC Prescaler 32
-#define ADC_PRESCALER_64 0x06  ///< ADC Prescaler 64
-#define ADC_PRESCALER_128 0x07 ///< ADC Prescaler 128
-/**
- * @}
- */
+typedef enum
+{
+    ADC_PS2 = 0x01,  /**< Division factor 2 */
+    ADC_PS4 = 0x02,  /**< Division factor 4 */
+    ADC_PS8 = 0x03,  /**< Division factor 8 */
+    ADC_PS16 = 0x04, /**< Division factor 16 */
+    ADC_PS32 = 0x05, /**< Division factor 32 */
+    ADC_PS64 = 0x06, /**< Division factor 64 */
+    ADC_PS128 = 0x07 /**< Division factor 128 */
+} adc_ps_t;
 
 /**
- * @defgroup adc_result ADC Left Adjust Result
- * @brief 10-bit or 8-bit result for ADC
- * @see ADC_set_result
- * @see ADC_init
- * @{
- */
-#define ADC_RESULT_10 0x00 ///< ADC 10-bit result
-#define ADC_RESULT_8 0x20  ///< ADC 8-bit result
-/**
- * @}
- */
-
-/**
- * @defgroup adc_channel ADC Channel
- * @brief Available channel selections for ADC
- * @see ADC_set_channel
+ * @brief Define ADC Analog channel
  * @see ADC_enable_channel
  * @see ADC_disable_channel
+ * @see ADC_get_channel
+ * @see ADC_set_channel
  * @see ADC_read
- * @{
  */
-#define ADC_CHANNEL_0 0x00 ///< ADC0
-#define ADC_CHANNEL_1 0x01 ///< ADC1
-#define ADC_CHANNEL_2 0x02 ///< ADC2
-#define ADC_CHANNEL_3 0x03 ///< ADC3
-#define ADC_CHANNEL_4 0x04 ///< ADC4
-#define ADC_CHANNEL_5 0x05 ///< ADC5
-
-#define ADC_CHANNEL_6 0x06 ///< ADC6
-#define ADC_CHANNEL_7 0x07 ///< ADC7
-/**
- * @}
- */
-
-/**
- * @{
- * @brief ADC Masks for internal use
- */
-#define ADC_MASK_REFERENCE 0xC0
-#define ADC_MASK_PRESCALER 0x07
-#define ADC_MASK_RESULT 0x20
-#define ADC_MASK_CHANNEL 0x0F
-/**
- * @}
- */
+typedef enum
+{
+    ADC_CH0 = 0, /**< Input channel __ADC0__ */
+    ADC_CH1 = 1, /**< Input channel __ADC1__ */
+    ADC_CH2 = 2, /**< Input channel __ADC2__ */
+    ADC_CH3 = 3, /**< Input channel __ADC3__ */
+    ADC_CH4 = 4, /**< Input channel __ADC4__ */
+    ADC_CH5 = 5, /**< Input channel __ADC5__ */
+    ADC_CH6 = 6, /**< Input channel __ADC6__ */
+    ADC_CH7 = 7  /**< Input channel __ADC7__ */
+} adc_ch_t;
 
 //------------------------------------------------------------------------------
-// ADMUX --- ADC Multiplexer Selection Register
-// | REFS1 | REFS0 | ADLAR | --- | MUX3 | MUX2 | MUX1 | MUX0 |
+// Basic Functions
 //------------------------------------------------------------------------------
 
 /**
- * @brief Set ADC reference voltage
+ * @brief Initialize __Analog-to-Digital Converter (ADC)__
  * @param reference Voltage reference
- * - ADC_REFERENCE_AREF
- * - ADC_REFERENCE_AVCC
- * - ADC_REFERENCE_INTERN
- *
- * @details
- * The `REFS[1:0]` bits select the voltage reference for the ADC.
- * If these bits are changed during a conversion, the change will not go in
- * effect until this conversion is complete (`ADIF` in `ADCSRA` is set).
- * The iunternal voltage reference options may not be used if an external
- * reference voltage is being applied to the `AREF` pin.
+ * @param resolution 8-bit or 10-bit result
+ * @param prescaler Division factor
+ * @see adc_ref_t
+ * @see adc_bit_t
+ * @see adc_ps_t
+ * @ingroup adc_basic
  */
-inline void ADC_set_reference(byte_t reference)
-{
-	BIT_write(ADMUX, reference, ADC_MASK_REFERENCE);
-}
+void ADC_init(adc_ref_t reference, adc_bit_t resolution, adc_ps_t prescaler);
 
 /**
- * @brief Set ADC Left Adjust Result
- * @param result ADC Left Adjust Result
- * - ADC_RESULT_10
- * - ADC_RESULT_8
- *
- * @details
- * The `ADLAR` bit affects the presentation of the ADC conversion result in
- * the ADC data register. Write one to the `ADLAR` to left adjust the result.
- * Otherwise, the result is right adjusted. Changing the `ADLAR` bit will affect
- * the ADC data register immediately, regardless of any ongoing conversion.
+ * @brief Enable ADC channel for conversion
+ * @param channel ADC channel to enable
+ * @see adc_ch_t
+ * @see adc_basic
  */
-inline void ADC_set_result(byte_t result)
-{
-	BIT_write(ADMUX, result, ADC_MASK_RESULT);
-}
-
-/**
- * @brief Set ADC channel
- * @param channel ADC channel
- * @details
- * The value of `MUX[3:0]` selects which analog inputs are connected to the ADC.
- * If these bits are changed during a conversion, the change will not go
- * in effect until this conversion is complete (`ADIF` in `ADCSRA` is set).
- * @see adc_channel
- */
-inline void ADC_set_channel(byte_t channel)
-{
-	BIT_write(ADMUX, channel, ADC_MASK_CHANNEL);
-}
-
-//------------------------------------------------------------------------------
-// ADCSRA -- ADC Control and Status Register A
-// | ADEN | ADSC | ADATE | ADIF | ADIE | ADPS2 | ADPS1 | ADPS0 |
-//------------------------------------------------------------------------------
-
-/**
- * @brief Enable ADC
- *
- * @details
- * Writing `ADEN` to `1` enables the ADC.
- */
-inline void ADC_enable(void)
-{
-	BIT_set(ADCSRA, BIT(ADEN));
-}
-
-/**
- * @brief Disable ADC
- * @details
- * By writing `ADEN` to `0`, the ADC is turned off. Turning the ADC off while
- * a conversion is in progress, will terminate this conversion.
- */
-inline void ADC_disable(void)
-{
-	BIT_clear(ADCSRA, BIT(ADEN));
-}
-
-/**
- * @brief Start ADC conversion
- * @details
- * In single conversion mode, write `ADSC` bit to one to start each conversion.
- * In free running mode, write this bit to one to start the first conversion.
- * The first conversion after `ADSC` has been written after the ADC has been
- * enabled, or if `ADSC` is written at the same time as the ADC is enabled,
- * will take 25 ADC clock cycles instead of the normal 13.
- * This first conversion performs initialization of the ADC.
- *
- * `ADSC` will read as one as long as a conversion is in progress.
- * When the conversion is complete, it returns to zero.
- * Writing zero to this bit has no effect.
- */
-inline void ADC_start_conversion(void)
-{
-	BIT_set(ADCSRA, BIT(ADSC));
-}
-
-/**
- * @brief Enable ADC Auto Trigger
- * @details
- * When `ADATE` bit is written to `1`, Auto Triggering of the ADC is enabled.
- * The ADC will start a conversion on a positive edge of the selected trigger
- * signal. The trigger source is selected by setting the ADC Trigger Select
- * `ADTS` in `ADCSRB`.
- */
-inline void ADC_enable_autotrigger(void)
-{
-	BIT_set(ADCSRA, BIT(ADATE));
-}
-
-/**
- * @brief Disable ADC Auto Trigger
- * @see ADC_enable_autotrigger
- */
-inline void ADC_disable_autotrigger(void)
-{
-	BIT_clear(ADCSRA, BIT(ADATE));
-}
-
-/**
- * @details
- * `ADIF` bit is set when an ADC conversion completes and the Data Registers
- * are updated. The ADC Conversion Complete Interrupt is executed if the `ADIE`
- * bit and the I-bit in SREG are set. `ADIF` is cleared by hardware when
- * executing the corresponding interrupt handling vector. Alternatively, `ADIF`
- * is cleared by writing a logical `1` to the flag.
- * Beware that if doing a Read-Modify-Write on `ADCSRA` a pending interrupt can
- * be disabled. This also applies if the `SBI` and `CBI` instructions are used.
- */
-inline bool_t ADC_is_conversion_complete(void)
-{
-	return (BIT_read(ADCSRA, BIT(ADIF)));
-}
-
-/**
- * @brief Enable ADC interrupt
- * @details
- * When this bit written to `1` and the I-bit in `SREG` is set,
- * the ADC conversion complete interrupt is activated.
- */
-inline void ADC_enable_interrupt(void)
-{
-	BIT_set(ADCSRA, BIT(ADIE));
-}
-
-/**
- * @brief Disable ADC interrupt
- */
-inline void ADC_disable_interrupt(void)
-{
-	BIT_clear(ADCSRA, BIT(ADIE));
-}
-
-/**
- * @brief Set ADC prescaler
- * @param prescaler ADC prescaler
- * @details
- * The ADPS[2:0] bits determine the division factor between the system clock
- * frequency and the input clock to the ADC.
- * @see adc_prescaler
- */
-inline void ADC_set_prescaler(byte_t prescaler)
-{
-	BIT_write(ADCSRA, prescaler, ADC_MASK_PRESCALER);
-}
-
-//------------------------------------------------------------------------------
-// ADCL and ADCH --- The ADC Data Register
-//------------------------------------------------------------------------------
-
-/**
- * @details
- * When ADC conversion is complete, the result is found in `ADCL` and `ADCH`.
- * When `ADCL` is read, the ADC Data Register is not updated until ADCH is read.
- * Consequently, if the result is left adjusted and no more than 8-bit precision
- * is required, it is sufficient to read `ADCH`. Otherwise, `ADCL` must be read
- * first, then `ADCH`.
- * The `ADLAR` bit in `ADMUX`, and the MUXn bits in `ADMUX` affect the way
- * the result is read from the register.
- * If `ADLAR` is set, the result is left adjusted.
- * If `ADLAR is cleared (default), the result is right adjusted.
- */
-unsigned int ADC_data(void);
-
-//------------------------------------------------------------------------------
-// ADCSRB --- ADC Control and Status Register B
-// | --- | ACME | --- | --- | --- | ADTS2 | ADTS1 | ADTS0 |
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
-// DIDR0 --- Digital Input Register 0
-// | --- | --- | ADC5D | ADC4D | ADC3D | ADC2D | ADC1D | ADC0D |
-//------------------------------------------------------------------------------
+void ADC_enable_channel(adc_ch_t channel);
 
 /**
  * @brief Disable ADC channel
- * @param channel ADC channel
- * - ADC_CHANNEL_0
- * - ADC_CHANNEL_1
- * - ADC_CHANNEL_2
- * - ADC_CHANNEL_3
- * - ADC_CHANNEL_4
- * - ADC_CHANNEL_5
- *
- * @details
- * When ADC[5:0]D bit is written logic `1`, the digital input buffer on
- * the corresponding ADC pin disabled. The corresponding PIN regiester bit
- * will always read as `0` when this bit is set. When an analog signal
- * is applied to then ADC[5:0] pin and the digital input from this pin
- * is not needed, this should be written logic `1` to reduce power consumption
- * in the digital input buffer.
+ * @param channel ADC channel to disable
+ * @see adc_ch_t
+ * @see adc_basic
  */
-
-inline void ADC_disable_channel(byte_t channel)
+inline void ADC_disable_channel(adc_ch_t channel)
 {
-	BIT_set(DIDR0, BIT(channel));
+    if (ADC_CH5 >= channel)
+    {
+        BIT_set(DIDR0, BIT(channel));
+    }
 }
-
-/**
- * @brief Enable ADC channel
- * @param channel ADC channel
- * @see adc_channel
- */
-inline void ADC_enable_channel(byte_t channel)
-{
-		BIT_clear(DIDR0, BIT(channel));
-}
-
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
-
-/**
- * @brief Reset all ADC registers to default values
- */
-void ADC_reset(void);
-
-/**
- * @brief Initialize ADC (Analog-to-Digital Converter)
- * @param reference Voltage reference
- * @param prescaler Prescaler
- * @param result ADC Left Adjust Result, 8-bit or 10-bit result
- * @see adc_reference
- * @see adc_prescaler
- * @see adc_result
- */
-// void ADC_init(byte_t reference, byte_t prescaler, byte_t result);
-void ADC_init(void);
-
 
 /**
  * @brief Start conversion, and return the converted value
  * @param channel Analog channel for the conversion
  * @return Result of the conversion
- * @see adc_channel
+ * @note The ADC channel must be enabled with `ADC_enable_channel`
+ * @see adc_ch_t
+ * @ingroup adc_basic
  */
-unsigned int ADC_read(byte_t channel);
+uint16_t ADC_read(adc_ch_t channel);
+
+//------------------------------------------------------------------------------
+// Advanced Functions
+//------------------------------------------------------------------------------
+
+/**
+ * @brief Reset all ADC registers to their default values
+ * @ingroup adc_advanced
+ */
+void ADC_reset(void);
+
+/**
+ * @brief Check whether the ADC is enabled
+ * @return `TRUE` if the ADC is switched on, otherwise `FALSE`
+ * @ingroup adc_advanced
+ */
+inline bool_t ADC_is_enabled(void)
+{
+    return (BIT_is_set(ADCSRA, BIT(ADEN)));
+}
+
+/**
+ * @brief Enable ADC
+ * @ingroup adc_advanced
+ */
+inline void ADC_enable(void)
+{
+    BIT_set(ADCSRA, BIT(ADEN)); // set `ADEN` flag
+}
+
+/**
+ * @brief Disable ADC
+ * @ingroup adc_advanced
+ */
+inline void ADC_disable(void)
+{
+    BIT_clear(ADCSRA, BIT(ADEN)); // clear `ADEN` flag
+}
+
+/**
+ * @brief Return the ADC reference voltage
+ * @return ADC reference voltage
+ * @see adc_ref_t
+ * @ingroup adc_advanced
+ */
+inline adc_ref_t ADC_get_reference(void)
+{
+    return (BIT_read(ADMUX, _ADC_MASK_REFERENCE));
+}
+
+/**
+ * @brief Set ADC reference voltage
+ * @param reference Voltage reference
+ * @ingroup adc_advanced
+ */
+inline void ADC_set_reference(adc_ref_t reference)
+{
+    BIT_write(ADMUX, reference, _ADC_MASK_REFERENCE);
+}
+
+/**
+ * @brief Return the ADC resolution
+ * @return ADC resolution (8-bit or 10-bit)
+ * @see adc_bit_t
+ * @ingroup adc_advanced
+ */
+inline adc_bit_t ADC_get_resolution(void)
+{
+    return (BIT_read(ADMUX, _ADC_MASK_RESULT));
+}
+
+/**
+ * @brief Set ADC resolution
+ * @param resolution ADC resolution (8-bit or 10-bit)
+ * @see adc_bit_t
+ * @ingroup adc_advanced
+ */
+inline void ADC_set_resolution(adc_bit_t resolution)
+{
+    BIT_write(ADMUX, resolution, _ADC_MASK_RESULT);
+}
+
+/**
+ * @brief Return the ADC prescaler
+ * @return ADC prescaler
+ * @see adc_ps_t
+ * @ingroup adc_advanced
+ */
+inline adc_ps_t ADC_get_prescaler(void)
+{
+    return (BIT_read(ADCSRA, _ADC_MASK_PRESCALER));
+}
+
+/**
+ * @brief Set ADC prescaler
+ * @param prescaler ADC prescaler
+ * @see adc_ps_t
+ * @ingroup adc_advanced
+ */
+inline void ADC_set_prescaler(adc_ps_t prescaler)
+{
+    BIT_write(ADCSRA, prescaler, _ADC_MASK_PRESCALER);
+}
+
+/**
+ * @brief Return the current active channel
+ * @return Current ADC channel
+ * @see adc_ch_t
+ * @ingroup adc_advanced
+ */
+inline adc_ch_t ADC_get_channel(void)
+{
+    return (BIT_read(ADMUX, _ADC_MASK_CHANNEL));
+}
+
+/**
+ * @brief Set ADC channel
+ * @param channel ADC channel
+ * @see adc_ch_t
+ * @ingroup adc_advanced
+ */
+inline void ADC_set_channel(adc_ch_t channel)
+{
+    BIT_write(ADMUX, channel, _ADC_MASK_CHANNEL);
+}
+
+/**
+ * @brief Check whether the conversion is complete
+ * @return `TRUE` if the conversion is complete, otherwise `FALSE`
+ */
+inline bool_t ADC_is_complete(void)
+{
+    return (BIT_is_set(ADCSRA, BIT(ADIF))); // check `ADIF` flag
+}
+
+/**
+ * @brief Start ADC conversion
+ * @ingroup adc_advanced
+ */
+inline void ADC_start(void)
+{
+    BIT_set(ADCSRA, BIT(ADSC)); // set `ADSC` flag
+}
+
+/**
+ * @brief Return the read value of the current active channel
+ * @return Converted value (8-bit or 10-bit)
+ * @ingroup adc_advanced
+ */
+uint16_t ADC_data(void);
+
+/**
+ * @brief Enable ADC Auto Trigger
+ * @warning Auto-trigger not available
+ */
+inline void ADC_enable_autotrigger(void)
+{
+    BIT_set(ADCSRA, BIT(ADATE));
+}
+
+/**
+ * @brief Disable ADC Auto Trigger
+ * @warning Auto-trigger not available
+ */
+inline void ADC_disable_autotrigger(void)
+{
+    BIT_clear(ADCSRA, BIT(ADATE));
+}
+
+/**
+ * @brief Enable ADC interrupt
+ * @warning Interruption not available
+ */
+inline void ADC_enable_interrupt(void)
+{
+    BIT_set(ADCSRA, BIT(ADIE)); // set `ADIE` flag
+}
+
+/**
+ * @brief Disable ADC interrupt
+ * @warning Interruption not available
+ */
+inline void ADC_disable_interrupt(void)
+{
+    BIT_clear(ADCSRA, BIT(ADIE)); // clear `ADIE` flag
+}
+
+/**
+ * @brief Attach an interrupt handler to be called when an ADC conversion
+ * complete occures
+ * @param on_complete Function callback to call when the interruption occures.
+ * @details
+ * The callback function takes the value of the conversion as parameter
+ */
+void ADC_attach_interrupt(void (*on_complete)(uint16_t));
 
 #endif // VEMAR_ADC_H
 
 /**
  * @file adc.h
- * @brief ADC manipulation
- * @author Christian Hugon
- * @version 0.0.1
+ * @brief ADC utility functions
+ * @author Christian HUGON <chriss.hugon@gmail.com>
+ * @version 1.0.0
+ * @details
+ * For quick configuration:
+ * ```
+ * void setup(void)
+ * {
+ *      ADC_init(ADC_AVCC, ADC_10BIT, ADC_PS128);
+ *      ADC_enable_channel(ADC_CH0); // channel ADC0
+ * }
+ *
+ * void loop(void)
+ * {
+ *      uint16 res = ADC_read(ADC_CH0);
+ *      // handle res
+ *      delay(1000); // wait for 1s
+ * }
+ * ```
  */
 
 /**
@@ -357,10 +365,11 @@ unsigned int ADC_read(byte_t channel);
  * @brief ADC (Analog-to-Digital Converter) module
  *
  * @section sec_adc_init Initialization
- * - Enable ADC
+ * For advanced configuration:
  * - Set ADC reference voltage
  * - Set ADC prescaler
- * - Set ADC result
+ * - Set ADC resolution
+ * - Enable ADC
  * - Enable ADC channel
  * - Set ADC channel
  * - Start conversion
