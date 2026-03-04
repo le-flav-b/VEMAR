@@ -145,7 +145,7 @@ void NRF24L01_init(pin_t ce, pin_t csn)
     PIN_write(nrf24l01_ce, PIN_LOW);
     PIN_write(nrf24l01_csn, PIN_HIGH);
 
-    SPI_init();
+    SPI_init(SPI_MSB, SPI_MODE0, SPI_PS4);
 
     delay(NRF24L01_DELAY_POWERUP); // wait for NRF24L01 to stablilize
 
@@ -199,7 +199,7 @@ void NRF24L01_mode_tx(void)
 
 void NRF24L01_standby(void)
 {
-    SERIAL_println(str, "standy");
+    // SERIAL_println(str, "standy");
     // if (NRF24L01_MODE_STBY1 != nrf24l01_mode)
     // {
     NRF24L01_clear_status();

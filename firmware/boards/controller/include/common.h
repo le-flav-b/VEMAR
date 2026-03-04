@@ -2,17 +2,8 @@
 #define VEMAR_COMMON_H
 
 #include <avr/io.h>
-#include <util/delay.h>
 
 #include "typedef.h"
-
-#ifndef F_CPU
-#define F_CPU 16000000UL /**< Default CPU frequency (16MHz) */
-#endif
-
-#define DEBOUNCE_TIME 30
-
-#define delay(ms) _delay_ms(ms)
 
 /**
  * @brief Create a bitmask with a single bit set to `1` at the position

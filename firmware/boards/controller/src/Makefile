@@ -32,6 +32,7 @@ CFLAGS		=	-Wall \
 				-fdata-sections \
 				-mmcu=$(MCU) \
 				-DF_CPU=$(FREQUENCY) \
+				-DBAUDRATE=$(BAUDRATE) \
 				-I$(INCLUDE)
 
 AVRFLAGS	=	-p $(MCU) \

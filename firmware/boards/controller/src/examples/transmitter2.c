@@ -42,7 +42,7 @@ static void receive(void)
     else
     {
         ++count;
-        if (count > 10000)
+        if (count > 20000)
         {
             count = 0;
             mode_tx = 1;

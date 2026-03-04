@@ -1,4 +1,5 @@
 #include "gpio.h"
+#include "config.h"
 
 // access corresponding register: PINx, DDRx, PORTx
 #define REG_PIN(pin) (_SFR_IO8(0x03 + ((pin & 0xF0) >> 4)))

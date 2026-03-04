@@ -13,6 +13,7 @@ NAME		=	blink \
 				receiver \
 				transmitter2 \
 				receiver2 \
+				transceiver \
 				display
 
 FREQUENCY	?=	16000000UL
@@ -145,4 +146,5 @@ transmitter: transmitter.hex
 receiver: receiver.hex
 transmitter2: transmitter2.hex
 receiver2: receiver2.hex
+transceiver: transceiver.hex
 display: display.hex
