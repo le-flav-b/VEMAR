@@ -1,9 +1,9 @@
 #include "spi.h"
 
-#define SPI_SS 0x04   ///< SPI Slave Select
-#define SPI_MOSI 0x08 ///< SPI Master Output Slave Input
-#define SPI_MISO 0x10 ///< SPI Master Input Slave Output
-#define SPI_SCK 0x20  ///< SPI Clock Input
+#define SPI_SS 0x04   /**< PB2 (~Slave Select) */
+#define SPI_MOSI 0x08 /**< PB3 (SPI Master Output Slave Input) */
+#define SPI_MISO 0x10 /**< PB4 (SPI Master Input Slave Output) */
+#define SPI_SCK 0x20  /**< PB5 (SPI Clock Input) */
 
 #define _SPI_MASK_PRESCALER 0x03
 
@@ -15,15 +15,13 @@ void SPI_init(spi_order_t order, spi_mode_t mode, spi_ps_t prescaler)
     if (!SPI_is_enabled())
     {
         // set MOSI, SCK as output, MISO as input
-        BIT_set(DDRB, SPI_MOSI);
-        BIT_set(DDRB, SPI_SCK);
-        BIT_set(DDRB, SPI_SS);
+        BIT_set(DDRB, (SPI_SS | SPI_MOSI | SPI_SCK));
         BIT_clear(DDRB, SPI_MISO);
 
         // enable SPI, set as Master
         SPCR = BIT(SPE) | (order) | BIT(MSTR) | (mode) |
                (prescaler & _SPI_MASK_PRESCALER);
-        SPSR = (prescaler) >> 4; // write `SPI2X` bit if required
+        SPSR = (prescaler) >> 4; // write `SPI2X` bit if necessary
     } // if SPI is not initialized
 }
 

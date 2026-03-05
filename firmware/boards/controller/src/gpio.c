@@ -47,8 +47,16 @@ void PIN_toggle(pin_t pin)
 void PIN_mode(pin_t pin, pin_mode_t mode)
 {
     BIT_write(REG_DDR(pin), REG_SHIFT(pin, mode), REG_SHIFT(pin, 1));
-    // enable pull-up resistor / set output high
-    BIT_write(REG_PORT(pin), REG_SHIFT(pin, 1), REG_SHIFT(pin, 1));
+}
+
+void PIN_enable_pullup(pin_t pin)
+{
+    BIT_set(REG_PORT(pin), REG_SHIFT(pin, 1));
+}
+
+void PIN_disable_pullup(pin_t pin)
+{
+	BIT_clear(REG_PORT(pin), REG_SHIFT(pin, 1));
 }
 
 //------------------------------------------------------------------------------
@@ -97,7 +105,7 @@ bool_t BUTTON_is_active(button_t *button)
     default:
         break;
     }
-    return (0);
+    return (FALSE);
 }
 
 //------------------------------------------------------------------------------

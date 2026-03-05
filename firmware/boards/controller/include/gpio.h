@@ -129,6 +129,18 @@ void PIN_toggle(pin_t pin);
  */
 void PIN_mode(pin_t pin, pin_mode_t mode);
 
+/**
+ * @brief Enable internal Pull-up Resistor
+ * @param pin Pin whose internal Pull-up Resistor to enable
+ */
+void PIN_enable_pullup(pin_t pin);
+
+/**
+ * @brief Disable internal Pull-up Resistor
+ * @param pin Pin whose internal Pull-up Resistor to disable
+ */
+void PIN_disable_pullup(pin_t pin);
+
 //------------------------------------------------------------------------------
 // LED
 //------------------------------------------------------------------------------

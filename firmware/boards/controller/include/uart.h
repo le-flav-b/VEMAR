@@ -130,7 +130,7 @@ inline void UART_set_format(uart_fmt_t format)
  * @brief Enable UART interrupt
  * @param mode Operation mode interrupt to enable
  */
-void UART_enable_interrupt(uart_mode_t mode)
+inline void UART_enable_interrupt(uart_mode_t mode)
 {
     BIT_set(UCSR0B, (mode << 3));
 }
@@ -139,7 +139,7 @@ void UART_enable_interrupt(uart_mode_t mode)
  * @brief Disable UART interrupt
  * @param mode Operation mode interrupt to disable
  */
-void UART_disable_interrupt(uart_mode_t mode)
+inline void UART_disable_interrupt(uart_mode_t mode)
 {
     BIT_clear(UCSR0B, (mode << 3));
 }

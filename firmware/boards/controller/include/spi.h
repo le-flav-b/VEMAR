@@ -212,7 +212,7 @@ inline bool_t SPI_is_complete(void)
  * {
  *      SPI_init(SPI_MSB, SPI_MODE0, SPI_SP16);
  * }
- * 
+ *
  * void loop(void)
  * {
  *      SPI_transmit(0x00);
