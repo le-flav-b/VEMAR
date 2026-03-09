@@ -84,17 +84,30 @@
 
 #define ILI9341_MASK_ORIENTATION 0xE0 /**< MADCTL[7:5] */
 
+typedef struct
+{
+    length_t size;        /**< Size of the text */
+    length_t spacing;     /**< Space betwwen characters in pixels */
+    color16_t color;      /**< Color of the text */
+    color16_t background; /**< Color of the background */
+} ili9341_text_t;
+
 struct ili9341_t
 {
-    uint16_t w;    /**< Width */
-    uint16_t h;    /**< Height */
-    pin_t cs;      /**< Chip Select (LOW to start SPI communication) */
-    pin_t dc;      /**< Data/Command (HIGH for data, LOw for command) */
-    pin_t rst;     /**< Reset */
-    byte_t madctl; /**< MADCTL register */
+    uint16_t w;          /**< Width */
+    uint16_t h;          /**< Height */
+    pin_t cs;            /**< Chip Select (LOW to start SPI communication) */
+    pin_t dc;            /**< Data/Command (HIGH for data, LOw for command) */
+    pin_t rst;           /**< Reset */
+    byte_t madctl;       /**< MADCTL register */
+    ili9341_text_t text; /**< Text configuration */
 };
 
 static struct ili9341_t g_ili9341;
+
+//------------------------------------------------------------------------------
+// ILI9341_set_command
+//------------------------------------------------------------------------------
 
 static void ILI9341_set_command(byte_t cmd)
 {
@@ -104,6 +117,10 @@ static void ILI9341_set_command(byte_t cmd)
     PIN_write(g_ili9341.cs, PIN_HIGH);
 }
 
+//------------------------------------------------------------------------------
+// ILI9341_set_data
+//------------------------------------------------------------------------------
+
 static void ILI9341_set_data(byte_t data)
 {
     PIN_write(g_ili9341.dc, PIN_HIGH);
@@ -111,6 +128,10 @@ static void ILI9341_set_data(byte_t data)
     SPI_transmit(data);
     PIN_write(g_ili9341.cs, PIN_HIGH);
 }
+
+//------------------------------------------------------------------------------
+// ILI9341_set_data16
+//------------------------------------------------------------------------------
 
 static void ILI9341_set_data16(uint16_t data)
 {
@@ -131,11 +152,19 @@ static void ILI9341_setup_rgb(void)
     ILI9341_set_data(ILI9341_RGB16);
 }
 
+//------------------------------------------------------------------------------
+// ILI9341_sleep_in
+//------------------------------------------------------------------------------
+
 void ILI9341_sleep_in(void)
 {
     ILI9341_set_command(ILI9341_SPI_SPLIN);
     delay(120);
 }
+
+//------------------------------------------------------------------------------
+// ILI9341_sleep_out
+//------------------------------------------------------------------------------
 
 void ILI9341_sleep_out(void)
 {
@@ -143,10 +172,18 @@ void ILI9341_sleep_out(void)
     delay(5);
 }
 
+//------------------------------------------------------------------------------
+// ILI9341_enable_display
+//------------------------------------------------------------------------------
+
 void ILI9341_enable_display(void)
 {
     ILI9341_set_command(ILI9341_SPI_DISPON);
 }
+
+//------------------------------------------------------------------------------
+// ILI9341_disable_display
+//------------------------------------------------------------------------------
 
 void ILI9341_disable_display(void)
 {
@@ -177,6 +214,10 @@ void ILI9341_define_area(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
     ILI9341_set_command(ILI9341_SPI_RAMWR);
 }
 
+//------------------------------------------------------------------------------
+// ILI9341_init
+//------------------------------------------------------------------------------
+
 void ILI9341_init(pin_t cs, pin_t dc, pin_t rst)
 {
     g_ili9341.cs = cs;
@@ -206,11 +247,19 @@ void ILI9341_init(pin_t cs, pin_t dc, pin_t rst)
     ILI9341_enable_display();
 }
 
+//------------------------------------------------------------------------------
+// ILI9341_reset
+//------------------------------------------------------------------------------
+
 void ILI9341_reset(void)
 {
     ILI9341_set_command(ILI9341_SPI_SWRESET);
     delay(120); // wait before sending new command
 }
+
+//------------------------------------------------------------------------------
+// ILI9341_draw_pixel
+//------------------------------------------------------------------------------
 
 void ILI9341_draw_pixel(uint16_t x, uint16_t y, uint16_t color)
 {
@@ -218,10 +267,18 @@ void ILI9341_draw_pixel(uint16_t x, uint16_t y, uint16_t color)
     ILI9341_set_data16(color);
 }
 
+//------------------------------------------------------------------------------
+// ILI9341_fill_screen
+//------------------------------------------------------------------------------
+
 void ILI9341_fill_screen(color16_t color)
 {
     ILI9341_fill_area(0, 0, g_ili9341.w, g_ili9341.h, color);
 }
+
+//------------------------------------------------------------------------------
+// ILI9341_fill_area
+//------------------------------------------------------------------------------
 
 void ILI9341_fill_area(uint16_t x, uint16_t y, uint16_t w, uint16_t h, color16_t color)
 {
@@ -231,6 +288,10 @@ void ILI9341_fill_area(uint16_t x, uint16_t y, uint16_t w, uint16_t h, color16_t
         ILI9341_set_data16(color);
     }
 }
+
+//------------------------------------------------------------------------------
+// ILI9341_set_orientation
+//------------------------------------------------------------------------------
 
 void ILI9341_set_orientation(ili9341_orientation_t orientation)
 {
@@ -249,42 +310,95 @@ void ILI9341_set_orientation(ili9341_orientation_t orientation)
     ILI9341_set_data(g_ili9341.madctl);
 }
 
-uint8_t char_w = 5;
-uint8_t char_h = 7;
+//------------------------------------------------------------------------------
+// ILI9341_set_text_size
+//------------------------------------------------------------------------------
 
-void ILI9341_draw_char(uint16_t x, uint16_t y, char ch, color16_t text, color16_t bg)
+void ILI9341_set_text_size(length_t size)
 {
-    uint16_t scale = 6;
-    // (void)ch;
+    g_ili9341.text.size = size;
+}
 
-    ILI9341_define_area(x, y, char_w * scale, char_h * scale);
-    uint16_t font_idx = (ch - 32) * 5;
+//------------------------------------------------------------------------------
+// ILI9341_set_text_spacing
+//------------------------------------------------------------------------------
 
-    for (uint8_t row = 0; row < char_h; ++row)
+void ILI9341_set_text_spacing(length_t spacing)
+{
+    g_ili9341.text.spacing = spacing;
+}
 
-    { // 5 columns + 1 blank for spacing
+//------------------------------------------------------------------------------
+// ILI9341_set_text_color
+//------------------------------------------------------------------------------
 
-        for (uint8_t i = 0; i < scale; ++i)
+void ILI9341_set_text_color(color16_t color)
+{
+    g_ili9341.text.color = color;
+}
+
+//------------------------------------------------------------------------------
+// ILI9341_set_text_background
+//------------------------------------------------------------------------------
+
+void ILI9341_set_text_background(color16_t background)
+{
+    g_ili9341.text.background = background;
+}
+
+static inline byte_t ILI9341_font(uint16_t ch, uint16_t idx)
+{
+    if (FONT_WIDTH > idx)
+    {
+        return (pgm_read_byte(&font[ch + idx]));
+    }
+    return (0);
+}
+
+//------------------------------------------------------------------------------
+// ILI9341_draw_char
+//------------------------------------------------------------------------------
+
+void ILI9341_draw_char(uint16_t x, uint16_t y, char ch)
+{
+    ILI9341_define_area(x, y,
+                        FONT_WIDTH * g_ili9341.text.size,
+                        FONT_HEIGHT * g_ili9341.text.size);
+    uint16_t font_idx = (ch - 32) * FONT_WIDTH;
+
+    for (uint8_t row = 0; row < FONT_HEIGHT; ++row)
+    {
+        for (uint8_t i = 0; i < g_ili9341.text.size; ++i)
         {
-            // uint8_t line = 0x01;
-            for (uint8_t col = 0; col < char_w; ++col)
+            for (uint8_t col = 0; col < FONT_WIDTH; ++col)
             {
-                uint8_t line = (col < 5) ? pgm_read_byte(&font[font_idx + col]) : 0x00;
+                byte_t line = (col < 5)
+                                   ? pgm_read_byte(&font[font_idx + col])
+                                   : 0x00;
+                color16_t color = (BIT_read(line, BIT(row)))
+                                      ? g_ili9341.text.color
+                                      : g_ili9341.text.background;
 
-                for (uint8_t j = 0; j < scale; ++j)
+                for (uint8_t j = 0; j < g_ili9341.text.size; ++j)
                 {
-
-                    if (line & (1 << row))
-                    {
-                        ILI9341_set_data16(text);
-                    }
-                    else
-                    {
-                        ILI9341_set_data16(bg);
-                    }
+                    ILI9341_set_data16(color);
                 }
             }
         }
+    }
+}
+
+//------------------------------------------------------------------------------
+// ILI9341_draw_string
+//------------------------------------------------------------------------------
+
+void ILI9341_draw_string(uint16_t x, uint16_t y, const char *str)
+{
+    while ('\0' != *str)
+    {
+        ILI9341_draw_char(x, y, *str);
+        ++str;
+        x += (g_ili9341.text.size * FONT_WIDTH) + g_ili9341.text.spacing;
     }
 }
 

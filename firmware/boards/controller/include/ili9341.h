@@ -4,25 +4,21 @@
 #define DEFINE_TFT_ILI9341
 
 #include "gpio.h"
-
-/**
- * @brief Define 16-bit RGB color
- */
-typedef uint16_t color16_t;
+#include "color.h"
 
 /**
  * @brief Define the orientation of the display
  */
 typedef enum
 {
-	ILI9341_PORT_TR = 0x00, /**< Portrait, Right to Left, Top to Bottom*/
-	ILI9341_LAND_BR = 0x20, /**< Landscape, Right to Left, Bottom to Top */
-	ILI9341_PORT_TL = 0x40, /**< Portrait, Left to Right, Top to Bottom */
-	ILI9341_LAND_TR = 0x60, /**< Landscape, Right to Left, Top to Bottom */
-	ILI9341_PORT_BR = 0x80, /**< Portrait, Right to Left, Bottom to Top */
-	ILI9341_LAND_BL = 0xA0, /**< Landscape, Left to Right, Bottom to Top */
-	ILI9341_PORT_BL = 0xC0, /**< Portrait, Left to Right, Bottom to Top */
-	ILI9341_LAND_TL = 0xE0	/**< Landscape, Left to Right, Top to Bottom */
+    ILI9341_PORT_TR = 0x00, /**< Portrait, Right to Left, Top to Bottom*/
+    ILI9341_LAND_BR = 0x20, /**< Landscape, Right to Left, Bottom to Top */
+    ILI9341_PORT_TL = 0x40, /**< Portrait, Left to Right, Top to Bottom */
+    ILI9341_LAND_TR = 0x60, /**< Landscape, Right to Left, Top to Bottom */
+    ILI9341_PORT_BR = 0x80, /**< Portrait, Right to Left, Bottom to Top */
+    ILI9341_LAND_BL = 0xA0, /**< Landscape, Left to Right, Bottom to Top */
+    ILI9341_PORT_BL = 0xC0, /**< Portrait, Left to Right, Bottom to Top */
+    ILI9341_LAND_TL = 0xE0  /**< Landscape, Left to Right, Top to Bottom */
 } ili9341_orientation_t;
 
 /**
@@ -77,12 +73,57 @@ void ILI9341_sleep_in(void);
  */
 void ILI9341_sleep_out(void);
 
+/**
+ * @brief Set the size of the text
+ * @param size Size of the text
+ */
+void ILI9341_set_text_size(length_t size);
+
+/**
+ * @brief Set the spacing between characters
+ * @param spacing Spacing
+ */
+void ILI9341_set_text_spacing(length_t spacing);
+
+/**
+ * @brief The the color of the text
+ * @param color Color of the text
+ */
+void ILI9341_set_text_color(color16_t color);
+
+/**
+ * @brief The the background color of the text
+ * @param background Background color of the text
+ */
+void ILI9341_set_text_background(color16_t background);
+
+/**
+ * @brief Set the orientation of the display
+ * @param orientation Orientation of the display
+ * @see ili9341_orientation_t
+ */
+void ILI9341_set_orientation(ili9341_orientation_t orientation);
+
+/**
+ * @brief Display a single pixel
+ * @param x Position X of the pixel
+ * @param y Position Y of the pixel
+ * @param color Color of the pixel
+ */
 void ILI9341_draw_pixel(uint16_t x, uint16_t y, uint16_t color);
-void ILI9341_draw_char(uint16_t x, uint16_t y, char ch, color16_t color, color16_t bg);
+
+/**
+ * @brief Display a character
+ * @param x Position Y of the character
+ * @param y Position Y of the character
+ * @param ch Character to display
+ * @warning Only printable character
+ */
+void ILI9341_draw_char(uint16_t x, uint16_t y, char ch);
+
+void ILI9341_draw_string(uint16_t x, uint16_t y, const char *str);
 
 void ILI9341_fill_screen(color16_t color);
 void ILI9341_fill_area(uint16_t x, uint16_t y, uint16_t w, uint16_t h, color16_t color);
-
-void ILI9341_set_orientation(ili9341_orientation_t orientation);
 
 #endif // VEMAR_ILI9341_H
