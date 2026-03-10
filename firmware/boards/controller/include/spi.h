@@ -3,55 +3,21 @@
 
 #include "common.h"
 
-/**
- * @defgroup spi_clock SPI Clock Divider
- * @brief Available clock divider selections for SPI
- * @{
- */
-#define SPI_CLOCK_4 0x00   ///< F_osc / 4
-#define SPI_CLOCK_16 0x01  ///< F_osc / 16
-#define SPI_CLOCK_64 0x02  ///< F_osc / 64
-#define SPI_CLOCK_128 0x03 ///< F_osc / 128
-/**
- * @}
- */
+//------------------------------------------------------------------------------
+// Enumerations
+//------------------------------------------------------------------------------
 
 /**
- * @defgroup spi_order SPI Data Order
- * @brief LSB first or MSB first for SPI transmission
- * @{
+ * @brief Define SPI data order
  */
-#define SPI_ORDER_MSB 0x00 ///< SPI Data Order MSB
-#define SPI_ORDER_LSB 0x20 ///< SPI Data Order LSB
-/**
- * @}
- */
+typedef enum
+{
+    SPI_MSB = 0x00, /**< MSB first */
+    SPI_LSB = 0x20  /**< LSB first */
+} spi_order_t;
 
 /**
- * @defgroup spi_polarity SPI Polarity
- * @brief Available polarity selections for SPI
- * @{
- */
-#define SPI_POLARITY_LEADING 0x00  ///< Rising on leading edge
-#define SPI_POLARITY_TRAILING 0x08 ///< Rising on trailing edge
-/**
- * @}
- */
-
-/**
- * @defgroup spi_phase SPI Phase
- * @brief Available phase selections for SPI
- * @{
- */
-#define SPI_PHASE_LEADING 0x00	///< Sample on leading edge
-#define SPI_PHASE_TRAILING 0x04 ///< Sample on trailing edge
-/**
- * @}
- */
-
-/**
- * @defgroup spi_mode SPI Mode
- * @brief Available mode selections for SPI
+ * @brief Define SPI mode (Polarity & Phase)
  * @details
  * | Mode | CPOL | CPHA |   Leading Edge   |   Trailing Edge  |
  * | ---- | ---- | ---- | ---------------- | ---------------- |
@@ -59,59 +25,90 @@
  * |   1  |   0  |   1  |  Setup (Rising)  | Sample (Falling) |
  * |   2  |   1  |   0  | Sample (Falling) |  Setup (Rising)  |
  * |   3  |   1  |   1  |  Setup (Falling) | Sample (Rising)  |
- * @{
  */
-#define SPI_MODE_0 (SPI_POLARITY_LEADING | SPI_PHASE_LEADING)	///< SPI Mode 0
-#define SPI_MODE_1 (SPI_POLARITY_LEADING | SPI_PHASE_TRAILING)	///< SPI Mode 1
-#define SPI_MODE_2 (SPI_POLARITY_TRAILING | SPI_PHASE_LEADING)	///< SPI Mode 2
-#define SPI_MODE_3 (SPI_POLARITY_TRAILING | SPI_PHASE_TRAILING) ///< SPI Mode 3
-/**
- * @}
- */
+typedef enum
+{
+    SPI_MODE0 = 0x00, /**< Sample on rising, Setup on falling */
+    SPI_MODE1 = 0x04, /**< Setup on rising, Sample on falling */
+    SPI_MODE2 = 0x08, /**< Sample on falling, Setup on rising */
+    SPI_MODE3 = 0x0C  /**< Setup on falling, Sample on rising */
+} spi_mode_t;
 
 /**
- * @{
- * @brief SPI Masks for internal use
+ * @brief Define SPI prescaler
  */
-#define SPI_MASK_MODE 0x0C
-#define SPI_MASK_CLOCK 0x03
+typedef enum
+{
+    SPI_PS4 = 0x00,   /**< F_osc / 4 */
+    SPI_PS16 = 0x01,  /**< F_osc / 16 */
+    SPI_PS64 = 0x02,  /**< F_osc / 64 */
+    SPI_PS128 = 0x03, /**< F_osc / 128 */
+    SPI_PS2 = 0x10,   /**< F_osc / 2 */
+    SPI_PS8 = 0x11,   /**< F_osc / 8 */
+    SPI_PS32 = 0x12,  /**< F_osc / 32 */
+} spi_ps_t;
+
 /**
- * @}
+ * @brief Initialize SPI as master
+ * @param order Data order
+ * @param mode SPI mode
+ * @param prescaler Clock division
+ * @see spi_order_t
+ * @see spi_mode_t
+ * @see spi_ps_t
  */
+void SPI_init(spi_order_t order, spi_mode_t mode, spi_ps_t prescaler);
+
+/**
+ * @brief Receive one byte of data
+ * @return Received byte
+ */
+byte_t SPI_receive(void);
+
+/**
+ * @brief Transmit one byte of data
+ * @param data Byte to tramsmit
+ */
+void SPI_transmit(byte_t data);
+
+/**
+ * @brief Transmit a serie of data
+ * @param src Data buffer to transmit
+ * @param len Size of the data buffer to transmit
+ */
+void SPI_write(const byte_t *src, length_t len);
+
+/**
+ * @brief Receive a serie of data
+ * @param data Data buffer to store received data
+ * @param len Size of the data to receive
+ */
+void SPI_read(byte_t *dst, length_t len);
 
 //------------------------------------------------------------------------------
-// SPCR --- SPI Control Register
-// | SPIE | SPE | DORD | MSTR | CPOL | CPHA | SPR1 | SPR0 |
+// Advanced configuration
 //------------------------------------------------------------------------------
 
 /**
- * @brief Enable SPI interrupt
- * @details
- * This bit causes the SPI interrupt to be executed if `SPIF` bit in the `SPSR`
- * register is set and if the Global Interrupt Enable bit in `SREG` is set.
+ * @brief Reset SPI registers to their defalut values
  */
-inline void SPI_enable_interrupt(void)
-{
-	BIT_set(SPCR, BIT(SPIE));
-}
+void SPI_reset(void);
 
 /**
- * @brief Disable SPI interrupt
+ * @brief Check whether the SPI is enabled
+ * @return `TRUE` if SPI is enabled, otherwise `FALSE`
  */
-inline void SPI_disable_interrupt(void)
+inline bool_t SPI_is_enabled(void)
 {
-	BIT_clear(SPCR, BIT(SPIE));
+    return (BIT_is_set(SPCR, BIT(SPE)));
 }
 
 /**
  * @brief Enable SPI
- *
- * When the `SPE` bit written to `1`, the SPI is enabled.
- * This bit must be set to enable any SPI operations.
  */
 inline void SPI_enable(void)
 {
-	BIT_set(SPCR, BIT(SPE));
+    BIT_set(SPCR, BIT(SPE));
 }
 
 /**
@@ -119,148 +116,109 @@ inline void SPI_enable(void)
  */
 inline void SPI_disable(void)
 {
-	BIT_clear(SPCR, BIT(SPE));
+    BIT_clear(SPCR, BIT(SPE));
+}
+
+/**
+ * @brief Enable SPI interrupt
+ * @warning SPI interruption not available
+ */
+inline void SPI_enable_interrupt(void)
+{
+    BIT_set(SPCR, BIT(SPIE));
+}
+
+/**
+ * @brief Disable SPI interrupt
+ * @warning SPI interruption not available
+ */
+inline void SPI_disable_interrupt(void)
+{
+    BIT_clear(SPCR, BIT(SPIE));
+}
+
+/**
+ * @brief Return SPI data order
+ * @return SPI data order
+ * @see spi_order_t
+ */
+inline spi_order_t SPI_get_order(void)
+{
+    return (BIT_read(SPCR, BIT(DORD)));
 }
 
 /**
  * @brief Set SPI Data order
- * @param order
- * - SPI_ORDER_LSB
- * - SPI_ORDER_MSB
- * @details
- * When the `DORD` bit is written to `1`, the LSB of the data word is
- * transmitted first.
- * When the `DORD` bit is written to `0`, the MSB of the data word is
- * transmitted first.
+ * @param order Data order
  */
-inline void SPI_set_order(byte_t order)
+inline void SPI_set_order(spi_order_t order)
 {
-	BIT_write(SPCR, order, BIT(DORD));
+    BIT_write(SPCR, order, BIT(DORD));
+}
+
+/**
+ * @brief Return SPI mode
+ * @return SPI mode
+ * @see spi_mode_t
+ */
+inline spi_mode_t SPI_get_mode(void)
+{
+    return (BIT_read(SPCR, (BIT(CPOL) | BIT(CPHA))));
 }
 
 /**
  * @brief Set SPI mode
- * @param mode
+ * @param mode SPI mode to set
+ * @see spi_mode_t
  */
-inline void SPI_set_mode(byte_t mode)
+inline void SPI_set_mode(spi_mode_t mode)
 {
-	BIT_write(SPCR, mode, BIT(MSTR));
+    BIT_write(SPCR, mode, (BIT(CPOL) | BIT(CPHA)));
 }
 
 /**
- * @brief Set SPI Polarity
- * @param polarity SPI polarity
- * @details
- * When `CPOL` is written to `1`, SCK is high when idle.
- * When `CPOL` is written to `0`, SCK is low when idle.
- * @see spi_polarity
+ * @brief Return the SPI prescaler
+ * @return SPI prescaler
  */
-inline void SPI_set_polarity(byte_t polarity)
-{
-	BIT_write(SPCR, polarity, BIT(CPOL));
-}
-
-/**
- * @brief Set SPI Phase
- * @param phase SPI phase
- * @details
- * The settings of the Clock Phase bit (`CPHA`) determine if data is sampled
- * on the leading (first) or trailing (last) edge of SCK.
- * @see spi_phase
- */
-inline void SPI_set_phase(byte_t phase)
-{
-	BIT_write(SPCR, phase, BIT(CPHA));
-}
+spi_ps_t SPI_get_prescaler(void);
 
 /**
  * @brief Set SPI clock divider
- * @param clock Clock divider
- * @details
- * `SPR[1:0]` bits control the `SCK` rate of the device configured as a master.
- * `SPR1` and `SPR0` have no effect on the slave.
- * @see spi_clock
+ * @param prescaler Clock divider
+ * @see spi_ps_t
  */
-inline void SPI_set_clock(byte_t clock)
-{
-	BIT_write(SPCR, clock, SPI_MASK_CLOCK);
-}
-
-//------------------------------------------------------------------------------
-// SPSR --- SPI Status Register
-// | SPIF | WCOL | --- | --- | --- | --- | --- | SPI2X |
-//------------------------------------------------------------------------------
+void SPI_set_prescaler(spi_ps_t prescaler);
 
 /**
  * @brief Check whether a serial transfer is complete
- * @return Non-zero value if the transfer is complete, otherwise `0`
- * @details
- * When a serial transfer is complete, the `SPIF` flag is set.
- * An interrupt is generated if `SPIE` in `SPCR` is set and Global Interrupts
- * are enabled.
- * If `~SS` is an input and is driven low when the `SPI` is in Master mode,
- * this will also set the `SPIF` flag.
- * `SPIF` is cleared by hardware when executing the corresponding interrupt
- * handling vector.
- * Alternatively, the `SPIF` bit is cleared by first reading the SPI Status
- * Register with `SPIF` set, then accessing the SPI Data Register (SPDR).
+ * @return `TRUE` if the transfer is complete, otherwise `FALSE`
  */
-inline bool_t SPI_is_transfert_complete(void)
+inline bool_t SPI_is_complete(void)
 {
-	return (0 != BIT_read(SPSR, BIT(SPIF)));
+    return (BIT_is_set(SPSR, BIT(SPIF)));
 }
-
-/**
- * @brief Enable SPI double speed
- * @details
- * When `SPI2X` is written logic `1` the SPI speed (SCK Frequency) will be
- * doubled when the SPI is in Master mode.
- * This means that the minimum SCK period will be two CPU clock periods.
- * When the SPI is configured as Slave, the SPI is only ensured to work at
- * `f_osc / 4` or lower.
- */
-inline void SPI_enable_double_speed(void)
-{
-	BIT_set(SPSR, BIT(SPI2X));
-}
-
-inline void SPI_disable_double_speed(void)
-{
-	BIT_clear(SPSR, BIT(SPI2X));
-}
-
-//------------------------------------------------------------------------------
-// Quick configuration
-//------------------------------------------------------------------------------
-
-/**
- * @brief Initialize SPI as master (MSB, Mode 0, clock 64)
- */
-void SPI_init(void);
-
-void SPI_transmit(byte_t data);
-
-/**
- * @brief Transmit data
- * @param data Data to transmit
- * @param len Size of the data to transmit
- */
-void SPI_write(const byte_t *data, byte_t len);
-
-byte_t SPI_receive(void);
-
-/**
- * @brief Receive data
- * @param data Buffer to store received data
- * @param len Size of the data to receive
- */
-void SPI_read(byte_t *data, byte_t len);
 
 #endif // VEMAR_SPI_H
 
 /**
  * @file spi.h
- * @brief SPI header file
- * @author Christian Hugon
- * @version 0.0.1
+ * @brief SPI utility functions
+ * @author Christian Hugon <chriss.hugon@gmail.com>
+ * @version 1.0.0
+ * @details
+ * For quick configuration
+ * ```
+ * void setup(void)
+ * {
+ *      SPI_init(SPI_MSB, SPI_MODE0, SPI_SP16);
+ * }
+ *
+ * void loop(void)
+ * {
+ *      SPI_transmit(0x00);
+ *      byte_t res = SPI_receive();
+ *      // handle res
+ *      delay(1000);
+ * }
+ * ```
  */

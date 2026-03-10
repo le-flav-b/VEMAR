@@ -4,9 +4,9 @@
 // Read the values from the joystick
 //
 // Requirements:
-// - Connect VRx pin of Joystick to ADC0 (PC0)
-// - Connect VRy pin of Joystick to ADC1 (PC1)
-// - Connect SW pin of Joystick to PC2
+// - Connect VRx pin of Joystick to ADC7
+// - Connect VRy pin of Joystick to ADC6
+// - Connect SW pin of Joystick to PC5
 // - Use `screen` program to read value
 //------------------------------------------------------------------------------
 
@@ -18,8 +18,7 @@ joystick_t joy;
 void setup(void)
 {
     SERIAL_init();
-    ADC_init();
-    joy = JOYSTICK_new(PIN_PC0, PIN_PC1, PIN_PC2);
+    joy = JOYSTICK_new(ADC_CH7, ADC_CH6, PIN_PC5);
 }
 
 void loop()

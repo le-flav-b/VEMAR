@@ -1,5 +1,11 @@
-build/
+.DS_Store
+.vscode
 
+build/
+docs/
+
+*.bak
+*.tmp
 *.o
 *.d
 *.a

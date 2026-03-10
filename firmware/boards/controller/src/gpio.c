@@ -1,4 +1,5 @@
 #include "gpio.h"
+#include "config.h"
 
 // access corresponding register: PINx, DDRx, PORTx
 #define REG_PIN(pin) (_SFR_IO8(0x03 + ((pin & 0xF0) >> 4)))
@@ -11,10 +12,6 @@
 // mask for button flags
 #define BUTTON_MASK_STATE 0x03
 #define BUTTON_MASK_TRIGGER 0x1C
-
-// convert analog pin to adc channel
-#define ANALOG_TO_ADC_CHANNEL(pin) \
-    ((pin) & 0x0F)
 
 /**
  * | Bit 1 | Bit 0 | Description |
@@ -50,8 +47,16 @@ void PIN_toggle(pin_t pin)
 void PIN_mode(pin_t pin, pin_mode_t mode)
 {
     BIT_write(REG_DDR(pin), REG_SHIFT(pin, mode), REG_SHIFT(pin, 1));
-    // enable pull-up resistor / set output high
-    BIT_write(REG_PORT(pin), REG_SHIFT(pin, 1), REG_SHIFT(pin, 1));
+}
+
+void PIN_enable_pullup(pin_t pin)
+{
+    BIT_set(REG_PORT(pin), REG_SHIFT(pin, 1));
+}
+
+void PIN_disable_pullup(pin_t pin)
+{
+	BIT_clear(REG_PORT(pin), REG_SHIFT(pin, 1));
 }
 
 //------------------------------------------------------------------------------
@@ -63,6 +68,7 @@ led_t LED_new(pin_t pin)
     led_t retval = {.pin = pin};
 
     PIN_mode(pin, PIN_OUTPUT); // configure pin as output
+    PIN_write(pin, PIN_LOW);   // switch off LED
     return (retval);
 }
 
@@ -99,24 +105,24 @@ bool_t BUTTON_is_active(button_t *button)
     default:
         break;
     }
-    return (0);
+    return (FALSE);
 }
 
 //------------------------------------------------------------------------------
 // Analog
 //------------------------------------------------------------------------------
 
-analog_t ANALOG_new(pin_t pin)
+analog_t ANALOG_new(adc_ch_t channel)
 {
-    analog_t retval = {.pin = pin};
-
-    ADC_enable_channel(ANALOG_TO_ADC_CHANNEL(pin));
+    ADC_init(ADC_AVCC, ADC_10BIT, ADC_PS64);
+    ADC_enable_channel(channel);
+    analog_t retval = {.channel = channel};
     return (retval);
 }
 
-unsigned int ANALOG_read(analog_t analog)
+uint16_t ANALOG_read(analog_t analog)
 {
-    return (ADC_read(ANALOG_TO_ADC_CHANNEL(analog.pin)));
+    return (ADC_read(analog.channel));
 }
 
 //------------------------------------------------------------------------------

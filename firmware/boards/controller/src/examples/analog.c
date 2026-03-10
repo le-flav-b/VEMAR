@@ -11,20 +11,19 @@
 #include "gpio.h"
 #include "serial.h"
 
-analog_t pot;
+analog_t analog;
 
 void setup(void)
 {
 	SERIAL_init();
-	ADC_init();
-	pot = ANALOG_new(PIN_PC0);
+	analog = ANALOG_new(PIN_PC0);
 }
 
 void loop(void)
 {
-	unsigned int analog = ADC_read(ADC_CHANNEL_0);
-	SERIAL_print(analog, uint);
-	SERIAL_print(", V = ", str);
-	SERIAL_println((5 * analog) / 1023, uint);
+	unsigned int res = ANALOG_read(analog);
+	SERIAL_print(uint, res);
+	SERIAL_print(str, ", V = ");
+	SERIAL_println(uint, (5 * res) / 1023);
 	delay(1000);
 }

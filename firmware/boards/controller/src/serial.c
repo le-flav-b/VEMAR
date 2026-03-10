@@ -38,7 +38,7 @@ static void SERIAL_print_base(unsigned long nbr, byte_t radix, byte_t len)
 
 void SERIAL_init(void)
 {
-    UART_init(UART_BAUDRATE_115200, UART_8N1, UART_TX | UART_RX);
+    UART_init(UART_8N1, UART_TX | UART_RX);
 }
 
 void SERIAL_print_char(char ch)

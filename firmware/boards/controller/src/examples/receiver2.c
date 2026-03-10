@@ -25,7 +25,7 @@ static void send(void)
     {
         SERIAL_println(str, "Failed to send to Transmitter");
         ++count;
-        if (count > 10)
+        if (count > 5)
         {
             count = 0;
             mode_tx = 0;

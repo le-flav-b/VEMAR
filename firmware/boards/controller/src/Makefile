@@ -32,6 +32,7 @@ CFLAGS		=	-Wall \
 				-fdata-sections \
 				-mmcu=$(MCU) \
 				-DF_CPU=$(FREQUENCY) \
+				-DBAUDRATE=$(BAUDRATE) \
 				-I$(INCLUDE)
 
 AVRFLAGS	=	-p $(MCU) \
@@ -45,11 +46,13 @@ SOURCES		=	main.c \
 				gpio.c \
 				adc.c \
 				uart.c \
+				spi.c \
 				serial.c \
 				joystick.c \
-				spi.c \
 				nrf24l01.c \
-				radio.c
+				radio.c \
+				ili9341.c \
+				tft.c
 
 BUILD_DIR	=	build
 
