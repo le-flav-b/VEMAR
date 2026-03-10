@@ -8,10 +8,7 @@
 #include <string.h>
 #include <avr/sleep.h>
 
-
-#define MT_SLA_ACK  0x18
-#define MT_DATA_ACK 0x28
-#define MR_DATA_NACK 0x58
+#include <util/twi.h>
 
 /*
  * Utils
