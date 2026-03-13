@@ -22,7 +22,7 @@ struct i2cMessage {
     uint16_t len;
     uint8_t buffer[I2C_BUFFER_SIZE];
     uint16_t current_idx;
-}
+};
 
 /*
  * Asserts
@@ -56,7 +56,8 @@ extern int8_t i2c_write(uint8_t data);
 extern int16_t i2c_read_ack(void);
 extern int16_t i2c_read_nack(void);
 extern int8_t i2c_write_packet(uint8_t addr, uint8_t *data, size_t len);
-extern int8_t i2c_read_packet(uint8_t addr, uint8_t *buffer, size_t len);
+extern int8_t i2c_read_packet(uint8_t addr, uint8_t *buffer);
+extern int32_t i2c_get_read_len(uint8_t addr);
 
 /*
  * Slave responses

@@ -1,6 +1,4 @@
 #include "i2c.h"
-#include <avr/io.h>
-#include <stdint.h>
 
 void i2c_init() {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
@@ -17,7 +15,7 @@ void i2c_init() {
 void i2c_init_slave(uint8_t addr) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   TWI0.SADDR = addr << 1;
-  TWI0.SCTRLA |= TWI_ENABLE_bm | TWI_APIEN_bm | TWI_ DIEN_bm;
+  TWI0.SCTRLA |= TWI_ENABLE_bm | TWI_APIEN_bm | TWI_DIEN_bm;
 #elif defined(__AVR_ATmega328P__)
   TWAR = (addr << 1) | (0 << TWGCE);
   TWCR = (1 << TWEA) | (1 << TWEN);
@@ -129,19 +127,37 @@ int8_t i2c_write_packet(uint8_t addr, uint8_t *data, size_t len) {
   return 0;
 }
 
-int8_t i2c_read_packet(uint8_t addr, uint8_t *buffer, size_t len) {
-  if (len == 0) return 0;
+int32_t i2c_get_read_len(uint8_t addr) {
   int8_t start_resp = i2c_start((addr << 1) | (1), false);
-  if (start_resp != 0) return start_resp;
-  size_t i = 0;
-  while (i < len - 1) {
+  if (start_resp) {
+    i2c_stop();
+    return start_resp;
+  }
+  uint16_t len = 0;
+  for (uint8_t i = 0; i < 2; i++) {
     int16_t read_resp = i2c_read_ack();
     if (read_resp < 0) {
       i2c_stop();
       return read_resp;
     }
-    buffer[i]= (uint8_t)read_resp;
-    ++i;
+    len |= (read_resp << (8 * (1 - i)));
+  }
+  return len;
+}
+
+int8_t i2c_read_packet(uint8_t addr, uint8_t *buffer) {
+  int32_t len = i2c_get_read_len(addr);
+  if (len <= 0) {
+    return (int8_t)len;
+  }
+  uint16_t i;
+  for (i = 0; i < len - 1; i++) {
+    int16_t read_resp = i2c_read_ack();
+    if (read_resp < 0) {
+      i2c_stop();
+      return read_resp;
+    }
+    buffer[i] = (uint8_t)read_resp;
   }
   int16_t last_read = i2c_read_nack();
   if (last_read < 0) {
