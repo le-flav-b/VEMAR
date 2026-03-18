@@ -11,18 +11,20 @@
 #include "gpio.h"
 
 led_t led;
-button_t button;
+button_t btn_down;
+button_t btn_up;
 
 void setup(void)
 {
-    button = BUTTON_new(PIN_PB1, BUTTON_ONHOLD);
-    led = LED_new(PIN_PB0);
+    btn_down = BUTTON_new(PIN_PD3, BUTTON_ONPRESS);
+    btn_up = BUTTON_new(PIN_PD4, BUTTON_ONHOLD);
+    led = LED_new(PIN_PD5);
     LED_off(led);
 }
 
 void loop(void)
 {
-    if (BUTTON_is_active(&button))
+    if (BUTTON_is_active(&btn_down) || BUTTON_is_active(&btn_up))
     {
         LED_on(led);
     }

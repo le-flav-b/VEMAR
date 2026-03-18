@@ -13,7 +13,7 @@ led_t led;
 
 void setup(void)
 {
-	led = LED_new(PIN_PB5);
+	led = LED_new(PIN_PD5);
 }
 
 void loop(void)
