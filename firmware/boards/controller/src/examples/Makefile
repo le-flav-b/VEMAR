@@ -14,7 +14,9 @@ NAME		=	blink \
 				transmitter2 \
 				receiver2 \
 				transceiver \
-				display
+				display \
+				controller \
+				test_rec
 
 FREQUENCY	?=	16000000UL
 BAUDRATE	?=	115200
@@ -148,3 +150,5 @@ transmitter2: transmitter2.hex
 receiver2: receiver2.hex
 transceiver: transceiver.hex
 display: display.hex
+controller: controller.hex
+test_rec: test_rec.hex

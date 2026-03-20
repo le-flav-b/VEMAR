@@ -52,7 +52,8 @@ SOURCES		=	main.c \
 				nrf24l01.c \
 				radio.c \
 				ili9341.c \
-				tft.c
+				tft.c \
+				util.c
 
 BUILD_DIR	=	build
 

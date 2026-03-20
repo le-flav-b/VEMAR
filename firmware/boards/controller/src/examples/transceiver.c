@@ -22,7 +22,7 @@ void setup(void)
 {
     SERIAL_init();
     RADIO_init(PIN_PD6, PIN_PD7);
-    button = BUTTON_new(PIN_PC5, BUTTON_ONPRESS);
+    button = BUTTON_new(PIN_PD4, BUTTON_ONPRESS);
     packet_tx.details.ack = 1;
 }
 

@@ -6,6 +6,10 @@
 #define NRF24L01_DELAY_RX 130      ///< RX Settling for 130us
 #define NRF24L01_DELAY_TX 150      ///< TX Settling for 130us
 
+//------------------------------------------------------------------------------
+// NRF24L01 register maps
+//------------------------------------------------------------------------------
+
 #define R_REGISTER 0x00         ///< Read command and `STATUS` register
 #define W_REGISTER 0x20         ///< Write command and `STATUS` register
 #define R_RX_PAYLOAD 0x61       ///< Read RX payload
@@ -18,6 +22,10 @@
 #define W_ACK_PAYLOAD 0xA8      ///< Write Payload to be transmitted
 #define W_TX_PAYLOAD_NOACK 0xB0 ///< Disable `AUTOACK` on this specific packet
 #define NOP 0xFF                ///< No Operation
+
+//------------------------------------------------------------------------------
+// NRF24L01 SPI commands
+//------------------------------------------------------------------------------
 
 #define CONFIG 0x00      ///< Configuration Register
 #define EN_AA 0x01       ///< Enable 'Auto-Acknowledgment'
@@ -60,79 +68,62 @@
 #define LNA_HCURR 0 ///< Setup LNA gain
 #define RF_DR 3     ///< Air Data Rate (0: 1Mbps, 1: 2Mbps)
 
-byte_t nrf24l01_csn;    ///< CSN pin
-byte_t nrf24l01_ce;     ///< CE pin
-byte_t nrf24l01_config; ///< CONFIG register
-// byte_t nrf24l01_rf;     ///< RF_SETUP register
-byte_t nrf24l01_addr_rx[5];
-byte_t nrf24l01_addr_tx[5];
-byte_t nrf24l01_aw; ///< RX/TX Address width
+byte_t nrf24l01_csn;        ///< CSN pin
+byte_t nrf24l01_ce;         ///< CE pin
+byte_t nrf24l01_config;     ///< CONFIG register
+byte_t nrf24l01_addr_rx[5]; ///< RX address
+byte_t nrf24l01_addr_tx[5]; ///< TX address
+byte_t nrf24l01_aw;         ///< RX/TX Address width
 
-// enum nrf24l01_enum_mode
-// {
-//     NRF24L01_MODE_PD,    ///< Power Down
-//     NRF24L01_MODE_STBY1, ///< Standby I
-//     NRF24L01_MODE_STBY2, ///< Standby II
-//     NRF24L01_MODE_RX,    ///< RX Mode
-//     NRF24L01_MODE_TX     ///< TX Mode
-// } nrf24l01_mode;
+//------------------------------------------------------------------------------
+// Static Functions
+//------------------------------------------------------------------------------
 
-static byte_t *NRF24L01_copy_address(byte_t *dst, const byte_t *src, length_t len)
-{
-    for (length_t i = 0; i < len; ++i)
-    {
-        dst[i] = src[i];
-    }
-    return (dst);
-}
+/**
+ * @brief Copy the address
+ * @param dst
+ * @param src
+ * @param len
+ * @return
+ */
+static byte_t *NRF24L01_copy_address(byte_t *dst,
+                                     const byte_t *src,
+                                     length_t len);
 
-static inline void NRF24L01_spi_start(void)
-{
-    PIN_write(nrf24l01_csn, PIN_LOW);
-}
+/**
+ * @brief Start SPI communication
+ */
+static inline void NRF24L01_spi_start(void);
 
-static inline void NRF24L01_spi_stop(void)
-{
-    PIN_write(nrf24l01_csn, PIN_HIGH);
-}
+/**
+ * @brief Stop SPI communication
+ */
+static inline void NRF24L01_spi_stop(void);
 
-static byte_t NRF24L01_get_register(byte_t reg)
-{
-    NRF24L01_spi_start();
-    SPI_transmit(R_REGISTER | reg);
-    byte_t retval = SPI_receive();
-    NRF24L01_spi_stop();
-    return (retval);
-}
+/**
+ * @brief Read the value of a register
+ * @param reg Register to read
+ */
+static byte_t NRF24L01_get_register(byte_t reg);
 
-static void NRF24L01_set_register(byte_t reg, byte_t value)
-{
-    NRF24L01_spi_start();
-    SPI_transmit(W_REGISTER | reg);
-    SPI_transmit(value);
-    NRF24L01_spi_stop();
-}
+/**
+ * @brief Write register
+ * @param reg Register to write
+ * @param value Value to set
+ */
+static void NRF24L01_set_register(byte_t reg, byte_t value);
 
-// static void NRF24L01_read_register(byte_t reg, byte_t *dst, length_t len)
-// {
-//     NRF24L01_spi_start();
-//     SPI_transmit(R_REGISTER | reg);
-//     SPI_read(dst, len);
-//     NRF24L01_spi_stop();
-// }
+/**
+ * @brief
+ * @param reg
+ * @param src
+ * @param len
+ */
+static void NRF24L01_write_register(byte_t reg, const byte_t *src, length_t len);
 
-static void NRF24L01_write_register(byte_t reg, const byte_t *src, length_t len)
-{
-    NRF24L01_spi_start();
-    SPI_transmit(W_REGISTER | reg);
-    SPI_write(src, len);
-    // while (len > 0)
-    // {
-    //     --len;
-    //     SPI_transmit(buff[len]);
-    // }
-    NRF24L01_spi_stop();
-}
+//------------------------------------------------------------------------------
+// NRF24L01_init
+//------------------------------------------------------------------------------
 
 void NRF24L01_init(pin_t ce, pin_t csn)
 {
@@ -149,68 +140,91 @@ void NRF24L01_init(pin_t ce, pin_t csn)
 
     delay(NRF24L01_DELAY_POWERUP); // wait for NRF24L01 to stablilize
 
-    // SERIAL_print(str, "start FIFO: 0x");
-    // SERIAL_println(hex, NRF24L01_get_register(FIFO_STATUS), 2);
-    // NRF24L01_flush_rx();
-    // NRF24L01_flush_tx();
-    // SERIAL_print(str, "flush FIFO: 0x");
-    // SERIAL_println(hex, NRF24L01_get_register(FIFO_STATUS), 2);
-
-    // enable CRC
     NRF24L01_set_register(CONFIG, BIT(EN_CRC) | BIT(CRCO)); // enable CRC
-    // byte_t crc = (BIT(EN_CRC) | BIT(CRCO));
-    // NRF24L01_write_register(CONFIG, &crc, 1);
-
-    nrf24l01_config = NRF24L01_get_register(CONFIG); // read CONFIG register
-    // nrf24l01_rf = NRF24L01_read_register(RF_SETUP); // read RF_SETUP register
-    nrf24l01_aw = NRF24L01_get_register(SETUP_AW) + 2; // address width
-    // nrf24l01_mode = NRF24L01_MODE_STBY1;
+    nrf24l01_config = NRF24L01_get_register(CONFIG);        // read CONFIG register
+    nrf24l01_aw = NRF24L01_get_register(SETUP_AW) + 2;      // address width
 }
+
+//------------------------------------------------------------------------------
+// NRF24L01_enable
+//------------------------------------------------------------------------------
+
+void NRF24L01_enable(void)
+{
+    PIN_write(nrf24l01_ce, PIN_HIGH);
+}
+
+//------------------------------------------------------------------------------
+// NRF24L01_disable
+//------------------------------------------------------------------------------
+
+void NRF24L01_disable(void)
+{
+    PIN_write(nrf24l01_ce, PIN_LOW);
+}
+
+//------------------------------------------------------------------------------
+// NRF24L01_power_up
+//------------------------------------------------------------------------------
+
+void NRF24L01_power_up(void)
+{
+    NRF24L01_disable();
+    BIT_set(nrf24l01_config, BIT(PWR_UP));
+    NRF24L01_write_register(CONFIG, &nrf24l01_config, 1);
+    _delay_us(NRF24L01_DELAY_POWERUP);
+}
+
+//------------------------------------------------------------------------------
+// NRF24L01_power_down
+//------------------------------------------------------------------------------
+
+void NRF24L01_power_down(void)
+{
+    BIT_clear(nrf24l01_config, BIT(PWR_UP));
+    NRF24L01_write_register(CONFIG, &nrf24l01_config, 1);
+    NRF24L01_disable();
+}
+
+//------------------------------------------------------------------------------
+// NRF24L01_mode_rx
+//------------------------------------------------------------------------------
 
 void NRF24L01_mode_rx(void)
 {
-    // byte_t status = NRF24L01_get_register(STATUS);
-    // SERIAL_print(str, "STATUS: 0x");
-    // SERIAL_println(hex, status, 2);
-
-    // if (NRF24L01_MODE_RX == nrf24l01_mode)
-    // {
     BIT_set(nrf24l01_config, BIT(PRIM_RX));
     NRF24L01_set_register(CONFIG, nrf24l01_config);
     NRF24L01_enable();
     _delay_us(NRF24L01_DELAY_RX);
-    //     nrf24l01_mode = NRF24L01_MODE_RX;
-    // }
 }
+
+//------------------------------------------------------------------------------
+// NRF24L01_mode_tx
+//------------------------------------------------------------------------------
 
 void NRF24L01_mode_tx(void)
 {
-    // if (NRF24L01_MODE_TX != nrf24l01_mode)
-    // {
     BIT_clear(nrf24l01_config, BIT(PRIM_RX));
     NRF24L01_set_register(CONFIG, nrf24l01_config);
     NRF24L01_enable();
     _delay_us(NRF24L01_DELAY_TX);
-    //     nrf24l01_mode = NRF24L01_MODE_TX;
-    // }
-    // SERIAL_print(str, "/tx CE: ");
-    // SERIAL_println(uint, PIN_read(nrf24l01_ce));
 }
+
+//------------------------------------------------------------------------------
+// NRF24L01_standby
+//------------------------------------------------------------------------------
 
 void NRF24L01_standby(void)
 {
-    // SERIAL_println(str, "standy");
-    // if (NRF24L01_MODE_STBY1 != nrf24l01_mode)
-    // {
     NRF24L01_clear_status();
     NRF24L01_flush_rx();
     NRF24L01_flush_tx();
     NRF24L01_disable();
-    //     nrf24l01_mode = NRF24L01_MODE_STBY1;
-    // }
-    // SERIAL_print(str, "/standby CE: ");
-    // SERIAL_println(uint, PIN_read(nrf24l01_ce));
 }
+
+//------------------------------------------------------------------------------
+// NRF24L01_setup
+//------------------------------------------------------------------------------
 
 void NRF24L01_setup(rf_rate_t rate, rf_power_t power, bool_t lna)
 {
@@ -218,10 +232,18 @@ void NRF24L01_setup(rf_rate_t rate, rf_power_t power, bool_t lna)
     NRF24L01_write_register(RF_SETUP, &setup, 1);
 }
 
+//------------------------------------------------------------------------------
+// NRF24L01_status
+//------------------------------------------------------------------------------
+
 byte_t NRF24L01_status(void)
 {
     return (NRF24L01_get_register(STATUS));
 }
+
+//------------------------------------------------------------------------------
+// NRF24L01_clear_status
+//------------------------------------------------------------------------------
 
 void NRF24L01_clear_status(void)
 {
@@ -229,31 +251,9 @@ void NRF24L01_clear_status(void)
     NRF24L01_write_register(STATUS, &clr, 1);
 }
 
-void NRF24L01_enable(void)
-{
-    PIN_write(nrf24l01_ce, PIN_HIGH);
-}
-
-void NRF24L01_disable(void)
-{
-    PIN_write(nrf24l01_ce, PIN_LOW);
-}
-
-void NRF24L01_primary_rx(void)
-{
-    BIT_set(nrf24l01_config, BIT(PRIM_RX));
-    NRF24L01_write_register(CONFIG, &nrf24l01_config, 1);
-}
-
-void NRF24L01_primary_tx(void)
-{
-    BIT_clear(nrf24l01_config, BIT(PRIM_RX));
-    NRF24L01_write_register(CONFIG, &nrf24l01_config, 1);
-
-    NRF24L01_write_register(RX_ADDR_P0, nrf24l01_addr_tx, nrf24l01_aw);
-    byte_t rxaddr = NRF24L01_get_register(EN_RXADDR) | BIT(NRF24L01_PIPE_0);
-    NRF24L01_write_register(EN_RXADDR, &rxaddr, 1);
-}
+//------------------------------------------------------------------------------
+// NRF24L01_set_frequency
+//------------------------------------------------------------------------------
 
 void NRF24L01_set_frequency(length_t frequency)
 {
@@ -261,23 +261,9 @@ void NRF24L01_set_frequency(length_t frequency)
     NRF24L01_write_register(RF_CH, &frequency, 1);
 }
 
-// void NRF24L01_set_pa(pa_t level)
-// {
-//     BIT_set(nrf24l01_rf, (level & 0x03) << 1); // bits [2:1]
-//     NRF24L01_write_register(RF_SETUP, &nrf24l01_rf, 1);
-// }
-
-// void NRF24L01_enable_lna(void)
-// {
-//     BIT_set(nrf24l01_rf, BIT(LNA_HCURR));
-//     NRF24L01_write_register(RF_SETUP, &nrf24l01_rf, 1);
-// }
-
-// void NRF24L01_disable_lna(void)
-// {
-//     BIT_clear(nrf24l01_rf, BIT(LNA_HCURR));
-//     NRF24L01_write_register(RF_SETUP, &nrf24l01_rf, 1);
-// }
+//------------------------------------------------------------------------------
+// NRF24L01_flush_tx
+//------------------------------------------------------------------------------
 
 void NRF24L01_flush_tx(void)
 {
@@ -286,12 +272,20 @@ void NRF24L01_flush_tx(void)
     NRF24L01_spi_stop();
 }
 
+//------------------------------------------------------------------------------
+// NRF24L01_flush_rx
+//------------------------------------------------------------------------------
+
 void NRF24L01_flush_rx(void)
 {
     NRF24L01_spi_start();
     SPI_transmit(FLUSH_RX);
     NRF24L01_spi_stop();
 }
+
+//------------------------------------------------------------------------------
+// NRF24L01_is_rx_empty
+//------------------------------------------------------------------------------
 
 bool_t NRF24L01_is_rx_empty(void)
 {
@@ -301,61 +295,71 @@ bool_t NRF24L01_is_rx_empty(void)
 
     return (BIT_is_set(NRF24L01_get_register(FIFO_STATUS),
                        BIT(RX_EMPTY)));
-
-    // return (0 != (NRF24L01_get_register(FIFO_STATUS) & BIT(RX_EMPTY)));
 }
+
+//------------------------------------------------------------------------------
+// NRF24L01_is_tx_empty
+//------------------------------------------------------------------------------
 
 bool_t NRF24L01_is_tx_empty(void)
 {
     return (0 != (NRF24L01_get_register(FIFO_STATUS) & BIT(TX_EMPTY)));
 }
 
+//------------------------------------------------------------------------------
+// NRF24L01_is_rx_full
+//------------------------------------------------------------------------------
+
 bool_t NRF24L01_is_rx_full(void)
 {
     return (0 != (NRF24L01_get_register(FIFO_STATUS) & BIT(RX_FULL)));
 }
+
+//------------------------------------------------------------------------------
+// NRF24L01_is_tx_full
+//------------------------------------------------------------------------------
 
 bool_t NRF24L01_is_tx_full(void)
 {
     return (0 != (NRF24L01_get_register(FIFO_STATUS) & BIT(TX_FULL)));
 }
 
+//------------------------------------------------------------------------------
+// NRF24L01_has_payload
+//------------------------------------------------------------------------------
+
 bool_t NRF24L01_has_payload(void)
 {
     return (BIT_is_set(NRF24L01_get_register(STATUS), NRF24L01_RX_DR));
 }
+
+//------------------------------------------------------------------------------
+// NRF24L01_read_payload
+//------------------------------------------------------------------------------
 
 void NRF24L01_read_payload(byte_t *buff, length_t len)
 {
     NRF24L01_spi_start();
     SPI_transmit(R_RX_PAYLOAD);
     SPI_read(buff, len);
-    // while (len > 0)
-    // {
-    //     --len;
-    //     buff[len] = SPI_receive();
-    // }
     NRF24L01_spi_stop();
 }
 
-// void NRF24L01_set_data_rate(data_rate_t rate)
-// {
-//     byte_t setup = NRF24L01_read_register(RF_SETUP);
-//     BIT_write(setup, rate, BIT(RF_DR));
-//     NRF24L01_write_register(RF_SETUP, &setup, 1);
-// }
+//------------------------------------------------------------------------------
+// NRF24L01_write_payload
+//------------------------------------------------------------------------------
 
 void NRF24L01_write_payload(const byte_t *buff, length_t len)
 {
     NRF24L01_spi_start();
     SPI_transmit(W_TX_PAYLOAD);
-
-    // (void)buff;
-    // (void)len;
     SPI_write(buff, len);
-
     NRF24L01_spi_stop();
 }
+
+//------------------------------------------------------------------------------
+// NRF24L01_
+//------------------------------------------------------------------------------
 
 static void NRF24L01_print_register(const char *tag, byte_t reg, bool_t hex)
 {
@@ -371,51 +375,28 @@ static void NRF24L01_print_register(const char *tag, byte_t reg, bool_t hex)
     }
 }
 
-void NRF24L01_power_up(void)
-{
-    // if (NRF24L01_MODE_PD == nrf24l01_mode)
-    // {
-    NRF24L01_disable();
-    BIT_set(nrf24l01_config, BIT(PWR_UP));
-    NRF24L01_write_register(CONFIG, &nrf24l01_config, 1);
-    _delay_us(NRF24L01_DELAY_POWERUP);
-    //    nrf24l01_mode = NRF24L01_MODE_STBY1;
-    // }
-}
-
-void NRF24L01_power_down(void)
-{
-    // if (NRF24L01_MODE_PD != nrf24l01_mode)
-    // {
-    BIT_clear(nrf24l01_config, BIT(PWR_UP));
-    NRF24L01_write_register(CONFIG, &nrf24l01_config, 1);
-    NRF24L01_disable();
-    //     nrf24l01_mode = NRF24L01_MODE_PD;
-    // }
-}
+//------------------------------------------------------------------------------
+// NRF24L01_
+//------------------------------------------------------------------------------
 
 void NRF24L01_set_payload_size(pipe_t pipe, length_t len)
 {
     NRF24L01_write_register(RX_PW_P0 + pipe, &len, 1);
 }
 
-void NRF24L01_disable_pipe(pipe_t pipe)
-{
-    NRF24L01_set_payload_size(pipe, 0);
-    // NRF24L01_write_register(RX_PW_P0 + pipe, 0);
-}
-
-void NRF24L01_disable_retransmit(void)
-{
-    NRF24L01_set_retransmit(0, 0);
-    // NRF24L01_write_register(SETUP_RETR, 0);
-}
+//------------------------------------------------------------------------------
+// NRF24L01_set_retransmit
+//------------------------------------------------------------------------------
 
 void NRF24L01_set_retransmit(length_t count, length_t delay)
 {
     byte_t retr = ((count & 0x0F) | ((delay & 0x0F) << 4));
     NRF24L01_write_register(SETUP_RETR, &retr, 1);
 }
+
+//------------------------------------------------------------------------------
+// NRF24L01_set_address_rx
+//------------------------------------------------------------------------------
 
 void NRF24L01_set_address_rx(pipe_t pipe, const byte_t *addr)
 {
@@ -431,12 +412,88 @@ void NRF24L01_set_address_rx(pipe_t pipe, const byte_t *addr)
     NRF24L01_write_register(EN_RXADDR, &rxaddr, 1);
 }
 
+//------------------------------------------------------------------------------
+// NRF24L01_set_address_tx
+//------------------------------------------------------------------------------
+
 void NRF24L01_set_address_tx(const byte_t *addr)
 {
     NRF24L01_write_register(RX_ADDR_P0, addr, nrf24l01_aw);
     NRF24L01_write_register(TX_ADDR, addr, nrf24l01_aw);
     NRF24L01_copy_address(nrf24l01_addr_tx, addr, nrf24l01_aw);
 }
+
+//------------------------------------------------------------------------------
+// NRF24L01_spi_start
+//------------------------------------------------------------------------------
+
+void NRF24L01_spi_start(void)
+{
+    PIN_write(nrf24l01_csn, PIN_LOW);
+}
+
+//------------------------------------------------------------------------------
+// NRF24L01_spi_stop
+//------------------------------------------------------------------------------
+
+void NRF24L01_spi_stop(void)
+{
+    PIN_write(nrf24l01_csn, PIN_HIGH);
+}
+
+//------------------------------------------------------------------------------
+// NRF24L01_get_register
+//------------------------------------------------------------------------------
+
+byte_t NRF24L01_get_register(byte_t reg)
+{
+    NRF24L01_spi_start();
+    SPI_transmit(R_REGISTER | reg);
+    byte_t retval = SPI_receive();
+    NRF24L01_spi_stop();
+    return (retval);
+}
+
+//------------------------------------------------------------------------------
+// NRF24L01_set_register
+//------------------------------------------------------------------------------
+
+void NRF24L01_set_register(byte_t reg, byte_t value)
+{
+    NRF24L01_spi_start();
+    SPI_transmit(W_REGISTER | reg);
+    SPI_transmit(value);
+    NRF24L01_spi_stop();
+}
+
+//------------------------------------------------------------------------------
+// NRF24L01_write_register
+//------------------------------------------------------------------------------
+
+void NRF24L01_write_register(byte_t reg, const byte_t *src, length_t len)
+{
+    NRF24L01_spi_start();
+    SPI_transmit(W_REGISTER | reg);
+    SPI_write(src, len);
+    NRF24L01_spi_stop();
+}
+
+//------------------------------------------------------------------------------
+// NRF24L01_copy_address
+//------------------------------------------------------------------------------
+
+byte_t *NRF24L01_copy_address(byte_t *dst, const byte_t *src, length_t len)
+{
+    for (length_t i = 0; i < len; ++i)
+    {
+        dst[i] = src[i];
+    }
+    return (dst);
+}
+
+//------------------------------------------------------------------------------
+// NRF24L01_print_status
+//------------------------------------------------------------------------------
 
 static void NRF24L01_print_status(void)
 {
@@ -452,6 +509,10 @@ static void NRF24L01_print_status(void)
     SERIAL_print(str, " TX_FULL=");
     SERIAL_println(uint, status & 0x01);
 }
+
+//------------------------------------------------------------------------------
+// NRF24L01_print_address
+//------------------------------------------------------------------------------
 
 static void NRF24L01_print_address(pipe_t pipe)
 {
@@ -481,6 +542,10 @@ static void NRF24L01_print_address(pipe_t pipe)
     SERIAL_println(str, "");
 }
 
+//------------------------------------------------------------------------------
+// NRF24L01_print_address_tx
+//------------------------------------------------------------------------------
+
 static void NRF24L01_print_address_tx(void)
 {
     byte_t addr[5];
@@ -495,6 +560,10 @@ static void NRF24L01_print_address_tx(void)
     }
     SERIAL_println(str, "");
 }
+
+//------------------------------------------------------------------------------
+// NRF24L01_print_setup
+//------------------------------------------------------------------------------
 
 static void NRF24L01_print_setup(void)
 {
@@ -534,6 +603,10 @@ static void NRF24L01_print_setup(void)
     }
 }
 
+//------------------------------------------------------------------------------
+// NRF24L01_print
+//------------------------------------------------------------------------------
+
 void NRF24L01_print(void)
 {
     NRF24L01_print_status();
@@ -563,7 +636,11 @@ void NRF24L01_print(void)
     NRF24L01_print_register("OBSERVE_TX = 0x", OBSERVE_TX, 1);
 }
 
-void NRF24L01_debug_config(void)
+//------------------------------------------------------------------------------
+// NRF24L01_print_config
+//------------------------------------------------------------------------------
+
+void NRF24L01_print_config(void)
 {
     byte_t config = NRF24L01_get_register(CONFIG);
     SERIAL_println(str, "CONFIG:");
