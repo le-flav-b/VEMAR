@@ -1,0 +1,78 @@
+(footprint "gpio_1"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0.1 3.7 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "d63d8240-9ccf-4698-82a2-905e4239e388")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "gpio_1"
+		(at 0.1 5.2 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "cbefec53-c012-42e1-a52e-095e4d273ce5")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "591590fe-4bcb-4ec2-9ebe-16084993d860")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "12782ff0-9118-4eec-9f93-4ea9de807401")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_text user "${REFERENCE}"
+		(at 0.1 6.7 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "fc0dcd4f-05e2-4068-ad73-89dde4ed4e31")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole circle
+		(at 0 0)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "8e8e95b5-93a1-422d-8047-e55beaaa3504")
+	)
+	(embedded_fonts no)
+)

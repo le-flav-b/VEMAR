@@ -1,0 +1,113 @@
+(footprint "Geiger_Tube_J305"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "2ae462fd-3657-46ea-88b6-c720aff22900")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "Geiger_Tube_J305"
+		(at 0 6.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "4fddaa9f-4cbb-4cf4-b0a6-d47582a54056")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "48509f7c-3fb7-4398-8a47-1ff356b397db")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "4b6bdb6d-589a-4d9b-87d3-1586a5771dd3")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_rect
+		(start -45 -3.65)
+		(end 45 3.65)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "eb3ffdf5-97c0-4a4c-a7f6-9219cc48009f")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 8 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "f214a87f-455c-443d-ad62-88ec345111d4")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole circle
+		(at -44 0)
+		(size 5 5)
+		(drill 3)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "0138ffd9-e8d4-420e-98e5-39740524510f")
+	)
+	(pad "1" thru_hole circle
+		(at -38 0)
+		(size 5 5)
+		(drill 3)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "f32a6a9c-0008-42b9-ae24-d8096290a894")
+	)
+	(pad "2" thru_hole circle
+		(at 38 0)
+		(size 5 5)
+		(drill 3)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "5b493443-9d6e-418c-a526-f4c63c7cbc49")
+	)
+	(pad "2" thru_hole circle
+		(at 44 0)
+		(size 5 5)
+		(drill 3)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "e887edfa-a53e-4ce3-8e2e-87138e3a2e7e")
+	)
+	(embedded_fonts no)
+)

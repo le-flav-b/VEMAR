@@ -1,0 +1,86 @@
+(footprint "Jumper_2"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0.1 5.7 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "bc197f42-25f4-4063-b73d-e4449edefece")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "Jumper_2"
+		(at 0.1 7.2 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "effe3024-25ec-499d-bf73-f1cf10a23be4")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "b13ce2d2-3ed4-4b9d-9a21-84f35bda4999")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "16926f5c-172d-4b8d-bbb5-c119ab754bc5")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_text user "${REFERENCE}"
+		(at 0.1 8.7 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "b2c6cf3a-4ed7-4022-92cf-f72aa2365da2")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole circle
+		(at 0 -1.27)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "f5521db6-9fc8-44b5-abba-6ba8649adc2d")
+	)
+	(pad "2" thru_hole circle
+		(at 0 1.27)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "e335ff72-4827-4a03-87df-96fa1a751c31")
+	)
+	(embedded_fonts no)
+)
