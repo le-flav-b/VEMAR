@@ -16,6 +16,7 @@ volatile struct i2cMessage msg = {0};
 ISR(TWI0_TWIS_vect) {
     // APIF - Address or Stop Interrupt Flag (master calls start)
     if (TWI0.SSTATUS & TWI_APIF_bm) {
+        msg.current_idx = 0;
         if (msg.len == 0) {
             i2c_slave_nack();
         } else {
@@ -25,12 +26,13 @@ ISR(TWI0_TWIS_vect) {
     // Master reading
     else if (TWI0.SSTATUS & TWI_DIF_bm) {
         if (TWI0.SSTATUS & TWI_DIR_bm) {
-            if (TWI0.SSTATUS & TWI_RXACK_bm) {
-                needs_fill = true;
-            } else if (msg.current_idx < msg.len) {
+            // DIR=1: master is reading (slave transmitting)
+            if (msg.current_idx < msg.len) {
+                // Send next byte
                 i2c_slave_transmit(msg.buffer[msg.current_idx++]);
             } else {
-                i2c_slave_nack();
+                // No more data, wait for master to NACK or stop
+                i2c_slave_ack();
                 needs_fill = true;
             }
         }
