@@ -2,6 +2,7 @@
 #define I2C_H
 
 #include <avr/io.h>
+#include <avr/interrupt.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -9,6 +10,12 @@
 #include <avr/sleep.h>
 
 #include <util/twi.h>
+
+#define I2C_ERR_ARBLOST    (-1)   /* arbitration lost                   */
+#define I2C_ERR_BUSERR     (-2)   /* bus error (illegal START/STOP)     */
+#define I2C_ERR_NACK       (-3)   /* slave sent NACK                    */
+#define I2C_ERR_INVALID_LEN (-4)  /* packet length 0 or > I2C_BUFFER_SIZE */
+#define I2C_ERR_TIMEOUT    (-5)   /* hardware flag never set            */
 
 /*
  * Utils

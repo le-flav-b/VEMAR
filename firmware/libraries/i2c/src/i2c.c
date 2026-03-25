@@ -1,5 +1,18 @@
 #include "i2c.h"
 
+
+#if defined(__AVR_ATmega328P__)
+static int8_t i2c_wait_twint(void) {
+  uint32_t guard = 0;
+  while (!(TWCR & (1 << TWINT))) {
+    if (++guard > 100000UL) {
+      return -5; // timeout waiting for hardware flag
+    }
+  }
+  return 0;
+}
+#endif
+
 void i2c_init() {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   TWI0.MCTRLA |= TWI_ENABLE_bm;
@@ -40,21 +53,23 @@ int8_t i2c_start(uint8_t addr_rw, bool restart) {
   (void)restart;
   while ((TWI0.MSTATUS & TWI_BUSSTATE_gm) != TWI_BUSSTATE_IDLE_gc);
   TWI0.MADDR = addr_rw;
-  if (TWI0.MSTATUS & TWI_ARBLOST_bm) return -1; // arbitration lost
-  if (TWI0.MSTATUS & TWI_BUSERR_bm) return -2; // bus error
+  if (TWI0.MSTATUS & TWI_ARBLOST_bm) return I2C_ERR_ARBLOST; // arbitration lost
+  if (TWI0.MSTATUS & TWI_BUSERR_bm) return I2C_ERR_BUSERR; // bus error
 #elif defined(__AVR_ATmega328P__)
+  uint8_t expected_addr_ack = (addr_rw & 0x01) ? TW_MR_SLA_ACK : TW_MT_SLA_ACK;
+
   TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);
-  while (!(TWCR & (1<<TWINT)));
+  if (i2c_wait_twint() != 0) return I2C_ERR_TIMEOUT;
   if (restart) {
-    if ((TWSR & 0xF8) != 0x10) return -1; // RESTART not acknowledged
+    if ((TWSR & 0xF8) != 0x10) return I2C_ERR_ARBLOST; // RESTART not acknowledged
   }
   else {
-    if ((TWSR & 0xF8) != 0x08) return -1; // START not acknowledged
+    if ((TWSR & 0xF8) != 0x08) return I2C_ERR_ARBLOST; // START not acknowledged
   }
   TWDR = addr_rw;
   TWCR = (1<<TWINT) | (1<<TWEN);
-  while (!(TWCR & (1 << TWINT)));
-  if ((TWSR & 0xF8)!= MT_DATA_ACK) return -2; // addr_rw not acknowledged
+  if (i2c_wait_twint() != 0) return I2C_ERR_TIMEOUT;
+  if ((TWSR & 0xF8) != expected_addr_ack) return I2C_ERR_BUSERR; // addr_rw not acknowledged
 #endif
   return 0;
 }
@@ -77,7 +92,7 @@ int8_t i2c_write(uint8_t data) {
 #elif defined(__AVR_ATmega328P__)
   TWDR = data;
   TWCR = (1<<TWINT) | (1 << TWEN);
-  while (!(TWCR & (1<<TWINT)));
+  if (i2c_wait_twint() != 0) return -5;
   if ((TWSR & 0xF8) != MT_DATA_ACK)  return -1; // NACK
 #endif
   return 0;
@@ -92,23 +107,28 @@ int16_t i2c_read_ack(void) {
   return TWI0.MDATA;
 #elif defined(__AVR_ATmega328P__)
   TWCR = (1 << TWINT) | (1 << TWEA) | (1 << TWEN);
-  while (!(TWCR & (1 << TWINT)));
-  if ((TWSR & 0xF8) != MT_DATA_ACK)  return -1; // NACK
+  if (i2c_wait_twint() != 0) return -5;
+  if ((TWSR & 0xF8) != MR_DATA_ACK)  return -1; // not data+ACK
   return TWDR;
 #endif
 }
 
 int16_t i2c_read_nack(void) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
-  TWI0.MCTRLB = TWI_ACKACT_NACK_gc | TWI_MCMD_STOP_gc;
-  while (!(TWI0.MSTATUS & TWI_RIF_bm)); 
-  if (TWI0.MSTATUS & TWI_ARBLOST_bm) return -1; // arbitration lost
-  if (TWI0.MSTATUS & TWI_BUSERR_bm) return -2; // bus error
+  TWI0.MCTRLB = TWI_ACKACT_NACK_gc | TWI_MCMD_RECVTRANS_gc;
+
+  uint32_t guard = 0;
+  while (!(TWI0.MSTATUS & TWI_RIF_bm)) {
+    if (++guard > 100000UL) return I2C_ERR_TIMEOUT;
+  }
+  if (TWI0.MSTATUS & TWI_ARBLOST_bm) return I2C_ERR_ARBLOST; // arbitration lost
+  if (TWI0.MSTATUS & TWI_BUSERR_bm) return I2C_ERR_BUSERR; // bus error
+  TWI0.MCTRLB  = TWI_MCMD_STOP_gc;
   return TWI0.MDATA;
 #elif defined(__AVR_ATmega328P__)
   TWCR = (1 << TWINT) | (1 << TWEN);
-  while (!(TWCR & (1 << TWINT)));
-  if ((TWSR & 0xF8) != MR_DATA_NACK)  return -1; // not NACK
+  if (i2c_wait_twint() != 0) return I2C_ERR_TIMEOUT;
+  if ((TWSR & 0xF8) != MR_DATA_NACK)  return I2C_ERR_ARBLOST; // not NACK
   return TWDR;
 #endif
 }
@@ -116,7 +136,7 @@ int16_t i2c_read_nack(void) {
 int8_t i2c_write_packet(uint8_t addr, uint8_t *data, size_t len) {
   int8_t start_resp = i2c_start(addr << 1, false);
   if (start_resp != 0) return start_resp;
-  for (int8_t i = 0; i < len; i++) {
+  for (size_t i = 0; i < len; i++) {
     int8_t write_resp = i2c_write(data[i]);
     if (write_resp != 0) {
       i2c_stop();
@@ -146,11 +166,31 @@ int32_t i2c_get_read_len(uint8_t addr) {
 }
 
 int8_t i2c_read_packet(uint8_t addr, uint8_t *buffer) {
-  int32_t len = i2c_get_read_len(addr);
-  if (len <= 0) {
-    return (int8_t)len;
+  int8_t start_resp = i2c_start((addr << 1) | 1, false);
+  if (start_resp) {
+    i2c_stop();
+    return start_resp;
   }
-  uint16_t i;
+
+  int16_t len_hi = i2c_read_ack();
+  if (len_hi < 0) {
+    i2c_stop();
+    return (int8_t)len_hi;
+  }
+
+  int16_t len_lo = i2c_read_ack();
+  if (len_lo < 0) {
+    i2c_stop();
+    return (int8_t)len_lo;
+  }
+
+  uint16_t len = ((uint16_t)len_hi << 8) | (uint16_t)len_lo;
+  if (len == 0 || len > I2C_BUFFER_SIZE) {
+    i2c_stop();
+    return -4; // invalid packet length
+  }
+
+  uint16_t i = 0;
   for (i = 0; i < len - 1; i++) {
     int16_t read_resp = i2c_read_ack();
     if (read_resp < 0) {

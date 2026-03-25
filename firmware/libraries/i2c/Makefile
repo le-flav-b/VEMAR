@@ -7,7 +7,6 @@ OBJCOPY = avr-objcopy
 AVRDUDE = avrdude
 
 SRC_FILES = $(SRC_DIR)/main_slave.c \
-			$(SRC_DIR)/main_master.c \
 			$(SRC_DIR)/i2c.c
 
 CFLAGS = -mmcu=$(MMCU)
@@ -56,7 +55,6 @@ I2C_FREQ	= 100000UL
 # FLAGS
 
 
-CFLAGS += -DBAUD=$(BAUD)
 CFLAGS += -DF_CPU=$(F_CPU)
 CFLAGS += -DI2C_FREQ=$(I2C_FREQ)
 CFLAGS += -I$(INC_DIR)
@@ -65,8 +63,8 @@ CFLAGS += -Os
 CFLAGS += -Wall -Werror -Wextra
 CFLAGS += -std=c11
 
-CFLAGS += -DI2C_MASTER
-# CFLAGS += -DI2C_SLAVE
+# CFLAGS += -DI2C_MASTER
+CFLAGS += -DI2C_SLAVE
 
 LDFLAGS = -mmcu=$(MMCU)
 
