@@ -1,5 +1,27 @@
 #include "i2c.h"
 
+#if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
+static int8_t i2c_wait_bus_idle(void) {
+  uint32_t guard = 0;
+  while ((TWI0.MSTATUS & TWI_BUSSTATE_gm) != TWI_BUSSTATE_IDLE_gc) {
+    if (++guard > 100000UL) {
+      return I2C_ERR_TIMEOUT;
+    }
+  }
+  return 0;
+}
+
+static int8_t i2c_wait_mstatus(uint8_t flag) {
+  uint32_t guard = 0;
+  while (!(TWI0.MSTATUS & flag)) {
+    if (++guard > 100000UL) {
+      return I2C_ERR_TIMEOUT;
+    }
+  }
+  return 0;
+}
+#endif
+
 
 #if defined(__AVR_ATmega328P__)
 static int8_t i2c_wait_twint(void) {
@@ -51,7 +73,7 @@ void i2c_stop_interface(void) {
 int8_t i2c_start(uint8_t addr_rw, bool restart) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   (void)restart;
-  while ((TWI0.MSTATUS & TWI_BUSSTATE_gm) != TWI_BUSSTATE_IDLE_gc);
+  if (i2c_wait_bus_idle() != 0) return I2C_ERR_TIMEOUT;
   TWI0.MADDR = addr_rw;
   if (TWI0.MSTATUS & TWI_ARBLOST_bm) return I2C_ERR_ARBLOST; // arbitration lost
   if (TWI0.MSTATUS & TWI_BUSERR_bm) return I2C_ERR_BUSERR; // bus error
@@ -85,7 +107,7 @@ void i2c_stop(void) {
 int8_t i2c_write(uint8_t data) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   TWI0.MDATA = data;
-  while (!(TWI0.MSTATUS & TWI_WIF_bm));
+  if (i2c_wait_mstatus(TWI_WIF_bm) != 0) return I2C_ERR_TIMEOUT;
   if (TWI0.MSTATUS & TWI_ARBLOST_bm) return -1; // arbitration lost
   if (TWI0.MSTATUS & TWI_BUSERR_bm) return -2; // bus error
   if (TWI0.MSTATUS & TWI_RXACK_bm) return -3; // NACK
@@ -101,7 +123,7 @@ int8_t i2c_write(uint8_t data) {
 int16_t i2c_read_ack(void) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   TWI0.MCTRLB = TWI_MCMD_RECVTRANS_gc; //trigger read, send ACK
-  while (!(TWI0.MSTATUS & TWI_RIF_bm)); // wait for Read Interrupt Flag
+  if (i2c_wait_mstatus(TWI_RIF_bm) != 0) return I2C_ERR_TIMEOUT;
   if (TWI0.MSTATUS & TWI_ARBLOST_bm) return -1; // arbitration lost
   if (TWI0.MSTATUS & TWI_BUSERR_bm) return -2; // bus error
   return TWI0.MDATA;
@@ -153,15 +175,20 @@ int32_t i2c_get_read_len(uint8_t addr) {
     i2c_stop();
     return start_resp;
   }
-  uint16_t len = 0;
-  for (uint8_t i = 0; i < 2; i++) {
-    int16_t read_resp = i2c_read_ack();
-    if (read_resp < 0) {
-      i2c_stop();
-      return read_resp;
-    }
-    len |= (read_resp << (8 * (1 - i)));
+  int16_t len_hi = i2c_read_ack();
+  if (len_hi < 0) {
+    i2c_stop();
+    return len_hi;
   }
+
+  int16_t len_lo = i2c_read_nack();
+  if (len_lo < 0) {
+    i2c_stop();
+    return len_lo;
+  }
+
+  uint16_t len = ((uint16_t)len_hi << 8) | (uint16_t)len_lo;
+  i2c_stop();
   return len;
 }
 

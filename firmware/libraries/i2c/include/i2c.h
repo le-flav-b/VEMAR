@@ -8,7 +8,6 @@
 #include <stdbool.h>
 #include <string.h>
 #include <avr/sleep.h>
-
 #include <util/twi.h>
 
 #define I2C_ERR_ARBLOST    (-1)   /* arbitration lost                   */
