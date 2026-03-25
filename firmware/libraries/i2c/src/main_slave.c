@@ -30,6 +30,7 @@ ISR(TWI0_TWIS_vect) {
             } else if (msg.current_idx < msg.len) {
                 i2c_slave_transmit(msg.buffer[msg.current_idx++]);
             } else {
+                i2c_slave_nack();
                 needs_fill = true;
             }
         }
