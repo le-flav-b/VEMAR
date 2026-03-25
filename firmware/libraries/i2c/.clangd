@@ -1,0 +1,6 @@
+CompileFlags:
+  Add: 
+    - "-mmcu=attiny412"
+    - "-I/usr/avr/include"
+    - "-DF_CPU=3333333UL"
+  Compiler: avr-gcc
