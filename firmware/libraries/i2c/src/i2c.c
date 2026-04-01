@@ -70,6 +70,27 @@ void i2c_stop_interface(void) {
 #endif
 }
 
+// used when switching from slave to master
+void i2c_switch_to_master(void) {
+#if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
+  TWI0.SCTRLA &= ~TWI_ENABLE_bm;
+  TWI0.MCTRLA |= TWI_ENABLE_bm;
+  TWI0.MSTATUS = TWI_BUSSTATE_IDLE_gc;
+#elif defined(__AVR_ATmega328P__)
+  TWCR = (1 << TWEN);
+#endif
+}
+
+// used when switching from master to slave
+void i2c_switch_to_slave(void) {
+#if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
+  TWI0.MCTRLA &= ~TWI_ENABLE_bm;
+  TWI0.SCTRLA |= TWI_ENABLE_bm | TWI_APIEN_bm | TWI_DIEN_bm;
+#elif defined(__AVR_ATmega328P__)
+  TWAR = (SLAVE_ADDR << 1) | (0 << TWGCE);
+  TWCR = (1 << TWEA) | (1 << TWEN);
+#endif
+}
 int8_t i2c_start(uint8_t addr_rw, bool restart) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   (void)restart;
