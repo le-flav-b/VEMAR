@@ -49,22 +49,20 @@
 				(hide yes)
 			)
 		)
-		(symbol "NRF24L01_0_1"
+		(symbol "NRF24L01_1_1"
 			(rectangle
 				(start -12.7 12.7)
 				(end 12.7 -12.7)
 				(stroke
 					(width 0)
-					(type default)
+					(type solid)
 				)
 				(fill
-					(type none)
+					(type background)
 				)
 			)
-		)
-		(symbol "NRF24L01_1_1"
 			(pin input line
-				(at -15.24 7.62 0)
+				(at -15.24 8.89 0)
 				(length 2.54)
 				(name "IREF"
 					(effects
@@ -82,61 +80,7 @@
 				)
 			)
 			(pin input line
-				(at -15.24 5.08 0)
-				(length 2.54)
-				(name "CE"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at -15.24 2.54 0)
-				(length 2.54)
-				(name "CSN"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at -15.24 0 0)
-				(length 2.54)
-				(name "SCK"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "3"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at -15.24 -2.54 0)
+				(at -15.24 6.35 0)
 				(length 2.54)
 				(name "MOSI"
 					(effects
@@ -154,7 +98,7 @@
 				)
 			)
 			(pin output line
-				(at -15.24 -5.08 0)
+				(at -15.24 3.81 0)
 				(length 2.54)
 				(name "MISO"
 					(effects
@@ -171,8 +115,62 @@
 					)
 				)
 			)
+			(pin input line
+				(at -15.24 1.27 0)
+				(length 2.54)
+				(name "SCK"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -15.24 -1.27 0)
+				(length 2.54)
+				(name "CSN"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -15.24 -3.81 0)
+				(length 2.54)
+				(name "CE"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 			(pin output line
-				(at -15.24 -7.62 0)
+				(at -15.24 -6.35 0)
 				(length 2.54)
 				(name "IRQ"
 					(effects
@@ -189,17 +187,17 @@
 					)
 				)
 			)
-			(pin power_in line
-				(at -5.08 -15.24 90)
+			(pin power_out line
+				(at -15.24 -8.89 0)
 				(length 2.54)
-				(name "VSS"
+				(name "DVDD"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "8"
+				(number "19"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -207,9 +205,10 @@
 					)
 				)
 			)
-			(pin power_in line
-				(at -2.54 15.24 270)
+			(pin passive line
+				(at 0 15.24 270)
 				(length 2.54)
+				(hide yes)
 				(name "VDD"
 					(effects
 						(font
@@ -217,7 +216,7 @@
 						)
 					)
 				)
-				(number "7"
+				(number "15"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -225,17 +224,18 @@
 					)
 				)
 			)
-			(pin power_in line
-				(at -2.54 -15.24 90)
+			(pin passive line
+				(at 0 15.24 270)
 				(length 2.54)
-				(name "VSS"
+				(hide yes)
+				(name "VDD"
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(number "14"
+				(number "18"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -253,7 +253,83 @@
 						)
 					)
 				)
-				(number "15"
+				(number "7"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -15.24 90)
+				(length 2.54)
+				(hide yes)
+				(name "VSS"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "14"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -15.24 90)
+				(length 2.54)
+				(hide yes)
+				(name "VSS"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "17"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -15.24 90)
+				(length 2.54)
+				(hide yes)
+				(name "VSS"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "20"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -15.24 90)
+				(length 2.54)
+				(hide yes)
+				(name "VSS"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "21"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -271,61 +347,7 @@
 						)
 					)
 				)
-				(number "17"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 2.54 15.24 270)
-				(length 2.54)
-				(name "VDD"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "18"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 2.54 -15.24 90)
-				(length 2.54)
-				(name "VSS"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "20"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 5.08 -15.24 90)
-				(length 2.54)
-				(name "VSS"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "21"
+				(number "8"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -334,25 +356,7 @@
 				)
 			)
 			(pin power_out line
-				(at 15.24 7.62 180)
-				(length 2.54)
-				(name "DVDD"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "19"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_out line
-				(at 15.24 5.08 180)
+				(at 15.24 8.89 180)
 				(length 2.54)
 				(name "VDD_PA"
 					(effects
@@ -370,7 +374,7 @@
 				)
 			)
 			(pin passive line
-				(at 15.24 1.27 180)
+				(at 15.24 5.08 180)
 				(length 2.54)
 				(name "ANT1"
 					(effects
@@ -388,7 +392,7 @@
 				)
 			)
 			(pin passive line
-				(at 15.24 -1.27 180)
+				(at 15.24 1.27 180)
 				(length 2.54)
 				(name "ANT2"
 					(effects
@@ -424,7 +428,7 @@
 				)
 			)
 			(pin passive line
-				(at 15.24 -7.62 180)
+				(at 15.24 -8.89 180)
 				(length 2.54)
 				(name "XC2"
 					(effects
@@ -493,97 +497,7 @@
 		)
 		(symbol "RFX2401C_0_0"
 			(pin power_in line
-				(at -11.43 -15.24 90)
-				(length 2.54)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at -8.89 -15.24 90)
-				(length 2.54)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "2"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at -6.35 -15.24 90)
-				(length 2.54)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "3"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at -3.81 -15.24 90)
-				(length 2.54)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "7"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at -1.27 -15.24 90)
-				(length 2.54)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "8"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 1.27 15.24 270)
+				(at 0 15.24 270)
 				(length 2.54)
 				(name "VDD"
 					(effects
@@ -600,9 +514,10 @@
 					)
 				)
 			)
-			(pin power_in line
-				(at 1.27 -15.24 90)
+			(pin passive line
+				(at 0 -15.24 90)
 				(length 2.54)
+				(hide yes)
 				(name "GND"
 					(effects
 						(font
@@ -610,79 +525,7 @@
 						)
 					)
 				)
-				(number "9"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 3.81 -15.24 90)
-				(length 2.54)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "11"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 6.35 -15.24 90)
-				(length 2.54)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "12"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 8.89 -15.24 90)
-				(length 2.54)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "15"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 11.43 -15.24 90)
-				(length 2.54)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "17"
+				(number "2"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -706,19 +549,6 @@
 							(size 1.27 1.27)
 						)
 					)
-				)
-			)
-		)
-		(symbol "RFX2401C_0_1"
-			(rectangle
-				(start -12.7 12.7)
-				(end 12.7 -12.7)
-				(stroke
-					(width 0)
-					(type default)
-				)
-				(fill
-					(type none)
 				)
 			)
 		)
@@ -778,8 +608,9 @@
 				)
 			)
 			(pin no_connect line
-				(at -1.27 15.24 270)
+				(at -2.54 15.24 270)
 				(length 2.54)
+				(hide yes)
 				(name "VDD"
 					(effects
 						(font
@@ -795,9 +626,180 @@
 					)
 				)
 			)
+			(pin power_in line
+				(at 0 -15.24 90)
+				(length 2.54)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -15.24 90)
+				(length 2.54)
+				(hide yes)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "11"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -15.24 90)
+				(length 2.54)
+				(hide yes)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "12"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -15.24 90)
+				(length 2.54)
+				(hide yes)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "15"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -15.24 90)
+				(length 2.54)
+				(hide yes)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "17"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -15.24 90)
+				(length 2.54)
+				(hide yes)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -15.24 90)
+				(length 2.54)
+				(hide yes)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "7"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -15.24 90)
+				(length 2.54)
+				(hide yes)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "8"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -15.24 90)
+				(length 2.54)
+				(hide yes)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "9"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 			(pin no_connect line
 				(at 15.24 7.62 180)
 				(length 2.54)
+				(hide yes)
 				(name "DNC"
 					(effects
 						(font
@@ -811,6 +813,19 @@
 							(size 1.27 1.27)
 						)
 					)
+				)
+			)
+		)
+		(symbol "RFX2401C_1_1"
+			(rectangle
+				(start -12.7 12.7)
+				(end 12.7 -12.7)
+				(stroke
+					(width 0)
+					(type solid)
+				)
+				(fill
+					(type background)
 				)
 			)
 		)

@@ -11,7 +11,7 @@
 		(effects
 			(font
 				(size 1 1)
-				(thickness 0.1)
+				(thickness 0.15)
 			)
 		)
 	)
@@ -252,7 +252,7 @@
 		(uuid "526b1794-172a-4fc9-89ef-d6f5c732de01")
 	)
 	(embedded_fonts no)
-	(model "${VEMAR_MODEL_DIR}/common/PTA4543-2015DPA103--3DModel-STEP-269445.step"
+	(model "/Users/chris/Documents/VEMAR/hardware/libraries/models/common/PTA4543_2015DPA103.step"
 		(offset
 			(xyz 0 0 0)
 		)

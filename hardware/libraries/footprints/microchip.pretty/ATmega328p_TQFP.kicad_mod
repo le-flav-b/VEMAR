@@ -11,7 +11,7 @@
 		(effects
 			(font
 				(size 1 1)
-				(thickness 0.1)
+				(thickness 0.15)
 			)
 		)
 	)
@@ -404,4 +404,15 @@
 		(uuid "cc910972-532e-45f8-827c-60c9e2fa7607")
 	)
 	(embedded_fonts no)
+	(model "${VEMAR_MODEL_DIR}/microchip/TQFP-32_7x7mm_P0.8mm.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 )

@@ -11,7 +11,7 @@
 		(effects
 			(font
 				(size 1 1)
-				(thickness 0.1)
+				(thickness 0.15)
 			)
 		)
 	)
@@ -123,7 +123,7 @@
 		(uuid "9c835ac5-1d1b-4f85-8170-0077676c01f1")
 	)
 	(embedded_fonts no)
-	(model "${KICAD9_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
+	(model "${VEMAR_MODEL_DIR}/common/C_0805.step"
 		(offset
 			(xyz 0 0 0)
 		)

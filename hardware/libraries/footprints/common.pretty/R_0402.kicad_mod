@@ -1,0 +1,137 @@
+(footprint "R_0402"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -1.4 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "2eda2a62-e02d-4b5c-8151-f502f07befbf")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "R_0402"
+		(at 0 1.4 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "ee1a4900-7690-4d33-86ff-5aebdd0177f7")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "fcb942f0-f295-4e5f-a9c0-99062ba26499")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "Resistor SMD 0402"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "9c9d02d5-091b-4ad1-b28b-2defbe93f6a3")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_line
+		(start -0.1 -0.35)
+		(end 0.1 -0.35)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "c1e6da79-b9dd-4bb1-ae60-3a8f36e3c5b1")
+	)
+	(fp_line
+		(start -0.1 0.35)
+		(end 0.1 0.35)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "86c73634-1a6f-455a-8430-b761841fbdb7")
+	)
+	(fp_rect
+		(start -0.95 -0.45)
+		(end 0.95 0.45)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "f3d213ec-747c-4ece-a772-c62b69f19a66")
+	)
+	(fp_rect
+		(start -0.5 -0.25)
+		(end 0.5 0.25)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "0619b330-9a32-4d8a-b501-f75c84e40ad9")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 3.2 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "859f8fc0-ede0-4b2c-a140-332ace58535b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd roundrect
+		(at -0.5 0)
+		(size 0.6 0.6)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "86b22227-a2f1-425a-9fa0-1aaf16a26710")
+	)
+	(pad "2" smd roundrect
+		(at 0.5 0)
+		(size 0.6 0.6)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "fe7f3733-0dec-4778-a7a8-8bc8d13b0044")
+	)
+	(embedded_fonts no)
+	(model "${VEMAR_MODEL_DIR}/common/R_0402.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)
