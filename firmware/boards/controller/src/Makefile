@@ -53,7 +53,9 @@ SOURCES		=	main.c \
 				radio.c \
 				ili9341.c \
 				tft.c \
-				util.c
+				util.c \
+				timer.c \
+				pwm.c
 
 BUILD_DIR	=	build
 

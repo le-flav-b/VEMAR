@@ -25,8 +25,10 @@ void ADC_reset(void)
 {
     ADMUX = 0x00;  // ADC Multiplexer Selection Register
     ADCSRA = 0x00; // ADC Control and Status Register A
+#if defined(__AVR_ATmega328P__)
     ADCSRB = 0x00; // ADC Control and Status Register B
     DIDR0 = 0x00;  // Digital Input Disable Register
+#endif
 }
 
 //------------------------------------------------------------------------------
@@ -38,7 +40,9 @@ void ADC_enable_channel(adc_ch_t channel)
     {
         BIT_clear(DDRC, BIT(channel));  // set as input
         BIT_clear(PORTC, BIT(channel)); // disable internal Pull-up Resistor
+#if defined(__AVR_ATmega328P__)
         BIT_set(DIDR0, BIT(channel));   // disable Digital Input Buffer
+#endif
     } // if channel 0 to 5
 }
 
@@ -100,12 +104,16 @@ extern inline bool_t ADC_is_complete(void);
 
 extern inline void ADC_enable(void);
 extern inline void ADC_enable_channel(adc_ch_t);
+#if defined(__AVR_ATmega328P__)
 extern inline void ADC_enable_autotrigger(void);
+#endif
 extern inline void ADC_enable_interrupt(void);
 
 extern inline void ADC_disable(void);
+#if defined(__AVR_ATmega328P__)
 extern inline void ADC_disable_channel(adc_ch_t);
 extern inline void ADC_disable_autotrigger(void);
+#endif
 extern inline void ADC_disable_interrupt(void);
 
 extern inline adc_ref_t ADC_get_reference(void);

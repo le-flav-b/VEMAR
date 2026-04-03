@@ -122,6 +122,7 @@ void ADC_enable_channel(adc_ch_t channel);
  * @see adc_ch_t
  * @see adc_basic
  */
+#if defined(__AVR_ATmega328P__)
 inline void ADC_disable_channel(adc_ch_t channel)
 {
     if (ADC_CH5 >= channel)
@@ -129,6 +130,7 @@ inline void ADC_disable_channel(adc_ch_t channel)
         BIT_set(DIDR0, BIT(channel));
     }
 }
+#endif
 
 /**
  * @brief Start conversion, and return the converted value
@@ -290,6 +292,7 @@ inline void ADC_start(void)
  */
 uint16_t ADC_data(void);
 
+#if defined(__AVR_ATmega328P__)
 /**
  * @brief Enable ADC Auto Trigger
  * @warning Auto-trigger not available
@@ -307,6 +310,8 @@ inline void ADC_disable_autotrigger(void)
 {
     BIT_clear(ADCSRA, BIT(ADATE));
 }
+
+#endif
 
 /**
  * @brief Enable ADC interrupt
