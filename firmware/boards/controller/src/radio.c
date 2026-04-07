@@ -63,7 +63,7 @@ bool_t RADIO_write(const byte_t *payload, length_t len)
         {
             break;
         } // max retransission reached
-        delay(100);
+        // delay(100);
     } while (BIT_is_clear(status, NRF24L01_TX_DS)); // wait transmit complete
 
     NRF24L01_standby();
@@ -71,9 +71,9 @@ bool_t RADIO_write(const byte_t *payload, length_t len)
     if (BIT_is_set(status, NRF24L01_MAX_RT))
     {
         NRF24L01_flush_tx();
-        return (0); // failure
+        return (FALSE); // failure
     } // flush TX FIFO
-    return (1); // success;
+    return (TRUE); // success;
 }
 
 extern inline void RADIO_set_address_tx(const byte_t *);
