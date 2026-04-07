@@ -6,6 +6,7 @@
 #include "bme.h"
 
 #define SLAVE_ADDR 0x09
+#define RAW_PM_PACKET_SIZE 10
 #define PM_PACKET_SIZE 4
 #define BME_PACKET_SIZE 12
 #define MAX_LEN 64

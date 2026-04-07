@@ -11,6 +11,7 @@ BME280_S32_t BME280_compensate_T_int32(BME280_S32_t adc_T, struct bme_calib *cal
     T = (calib->t_fine * 5 + 128) >> 8;
     return T;
 }
+
 // Returns pressure in Pa as unsigned 32 bit integer in Q24.8 format (24 integer bits and 8 fractional bits).
 // Output value of “24674867” represents 24674867/256 = 96386.2 Pa = 963.862 hPa
 BME280_U32_t BME280_compensate_P_int64(BME280_S32_t adc_P, struct bme_calib *calib)
@@ -33,6 +34,7 @@ BME280_U32_t BME280_compensate_P_int64(BME280_S32_t adc_P, struct bme_calib *cal
     p = ((p + var1 + var2) >> 8) + (((BME280_S64_t)calib->dig_P7)<<4);
     return (BME280_U32_t)p;
 }
+
 // Returns humidity in %RH as unsigned 32 bit integer in Q22.10 format (22 integer and 10 fractional bits).
 // Output value of “47445” represents 47445/1024 = 46.333 %RH
 BME280_U32_t bme280_compensate_H_int32(BME280_S32_t adc_H, struct bme_calib *calib)

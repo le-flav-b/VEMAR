@@ -23,7 +23,7 @@ BME280_INC = ../../../libraries/bme280/include
 
 ifeq ($(MCU), attiny1614)
 MMCU		= attiny1614
-F_CPU		= 16000000UL
+F_CPU		= 20000000UL
 PROGRAMMER	= serialupdi
 PORT		= /dev/ttyUSB0
 BAUD		= 115200
@@ -58,7 +58,7 @@ endif
 I2C_FREQ	= 100000UL
 
 # Set base CFLAGS now that MMCU is defined
-CFLAGS = -mmcu=$(MMCU)
+CFLAGS += -mmcu=$(MMCU)
 
 # Add include paths globally
 CFLAGS += -I$(INC_DIR) -I$(I2C_INC) -I$(BME280_INC) -I$(ATTINY_INC)
