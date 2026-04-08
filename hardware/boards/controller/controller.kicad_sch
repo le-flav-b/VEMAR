@@ -4142,7 +4142,7 @@
 	)
 	(wire
 		(pts
-			(xy 36.83 39.37) (xy 26.67 39.37)
+			(xy 26.67 39.37) (xy 46.99 39.37)
 		)
 		(stroke
 			(width 0)
@@ -4219,16 +4219,6 @@
 			(type default)
 		)
 		(uuid "f7e66025-29d8-4004-adf9-d6ebf9911fd9")
-	)
-	(wire
-		(pts
-			(xy 41.91 39.37) (xy 46.99 39.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fa52034d-9cec-47ca-8f4d-1d90ae1cb6f9")
 	)
 	(wire
 		(pts
@@ -8466,119 +8456,6 @@
 			(project ""
 				(path "/beaf00ba-d60c-407c-adfe-9d518bae0b16"
 					(reference "R3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "common:Capacitor")
-		(at 39.37 39.37 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ac1ecf4d-a86e-4d68-9526-329dc4766adc")
-		(property "Reference" "C3"
-			(at 39.37 33.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100nF"
-			(at 39.37 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "common:C_0603"
-			(at 39.37 39.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 39.37 39.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized Capacitor"
-			(at 39.37 44.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Ext. Price" "0.25"
-			(at 39.37 39.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part" "C14663"
-			(at 39.37 39.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer" "YAGEO"
-			(at 39.37 39.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer Part" "CC0603KRX7R9BB104"
-			(at 39.37 39.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Unit Price" "0.0025"
-			(at 39.37 39.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "84f95bd9-55db-4ded-8737-4e643cb51359")
-		)
-		(pin "2"
-			(uuid "613d477f-0b70-4caf-9d7f-5c82b64500dd")
-		)
-		(instances
-			(project ""
-				(path "/beaf00ba-d60c-407c-adfe-9d518bae0b16"
-					(reference "C3")
 					(unit 1)
 				)
 			)
