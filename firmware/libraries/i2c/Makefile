@@ -6,7 +6,7 @@ CC = avr-gcc
 OBJCOPY = avr-objcopy
 AVRDUDE = avrdude
 
-SRC_FILES = $(SRC_DIR)/main_slave.c \
+SRC_FILES = $(SRC_DIR)/atmosphere_slave.c \
 			$(SRC_DIR)/i2c.c
 
 CFLAGS = -mmcu=$(MMCU)

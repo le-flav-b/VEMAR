@@ -48,6 +48,8 @@ extern void i2c_init(void);
 extern void i2c_init_slave(uint8_t addr);
 // extern void i2c_set_callback(void (*func)(void)); // Handle events
 extern void i2c_stop_interface(void);
+extern void i2c_switch_to_master(void);
+extern void i2c_switch_to_slave(void);
 
 /*
  * Control
