@@ -2,14 +2,15 @@
 ######  STRUCTURE  ######
 #########################
 
+NAME			=	lidar_firmware
 SRC_DIR			=	src
 INC_DIRS		=	include
 BUILD_DIR		=	build
 OBJ_DIR			=	${BUILD_DIR}/obj
 DEP_DIR			=	${BUILD_DIR}/dep
 
-BIN_FILE		=	${BUILD_DIR}/prog.bin
-HEX_FILE		=	${BUILD_DIR}/prog.hex
+BIN_FILE		=	${BUILD_DIR}/${NAME}.bin
+HEX_FILE		=	${BUILD_DIR}/${NAME}.hex
 
 
 #######################
@@ -19,39 +20,60 @@ HEX_FILE		=	${BUILD_DIR}/prog.hex
 MAIN_SRCS_DIR	=	${SRC_DIR}
 MAIN_SRCS		=	${wildcard ${MAIN_SRCS_DIR}/*.c}
 
+SRCS			=	${MAIN_SRCS}
+
 
 ##########################
 ######  MCU CONFIG  ######
 ##########################
 
 MCU				=	atmega128a
-UART_BAUDRATE	=	19200
 F_CPU			=	16000000UL
-PORT			=	/dev/ttyUSB0
-PROGRAMMER		=	stk500v1
 
 
 ###########################
 ######  COMPILATION  ######
 ###########################
 
-SRCS			=	${MAIN_SRCS}
 OBJS			=	${SRCS:${SRC_DIR}/%.c=${OBJ_DIR}/%.o}
 DEPS			=	${SRCS:${SRC_DIR}/%.c=${DEP_DIR}/%.d}
 
 GET_DEP_PATH	=	${@:${OBJ_DIR}/%.o=${DEP_DIR}/%.d}
 
 CC				=	avr-gcc
-CFLAGS			=	-O \
-					-mmcu=${MCU} \
+
+CC_BUILD_FLAGS	=	-mmcu=${MCU} \
+					-c \
+					-MMD -MF ${GET_DEP_PATH} \
 					-DF_CPU=${F_CPU} \
-					${addprefix -I,${INC_DIRS}}
+					${addprefix -I,${INC_DIRS}} \
+					-Wall \
+					-Wextra \
+					-O3 \
+					-ffunction-sections \
+					-fdata-sections
 
-CBUILD			=	-c \
-					-MMD -MF ${GET_DEP_PATH}
+CC_LINK_FLAGS	=	-mmcu=${MCU} \
+					-Wl,--gc-sections
 
-MKDIR			=	@mkdir -vp
-RM				=	@rm -vrf
+
+######################
+######  UPLOAD  ######
+######################
+
+PORT			=	/dev/ttyUSB0
+PROGRAMMER		=	stk500v1
+UART_BAUDRATE	=	19200
+
+OBJCOPY			=	avr-objcopy
+OBJCOPY_FLAGS	=	-O ihex
+
+AVRDUDE			=	avrdude
+AVRDUDE_FLAGS	=	-U ${HEX_FILE} \
+					-P ${PORT} \
+					-p ${MCU} \
+					-c ${PROGRAMMER} \
+					-b ${UART_BAUDRATE}
 
 
 #####################
@@ -63,26 +85,23 @@ all: hex flash
 -include ${DEPS}
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c
-	${MKDIR} ${dir $@} ${dir ${GET_DEP_PATH}}
-	${CC} ${CFLAGS} ${CBUILD} $< -o $@
+	@mkdir -vp ${dir $@} ${dir ${GET_DEP_PATH}}
+	${CC} ${CC_BUILD_FLAGS} $< -o $@
 
 ${BIN_FILE}: ${OBJS}
-	${CC} ${CFLAGS} $^ -o $@
+	${CC} ${CC_LINK_FLAGS} $^ -o $@
 
 ${HEX_FILE}: ${BIN_FILE}
-	avr-objcopy -O ihex $< $@
+	${OBJCOPY} ${OBJCOPY_FLAGS} $< $@
 
 hex: ${HEX_FILE}
 
 flash:
-	avrdude -U ${HEX_FILE} -P ${PORT} -p ${MCU} -c ${PROGRAMMER} -b ${UART_BAUDRATE}
+	${AVRDUDE} ${AVRDUDE_FLAGS}
 
 clean:
-	${RM} ${BUILD_DIR}
+	@rm -vrf ${BUILD_DIR}
 
 re: clean all
 
 .PHONY: all hex flash clean re
-
-
-# usbipd attach --busid 2-10 --wsl
