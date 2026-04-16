@@ -16,7 +16,7 @@ analog_t analog;
 void setup(void)
 {
 	SERIAL_init();
-	analog = ANALOG_new(PIN_PC0);
+	analog = ANALOG_new(ADC_CH4);
 }
 
 void loop(void)

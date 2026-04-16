@@ -37,9 +37,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.9,
-          "height": 1.778,
-          "width": 1.778
+          "drill": 3.2,
+          "height": 3.2,
+          "width": 3.2
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -541,7 +541,7 @@
           "group_by": false,
           "label": "Exclude from BOM",
           "name": "${EXCLUDE_FROM_BOM}",
-          "show": false
+          "show": true
         },
         {
           "group_by": false,
@@ -606,7 +606,7 @@
       ],
       "filter_string": "",
       "group_symbols": true,
-      "include_excluded_from_bom": true,
+      "include_excluded_from_bom": false,
       "name": "",
       "sort_asc": true,
       "sort_field": "Ext. Price"
@@ -655,10 +655,6 @@
     [
       "beaf00ba-d60c-407c-adfe-9d518bae0b16",
       "Root"
-    ],
-    [
-      "9ee852fa-0889-4353-9e40-a4372248f1f0",
-      "Transceiver"
     ],
     [
       "cc1add63-85b7-48c9-bd2f-968906ef3f97",

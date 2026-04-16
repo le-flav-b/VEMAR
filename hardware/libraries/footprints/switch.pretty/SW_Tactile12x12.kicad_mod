@@ -4,19 +4,19 @@
 	(generator_version "9.0")
 	(layer "F.Cu")
 	(property "Reference" "REF**"
-		(at 0.4 -13.1 0)
+		(at 0 -8 0)
 		(unlocked yes)
 		(layer "F.SilkS")
 		(uuid "29a2429b-52de-440b-98c2-165aa298e4f0")
 		(effects
 			(font
 				(size 1 1)
-				(thickness 0.1)
+				(thickness 0.15)
 			)
 		)
 	)
 	(property "Value" "SW_Tactile12x12"
-		(at -0.05 8.95 0)
+		(at 0 8 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "922a384e-da05-40c1-90fd-1eb2c03bf25f")
@@ -231,7 +231,7 @@
 		(uuid "9ab79893-f82e-4b76-8b5e-ec8514ba5eab")
 	)
 	(fp_text user "${REFERENCE}"
-		(at -0.05 10.45 0)
+		(at 0 10 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "8e776dc1-ab92-4f0c-b83f-ef94e057bbdc")
@@ -271,7 +271,7 @@
 		(uuid "73e7bbd8-adc5-4aec-af49-bb8ceafe37c4")
 	)
 	(embedded_fonts no)
-	(model "${VEMAR_MODEL_DIR}/switch/TS16-1212-95-BK-160-SMT-TR--3DModel-STEP-242080.step"
+	(model "${VEMAR_MODEL_DIR}/switch/TS16-1212-95-BK-160-SMT-TR.step"
 		(offset
 			(xyz 0 0 0.5)
 		)

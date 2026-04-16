@@ -9,21 +9,31 @@
 //------------------------------------------------------------------------------
 
 #include "gpio.h"
+#include "serial.h"
 
-led_t led;
-button_t button;
+button_t btn_down;
+button_t btn_up;
 
 void setup(void)
 {
-    button = BUTTON_new(PIN_PB1, BUTTON_ONPRESS);
-    led = LED_new(PIN_PB0);
-    LED_off(led);
+    btn_up = BUTTON_new(PIN_PC3, BUTTON_ONHOLD);
+    btn_down = BUTTON_new(PIN_PC2, BUTTON_ONHOLD);
+    SERIAL_init();
 }
 
 void loop(void)
 {
-    if (BUTTON_is_active(&button))
+    if (BUTTON_is_active(&btn_up))
     {
-        LED_toggle(led);
+        SERIAL_println(str, "button UP");
     }
+    else if (BUTTON_is_active(&btn_down))
+    {
+        SERIAL_println(str, "button DOWN");
+    }
+    else
+    {
+        SERIAL_println(str, "OFF");
+    }
+    delay(1000);
 }

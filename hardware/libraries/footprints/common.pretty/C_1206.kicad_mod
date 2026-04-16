@@ -4,19 +4,19 @@
 	(generator_version "9.0")
 	(layer "F.Cu")
 	(property "Reference" "REF**"
-		(at 0.1 4.2 0)
+		(at 0 -2.5 0)
 		(unlocked yes)
 		(layer "F.SilkS")
 		(uuid "b21992db-e03b-46cb-bbca-080d33013699")
 		(effects
 			(font
 				(size 1 1)
-				(thickness 0.1)
+				(thickness 0.15)
 			)
 		)
 	)
 	(property "Value" "C_1206"
-		(at 0.1 5.7 0)
+		(at 0 2.25 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "d9fa5a52-ae2f-4427-9169-38f6f1592ff8")
@@ -86,7 +86,7 @@
 		(uuid "261cf569-97f0-4440-b694-b6c1a89746be")
 	)
 	(fp_text user "${REFERENCE}"
-		(at 0.1 7.2 0)
+		(at 0 4 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "86e1ebbe-f894-4614-a98f-c6163942f899")
@@ -112,4 +112,15 @@
 		(uuid "0ad639b5-f8ff-48c3-8052-225556d88506")
 	)
 	(embedded_fonts no)
+	(model "${VEMAR_MODEL_DIR}/common/C_1206.step"
+		(offset
+			(xyz 0 0.2 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 -0)
+		)
+	)
 )

@@ -54,6 +54,6 @@
 /**
  * @brief Debounce time in milliseconds
  */
-#define DEBOUNCE_TIME 50
+#define DEBOUNCE_TIME 10
 
 #endif // VEMAR_CONFIG_H

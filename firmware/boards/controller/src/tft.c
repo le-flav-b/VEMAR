@@ -22,11 +22,11 @@ void TFT_set_mode(tft_mode_t orientation, tft_dir_t x, tft_dir_t y)
 {
     if (TFT_LANDSCAPE == orientation)
     {
-        ILI9341_set_orientation((orientation << 1) | (y << 2) | (x << 3));
+        ILI9341_set_orientation((orientation << 5) | (y << 6) | (x << 7));
     }
     else
     {
-        ILI9341_set_orientation((x << 2) | (y << 3));
+        ILI9341_set_orientation((x << 6) | ((!y) << 7));
     }
 }
 

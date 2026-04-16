@@ -74,6 +74,13 @@ void ILI9341_sleep_in(void);
 void ILI9341_sleep_out(void);
 
 /**
+ * @brief Set the orientation of the display
+ * @param orientation Orientation of the display
+ * @see ili9341_orientation_t
+ */
+void ILI9341_set_orientation(ili9341_orientation_t orientation);
+
+/**
  * @brief Set the size of the text
  * @param size Size of the text
  */
@@ -98,11 +105,20 @@ void ILI9341_set_text_color(color16_t color);
 void ILI9341_set_text_background(color16_t background);
 
 /**
- * @brief Set the orientation of the display
- * @param orientation Orientation of the display
- * @see ili9341_orientation_t
+ * @brief Fill the screen with the specified color
+ * @param color Color to fill
  */
-void ILI9341_set_orientation(ili9341_orientation_t orientation);
+void ILI9341_fill_screen(color16_t color);
+
+/**
+ * @brief Fill the specified area with the color
+ * @param x Starting position X of the area
+ * @param y Starting position Y of the area
+ * @param w Width of the area
+ * @param h Height of the area
+ * @param color Color to fill
+ */
+void ILI9341_fill_area(uint16_t x, uint16_t y, uint16_t w, uint16_t h, color16_t color);
 
 /**
  * @brief Display a single pixel
@@ -121,9 +137,13 @@ void ILI9341_draw_pixel(uint16_t x, uint16_t y, uint16_t color);
  */
 void ILI9341_draw_char(uint16_t x, uint16_t y, char ch);
 
+/**
+ * @brief Display text on the screen
+ * @param x Position X of the text
+ * @param y Position Y of the text
+ * @param str Text to display
+ * @warning The text should only contain printable characters
+ */
 void ILI9341_draw_string(uint16_t x, uint16_t y, const char *str);
-
-void ILI9341_fill_screen(color16_t color);
-void ILI9341_fill_area(uint16_t x, uint16_t y, uint16_t w, uint16_t h, color16_t color);
 
 #endif // VEMAR_ILI9341_H

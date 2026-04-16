@@ -4,19 +4,19 @@
 	(generator_version "9.0")
 	(layer "F.Cu")
 	(property "Reference" "REF**"
-		(at 0 -15.25 0)
+		(at 0 0 0)
 		(unlocked yes)
 		(layer "F.SilkS")
 		(uuid "22b92ee3-2003-4178-b492-79f7b8d81535")
 		(effects
 			(font
 				(size 1 1)
-				(thickness 0.1)
+				(thickness 0.15)
 			)
 		)
 	)
 	(property "Value" "Inductor"
-		(at 0 -13.75 0)
+		(at 0 5.85 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "96e92558-9755-433d-a2ab-81bfaeca962a")
@@ -77,7 +77,7 @@
 		(uuid "c667ed64-4956-427b-93c6-174ab3ae4702")
 	)
 	(fp_text user "${REFERENCE}"
-		(at 0 -12.25 0)
+		(at 0 7.35 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "4e8629e2-db54-4e2d-b69e-34ca8d13a779")

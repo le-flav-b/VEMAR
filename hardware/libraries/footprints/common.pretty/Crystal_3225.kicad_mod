@@ -4,19 +4,19 @@
 	(generator_version "9.0")
 	(layer "F.Cu")
 	(property "Reference" "REF**"
-		(at 0 -6.25 0)
+		(at 0 -3 0)
 		(unlocked yes)
 		(layer "F.SilkS")
 		(uuid "351639cc-63f8-41ab-8d78-67535d0e400a")
 		(effects
 			(font
 				(size 1 1)
-				(thickness 0.1)
+				(thickness 0.15)
 			)
 		)
 	)
 	(property "Value" "Crystal_3225"
-		(at 0.125 7.725 0)
+		(at 0 3 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "8cd9cdb7-1a31-4792-8d06-d91d0f943a8a")
@@ -55,6 +55,16 @@
 	)
 	(attr smd)
 	(fp_line
+		(start -2.1 0)
+		(end -2.1 1.8)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "771b4e3a-e507-4c41-9a19-ae130ecaa575")
+	)
+	(fp_line
 		(start -1.7 0.1)
 		(end -1.7 -0.1)
 		(stroke
@@ -85,6 +95,16 @@
 		(uuid "6c8ff594-7432-4653-8a4e-dc0135a8c3f7")
 	)
 	(fp_line
+		(start 0 1.8)
+		(end -2.1 1.8)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "30cec2ba-8d2b-4ec7-bd47-e146405e53bc")
+	)
+	(fp_line
 		(start 1.7 0.1)
 		(end 1.7 -0.1)
 		(stroke
@@ -94,20 +114,9 @@
 		(layer "F.SilkS")
 		(uuid "fe241c2d-0368-49be-8a23-06cb0e0e263d")
 	)
-	(fp_circle
-		(center -2.5 1)
-		(end -2.25 1)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill yes)
-		(layer "F.SilkS")
-		(uuid "fc38e7ce-ca8d-4b9f-9185-14c27a2ea519")
-	)
 	(fp_rect
-		(start -2.6 -2.25)
-		(end 2.6 2.25)
+		(start -2.2 -1.9)
+		(end 2.2 1.9)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -128,7 +137,7 @@
 		(uuid "3eb18309-3e82-49de-aa9a-c36deb3315e6")
 	)
 	(fp_text user "${REFERENCE}"
-		(at 0.125 9.225 0)
+		(at 0 5 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "9b41500c-3d12-4551-8eaa-257dd62dcf89")
@@ -168,4 +177,15 @@
 		(uuid "2d560f69-c8d3-4b48-a4fa-02d624ef1d66")
 	)
 	(embedded_fonts no)
+	(model "${VEMAR_MODEL_DIR}/common/Crystal_3225.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 )

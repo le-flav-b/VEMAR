@@ -52,7 +52,11 @@ SOURCES		=	main.c \
 				nrf24l01.c \
 				radio.c \
 				ili9341.c \
-				tft.c
+				tft.c \
+				util.c \
+				timer.c \
+				pwm.c \
+				i2c.c
 
 BUILD_DIR	=	build
 

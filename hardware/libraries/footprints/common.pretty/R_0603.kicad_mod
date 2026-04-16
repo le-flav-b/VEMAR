@@ -11,7 +11,7 @@
 		(effects
 			(font
 				(size 1 1)
-				(thickness 0.1)
+				(thickness 0.15)
 			)
 		)
 	)
@@ -123,4 +123,15 @@
 		(uuid "9c835ac5-1d1b-4f85-8170-0077676c01f1")
 	)
 	(embedded_fonts no)
+	(model "${VEMAR_MODEL_DIR}/common/R_0603.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 )
