@@ -31,6 +31,12 @@ static void uart_send_byte(uint8_t byte) {
     USART0.TXDATAL = byte;
 }
 
+static void send_sds011_cmd(const uint8_t cmd[19]) {
+    for (uint8_t i = 0; i < 19; i++) {
+        uart_send_byte(cmd[i]);
+    }
+}
+
 void send_sds011_wakeup(void) {
     // AA B4 06 01 01 00*10 FF FF checksum AB
     // checksum = (0x06 + 0x01 + 0x01 + 0xFF + 0xFF) % 256 = 0x06
@@ -39,9 +45,7 @@ void send_sds011_wakeup(void) {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
         0xFF, 0x06, 0xAB
     };
-    for (uint8_t i = 0; i < 19; i++) {
-        uart_send_byte(cmd[i]);
-    }
+    send_sds011_cmd(cmd);
 }
 
 void set_sds011_active_mode(void) {
@@ -52,39 +56,84 @@ void set_sds011_active_mode(void) {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
         0xFF, 0x01, 0xAB
     };
-    for (uint8_t i = 0; i < 19; i++) {
-        uart_send_byte(cmd[i]);
-    }
+    send_sds011_cmd(cmd);
 }
 
-ISR(USART0_RXC_vect) {
-    uint8_t status = USART0.RXDATAH;
-    uint8_t byte = USART0.RXDATAL;
+void set_sds011_continuous_mode(void) {
+    // AA B4 08 01 00*10 FF FF checksum AB
+    // checksum = (0x08 + 0x01 + 0x00 + 0xFF + 0xFF) % 256 = 0x07
+    const uint8_t cmd[19] = {
+        0xAA, 0xB4, 0x08, 0x01, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
+        0xFF, 0x07, 0xAB
+    };
+    send_sds011_cmd(cmd);
+}
 
+static void process_sds011_rx_byte(uint8_t status, uint8_t byte) {
     if (status & (USART_FERR_bm | USART_BUFOVF_bm | USART_PERR_bm)) {
         uart_idx = 0;
         return;
     }
 
-    // Sync on start byte 0xAA
-    if (uart_idx == 0 && byte != 0xAA) {
+    if (uart_idx == 0) {
+        if (byte != 0xAA) {
+            return;
+        }
+        pm_data_unfinished[uart_idx++] = byte;
         return;
     }
-    // Second byte must be 0xC0 (PM data response ID); discard command responses
-    if (uart_idx == 1 && byte != 0xC0) {
-        uart_idx = 0;
+
+    // Second byte must be 0xC0 (PM data response ID); discard command responses.
+    if (uart_idx == 1) {
+        if (byte == 0xC0) {
+            pm_data_unfinished[uart_idx++] = byte;
+        } else if (byte == 0xAA) {
+            pm_data_unfinished[0] = 0xAA;
+            uart_idx = 1;
+        } else {
+            uart_idx = 0;
+        }
+        return;
+    }
+
+    // Mid-frame AA likely means we lost alignment; treat it as a new frame start.
+    if (byte == 0xAA) {
+        pm_data_unfinished[0] = 0xAA;
+        uart_idx = 1;
         return;
     }
 
     pm_data_unfinished[uart_idx++] = byte;
 
     if (uart_idx == RAW_PM_PACKET_SIZE) {
-        for (uint8_t i = 2; i < 6; i++) {
-            pm_data_finished[i - 2] = pm_data_unfinished[i];
+        uint8_t checksum = 0;
+        for (uint8_t i = 2; i <= 7; i++) {
+            checksum += pm_data_unfinished[i];
         }
-        toggle_led(); // Blink once per complete PM frame
+
+        if (pm_data_unfinished[9] == 0xAB && checksum == pm_data_unfinished[8]) {
+            for (uint8_t i = 2; i < 6; i++) {
+                pm_data_finished[i - 2] = pm_data_unfinished[i];
+            }
+            toggle_led(); // Blink once per valid PM frame
+        }
         uart_idx = 0;
     }
+}
+
+static void poll_sds011_uart(void) {
+    while (USART0.STATUS & USART_RXCIF_bm) {
+        uint8_t status = USART0.RXDATAH;
+        uint8_t byte = USART0.RXDATAL;
+        process_sds011_rx_byte(status, byte);
+    }
+}
+
+ISR(USART0_RXC_vect) {
+    uint8_t status = USART0.RXDATAH;
+    uint8_t byte = USART0.RXDATAL;
+    process_sds011_rx_byte(status, byte);
 }
 
 ISR(TWI0_TWIS_vect) {
@@ -132,7 +181,7 @@ void uart_init(void) {
     PORTA.DIRSET = PIN1_bm; // TX
     PORTA.DIRCLR = PIN2_bm; // RX
     PORTA.PIN2CTRL |= PORT_PULLUPEN_bm; // Keep RX high when line is idle/open
-    USART0.CTRLA = USART_RXCIE_bm; // Enable RX complete interrupt
+    USART0.CTRLA = 0; // Poll RX in main loop to avoid UART ISR interference with I2C
     USART0.CTRLB = USART_TXEN_bm | USART_RXEN_bm | USART_RXMODE_NORMAL_gc; // Enable TX/RX; RX IRQ is enabled in CTRLA
 }
 
@@ -238,11 +287,21 @@ int main(void) {
     // set_sleep_mode(SLEEP_MODE_IDLE);
     sei();       // enable interrupts early so TWI ISR can respond to master
     _delay_ms(1000); // Wait for sds011 to power on
+
+    // SDS011 may ignore the first wakeup after power-on.
     send_sds011_wakeup();
+    _delay_ms(200);
+    send_sds011_wakeup();
+    _delay_ms(200);
+
     set_sds011_active_mode();
+    _delay_ms(200);
+    set_sds011_continuous_mode();
+
     CCP = CCP_IOREG_gc; // enable config change
     WDT.CTRLA = WDT_PERIOD_8KCLK_gc; // 8s timeout
     while (1) {
+        poll_sds011_uart();
         // sleep_mode();
         if (needs_fill) {
             fill_msg();
