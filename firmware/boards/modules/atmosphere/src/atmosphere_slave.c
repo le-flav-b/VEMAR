@@ -1,12 +1,25 @@
 #include "atmosphere.h"
 
-static volatile bool needs_fill = false;
+static volatile bool needs_fill = true;
 volatile struct i2cMessage msg = {0};
 volatile uint8_t pm_data_unfinished[RAW_PM_PACKET_SIZE] = {0};
 volatile uint8_t pm_data_finished[PM_PACKET_SIZE] = {0};
 // volatile uint8_t bme_data[BME_PACKET_SIZE] = {0};
 static volatile uint8_t uart_idx = 0;
 // static struct bme_calib calib = {0};  // BME280 calibration data
+
+static void clock_init_20mhz(void) {
+#if defined(__AVR_ATtiny1614__) || defined(__AVR_ATtiny412__)
+    // Ensure runtime clock matches F_CPU used for UART/I2C timing math.
+    CCP = CCP_IOREG_gc;
+    CLKCTRL.MCLKCTRLA = CLKCTRL_CLKSEL_OSC20M_gc;
+    while (CLKCTRL.MCLKSTATUS & CLKCTRL_SOSC_bm) {
+    }
+
+    CCP = CCP_IOREG_gc;
+    CLKCTRL.MCLKCTRLB = 0; // Disable prescaler
+#endif
+}
 
 void toggle_led(void) {
     // toggle LED on PB2
@@ -45,8 +58,13 @@ void set_sds011_active_mode(void) {
 }
 
 ISR(USART0_RXC_vect) {
-    toggle_led();
+    uint8_t status = USART0.RXDATAH;
     uint8_t byte = USART0.RXDATAL;
+
+    if (status & (USART_FERR_bm | USART_BUFOVF_bm | USART_PERR_bm)) {
+        uart_idx = 0;
+        return;
+    }
 
     // Sync on start byte 0xAA
     if (uart_idx == 0 && byte != 0xAA) {
@@ -64,6 +82,7 @@ ISR(USART0_RXC_vect) {
         for (uint8_t i = 2; i < 6; i++) {
             pm_data_finished[i - 2] = pm_data_unfinished[i];
         }
+        toggle_led(); // Blink once per complete PM frame
         uart_idx = 0;
     }
 }
@@ -102,12 +121,19 @@ void uart_init(void) {
     // Data Packet Freq: 1Hz
 
     // set board for 20Mhz
-    USART0.BAUD = (uint16_t)((64UL * 20000000) / (16UL * 9600)); // tinyAVR formula
-    USART0.CTRLC = USART_CHSIZE_8BIT_gc;
+#if defined(PORTMUX_USART0_gm)
+    PORTMUX.USARTROUTEA = (PORTMUX.USARTROUTEA & ~PORTMUX_USART0_gm) | PORTMUX_USART0_DEFAULT_gc;
+#endif
+    USART0.BAUD = (uint16_t)((64UL * F_CPU) / (16UL * 9600)); // tinyAVR formula
+    USART0.CTRLC = USART_CMODE_ASYNCHRONOUS_gc |
+                   USART_PMODE_DISABLED_gc |
+                   USART_SBMODE_1BIT_gc |
+                   USART_CHSIZE_8BIT_gc;
     PORTA.DIRSET = PIN1_bm; // TX
     PORTA.DIRCLR = PIN2_bm; // RX
+    PORTA.PIN2CTRL |= PORT_PULLUPEN_bm; // Keep RX high when line is idle/open
     USART0.CTRLA = USART_RXCIE_bm; // Enable RX complete interrupt
-    USART0.CTRLB = USART_TXEN_bm | USART_RXEN_bm; // Enable TX and RX
+    USART0.CTRLB = USART_TXEN_bm | USART_RXEN_bm | USART_RXMODE_NORMAL_gc; // Enable TX/RX; RX IRQ is enabled in CTRLA
 }
 
 
@@ -197,6 +223,10 @@ static void fill_msg(void) {
 }
 
 void slave_init(void) {
+    clock_init_20mhz();
+    PORTB.DIRSET = PIN2_bm; // STATUS_LED
+    PORTB.OUTCLR = PIN2_bm;
+    PORTB.DIRCLR = PIN0_bm | PIN1_bm; // TWI0 default pins: SCL/SDA inputs
     i2c_init_slave(SLAVE_ADDR);
     uart_init();
 }
@@ -204,14 +234,14 @@ void slave_init(void) {
 int main(void) {
     slave_init();
     // calibrate_bme();
-    // fill_msg();
+    fill_msg();  // pre-fill with zeros so slave can ACK before SDS011 is ready
     // set_sleep_mode(SLEEP_MODE_IDLE);
-    _delay_ms(10000); // Wait for sds011 to power on
+    sei();       // enable interrupts early so TWI ISR can respond to master
+    _delay_ms(1000); // Wait for sds011 to power on
     send_sds011_wakeup();
     set_sds011_active_mode();
     CCP = CCP_IOREG_gc; // enable config change
     WDT.CTRLA = WDT_PERIOD_8KCLK_gc; // 8s timeout
-    sei();
     while (1) {
         // sleep_mode();
         if (needs_fill) {
