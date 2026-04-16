@@ -6,6 +6,17 @@ volatile uint8_t pm_data_unfinished[RAW_PM_PACKET_SIZE] = {0};
 volatile uint8_t pm_data_finished[PM_PACKET_SIZE] = {0};
 // volatile uint8_t bme_data[BME_PACKET_SIZE] = {0};
 static volatile uint8_t uart_idx = 0;
+static volatile uint16_t sds_valid_frames = 0;
+static volatile uint16_t sds_checksum_fail_frames = 0;
+static volatile uint16_t sds_uart_error_bytes = 0;
+static volatile uint16_t sds_rx_bytes = 0;
+static volatile uint16_t sds_aa_headers = 0;
+static volatile uint16_t sds_c0_headers = 0;
+static volatile uint16_t sds_c5_headers = 0;
+static volatile uint16_t sds_query_sent = 0;
+static volatile uint16_t sds_rx_edges = 0;
+static volatile uint8_t reset_flags_snapshot = 0;
+static uint8_t sds_query_cooldown = 0;
 // static struct bme_calib calib = {0};  // BME280 calibration data
 
 static void clock_init_20mhz(void) {
@@ -59,6 +70,17 @@ void set_sds011_active_mode(void) {
     send_sds011_cmd(cmd);
 }
 
+void set_sds011_query_mode(void) {
+    // AA B4 02 01 01*11 FF FF checksum AB
+    // checksum = (0x02 + 0x01 + 0x01 + 0xFF + 0xFF) % 256 = 0x02
+    const uint8_t cmd[19] = {
+        0xAA, 0xB4, 0x02, 0x01, 0x01, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
+        0xFF, 0x02, 0xAB
+    };
+    send_sds011_cmd(cmd);
+}
+
 void set_sds011_continuous_mode(void) {
     // AA B4 08 01 00*10 FF FF checksum AB
     // checksum = (0x08 + 0x01 + 0x00 + 0xFF + 0xFF) % 256 = 0x07
@@ -70,8 +92,21 @@ void set_sds011_continuous_mode(void) {
     send_sds011_cmd(cmd);
 }
 
+void query_sds011_pm(void) {
+    // AA B4 04 00*12 FF FF checksum AB
+    // checksum = (0x04 + 0xFF + 0xFF) % 256 = 0x02
+    const uint8_t cmd[19] = {
+        0xAA, 0xB4, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
+        0xFF, 0x02, 0xAB
+    };
+    send_sds011_cmd(cmd);
+    sds_query_sent++;
+}
+
 static void process_sds011_rx_byte(uint8_t status, uint8_t byte) {
     if (status & (USART_FERR_bm | USART_BUFOVF_bm | USART_PERR_bm)) {
+        sds_uart_error_bytes++;
         uart_idx = 0;
         return;
     }
@@ -80,6 +115,7 @@ static void process_sds011_rx_byte(uint8_t status, uint8_t byte) {
         if (byte != 0xAA) {
             return;
         }
+        sds_aa_headers++;
         pm_data_unfinished[uart_idx++] = byte;
         return;
     }
@@ -87,20 +123,18 @@ static void process_sds011_rx_byte(uint8_t status, uint8_t byte) {
     // Second byte must be 0xC0 (PM data response ID); discard command responses.
     if (uart_idx == 1) {
         if (byte == 0xC0) {
+            sds_c0_headers++;
             pm_data_unfinished[uart_idx++] = byte;
+        } else if (byte == 0xC5) {
+            sds_c5_headers++;
+            uart_idx = 0;
         } else if (byte == 0xAA) {
+            sds_aa_headers++;
             pm_data_unfinished[0] = 0xAA;
             uart_idx = 1;
         } else {
             uart_idx = 0;
         }
-        return;
-    }
-
-    // Mid-frame AA likely means we lost alignment; treat it as a new frame start.
-    if (byte == 0xAA) {
-        pm_data_unfinished[0] = 0xAA;
-        uart_idx = 1;
         return;
     }
 
@@ -116,7 +150,10 @@ static void process_sds011_rx_byte(uint8_t status, uint8_t byte) {
             for (uint8_t i = 2; i < 6; i++) {
                 pm_data_finished[i - 2] = pm_data_unfinished[i];
             }
+            sds_valid_frames++;
             toggle_led(); // Blink once per valid PM frame
+        } else {
+            sds_checksum_fail_frames++;
         }
         uart_idx = 0;
     }
@@ -126,8 +163,47 @@ static void poll_sds011_uart(void) {
     while (USART0.STATUS & USART_RXCIF_bm) {
         uint8_t status = USART0.RXDATAH;
         uint8_t byte = USART0.RXDATAL;
+        sds_rx_bytes++;
         process_sds011_rx_byte(status, byte);
     }
+}
+
+static void poll_sds011_uart_ms(uint16_t duration_ms);
+
+static void reset_sds_parser(void) {
+    uart_idx = 0;
+}
+
+static void flush_sds011_uart_rx(void) {
+    while (USART0.STATUS & USART_RXCIF_bm) {
+        (void)USART0.RXDATAH;
+        (void)USART0.RXDATAL;
+    }
+}
+
+static void request_sds011_query_with_retry(void) {
+    uint16_t valid_before = sds_valid_frames;
+
+    // Reference libraries flush stale bytes before issuing a command.
+    flush_sds011_uart_rx();
+    reset_sds_parser();
+
+    // Throttle to a single query transaction; avoid hammering the sensor.
+    query_sds011_pm();
+    poll_sds011_uart_ms(700);
+
+    // If data is late, keep listening a bit longer without sending a second command.
+    if (sds_valid_frames == valid_before) {
+        poll_sds011_uart_ms(250);
+    }
+}
+
+static void poll_sds011_uart_ms(uint16_t duration_ms) {
+    for (uint16_t i = 0; i < duration_ms; i++) {
+        poll_sds011_uart();
+        _delay_ms(1);
+    }
+    poll_sds011_uart();
 }
 
 ISR(USART0_RXC_vect) {
@@ -137,25 +213,35 @@ ISR(USART0_RXC_vect) {
 }
 
 ISR(TWI0_TWIS_vect) {
-    // APIF - Address or Stop Interrupt Flag (master calls start)
+    // APIF - Address or Stop Interrupt Flag
     if (TWI0.SSTATUS & TWI_APIF_bm) {
-        msg.current_idx = 0;
-        if (msg.len == 0) {
-            i2c_slave_nack();
+        if (TWI0.SSTATUS & TWI_AP_bm) {
+            // Address match
+            msg.current_idx = 0;
+            if (msg.len == 0) {
+                i2c_slave_nack();
+            } else {
+                i2c_slave_ack();
+            }
         } else {
-            i2c_slave_ack();
+            // STOP condition - release bus cleanly
+            TWI0.SCTRLB = TWI_SCMD_COMPTRANS_gc;
         }
     }
-    // Master reading
+    // Data interrupt
     else if (TWI0.SSTATUS & TWI_DIF_bm) {
         if (TWI0.SSTATUS & TWI_DIR_bm) {
             // DIR=1: master is reading (slave transmitting)
-            if (msg.current_idx < msg.len) {
-                // Send next byte
+            // After first byte, RXACK reflects master's response to previous byte
+            if (msg.current_idx > 0 && (TWI0.SSTATUS & TWI_RXACK_bm)) {
+                // Master sent NACK - finish transaction
+                TWI0.SCTRLB = TWI_SCMD_COMPTRANS_gc;
+                needs_fill = true;
+            } else if (msg.current_idx < msg.len) {
                 i2c_slave_transmit(msg.buffer[msg.current_idx++]);
             } else {
-                // No more data, wait for master to NACK or stop
-                i2c_slave_ack();
+                // Master requested beyond available bytes - end transaction
+                TWI0.SCTRLB = TWI_SCMD_COMPTRANS_gc;
                 needs_fill = true;
             }
         }
@@ -180,7 +266,7 @@ void uart_init(void) {
                    USART_CHSIZE_8BIT_gc;
     PORTA.DIRSET = PIN1_bm; // TX
     PORTA.DIRCLR = PIN2_bm; // RX
-    PORTA.PIN2CTRL |= PORT_PULLUPEN_bm; // Keep RX high when line is idle/open
+    PORTA.PIN2CTRL = PORT_PULLUPEN_bm; // Keep RX high when line is idle/open
     USART0.CTRLA = 0; // Poll RX in main loop to avoid UART ISR interference with I2C
     USART0.CTRLB = USART_TXEN_bm | USART_RXEN_bm | USART_RXMODE_NORMAL_gc; // Enable TX/RX; RX IRQ is enabled in CTRLA
 }
@@ -252,7 +338,7 @@ static void fill_msg(void) {
     // read_bme();
 
     // uint16_t len = 16; // PM data + BME data
-    uint16_t len = 4; // PM data only for now
+    uint16_t len = 23; // PM data (4) + SDS011 diagnostics (19)
 
     msg.buffer[0] = (uint8_t)(len >> 8);
     msg.buffer[1] = (uint8_t)(len & 0xFF);
@@ -260,6 +346,25 @@ static void fill_msg(void) {
     for (uint8_t i = 0; i < PM_PACKET_SIZE; i++) {
         msg.buffer[sizeof(uint16_t) + i] = pm_data_finished[i];
     }
+    msg.buffer[6] = (uint8_t)(sds_valid_frames & 0xFF);
+    msg.buffer[7] = (uint8_t)(sds_valid_frames >> 8);
+    msg.buffer[8] = (uint8_t)(sds_checksum_fail_frames & 0xFF);
+    msg.buffer[9] = (uint8_t)(sds_checksum_fail_frames >> 8);
+    msg.buffer[10] = (uint8_t)(sds_uart_error_bytes & 0xFF);
+    msg.buffer[11] = (uint8_t)(sds_uart_error_bytes >> 8);
+    msg.buffer[12] = (uint8_t)(sds_rx_bytes & 0xFF);
+    msg.buffer[13] = (uint8_t)(sds_rx_bytes >> 8);
+    msg.buffer[14] = (uint8_t)(sds_aa_headers & 0xFF);
+    msg.buffer[15] = (uint8_t)(sds_aa_headers >> 8);
+    msg.buffer[16] = (uint8_t)(sds_c0_headers & 0xFF);
+    msg.buffer[17] = (uint8_t)(sds_c0_headers >> 8);
+    msg.buffer[18] = (uint8_t)(sds_c5_headers & 0xFF);
+    msg.buffer[19] = (uint8_t)(sds_c5_headers >> 8);
+    msg.buffer[20] = (uint8_t)(sds_query_sent & 0xFF);
+    msg.buffer[21] = (uint8_t)(sds_query_sent >> 8);
+    msg.buffer[22] = (uint8_t)(sds_rx_edges & 0xFF);
+    msg.buffer[23] = (uint8_t)(sds_rx_edges >> 8);
+    msg.buffer[24] = reset_flags_snapshot;
     // for (uint8_t i = 0; i < BME_PACKET_SIZE; i++) {
     //     msg.buffer[sizeof(uint16_t) + PM_PACKET_SIZE + i] = bme_data[i];
     // }
@@ -281,6 +386,9 @@ void slave_init(void) {
 }
 
 int main(void) {
+    reset_flags_snapshot = RSTCTRL.RSTFR;
+    RSTCTRL.RSTFR = reset_flags_snapshot;
+
     slave_init();
     // calibrate_bme();
     fill_msg();  // pre-fill with zeros so slave can ACK before SDS011 is ready
@@ -292,21 +400,28 @@ int main(void) {
     send_sds011_wakeup();
     _delay_ms(200);
     send_sds011_wakeup();
-    _delay_ms(200);
+    _delay_ms(500);
 
-    set_sds011_active_mode();
-    _delay_ms(200);
-    set_sds011_continuous_mode();
+    // Query mode + explicit query loop is the most deterministic flow for SDS011.
+    set_sds011_query_mode();
+    _delay_ms(500);
 
-    CCP = CCP_IOREG_gc; // enable config change
-    WDT.CTRLA = WDT_PERIOD_8KCLK_gc; // 8s timeout
+    // Keep watchdog disabled while debugging serial receive stability.
     while (1) {
         poll_sds011_uart();
         // sleep_mode();
         if (needs_fill) {
+            // Query at a slower cadence to reduce sensor command pressure.
+            // With a 1s master polling loop and cooldown=2, this is ~1 query every 3s.
+            if (sds_query_cooldown == 0) {
+                request_sds011_query_with_retry();
+                sds_query_cooldown = 2;
+            } else {
+                sds_query_cooldown--;
+                poll_sds011_uart_ms(20);
+            }
             fill_msg();
         }
-        wdt_reset();  // Reset the watchdog
     }
     return 0;
 }
