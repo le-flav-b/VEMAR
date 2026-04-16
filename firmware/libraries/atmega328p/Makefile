@@ -20,7 +20,7 @@ RM			:=	rm -f
 ECHO		:=	echo
 MKDIR		:=	mkdir -p
 
-INCLUDE		=	../include
+INCLUDE		=	include
 
 CFLAGS		=	-Wall \
 				-Wextra \
@@ -59,6 +59,7 @@ SOURCES		=	main.c \
 				i2c.c
 
 BUILD_DIR	=	build
+SOURCE_DIR	=	src
 
 OBJECTS		=	$(addprefix $(BUILD_DIR)/, $(SOURCES:.c=.o))
 
@@ -87,7 +88,16 @@ fclean: clean
 
 rebuild: fclean all
 
-$(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
+.PHONY: help
+
+help:
+	@$(ECHO) "Syntax: make [PARAM=VALUE] [...]"
+	@$(ECHO) "- FREQUENCY"
+	@$(ECHO) "- BAUDRATE"
+	@$(ECHO) "- PORT"
+	@$(ECHO) "- PROGRAMMER"
+
+$(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.c | $(BUILD_DIR)
 	@$(ECHO) $(COLOR_LOG) "Building OBJ file: '$@'" $(COLOR_RESET)
 	$(CC) $(CFLAGS) -o $@ -c $<
 

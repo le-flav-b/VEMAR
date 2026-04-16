@@ -37,7 +37,7 @@ MAKE		:=	make -C
 ECHO		:=	echo
 MKDIR		:=	mkdir -p
 
-INCLUDE		=	../../include
+INCLUDE		=	../include
 
 LIBRARY_DIR	=	..
 LIBRARY		=	libvemar.a
