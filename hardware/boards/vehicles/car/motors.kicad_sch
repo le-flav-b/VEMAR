@@ -5,380 +5,6 @@
 	(uuid "30a04dec-552e-4fc9-bf05-4fed0ce76b48")
 	(paper "A4")
 	(lib_symbols
-		(symbol "Connector_Generic:Conn_02x05_Odd_Even"
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "J"
-				(at 1.27 7.62 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "Conn_02x05_Odd_Even"
-				(at 1.27 -7.62 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Generic connector, double row, 02x05, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "connector"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "Connector*:*_2x??_*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "Conn_02x05_Odd_Even_1_1"
-				(rectangle
-					(start -1.27 6.35)
-					(end 3.81 -6.35)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(rectangle
-					(start -1.27 5.207)
-					(end 0 4.953)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 2.667)
-					(end 0 2.413)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 0.127)
-					(end 0 -0.127)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 -2.413)
-					(end 0 -2.667)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 -4.953)
-					(end 0 -5.207)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 3.81 5.207)
-					(end 2.54 4.953)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 3.81 2.667)
-					(end 2.54 2.413)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 3.81 0.127)
-					(end 2.54 -0.127)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 3.81 -2.413)
-					(end 2.54 -2.667)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 3.81 -4.953)
-					(end 2.54 -5.207)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at -5.08 5.08 0)
-					(length 3.81)
-					(name "Pin_1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 2.54 0)
-					(length 3.81)
-					(name "Pin_3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 3.81)
-					(name "Pin_5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 -2.54 0)
-					(length 3.81)
-					(name "Pin_7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 -5.08 0)
-					(length 3.81)
-					(name "Pin_9"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "9"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 7.62 5.08 180)
-					(length 3.81)
-					(name "Pin_2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 7.62 2.54 180)
-					(length 3.81)
-					(name "Pin_4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 7.62 0 180)
-					(length 3.81)
-					(name "Pin_6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 7.62 -2.54 180)
-					(length 3.81)
-					(name "Pin_8"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "8"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 7.62 -5.08 180)
-					(length 3.81)
-					(name "Pin_10"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "10"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "Device:C"
 			(pin_numbers
 				(hide yes)
@@ -2462,16 +2088,6 @@
 	)
 	(wire
 		(pts
-			(xy 160.02 33.02) (xy 160.02 34.29)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0656c350-1517-4a28-a9e7-d5c33c2d6bac")
-	)
-	(wire
-		(pts
 			(xy 205.74 138.43) (xy 214.63 138.43)
 		)
 		(stroke
@@ -2509,16 +2125,6 @@
 			(type default)
 		)
 		(uuid "0aa9ca61-b237-427b-9af4-41e3d7b7a7d1")
-	)
-	(wire
-		(pts
-			(xy 154.94 39.37) (xy 154.94 33.02)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0c2d5cff-3c3d-4fe8-ab1a-ce93776bc440")
 	)
 	(wire
 		(pts
@@ -2739,16 +2345,6 @@
 			(type default)
 		)
 		(uuid "4a34595d-44e7-4b5e-bc0d-f9b80a1fe5dc")
-	)
-	(wire
-		(pts
-			(xy 154.94 33.02) (xy 160.02 33.02)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4b512914-171c-442a-9c10-d32c7b8e6df8")
 	)
 	(wire
 		(pts
@@ -3109,16 +2705,6 @@
 			(type default)
 		)
 		(uuid "86f99e7b-af11-40f3-b84e-4be7b1b921a8")
-	)
-	(wire
-		(pts
-			(xy 142.24 39.37) (xy 139.7 39.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8d660937-730d-463d-84bd-91c85778da4e")
 	)
 	(wire
 		(pts
@@ -3532,16 +3118,6 @@
 	)
 	(wire
 		(pts
-			(xy 139.7 39.37) (xy 139.7 38.1)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f1ba91af-e4b5-4289-97fd-9f96a88f2469")
-	)
-	(wire
-		(pts
 			(xy 193.04 85.09) (xy 196.85 85.09)
 		)
 		(stroke
@@ -3663,94 +3239,6 @@
 			(justify left)
 		)
 		(uuid "05156c8b-2446-4e3a-84a4-689e99737a55")
-	)
-	(hierarchical_label "M2_EN_CW"
-		(shape input)
-		(at 154.94 46.99 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "38580d0c-53d0-44cc-b614-97f0eb14e00c")
-	)
-	(hierarchical_label "M2_PWM_CCW"
-		(shape input)
-		(at 154.94 44.45 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "4a1993dd-1967-4231-a79f-878bf00fe079")
-	)
-	(hierarchical_label "M2_PWM_CW"
-		(shape input)
-		(at 154.94 41.91 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "8ad435e9-1ae1-4883-8530-026a6f2767bd")
-	)
-	(hierarchical_label "M1_EN_CW"
-		(shape input)
-		(at 142.24 46.99 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "baba72d5-3c71-4907-b636-2bad5277d013")
-	)
-	(hierarchical_label "M1_EN_CCW"
-		(shape input)
-		(at 142.24 49.53 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "ca90fc84-f916-409b-b211-0fc1c621c320")
-	)
-	(hierarchical_label "M1_PWM_CW"
-		(shape input)
-		(at 142.24 41.91 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "e608143c-821b-4a8b-8788-3fe3149ea5f9")
-	)
-	(hierarchical_label "M1_PWM_CCW"
-		(shape input)
-		(at 142.24 44.45 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "e77f5148-355d-4982-ae62-0dd3fd8e108b")
-	)
-	(hierarchical_label "M2_EN_CCW"
-		(shape input)
-		(at 154.94 49.53 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "eaced218-2352-4192-916e-6ed05f789ccb")
 	)
 	(hierarchical_label "M1_EN_CCW"
 		(shape input)
@@ -3935,7 +3423,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "17273455-71bc-4353-af89-20dea1eb6c18")
-		(property "Reference" "C13"
+		(property "Reference" "C20"
 			(at 59.69 112.268 0)
 			(effects
 				(font
@@ -3953,7 +3441,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm"
+		(property "Footprint" "common:CP_Elec_8x10.5"
 			(at 67.0052 116.84 0)
 			(effects
 				(font
@@ -3989,7 +3477,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "C13")
+					(reference "C20")
 					(unit 1)
 				)
 			)
@@ -4004,7 +3492,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "1d147b59-a6eb-4c5a-a776-d4d490122263")
-		(property "Reference" "D8"
+		(property "Reference" "D9"
 			(at 189.23 100.33 0)
 			(effects
 				(font
@@ -4020,7 +3508,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
+		(property "Footprint" "common:SMA(DO-214AC)"
 			(at 189.23 102.235 0)
 			(effects
 				(font
@@ -4074,7 +3562,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D8")
+					(reference "D9")
 					(unit 1)
 				)
 			)
@@ -4098,7 +3586,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Motor_DC"
+		(property "Value" "LEFT"
 			(at 98.552 109.22 0)
 			(effects
 				(font
@@ -4107,7 +3595,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
 			(at 95.25 108.966 0)
 			(effects
 				(font
@@ -4158,7 +3646,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "2178f56a-a815-41a2-8f59-e38bc57031b4")
-		(property "Reference" "D9"
+		(property "Reference" "D10"
 			(at 204.47 100.33 0)
 			(effects
 				(font
@@ -4174,7 +3662,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
+		(property "Footprint" "common:SMA(DO-214AC)"
 			(at 204.47 102.235 0)
 			(effects
 				(font
@@ -4228,7 +3716,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D9")
+					(reference "D10")
 					(unit 1)
 				)
 			)
@@ -4243,7 +3731,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "26405604-12be-4500-8d98-150cbadab61f")
-		(property "Reference" "R14"
+		(property "Reference" "R16"
 			(at 85.598 144.78 90)
 			(effects
 				(font
@@ -4297,7 +3785,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R14")
+					(reference "R16")
 					(unit 1)
 				)
 			)
@@ -4470,7 +3958,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3c790a48-802d-4eab-9721-009e637f83d3")
-		(property "Reference" "Q8"
+		(property "Reference" "Q9"
 			(at 205.74 88.392 90)
 			(effects
 				(font
@@ -4528,7 +4016,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "Q8")
+					(reference "Q9")
 					(unit 1)
 				)
 			)
@@ -4543,7 +4031,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "49cb66c9-e939-4867-9a97-6784a91327ac")
-		(property "Reference" "R20"
+		(property "Reference" "R28"
 			(at 173.99 133.604 0)
 			(effects
 				(font
@@ -4597,7 +4085,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R20")
+					(reference "R28")
 					(unit 1)
 				)
 			)
@@ -4612,7 +4100,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "4c94642e-0931-4120-85d1-d960c9c53e08")
-		(property "Reference" "D4"
+		(property "Reference" "D5"
 			(at 87.63 100.33 0)
 			(effects
 				(font
@@ -4628,7 +4116,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
+		(property "Footprint" "common:SMA(DO-214AC)"
 			(at 87.63 102.235 0)
 			(effects
 				(font
@@ -4682,7 +4170,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D4")
+					(reference "D5")
 					(unit 1)
 				)
 			)
@@ -4892,7 +4380,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "58efb277-6b51-4ddc-8b2b-9bd792e4146f")
-		(property "Reference" "R15"
+		(property "Reference" "R23"
 			(at 187.452 69.596 90)
 			(effects
 				(font
@@ -4946,7 +4434,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R15")
+					(reference "R23")
 					(unit 1)
 				)
 			)
@@ -4961,7 +4449,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "59ad5895-85bc-4e6d-a2db-8274ae4d7b69")
-		(property "Reference" "R12"
+		(property "Reference" "R20"
 			(at 72.39 133.604 0)
 			(effects
 				(font
@@ -5015,7 +4503,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R12")
+					(reference "R20")
 					(unit 1)
 				)
 			)
@@ -5030,7 +4518,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5ca815e6-3dad-4b70-baa9-979da7de9a0f")
-		(property "Reference" "R8"
+		(property "Reference" "R17"
 			(at 109.474 69.85 90)
 			(effects
 				(font
@@ -5084,7 +4572,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R8")
+					(reference "R17")
 					(unit 1)
 				)
 			)
@@ -5255,7 +4743,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "64feaeb8-5924-4e5d-998a-f9c5f752f61f")
-		(property "Reference" "R16"
+		(property "Reference" "R25"
 			(at 211.328 69.85 90)
 			(effects
 				(font
@@ -5309,7 +4797,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R16")
+					(reference "R25")
 					(unit 1)
 				)
 			)
@@ -5325,7 +4813,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7247beed-fa6b-4c87-82ae-2ec67eab91d8")
-		(property "Reference" "Q3"
+		(property "Reference" "Q2"
 			(at 86.36 125.73 90)
 			(effects
 				(font
@@ -5383,7 +4871,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "Q3")
+					(reference "Q2")
 					(unit 1)
 				)
 			)
@@ -5398,7 +4886,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "734ba4f9-4a27-485f-9d2b-be85714edcde")
-		(property "Reference" "C15"
+		(property "Reference" "C22"
 			(at 161.29 112.268 0)
 			(effects
 				(font
@@ -5416,7 +4904,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm"
+		(property "Footprint" "common:CP_Elec_8x10.5"
 			(at 168.6052 116.84 0)
 			(effects
 				(font
@@ -5452,7 +4940,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "C15")
+					(reference "C22")
 					(unit 1)
 				)
 			)
@@ -5467,7 +4955,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "77e6a19f-f8bf-4f56-8960-73c6d3615d19")
-		(property "Reference" "D10"
+		(property "Reference" "D11"
 			(at 189.23 113.792 0)
 			(effects
 				(font
@@ -5483,7 +4971,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
+		(property "Footprint" "common:SMA(DO-214AC)"
 			(at 189.23 122.555 0)
 			(effects
 				(font
@@ -5537,7 +5025,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D10")
+					(reference "D11")
 					(unit 1)
 				)
 			)
@@ -5617,7 +5105,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "78e6072f-1c3b-484c-a12c-049ea31da4df")
-		(property "Reference" "R9"
+		(property "Reference" "R19"
 			(at 73.66 80.264 0)
 			(effects
 				(font
@@ -5671,7 +5159,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R9")
+					(reference "R19")
 					(unit 1)
 				)
 			)
@@ -5824,7 +5312,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "88a63d20-a30f-4121-a93d-198e5f213d52")
-		(property "Reference" "R13"
+		(property "Reference" "R18"
 			(at 109.982 144.526 90)
 			(effects
 				(font
@@ -5878,7 +5366,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R13")
+					(reference "R18")
 					(unit 1)
 				)
 			)
@@ -5893,7 +5381,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "894ea305-337d-43ad-a5d3-ba1d4d237a71")
-		(property "Reference" "D5"
+		(property "Reference" "D6"
 			(at 102.87 100.33 0)
 			(effects
 				(font
@@ -5909,7 +5397,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
+		(property "Footprint" "common:SMA(DO-214AC)"
 			(at 102.87 102.235 0)
 			(effects
 				(font
@@ -5963,7 +5451,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D5")
+					(reference "D6")
 					(unit 1)
 				)
 			)
@@ -5978,7 +5466,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "936d0e9b-5de0-4d41-8b46-e10dbff60586")
-		(property "Reference" "C14"
+		(property "Reference" "C21"
 			(at 74.93 112.268 0)
 			(effects
 				(font
@@ -6032,7 +5520,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "C14")
+					(reference "C21")
 					(unit 1)
 				)
 			)
@@ -6138,7 +5626,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9bf3ad5c-ba3f-446f-876b-012466b3ad93")
-		(property "Reference" "R22"
+		(property "Reference" "R24"
 			(at 187.198 144.78 90)
 			(effects
 				(font
@@ -6192,7 +5680,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R22")
+					(reference "R24")
 					(unit 1)
 				)
 			)
@@ -6207,7 +5695,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9cfd64d0-f655-4ef6-b0e5-5c57c7a86abf")
-		(property "Reference" "D6"
+		(property "Reference" "D7"
 			(at 87.63 113.792 0)
 			(effects
 				(font
@@ -6223,7 +5711,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
+		(property "Footprint" "common:SMA(DO-214AC)"
 			(at 87.63 122.555 0)
 			(effects
 				(font
@@ -6277,7 +5765,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D6")
+					(reference "D7")
 					(unit 1)
 				)
 			)
@@ -6293,7 +5781,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a03e5ae4-5c38-4629-8ee8-9c59f7f7b1b5")
-		(property "Reference" "Q9"
+		(property "Reference" "Q8"
 			(at 187.96 125.73 90)
 			(effects
 				(font
@@ -6351,7 +5839,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "Q9")
+					(reference "Q8")
 					(unit 1)
 				)
 			)
@@ -6504,7 +5992,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a864df40-472f-4d97-bac2-02d02235e306")
-		(property "Reference" "R18"
+		(property "Reference" "R29"
 			(at 215.9 90.424 0)
 			(effects
 				(font
@@ -6558,7 +6046,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R18")
+					(reference "R29")
 					(unit 1)
 				)
 			)
@@ -6573,7 +6061,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ab0a0366-9bac-4f24-bde4-b8bf4fda898d")
-		(property "Reference" "R11"
+		(property "Reference" "R22"
 			(at 114.3 123.444 0)
 			(effects
 				(font
@@ -6627,7 +6115,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R11")
+					(reference "R22")
 					(unit 1)
 				)
 			)
@@ -6642,7 +6130,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ab210f64-1982-4bd4-a8a1-69e1b9ac86a3")
-		(property "Reference" "D7"
+		(property "Reference" "D8"
 			(at 102.87 113.792 0)
 			(effects
 				(font
@@ -6658,7 +6146,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
+		(property "Footprint" "common:SMA(DO-214AC)"
 			(at 102.87 122.555 0)
 			(effects
 				(font
@@ -6712,7 +6200,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D7")
+					(reference "D8")
 					(unit 1)
 				)
 			)
@@ -6736,7 +6224,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Motor_DC"
+		(property "Value" "RIGHT"
 			(at 200.152 109.22 0)
 			(effects
 				(font
@@ -6745,7 +6233,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
 			(at 196.85 108.966 0)
 			(effects
 				(font
@@ -6796,7 +6284,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "aefcc359-bea2-4ebe-9d4d-4d76d6d0f5e8")
-		(property "Reference" "D11"
+		(property "Reference" "D12"
 			(at 204.47 113.792 0)
 			(effects
 				(font
@@ -6812,7 +6300,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
+		(property "Footprint" "common:SMA(DO-214AC)"
 			(at 204.47 122.555 0)
 			(effects
 				(font
@@ -6866,7 +6354,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "D11")
+					(reference "D12")
 					(unit 1)
 				)
 			)
@@ -6973,7 +6461,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "bc19bf74-f3b2-4944-a5f7-ba25d0cacd41")
-		(property "Reference" "R17"
+		(property "Reference" "R27"
 			(at 173.99 80.264 0)
 			(effects
 				(font
@@ -7027,7 +6515,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R17")
+					(reference "R27")
 					(unit 1)
 				)
 			)
@@ -7042,7 +6530,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c00c942f-5fbe-475b-b109-df25401ff1e3")
-		(property "Reference" "R21"
+		(property "Reference" "R26"
 			(at 211.582 144.526 90)
 			(effects
 				(font
@@ -7096,7 +6584,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R21")
+					(reference "R26")
 					(unit 1)
 				)
 			)
@@ -7249,7 +6737,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c8bd7e21-fe00-45f1-a505-c42bad805100")
-		(property "Reference" "R10"
+		(property "Reference" "R21"
 			(at 114.3 90.424 0)
 			(effects
 				(font
@@ -7303,72 +6791,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R10")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 160.02 34.29 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "cd930f92-d2e1-4c2e-8173-e147d1f59d8c")
-		(property "Reference" "#PWR036"
-			(at 160.02 40.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 160.02 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 160.02 34.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 160.02 34.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 160.02 34.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "27510d01-c91d-4853-a996-6ecf17d1cb4e")
-		)
-		(instances
-			(project "car"
-				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "#PWR036")
+					(reference "R21")
 					(unit 1)
 				)
 			)
@@ -7448,98 +6871,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Generic:Conn_02x05_Odd_Even")
-		(at 147.32 44.45 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "df56f1fc-0a76-4627-8fd2-d425b8e096ce")
-		(property "Reference" "J9"
-			(at 148.336 37.084 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Conn_02x05_Odd_Even"
-			(at 148.59 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical"
-			(at 147.32 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 147.32 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic connector, double row, 02x05, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 147.32 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "7"
-			(uuid "02534355-49b4-4f77-ad6d-e054109c7ef1")
-		)
-		(pin "2"
-			(uuid "f922d748-c995-44a2-8304-4b7c1d29c48c")
-		)
-		(pin "6"
-			(uuid "50ec1a22-5ad3-470b-91f0-0f90560e86bd")
-		)
-		(pin "3"
-			(uuid "09f84ef9-dc78-4a1b-bb09-27cb937d6bfe")
-		)
-		(pin "1"
-			(uuid "4459cee5-e3a6-4c97-b7f0-bd62398e9bf7")
-		)
-		(pin "5"
-			(uuid "8421a863-26b3-4675-b4ef-cd4e3bde6aa6")
-		)
-		(pin "9"
-			(uuid "e2e9bb42-3731-4400-ae64-64ec1f0bec6e")
-		)
-		(pin "4"
-			(uuid "4b05df2c-aca7-45bf-a87e-3ede420872e5")
-		)
-		(pin "8"
-			(uuid "e226faa8-32a8-4a05-a74c-6d9a94db0bbf")
-		)
-		(pin "10"
-			(uuid "a86c0a43-312b-43f8-9c12-71f639b39502")
-		)
-		(instances
-			(project ""
-				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "J9")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 214.63 124.46 0)
 		(unit 1)
@@ -7548,7 +6879,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "df7f2f1d-7b05-40a6-9f93-a5d4323dfa15")
-		(property "Reference" "R19"
+		(property "Reference" "R30"
 			(at 215.9 123.444 0)
 			(effects
 				(font
@@ -7602,7 +6933,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R19")
+					(reference "R30")
 					(unit 1)
 				)
 			)
@@ -7617,7 +6948,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e0f0cf43-d411-44ed-95e3-c750c4e46172")
-		(property "Reference" "R7"
+		(property "Reference" "R15"
 			(at 85.344 69.596 90)
 			(effects
 				(font
@@ -7671,7 +7002,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "R7")
+					(reference "R15")
 					(unit 1)
 				)
 			)
@@ -7686,7 +7017,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e17eb24f-9d1f-42f1-a655-e7b6f5d82941")
-		(property "Reference" "C16"
+		(property "Reference" "C23"
 			(at 176.53 112.268 0)
 			(effects
 				(font
@@ -7740,7 +7071,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "C16")
+					(reference "C23")
 					(unit 1)
 				)
 			)
@@ -7821,7 +7152,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "eb7fc730-fc93-4c12-b241-237f1576b6fe")
-		(property "Reference" "Q2"
+		(property "Reference" "Q3"
 			(at 104.14 88.392 90)
 			(effects
 				(font
@@ -7879,72 +7210,7 @@
 		(instances
 			(project "car"
 				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "Q2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:VCC")
-		(at 139.7 38.1 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "f2e7d159-e4e0-4015-91f8-aa1a341748bf")
-		(property "Reference" "#PWR035"
-			(at 139.7 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "12V"
-			(at 139.7 34.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 139.7 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 139.7 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"VCC\""
-			(at 139.7 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "cf3ad2d2-4664-4932-a7cc-eb32d6b4a8dd")
-		)
-		(instances
-			(project "car"
-				(path "/d4bcaa97-404f-4040-88d9-84162ce8c00c/3a79dc46-7c20-4cbf-828b-ee9f07ae0d45"
-					(reference "#PWR035")
+					(reference "Q3")
 					(unit 1)
 				)
 			)

@@ -133,7 +133,7 @@
         "min_track_width": 0.1,
         "min_via_annular_width": 0.15,
         "min_via_diameter": 0.25,
-        "solder_mask_to_copper_clearance": 0.0,
+        "solder_mask_to_copper_clearance": 0.005,
         "use_height_for_length_calcs": true
       },
       "teardrop_options": [
@@ -596,6 +596,12 @@
           "label": "#",
           "name": "${ITEM_NUMBER}",
           "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Type",
+          "name": "Sim.Type",
+          "show": false
         }
       ],
       "filter_string": "",
@@ -657,10 +663,6 @@
     [
       "3a79dc46-7c20-4cbf-828b-ee9f07ae0d45",
       "Motors"
-    ],
-    [
-      "ee574487-8a00-4285-98d1-21912b440698",
-      "Transceiver"
     ],
     [
       "8bf896e7-f67d-40c3-a1d3-ca6ef9c3dd94",
