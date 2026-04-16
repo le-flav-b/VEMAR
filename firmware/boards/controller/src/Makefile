@@ -55,7 +55,8 @@ SOURCES		=	main.c \
 				tft.c \
 				util.c \
 				timer.c \
-				pwm.c
+				pwm.c \
+				i2c.c
 
 BUILD_DIR	=	build
 
