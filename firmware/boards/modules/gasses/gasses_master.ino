@@ -16,6 +16,11 @@
 // STATUS bits
 #define STATUS_CO2_VALID      0x01
 #define STATUS_CO2_PREHEATING 0x02
+#define STATUS_CO2_RX_SEEN    0x04
+#define STATUS_CO2_FRAME_SEEN 0x08
+#define STATUS_CO2_UART_ERR   0x10
+#define STATUS_CO2_RX_EDGE    0x20
+#define STATUS_CO2_CMD_SENT   0x40
 
 void setup() {
     Serial.begin(115200);
@@ -59,12 +64,23 @@ void loop() {
 
     bool co2_valid      = status & STATUS_CO2_VALID;
     bool co2_preheating = status & STATUS_CO2_PREHEATING;
+    bool co2_rx_seen    = status & STATUS_CO2_RX_SEEN;
+    bool co2_frame_seen = status & STATUS_CO2_FRAME_SEEN;
+    bool co2_uart_err   = status & STATUS_CO2_UART_ERR;
+    bool co2_rx_edge    = status & STATUS_CO2_RX_EDGE;
+    bool co2_cmd_sent   = status & STATUS_CO2_CMD_SENT;
 
     if (co2_preheating) Serial.println("[CO2 sensor preheating - < 60s uptime]");
 
     Serial.print("CO2: ");   Serial.print(co2_ppm);
     Serial.println(co2_valid ? " ppm (CRC ok)" : " ppm (CRC pending)");
     Serial.print("Temp(CO2 sensor): "); Serial.print(temp_c); Serial.println(" C");
+    Serial.print("CO2 status byte: 0x"); Serial.println(status, HEX);
+    Serial.print("CO2 UART rx_seen="); Serial.print(co2_rx_seen ? "Y" : "N");
+    Serial.print(", frame_seen="); Serial.print(co2_frame_seen ? "Y" : "N");
+    Serial.print(", uart_err="); Serial.print(co2_uart_err ? "Y" : "N");
+    Serial.print(", rx_edge="); Serial.print(co2_rx_edge ? "Y" : "N");
+    Serial.print(", cmd_sent="); Serial.println(co2_cmd_sent ? "Y" : "N");
     Serial.print("CO:  ");   Serial.print(co_raw);  Serial.println(" (raw ADC)");
     Serial.print("NH3: ");   Serial.print(nh3_raw); Serial.println(" (raw ADC)");
     Serial.print("NO2: ");   Serial.print(no2_raw); Serial.println(" (raw ADC)");
