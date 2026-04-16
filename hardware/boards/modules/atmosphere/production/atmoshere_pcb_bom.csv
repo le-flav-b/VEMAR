@@ -1,0 +1,10 @@
+﻿Designator,Footprint,Quantity,Value,LCSC Part #
+"C19, C20, C21, C22, C31",C_0603,5,100nF,
+D1,LED_3mm_THT,1,~,
+G1,GPIO_HEADER,1,~,
+J4,ATtiny_Programming_Header,1,~,
+R1,R_0603,1,220,
+S3,BME280,1,BME280,
+S4,SDS011,1,SDS011,
+U7,ATtiny1614,1,ATtiny1614,
+U8,SN74LVC125,1,buffer,

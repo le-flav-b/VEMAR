@@ -480,16 +480,16 @@
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "O"
-				(at 0 -9.144 0)
+			(property "Reference" "O1"
+				(at 0 -8.89 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" ""
-				(at 0 0 0)
+			(property "Value" "AO-03"
+				(at 0 -6.35 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -547,7 +547,7 @@
 							)
 						)
 					)
-					(number ""
+					(number "3"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -4209,7 +4209,7 @@
 			)
 		)
 	)
-	(global_label "C02_RX"
+	(global_label "CO2_RX"
 		(shape input)
 		(at 175.26 129.54 180)
 		(fields_autoplaced yes)
@@ -4221,7 +4221,7 @@
 		)
 		(uuid "6e9917d1-78e9-4467-ac2a-a1be1543058c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 165.1387 129.54 0)
+			(at 165.0177 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4231,7 +4231,7 @@
 			)
 		)
 	)
-	(global_label "C02_RX"
+	(global_label "CO2_RX"
 		(shape input)
 		(at 76.2 113.03 180)
 		(fields_autoplaced yes)
@@ -4243,7 +4243,7 @@
 		)
 		(uuid "72f22529-5115-4eed-9f03-9f51e7cd39bf")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 66.0787 113.03 0)
+			(at 65.9577 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4689,7 +4689,7 @@
 			(uuid "78ec24cc-c757-432f-9553-b00ab4d92ae6")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "C12")
 					(unit 1)
@@ -4755,7 +4755,7 @@
 			(uuid "be178968-4ad4-4e60-847d-c0adce8049e5")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#GND01")
 					(unit 1)
@@ -4822,7 +4822,7 @@
 			(uuid "ebff8a26-4720-4c5a-b717-d30e987fc3de")
 		)
 		(instances
-			(project ""
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#FLAG01")
 					(unit 1)
@@ -4892,7 +4892,7 @@
 			(uuid "420bdae7-b00a-4e1e-8eb6-506d24a44d42")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "R1")
 					(unit 1)
@@ -4960,7 +4960,7 @@
 			(uuid "24f6acde-07fe-46a7-a506-6e545cd8dbf4")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "R3")
 					(unit 1)
@@ -5026,7 +5026,7 @@
 			(uuid "8b7b7706-0bb0-4fbd-96c8-7c278974185d")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#GND012")
 					(unit 1)
@@ -5096,7 +5096,7 @@
 			(uuid "ff288df5-fb8d-492e-aeef-74db65109597")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "C23")
 					(unit 1)
@@ -5161,7 +5161,7 @@
 			(uuid "cfb438a0-a015-4966-893b-c6c3f5681432")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#GND029")
 					(unit 1)
@@ -5227,7 +5227,7 @@
 			(uuid "9b46cdfb-c743-41d7-a7cd-fd1e488b9c9f")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#GND025")
 					(unit 1)
@@ -5295,7 +5295,7 @@
 			(uuid "9c6fcb3d-3940-45a9-942f-7c91b29e2fbc")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "C15")
 					(unit 1)
@@ -5361,7 +5361,7 @@
 			(uuid "7555d034-3dd7-417f-bfa9-b770808a41f4")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#GND028")
 					(unit 1)
@@ -5427,7 +5427,7 @@
 			(uuid "fc2c9f53-30c7-44dd-8445-ea67901d7772")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#5V012")
 					(unit 1)
@@ -5493,7 +5493,7 @@
 			(uuid "5d8a9e2a-ac00-468f-b671-3d82363afd68")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#GND02")
 					(unit 1)
@@ -5559,7 +5559,7 @@
 			(uuid "86eca38a-2152-4d46-a18c-2406946e6146")
 		)
 		(instances
-			(project ""
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#GND06")
 					(unit 1)
@@ -5625,7 +5625,7 @@
 			(uuid "0fdfb9a6-2dc3-4ec8-b485-5f51d7af3339")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#GND041")
 					(unit 1)
@@ -5695,7 +5695,7 @@
 			(uuid "3e5138fb-170e-4a48-a77c-2e7bc5bb2609")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "C18")
 					(unit 1)
@@ -5763,7 +5763,7 @@
 			(uuid "b7c4e5e8-54d4-44cd-99bf-d4aa422159bc")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "C32")
 					(unit 1)
@@ -5867,7 +5867,7 @@
 			(uuid "7711d1df-7179-44a5-86d3-f0d5e6467753")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "U6")
 					(unit 1)
@@ -5935,7 +5935,7 @@
 			(uuid "51b03ea7-c956-48e8-b116-7aed47b36668")
 		)
 		(instances
-			(project ""
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "R6")
 					(unit 1)
@@ -6003,7 +6003,7 @@
 			(uuid "f2cb1ec9-e6b0-49a7-8594-8e32e3b580f4")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "R11")
 					(unit 1)
@@ -6070,7 +6070,7 @@
 			(uuid "d550b94e-e0ce-4a2d-86d3-dd15247f6f8b")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#FLAG03")
 					(unit 1)
@@ -6162,7 +6162,7 @@
 			(uuid "dd9d0464-b971-46f3-aba8-613552dff1a3")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "M1")
 					(unit 1)
@@ -6228,7 +6228,7 @@
 			(uuid "eafc24d7-fc98-43a8-a81b-96d84710a3e4")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#3V020")
 					(unit 1)
@@ -6294,7 +6294,7 @@
 			(uuid "c074bdb3-0c73-41e4-961f-531d96da22e9")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#3V016")
 					(unit 1)
@@ -6380,7 +6380,7 @@
 			(uuid "f3596725-843b-4e06-a81a-e1ae021876d1")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "A1")
 					(unit 1)
@@ -6446,7 +6446,7 @@
 			(uuid "a0164bdc-66ed-4776-8eeb-c3e2c5eba9b8")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#5V011")
 					(unit 1)
@@ -6522,7 +6522,7 @@
 			(uuid "fb28f3ec-1192-4d3c-b844-637eeeeb9ad4")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "G2")
 					(unit 1)
@@ -6590,7 +6590,7 @@
 			(uuid "6ecffd70-993b-4942-a4a8-52a681c2e825")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "R5")
 					(unit 1)
@@ -6656,7 +6656,7 @@
 			(uuid "bee93b89-6653-4873-ae9b-c3b3e5f81686")
 		)
 		(instances
-			(project ""
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#GND05")
 					(unit 1)
@@ -6724,7 +6724,7 @@
 			(uuid "f230f204-ef78-4e01-a24a-cfd9c67ddee2")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "R2")
 					(unit 1)
@@ -6791,7 +6791,7 @@
 			(uuid "fc505865-38b7-48e4-a69e-ece05c01cd3b")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#FLAG02")
 					(unit 1)
@@ -6857,7 +6857,7 @@
 			(uuid "5a45db8e-77aa-48aa-b56b-b03864a9cbd7")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#5V015")
 					(unit 1)
@@ -6925,7 +6925,7 @@
 			(uuid "b2061189-af33-44af-95aa-bf9483a6ade2")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "R12")
 					(unit 1)
@@ -6991,7 +6991,7 @@
 			(uuid "07c2ee69-0208-4b4b-9465-3ebc26b42ca8")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#GND04")
 					(unit 1)
@@ -7062,7 +7062,7 @@
 			(uuid "ef19884b-4e5a-49b3-a547-86efa8885394")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "J1")
 					(unit 1)
@@ -7131,7 +7131,7 @@
 			(uuid "72e692c0-caba-4652-8d16-cf04527e98d9")
 		)
 		(instances
-			(project ""
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "D1")
 					(unit 1)
@@ -7199,7 +7199,7 @@
 			(uuid "d3084844-1f40-4197-9249-08795036af5c")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "R10")
 					(unit 1)
@@ -7265,7 +7265,7 @@
 			(uuid "baa89be9-e054-4136-a693-7661f3cebaf4")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#FLAG06")
 					(unit 1)
@@ -7354,7 +7354,7 @@
 			(uuid "94a00171-537b-4963-a03c-0c658245a794")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "S5")
 					(unit 1)
@@ -7420,7 +7420,7 @@
 			(uuid "3e9b209a-1475-4a6a-b787-fa65fa4c12c8")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#3V017")
 					(unit 1)
@@ -7486,7 +7486,7 @@
 			(uuid "c7745639-ef06-4c40-ac86-96407c6c3d0b")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#3V019")
 					(unit 1)
@@ -7590,7 +7590,7 @@
 			(uuid "f60fc360-d2a0-47bb-92af-c99400655b2f")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "U9")
 					(unit 1)
@@ -7660,7 +7660,7 @@
 			(uuid "3d62d013-c115-4781-8c42-ac5c3843d3e8")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "C16")
 					(unit 1)
@@ -7726,7 +7726,7 @@
 			(uuid "a0473022-8733-47fb-b2d1-15eabdb3d691")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#GND030")
 					(unit 1)
@@ -7794,7 +7794,7 @@
 			(uuid "e3317088-d99a-44d8-8865-723d4d20c02f")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "R4")
 					(unit 1)
@@ -7860,7 +7860,7 @@
 			(uuid "34912794-c7b7-473b-b938-989ac86e746b")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#5V014")
 					(unit 1)
@@ -7926,7 +7926,7 @@
 			(uuid "b0a7e719-7f6e-4db8-965f-c86769b786c6")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#5V013")
 					(unit 1)
@@ -7991,14 +7991,14 @@
 		(pin "1"
 			(uuid "54fe93f0-c417-4119-b168-b1bdf0522146")
 		)
-		(pin ""
+		(pin "3"
 			(uuid "38451007-1983-4331-b938-03a4a931a030")
 		)
 		(pin "2"
 			(uuid "c0e90f60-442c-4247-9f2c-52db189695ba")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "O1")
 					(unit 1)
@@ -8064,7 +8064,7 @@
 			(uuid "cca3dea9-56e9-45e0-a168-95872161fea3")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#GND03")
 					(unit 1)
@@ -8134,7 +8134,7 @@
 			(uuid "ca431e7d-c529-40fc-bdd6-e4b58b67dc41")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "C13")
 					(unit 1)
@@ -8200,7 +8200,7 @@
 			(uuid "2037df19-e263-4a46-8649-665b37465cc4")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#GND036")
 					(unit 1)
@@ -8270,7 +8270,7 @@
 			(uuid "ab0aa943-30cf-432b-a981-2bfe608d5dc4")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "C14")
 					(unit 1)
@@ -8336,7 +8336,7 @@
 			(uuid "344fbcae-bd50-447c-8bfb-2d46dd646742")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#3V018")
 					(unit 1)
@@ -8402,7 +8402,7 @@
 			(uuid "d685bfaa-45b6-4c46-8701-f31a04788322")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#FLAG05")
 					(unit 1)
@@ -8468,7 +8468,7 @@
 			(uuid "2ab2e0d2-899e-4e5a-b1bc-072b1d03ff33")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#FLAG07")
 					(unit 1)
@@ -8534,7 +8534,7 @@
 			(uuid "2ca74d11-066a-49d4-b77c-ba536ce3138a")
 		)
 		(instances
-			(project "air_sensor"
+			(project "gasses"
 				(path "/bd8bb99f-1696-40e4-a829-79b3479834af"
 					(reference "#GND042")
 					(unit 1)
