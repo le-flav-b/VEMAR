@@ -1669,7 +1669,7 @@
 			)
 		)
 		(symbol "SPEAKER_1_1"
-			(pin input line
+			(pin passive line
 				(at -2.54 7.62 0)
 				(length 2.54)
 				(name "1"
@@ -1687,7 +1687,7 @@
 					)
 				)
 			)
-			(pin input line
+			(pin passive line
 				(at -2.54 5.08 0)
 				(length 2.54)
 				(name "2"
