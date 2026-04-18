@@ -32,7 +32,7 @@ void off() {
   digitalWrite(PIN_M2_PWM_CW, LOW);
   digitalWrite(PIN_M2_EN_CCW, LOW);
   digitalWrite(PIN_M2_PWM_CCW, LOW);
-  delay(2);
+  delay(2); // 5us dead time needed between switching directions
 }
 
 

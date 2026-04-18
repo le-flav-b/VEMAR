@@ -3,10 +3,8 @@
 
 # include "utils.h"
 
-# define LIDAR_DDR DDRE
-# define LIDAR_PORT PORTE
-# define LIDAR_EN_PIN PE4
-# define LIDAR_PWM_PIN PE3
+# define LIDAR_EN _PE4
+# define LIDAR_PWM _PE3
 
 # define LIDAR_MOTOR_PWM_FREQ 10000UL
 # define LIDAR_MOTOR_PWM_DUTY_CYCLE 35

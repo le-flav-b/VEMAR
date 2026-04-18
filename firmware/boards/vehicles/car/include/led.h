@@ -3,8 +3,8 @@
 
 # include "utils.h"
 
-# define LED_GREEN _PD6
-# define LED_RED _PD7
+# define LED_GREEN _PC2
+# define LED_RED _PC3
 
 void led_init(void);
 void led_green_on(void);

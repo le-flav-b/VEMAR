@@ -3,10 +3,8 @@
 
 # include "utils.h"
 
-# define SERVO_DDR DDRB
-# define SERVO_PORT PORTB
-# define SERVO_A_PIN PB5
-# define SERVO_B_PIN PB6
+# define SERVO_A _PB5
+# define SERVO_B _PB6
 
 # define SERVO_PWM_FREQ 50UL
 # define SERVO_US_MIN 500UL

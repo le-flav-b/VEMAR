@@ -12,6 +12,10 @@ static void _servo_config_pwm(void)
 
 	// Frequency configuration
 	ICR1  = SERVO_TIMER_TOP;
+
+	// Set to middle position
+	servo_a_set(90);
+	servo_b_set(90);
 }
 
 static uint16_t _servo_us_to_ocr(uint16_t us) { return ((uint32_t)us * SERVO_TICKS_PER_US); }
@@ -38,7 +42,8 @@ static void _servo_b_set_us(uint16_t us)
 
 void servo_init(void)
 {
-	SET_MSK(SERVO_DDR, MSK(SERVO_A_PIN) | MSK(SERVO_B_PIN));
+	GPIO_OUTPUT(SERVO_A);
+	GPIO_OUTPUT(SERVO_B);
 	_servo_config_pwm();
 }
 

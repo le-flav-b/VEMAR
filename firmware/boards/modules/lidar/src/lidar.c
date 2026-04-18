@@ -15,11 +15,10 @@ static void _lidar_config_uart(void) {} // TODO
 
 void lidar_init(void)
 {
-	SET_MSK(LIDAR_DDR, MSK(LIDAR_EN_PIN) | MSK(LIDAR_PWM_PIN));
-	CLEAR(LIDAR_PORT, LIDAR_EN_PIN);
-	_lidar_config_pwm();
+	GPIO_OUTPUT(LIDAR_EN); lidar_off();
+	GPIO_OUTPUT(LIDAR_PWM); _lidar_config_pwm();
 	_lidar_config_uart();
 }
 
-void lidar_on(void) { SET(LIDAR_PORT, LIDAR_EN_PIN); }
-void lidar_off(void) { CLEAR(LIDAR_PORT, LIDAR_EN_PIN); }
+void lidar_on(void) { GPIO_SET(LIDAR_EN); }
+void lidar_off(void) { GPIO_CLEAR(LIDAR_EN); }
