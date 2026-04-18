@@ -9,14 +9,15 @@ static volatile uint8_t  co2_idx = 0;
 static volatile uint16_t co2_ppm = 0;
 static volatile uint8_t  co2_temp_raw = 0;  // response[4]; subtract CO2_TEMP_OFFSET for °C
 static volatile bool     co2_valid = false;  // true once a CRC-passing packet is received
+static volatile bool     co2_rx_seen = false;
+static volatile bool     co2_frame_seen = false;
+static volatile bool     co2_uart_error = false;
+static volatile bool     co2_rx_edge_seen = false;
+static volatile bool     co2_cmd_sent = false;
 
 // Preheat: count main-loop iterations (~1s each); sensor ready after CO2_PREHEAT_MS
 static volatile uint16_t uptime_s = 0;
 static volatile bool     co2_preheating = true;
-
-static void toggle_led(void) {
-    PORTB.OUTTGL = PIN2_bm;
-}
 
 // ─── UART (MH-Z1911A CO2 sensor) ────────────────────────────────────────────
 
@@ -25,19 +26,30 @@ static void uart_send_byte(uint8_t byte) {
     USART0.TXDATAL = byte;
 }
 
-static void send_co2_read_cmd(void) {
-    // MH-Z1911A read CO2 command: FF 01 86 00 00 00 00 00 79
-    const uint8_t cmd[9] = {0xFF, 0x01, 0x86, 0x00, 0x00, 0x00, 0x00, 0x00, 0x79};
-    for (uint8_t i = 0; i < 9; i++) {
-        uart_send_byte(cmd[i]);
+static void uart_flush_rx(void) {
+    while (USART0.STATUS & USART_RXCIF_bm) {
+        (void)USART0.RXDATAH;
+        (void)USART0.RXDATAL;
     }
 }
 
-// MH-Z1911A response: FF 86 [CO2_H] [CO2_L] [TEMP_H] [TEMP_L] 00 00 [CRC]
-// CRC = (~sum(bytes[1..7]) + 1) & 0xFF
-ISR(USART0_RXC_vect) {
-    toggle_led();
-    uint8_t byte = USART0.RXDATAL;
+static void co2_uart_prepare_request(void) {
+    uint8_t sreg = SREG;
+    cli();
+    co2_idx = 0;
+    uart_flush_rx();
+    SREG = sreg;
+}
+
+static void co2_process_rx_byte(uint8_t status, uint8_t byte) {
+    // Drop errored bytes and resync on next packet start.
+    if (status & (USART_FERR_bm | USART_BUFOVF_bm | USART_PERR_bm)) {
+        co2_uart_error = true;
+        co2_idx = 0;
+        return;
+    }
+
+    co2_rx_seen = true;
 
     if (co2_idx == 0 && byte != 0xFF) return;
     if (co2_idx == 1 && byte != 0x86) { co2_idx = 0; return; }
@@ -48,14 +60,50 @@ ISR(USART0_RXC_vect) {
         uint8_t crc = 0;
         for (uint8_t i = 1; i < 8; i++) crc += co2_buf[i];
         crc = (~crc) + 1;
+        co2_frame_seen = true;
 
-        // Always update from a structurally valid packet (correct start bytes +
-        // length). co2_valid tracks whether CRC has ever passed so the master
-        // can distinguish a genuine reading from the power-on default of 0.
-        co2_ppm      = ((uint16_t)co2_buf[2] << 8) | co2_buf[3];
-        co2_temp_raw = co2_buf[4]; // caller subtracts CO2_TEMP_OFFSET (44) for °C
-        co2_valid    = (crc == co2_buf[8]);
-        co2_idx      = 0;
+        if (crc == co2_buf[8]) {
+            co2_ppm      = ((uint16_t)co2_buf[2] << 8) | co2_buf[3];
+            co2_temp_raw = co2_buf[4]; // caller subtracts CO2_TEMP_OFFSET (44) for °C
+            co2_valid    = true;
+        } else {
+            co2_uart_error = true;
+        }
+        co2_idx = 0;
+    }
+}
+
+static void co2_poll_uart_ms(uint16_t timeout_ms) {
+    for (uint16_t ms = 0; ms < timeout_ms; ms++) {
+        while (USART0.STATUS & USART_RXCIF_bm) {
+            uint8_t status = USART0.RXDATAH;
+            uint8_t byte = USART0.RXDATAL;
+            co2_process_rx_byte(status, byte);
+        }
+        _delay_ms(1);
+    }
+}
+
+static void send_co2_read_cmd(void) {
+    // MH-Z1911A read CO2 command: FF 01 86 00 00 00 00 00 79
+    const uint8_t cmd[9] = {0xFF, 0x01, 0x86, 0x00, 0x00, 0x00, 0x00, 0x00, 0x79};
+    for (uint8_t i = 0; i < 9; i++) {
+        uart_send_byte(cmd[i]);
+    }
+    co2_cmd_sent = true;
+}
+
+ISR(USART0_RXC_vect) {
+    uint8_t status = USART0.RXDATAH;
+    uint8_t byte = USART0.RXDATAL;
+    co2_process_rx_byte(status, byte);
+}
+
+ISR(PORTA_PORT_vect) {
+    uint8_t flags = PORTA.INTFLAGS;
+    if (flags & PIN2_bm) {
+        co2_rx_edge_seen = true;
+        PORTA.INTFLAGS = PIN2_bm;
     }
 }
 
@@ -107,14 +155,25 @@ static void fill_msg(void) {
 
     uint16_t co2_val  = co2_ppm;
     uint8_t  temp_raw = co2_temp_raw;
-    // STATUS byte: bit 0 = co2_valid, bit 1 = co2_preheating
-    uint8_t  status   = (co2_valid ? 0x01 : 0x00) | (co2_preheating ? 0x02 : 0x00);
+    // STATUS byte:
+    // bit 0 = co2_valid, bit 1 = co2_preheating,
+    // bit 2 = co2_rx_seen, bit 3 = co2_frame_seen,
+    // bit 4 = co2_uart_error, bit 5 = co2_rx_edge_seen,
+    // bit 6 = co2_cmd_sent
+    uint8_t  status   =
+        (co2_valid ? 0x01 : 0x00) |
+        (co2_preheating ? 0x02 : 0x00) |
+        (co2_rx_seen ? 0x04 : 0x00) |
+        (co2_frame_seen ? 0x08 : 0x00) |
+        (co2_uart_error ? 0x10 : 0x00) |
+        (co2_rx_edge_seen ? 0x20 : 0x00) |
+        (co2_cmd_sent ? 0x40 : 0x00);
     uint16_t len      = GAS_PACKET_SIZE;
 
     // Packet layout (12 bytes payload + 2 bytes length header = 14 total):
     // [len_hi][len_lo][CO2_H][CO2_L][CO_H][CO_L][NH3_H][NH3_L][NO2_H][NO2_L][O2_H][O2_L][TEMP][STATUS]
     // TEMP   : response[4] from sensor — subtract CO2_TEMP_OFFSET (44) on master for °C
-    // STATUS : bit 0 = co2_valid (CRC passed), bit 1 = co2_preheating (< 60s uptime)
+    // STATUS : see bit definitions above
     msg.buffer[0]  = (uint8_t)(len >> 8);
     msg.buffer[1]  = (uint8_t)(len & 0xFF);
     msg.buffer[2]  = (uint8_t)(co2_val >> 8);
@@ -140,13 +199,24 @@ static void fill_msg(void) {
 // ─── Init ────────────────────────────────────────────────────────────────────
 
 void uart_init(void) {
-    // 9600 baud, 8N1 @ F_CPU (20 MHz)
-    USART0.BAUD = (uint16_t)((64UL * F_CPU) / (16UL * 9600));
-    USART0.CTRLC = USART_CHSIZE_8BIT_gc;
+    // 9600 baud, 8N1 @ 20MHz system clock.
+    // This module is built/flashed for 20MHz (see Makefile F_CPU).
+    const uint32_t clk_hz = 20000000UL;
+
+#if defined(PORTMUX_USART0_gm)
+    PORTMUX.USARTROUTEA = (PORTMUX.USARTROUTEA & ~PORTMUX_USART0_gm) | PORTMUX_USART0_DEFAULT_gc;
+#endif
+    USART0.BAUD = (uint16_t)((64UL * clk_hz) / (16UL * 9600));
+    USART0.CTRLC = USART_CMODE_ASYNCHRONOUS_gc |
+                   USART_PMODE_DISABLED_gc |
+                   USART_SBMODE_1BIT_gc |
+                   USART_CHSIZE_8BIT_gc;
     PORTA.DIRSET = PIN1_bm; // PA1 = AT_GAS_TX
     PORTA.DIRCLR = PIN2_bm; // PA2 = AT_GAS_RX
+    PORTA.PIN2CTRL = PORT_ISC_BOTHEDGES_gc;
+    PORTA.INTFLAGS = PIN2_bm;
     USART0.CTRLA = USART_RXCIE_bm;
-    USART0.CTRLB = USART_TXEN_bm | USART_RXEN_bm;
+    USART0.CTRLB = USART_TXEN_bm | USART_RXEN_bm | USART_RXMODE_NORMAL_gc;
 }
 
 void adc_init(void) {
@@ -178,16 +248,16 @@ int main(void) {
     sei();
 
     while (1) {
-        // Request CO2 reading; sensor responds within ~100ms via UART RX ISR
+        // Continuous command mode: always request a frame and process replies.
+        co2_uart_prepare_request();
         send_co2_read_cmd();
-        _delay_ms(500); // Allow response to arrive
+        co2_poll_uart_ms(500);
 
-        if (needs_fill) {
-            fill_msg();
-        }
+        // Always refresh payload so diagnostic bits reflect current runtime state.
+        fill_msg();
 
         wdt_reset();
-        _delay_ms(500); // Maintain ~1Hz poll rate
+        _delay_ms(500); // ~1Hz command cadence
 
         // Track uptime for preheat (CO2_PREHEAT_MS = 60s per MHZ1911A datasheet)
         if (co2_preheating) {

@@ -18,6 +18,7 @@
 #define GAS_PACKET_SIZE         12
 #define CO2_TEMP_OFFSET         44    // from MHZ library: temperature = response[4] - 44
 #define CO2_PREHEAT_MS          60000 // MHZ1911A_PREHEATING_TIME per reference library
+#define CO2_RESPONSE_INTERVAL_S 2     // Continuous polling interval for UART command mode
 
 // MH-Z1911A CO2 sensor UART response length
 #define CO2_RESPONSE_LEN    9
