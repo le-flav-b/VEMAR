@@ -1,127 +1,107 @@
-SHELL		:= /bin/zsh
-SYSTEM		:= $(shell uname -s)
+#########################
+######  STRUCTURE  ######
+#########################
 
-NAME		=	at128_blink \
-				at128_uart \
-				serial
+NAME			=	lidar_firmware
+SRC_DIR			=	src
+INC_DIRS		=	include
+BUILD_DIR		=	build
+OBJ_DIR			=	${BUILD_DIR}/obj
+DEP_DIR			=	${BUILD_DIR}/dep
 
-FREQUENCY	?=	8000000UL
-BAUDRATE	?=	19200
-PORT		?=	/dev/ttyUSB0
-PROGRAMMER	?=	avrisp
-MCU			?=	atmega128a
+BIN_FILE		=	${BUILD_DIR}/${NAME}.bin
+HEX_FILE		=	${BUILD_DIR}/${NAME}.hex
 
-ifeq ($(SYSTEM), Darwin)
-PORT		:=	/dev/tty.usbserial-1410
-endif
 
-CC			:=	avr-gcc
-OBJCOPY		:=	avr-objcopy
-AVRDUDE		:=	avrdude
-RM			:=	rm -f
-SCREEN		:=	screen
-MAKE		:=	make -C
-ECHO		:=	echo
-MKDIR		:=	mkdir -p
+#######################
+######  SOURCES  ######
+#######################
 
-INCLUDE		=	../../include
+MAIN_SRCS_DIR	=	${SRC_DIR}
+MAIN_SRCS		=	${wildcard ${MAIN_SRCS_DIR}/*.c}
 
-LIBRARY_DIR	=	..
-LIBRARY		=	libvemar.a
+SRCS			=	${MAIN_SRCS}
 
-CFLAGS		=	-Wall \
-				-Wextra \
-				-Werror \
-				-pedantic \
-				-std=gnu99 \
-				-Os \
-				-ffunction-sections \
-				-fdata-sections \
-				-mmcu=$(MCU) \
-				-DF_CPU=$(FREQUENCY) \
-				-I$(INCLUDE)
 
-LDFLAGS		=	-Os \
-				-mmcu=$(MCU) \
-				-ffunction-sections \
-				-fdata-sections \
-				-Wl,--gc-sections
+##########################
+######  MCU CONFIG  ######
+##########################
 
-AVRFLAGS	=	-p $(MCU) \
-				-c $(PROGRAMMER) \
-				-b $(BAUDRATE) \
-				-P $(PORT) \
-				-v
+MCU				=	atmega128a
+F_CPU			=	16000000UL
 
-SOURCES		=	$(addsuffix .c, $(NAME))
 
-BUILD_DIR	=	build
+###########################
+######  COMPILATION  ######
+###########################
 
-OBJECTS		=	$(addprefix $(BUILD_DIR)/, $(SOURCES:.c=.o))
+OBJS			=	${SRCS:${SRC_DIR}/%.c=${OBJ_DIR}/%.o}
+DEPS			=	${SRCS:${SRC_DIR}/%.c=${DEP_DIR}/%.d}
 
-FILE_HEX	=	$(addsuffix .hex, $(NAME))
-FILE_BIN	=	$(addsuffix .bin, $(NAME))
+GET_DEP_PATH	=	${@:${OBJ_DIR}/%.o=${DEP_DIR}/%.d}
 
-COLOR_LOG	=	"\033[96m\033[1m"
-COLOR_RESET	=	"\033[0m"
+CC				=	avr-gcc
 
-EXAMPLES	=	$(foreach example, $(NAME), "  - $(example)\n")
+CC_BUILD_FLAGS	=	-mmcu=${MCU} \
+					-c \
+					-MMD -MF ${GET_DEP_PATH} \
+					-DF_CPU=${F_CPU} \
+					${addprefix -I,${INC_DIRS}} \
+					-Wall \
+					-Wextra \
+					-O3 \
+					-ffunction-sections \
+					-fdata-sections
 
-.PHONY: help
+CC_LINK_FLAGS	=	-mmcu=${MCU} \
+					-Wl,--gc-sections
 
-help:
-	@$(ECHO) "Select an example:"
-	@$(ECHO) "" $(EXAMPLES)
 
-.PHONY: $(NAME)
+######################
+######  UPLOAD  ######
+######################
 
-$(NAME):
-	$(AVRDUDE) $(AVRFLAGS) -U flash:w:$<:i
+PORT			=	/dev/ttyUSB0
+PROGRAMMER		=	stk500v1
+UART_BAUDRATE	=	19200
 
-.PHONY: clean fclean
+OBJCOPY			=	avr-objcopy
+OBJCOPY_FLAGS	=	-O ihex
+
+AVRDUDE			=	avrdude
+AVRDUDE_FLAGS	=	-U ${HEX_FILE} \
+					-P ${PORT} \
+					-p ${MCU} \
+					-c ${PROGRAMMER} \
+					-b ${UART_BAUDRATE}
+
+
+#####################
+######  RULES  ######
+#####################
+
+all: hex flash
+
+-include ${DEPS}
+
+${OBJ_DIR}/%.o: ${SRC_DIR}/%.c
+	@mkdir -vp ${dir $@} ${dir ${GET_DEP_PATH}}
+	${CC} ${CC_BUILD_FLAGS} $< -o $@
+
+${BIN_FILE}: ${OBJS}
+	${CC} ${CC_LINK_FLAGS} $^ -o $@
+
+${HEX_FILE}: ${BIN_FILE}
+	${OBJCOPY} ${OBJCOPY_FLAGS} $< $@
+
+hex: ${HEX_FILE}
+
+flash:
+	${AVRDUDE} ${AVRDUDE_FLAGS}
 
 clean:
-	@$(ECHO) $(COLOR_LOG) "Removing OBJ files" $(COLOR_RESET)
-	$(RM) $(OBJECTS)
+	@rm -vrf ${BUILD_DIR}
 
-fclean: clean
-	@$(ECHO) $(COLOR_LOG) "Removing Building Directory" $(COLOR_RESET)
-	$(RM) -r $(BUILD_DIR)
-	$(RM) $(FILE_BIN) $(FILE_HEX)
+re: clean all
 
-%.bin: $(BUILD_DIR)/%.o $(LIBRARY_DIR)/$(LIBRARY)
-	@$(ECHO) $(COLOR_LOG) "Building BIN file: '$@'" $(COLOR_RESET)
-	$(CC) $(LDFLAGS) -o $@ $< -L$(LIBRARY_DIR) -lvemar
-
-%.hex: %.bin
-	@$(ECHO) $(COLOR_LOG) "Building HEX file: '$@'" $(COLOR_RESET)
-	$(OBJCOPY) -O ihex $< $@
-
-$(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
-	@$(ECHO) $(COLOR_LOG) "Building OBJ file: '$@'" $(COLOR_RESET)
-	$(CC) $(CFLAGS) -o $@ -c $<
-
-$(BUILD_DIR):
-	@$(ECHO) $(COLOR_LOG) "Creating Build Directory: '$@'" $(COLOR_RESET)
-	mkdir -p $@
-
-$(LIBRARY_DIR)/$(LIBRARY):
-	@$(ECHO) $(COLOR_LOG) "Building Library" $(COLOR_RESET)
-	$(MAKE) $(LIBRARY_DIR)
-
-.PHONY: screen
-
-screen:
-	$(SCREEN) $(PORT) $(BAUDRATE)
-
-.PHONY: lib
-
-lib:
-	@$(ECHO) $(COLOR_LOG) "Rebuilding library" $(COLOR_RESET)
-	$(MAKE) $(LIBRARY_DIR) rebuild MCU=atmega128a BAUDRATE=19200 FREQUENCY=8000000
-
-.PRECIOUS: $(BUILD_DIR)/%.o %.bin
-
-at128_blink: at128_blink.hex
-at128_uart: at128_uart.hex
-serial: serial.hex
+.PHONY: all hex flash clean re

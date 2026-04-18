@@ -1,18 +1,14 @@
-#include "main.h"
-#include "uart.h"
+#include "uart0.h"
 
-
-#define BAUD 115200
-#define UBRR_VALUE ((int)(F_CPU / (8.0 * BAUD) - .5))
-
+#define UBRR_VALUE ((int)(F_CPU / (8.0 * UART0_BAUD) - .5))
 
 /*
-Init UART 0 with :
+Init UART0 with :
 - receiver
 - transmitter
 - 8N1 frame format
 */
-void uart_init()
+void uart0_init()
 {
 	UBRR0H = (UBRR_VALUE >> 8); UBRR0L = UBRR_VALUE; // Set baud rate
     SET_MSK(UCSR0A, (1<<U2X0)); // Enable double speed
@@ -21,13 +17,13 @@ void uart_init()
 }
 
 /*
-Wait for a character from UART0 and return it
-Block the programme till a character is received
+Wait for a byte from UART0 and return it
+Block the programme till a byte is received
 */
-char uart_rx()
+uint8_t uart0_rx()
 {
 	while (!GET_VALUE(UCSR0A, RXC0)); // Wait for data to be received
-	char c = UDR0; // Get received data from buffer
+	uint8_t c = UDR0; // Get received data from buffer
 	if (c == 0x7F) return '\b'; // Rectify 'backspace' transmission problem
 	if (c == '\r') return '\n'; // Rectify 'new line' transmission problem
 	return c; // Return received data from buffer
@@ -38,7 +34,7 @@ Check for non-ascii key press
 Supported keys :
 - arrows
 */
-uint8_t _special_sequence(const char c)
+static uint8_t _special_sequence(const uint8_t c)
 {
 	static uint8_t seq = 0;
 	if (c == 0x1b) return seq = 1; // ESC key (beginning of a sequence)
@@ -49,23 +45,23 @@ uint8_t _special_sequence(const char c)
 }
 
 /*
-Fill 'line' with the string received from UART 0
+Fill 'line' with the string received from UART0
 Does not put the '\n' in 'line'
 Return 1 if the input is larger than 'max_size', 0 otherwise
 If 'max_size' is greater than allocated space of 'line' it can segfault
 Block the programme till a '\n' is received
 */
-uint8_t uart_getline(char *line, const unsigned int max_size)
+uint8_t uart0_getline(char *line, const uint8_t max_size)
 {
-	int len = 0;
-	char c;
+	uint8_t len = 0;
+	uint8_t c;
 
 	while (1)
 	{
-		c = uart_rx();
+		c = uart0_rx();
 		if (_special_sequence(c)) continue; // Do nothing if a supported special key is pressed
 		if (c == '\b' && !len) continue; // Do nothing if 'backspace' but nothing to erease
-		uart_tx(c); // Show what we are typing
+		uart0_tx(c); // Show what we are typing
 		if (c == '\n' && len < max_size) return (line[len] = '\0'); // 'line' set, return 0
 		if (c == '\n') return 1; // Line greater than 'max_size', return 1
 		if (c == '\b') { len--; continue; }; // Manage backspace
@@ -75,23 +71,33 @@ uint8_t uart_getline(char *line, const unsigned int max_size)
 }
 
 /*
-Send the character 'c' to UART 0
+Send the byte to UART0
 */
-void uart_tx(const char c)
+void uart0_tx(const uint8_t c)
 {
 	static uint8_t rec = 0;
 	while (!GET_VALUE(UCSR0A, UDRE0)); // Wait for empty transmit buffer
 	UDR0 = c; // Put data into buffer, sends the data
-	if (c == '\b' && !rec) { uart_tx(' '); rec = 1; uart_tx('\b'); } // Rectify 'backspace' transmission problem
-	else if (c == '\n') uart_tx('\r'); // Rectify 'new line' transmission problem
+	if (c == '\b' && !rec) { uart0_tx(' '); rec = 1; uart0_tx('\b'); } // Rectify 'backspace' transmission problem
+	else if (c == '\n') uart0_tx('\r'); // Rectify 'new line' transmission problem
 	rec = 0;
 }
 
 /*
-Send the string 'str' to UART 0
+Send the hexa value of 'c' to UART0
 */
-void uart_printstr(const char *str)
+void uart0_tx_hexa(const uint8_t c)
+{
+    const char hex[] = "0123456789ABCDEF";
+    uart0_tx(hex[(c >> 4) & 0x0F]);
+    uart0_tx(hex[c & 0x0F]);
+}
+
+/*
+Send the string 'str' to UART0
+*/
+void uart0_printstr(const char *str)
 {
 	while (*str)
-		uart_tx(*str++);
+		uart0_tx(*str++);
 }
