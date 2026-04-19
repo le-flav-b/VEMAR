@@ -13,4 +13,6 @@
 #define MOTOR_RIGHT_PWM_CW _PB1
 #define MOTOR_RIGHT_PWM_CCW _PB2
 
+void motor_init(void);
+
 #endif
