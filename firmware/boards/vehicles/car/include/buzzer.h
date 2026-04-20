@@ -8,6 +8,6 @@
 
 void buzzer_init(void);
 void buzzer_off(void);
-void buzzer_tone(uint16_t frequency);
+void buzzer_tone(uint8_t value);
 
 #endif
