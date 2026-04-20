@@ -1,47 +1,78 @@
-#ifndef VEMAR_I2C_H
-#define VEMAR_I2C_H
+#ifndef I2C_H
+#define I2C_H
 
-#include "common.h"
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <avr/sleep.h>
+#include <util/twi.h>
 
-typedef enum {
-	I2C_PS1 = 0x00,
-	I2C_PS4 = 0x01,
-	I2C_PS16 = 0x02,
-	I2C_PS64 = 0x03
-} i2c_ps_t;
+#define I2C_ERR_ARBLOST    (-1)   /* arbitration lost                   */
+#define I2C_ERR_BUSERR     (-2)   /* bus error (illegal START/STOP)     */
+#define I2C_ERR_NACK       (-3)   /* slave sent NACK                    */
+#define I2C_ERR_INVALID_LEN (-4)  /* packet length 0 or > I2C_BUFFER_SIZE */
+#define I2C_ERR_TIMEOUT    (-5)   /* hardware flag never set            */
 
-void I2C_init(i2c_ps_t prescaler);
-
-/**
- * @brief Set the slave address (7 bits) of the device
- * @param address 7-bit slave address
+/*
+ * Utils
  */
-inline void I2C_set_address(byte_t address)
-{
-	TWAR = (address << 1);
-}
+#define TWI_BAUD (((F_CPU / I2C_FREQ) - 10) / 2)
+#define TWBR_VAL (((F_CPU / I2C_FREQ) - 16) / 2)
 
-/**
- * @brief Transmit data to the I2C bus
- * @param address I2C address of the device to transmit to
- * @param data Pointer to the data to transmit
- * @param length Length of the data to transmit
+#define I2C_BUFFER_SIZE 64
+
+struct i2cMessage {
+    uint16_t len;
+    uint8_t buffer[I2C_BUFFER_SIZE];
+    uint16_t current_idx;
+};
+
+/*
+ * Asserts
+*/
+#if defined(I2C_MASTER) && defined(I2C_SLAVE)
+    #error "Cannot define both i2c master and slave. Edit the makefile"
+#endif
+
+#if !defined(I2C_MASTER) && !defined(I2C_SLAVE)
+    #error "You need to define either the i2c master or slave in the makefile."
+#endif
+
+/*
+ * Setup
  */
-void I2C_read(byte_t address, byte_t *data, length_t length);
+extern void i2c_init(void);
+extern void i2c_init_slave(uint8_t addr);
+// extern void i2c_set_callback(void (*func)(void)); // Handle events
+extern void i2c_stop_interface(void);
+extern void i2c_switch_to_master(void);
+extern void i2c_switch_to_slave(void);
 
-/**
- * @brief Receive data from the I2C bus
- * @param address I2C address of the device to receive from
- * @param data Pointer to the data to receive
- * @param length Length of the data to receive
+/*
+ * Control
  */
-void I2C_write(byte_t address, byte_t *data, length_t length);
+extern int8_t i2c_start(uint8_t addr_rw, bool restart);
+extern void i2c_stop(void);
 
-#endif // VEMAR_I2C_H
-
-/**
- * @file i2c.h
- * @brief I2C header file
- * @version 0.0.1
- * @author Christian Hugon
+/*
+ * Data Transfer
  */
+extern int8_t i2c_write(uint8_t data);
+extern int16_t i2c_read_ack(void);
+extern int16_t i2c_read_nack(void);
+extern int8_t i2c_write_packet(uint8_t addr, uint8_t *data, size_t len);
+extern int8_t i2c_read_packet(uint8_t addr, uint8_t *buffer);
+extern int32_t i2c_get_read_len(uint8_t addr);
+
+/*
+ * Slave responses
+ */
+extern uint8_t i2c_slave_receive(void);
+extern void i2c_slave_transmit(uint8_t byte);
+extern void i2c_slave_ack(void);
+extern void i2c_slave_nack(void);
+
+#endif // !I2C_H

@@ -48,7 +48,11 @@ typedef union
     struct
     {
         uint8_t id;                       /**< ID */
-        uint8_t padding[PACKET_SIZE - 1]; /**< Padding */
+        uint16_t co2;
+        uint16_t co;
+        uint16_t nh3;
+        uint16_t no2;
+        uint8_t padding[PACKET_SIZE - 10]; /**< Padding */
     } gas;                                /**< Gas sensor module */
 } packet_t;
 

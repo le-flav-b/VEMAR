@@ -62,8 +62,31 @@ typedef enum
     TIMER2_FPWM = 0x03
 } timer2_mode_t;
 
+/**
+ * @brief Initialize Timer0
+ * @param mode
+ * @param prescaler
+ */
 void TIMER0_init(timer0_mode_t mode, timer0_ps_t prescaler);
+
+/**
+ * @brief Initialize Timer1
+ * @param mode
+ * @param prescaler
+ */
 void TIMER1_init(timer1_mode_t mode, timer1_ps_t prescaler);
+
+/**
+ * @brief Initialize Timer2
+ * @param mode
+ * @param prescaler
+ */
 void TIMER2_init(timer2_mode_t mode, timer2_ps_t prescaler);
 
 #endif // VEMAR_TIMER_H
+
+/**
+ * @file timer.h
+ * @brief Utility functions for timers
+ * @author Christian Hugon <chriss.hugon@gmail.com>
+ */

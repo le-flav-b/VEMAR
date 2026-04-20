@@ -1,7 +1,7 @@
 SHELL		:= /bin/zsh
 SYSTEM		:= $(shell uname -s)
 
-NAME		=	controller
+NAME		=	gas
 
 FREQUENCY	?=	16000000UL
 BAUDRATE	?=	115200
@@ -23,11 +23,10 @@ ECHO		:=	echo
 MKDIR		:=	mkdir -p
 MV			:=	mv
 
-INC_ATMEGA	=	../../libraries/atmega328p/include
-INC_PACKET	=	../../libraries/util
+ATMEGA_DIR	=	../../../libraries/atmega328p/include
+INCLUDE		=	../../../libraries
 
-
-LIBRARY_DIR	=	../../libraries/atmega328p
+LIBRARY_DIR	=	../../../libraries/atmega328p
 LIBRARY		=	libvemar.a
 
 CFLAGS		=	-Wall \
@@ -40,8 +39,9 @@ CFLAGS		=	-Wall \
 				-fdata-sections \
 				-mmcu=$(MCU) \
 				-DF_CPU=$(FREQUENCY) \
-				-I$(INC_ATMEGA) \
-				-I$(INC_PACKET)
+				-I$(ATMEGA_DIR) \
+				-I$(INCLUDE) \
+				-DI2C_MASTER
 
 LDFLAGS		=	-Os \
 				-mmcu=$(MCU) \
@@ -75,6 +75,9 @@ all: $(NAME)
 .PHONY: $(NAME)
 
 $(NAME):
+	$(warning ---------------------)
+	$(warning USING 16MHz FREQUENCY)
+	$(warning ---------------------)
 	$(AVRDUDE) $(AVRFLAGS) -U flash:w:$<:i
 
 .PHONY: clean fclean
@@ -107,7 +110,7 @@ $(BUILD_DIR):
 
 $(LIBRARY):
 	@$(ECHO) $(COLOR_LOG) "Building Library" $(COLOR_RESET)
-	$(MAKE) $(LIBRARY_DIR)
+	$(MAKE) $(LIBRARY_DIR) FREQUENCY=$(FREQUENCY)
 	@$(MV) $(LIBRARY_DIR)/$(LIBRARY) .
 
 .PHONY: screen
@@ -119,9 +122,9 @@ screen:
 
 lib:
 	@$(ECHO) $(COLOR_LOG) "Rebuilding library" $(COLOR_RESET)
-	@$(MAKE) $(LIBRARY_DIR) rebuild
+	@$(MAKE) $(LIBRARY_DIR) rebuild FREQUENCY=$(FREQUENCY)
 	@$(MV) $(LIBRARY_DIR)/$(LIBRARY) .
 
 .PRECIOUS: $(BUILD_DIR)/%.o %.bin
 
-controller: controller.hex
+gas: gas.hex

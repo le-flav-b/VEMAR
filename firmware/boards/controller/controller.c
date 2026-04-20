@@ -1,7 +1,7 @@
-#include "controller.h"
-#include "packet.h"
-#include "serial.h"
+#include <packet.h>
 
+#include "controller.h"
+#include "serial.h"
 
 controller_t g_controller;
 packet_t g_packet;
@@ -82,12 +82,13 @@ void loop(void)
     if (BIT_is_set(status, _CONTROLLER_TX_ENABLED))
     {
         CONTROLLER_write();
+        CONTROLLER_update_connection();
     } // if TX enabled
     if (BIT_is_set(status, _CONTROLLER_RX_ENABLED))
     {
         CONTROLLER_read();
+        CONTROLLER_update_connection();
     } // if RX enabled
-    CONTROLLER_update_connection();
 }
 
 // CONTROLLER_init
@@ -115,6 +116,17 @@ void CONTROLLER_setup_display(void)
     TFT_print_str(COL3, ROW2, "%");
     TFT_print_str(COL1, ROW3, "Pressure   : ");
     TFT_print_str(COL3, ROW3, "hPa");
+
+    TFT_print_str(COL1, ROW4, "CO2        : ");
+    TFT_print_str(COL3, ROW4, "ppm");
+    TFT_print_str(COL1, ROW5, "CO         : ");
+    TFT_print_str(COL3, ROW5, "(raw ADC)");
+    TFT_print_str(COL1, ROW6, "NH3        : ");
+    TFT_print_str(COL3, ROW6, "(raw ADC)");
+    TFT_print_str(COL1, ROW7, "NO2        : ");
+    TFT_print_str(COL3, ROW7, "(raw ADC)");
+    TFT_print_str(COL1, ROW8, "O2         : ");
+    TFT_print_str(COL3, ROW8, "(raw ADC)");
 }
 
 // CONTROLLER_update_atmosphere
@@ -132,6 +144,26 @@ void CONTROLLER_update_atmosphere(void)
     TFT_print_str(COL2, ROW3, str);
 }
 
+void CONTROLLER_update_gas(void)
+{
+    char *str;
+
+    str = UTIL_itoa(g_packet.gas.co2, 4);
+    TFT_print_str(COL2, ROW4, str);
+
+    str = UTIL_itoa(g_packet.gas.co, 4);
+    TFT_print_str(COL2, ROW5, str);
+
+    str = UTIL_itoa(g_packet.gas.nh3, 4);
+    TFT_print_str(COL2, ROW6, str);
+
+    str = UTIL_itoa(g_packet.gas.no2, 4);
+    TFT_print_str(COL2, ROW7, str);
+
+    str = UTIL_itoa(g_packet.gas.o2, 4);
+    TFT_print_str(COL2, ROW8, str);
+}
+
 // CONTROLLER_update_connection
 void CONTROLLER_update_connection(void)
 {
@@ -139,11 +171,11 @@ void CONTROLLER_update_connection(void)
     {
         if (_RADIO_IS_STATUS_CONNECTED(g_radio_status))
         {
-            TFT_print_str(COL1, ROW13, "            ");
+            TFT_print_str(COL1, ROW14, "            ");
         } // if Disconnected -> Connected
         else if (_RADIO_IS_STATUS_DISCONNECTED(g_radio_status))
         {
-            TFT_print_str(COL1, ROW13, "Disconnected");
+            TFT_print_str(COL1, ROW14, "Disconnected");
         } // if Connected -> Disconnected
     } // if Status Change flag is set
 }
@@ -155,23 +187,20 @@ void CONTROLLER_read(void)
     {
         if (RADIO_read(g_packet.data, PACKET_SIZE))
         {
+            /// TODO: add more packet handler
             if (PACKET_ID_ATM == g_packet.header.id)
             {
                 CONTROLLER_update_atmosphere();
+            }
+            else if (PACKET_ID_GAS == g_packet.header.id)
+            {
+                CONTROLLER_update_gas();
             }
             g_radio_status = _RADIO_DIS_TO_CON(g_radio_status);
             break;
         } // has received a packet
     }
     _CONTROLLER_disconnect();
-    // if (_RADIO_COUNTER(g_radio_status) < _RADIO_MAX_RETRY)
-    // {
-    //     ++g_radio_status;
-    // } // increase disconnection count
-    // else
-    // {
-    //     g_radio_status = _RADIO_CON_TO_DIS(g_radio_status) | _RADIO_MAX_RETRY;
-    // } // disconnected and display
 }
 
 // CONTROLLER_write
@@ -186,14 +215,6 @@ void CONTROLLER_write(void)
     else
     {
         _CONTROLLER_disconnect();
-        // if (_RADIO_COUNTER(g_radio_status) < _RADIO_MAX_RETRY)
-        // {
-        //     ++g_radio_status;
-        // } // increase disconnection count
-        // else
-        // {
-        //     g_radio_status = _RADIO_CON_TO_DIS(g_radio_status) | _RADIO_MAX_RETRY;
-        // } // disconnected and display
     }
 }
 
