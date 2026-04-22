@@ -2417,7 +2417,7 @@
 				)
 			)
 		)
-		(property "Value" "RS1MFA"
+		(property "Value" "1N4007"
 			(at 201.93 83.82 0)
 			(effects
 				(font
