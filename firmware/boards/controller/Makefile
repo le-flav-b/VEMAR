@@ -68,8 +68,6 @@ FILE_BIN	=	$(addsuffix .bin, $(NAME))
 COLOR_LOG	=	"\033[96m\033[1m"
 COLOR_RESET	=	"\033[0m"
 
-EXAMPLES	=	$(foreach example, $(NAME), "  - $(example)\n")
-
 all: $(NAME)
 
 .PHONY: $(NAME)

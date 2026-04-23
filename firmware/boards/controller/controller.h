@@ -1,36 +1,37 @@
 #ifndef VEMAR_CONTROLLER_H
 #define VEMAR_CONTROLLER_H
 
-#include "joystick.h"
-#include "tft.h"
-#include "radio.h"
-#include "util.h"
+#include <joystick.h>
+#include <tft.h>
+#include <radio.h>
+#include <util.h>
+#include <packet.h>
 
 #define VEMAR_DEBUG_ENABLED
 
 #ifdef VEMAR_DEBUG_ENABLED
 #include "serial.h"
 #define CONTROLLER_DEBUG(_type, ...) \
-    SERIAL_println(_type, __VA_ARGS__)
+    SERIAL_print(_type, __VA_ARGS__)
 #else
 #define CONTROLLER_DEBUG(_type, ...)
 #endif
 
-#define PIN_TOGGLE_UP PIN_PC3
-#define PIN_TOGGLE_DOWN PIN_PC2
-#define PIN_BUTTON1 PIN_PD4
-#define PIN_BUTTON2 PIN_PD3
-#define PIN_POTENTIOMETER ADC_CH4
-#define PIN_JOY_RX ADC_CH4
-#define PIN_JOY_RY ADC_CH5
-#define PIN_JOY_RB PIN_PD2
-#define PIN_JOY_LX ADC_CH6
-#define PIN_JOY_LY ADC_CH7
-#define PIN_JOY_LB PIN_PC2
+#define PIN_TOGGLE_UP PIN_PD3
+#define PIN_TOGGLE_DOWN PIN_PD4
+#define PIN_BUTTON1 PIN_PC0
+#define PIN_BUTTON2 PIN_PC1
+#define PIN_POTENTIOMETER ADC_CH3
+#define PIN_JOY_RX ADC_CH7
+#define PIN_JOY_RY ADC_CH6
+#define PIN_JOY_RB PIN_PC2
+#define PIN_JOY_LX ADC_CH5
+#define PIN_JOY_LY ADC_CH4
+#define PIN_JOY_LB PIN_PD2
 #define PIN_LED PIN_PD5
 
-#define PIN_RADIO_CE PIN_PD6
-#define PIN_RADIO_CSN PIN_PD7
+#define PIN_RADIO_CE PIN_PD7
+#define PIN_RADIO_CSN PIN_PD6
 #define PIN_TFT_CS PIN_PB2
 #define PIN_TFT_DC PIN_PB0
 #define PIN_TFT_RST PIN_PB1
@@ -74,6 +75,17 @@ typedef struct
     led_t led;         /**< LED */
 } controller_t;
 
+// typedef struct
+// {
+//     uint16_t pot; /**< Value of the potentiometer */
+//     uint16_t xl;  /**< Value of the X-axis of the Left Joystick */
+//     uint16_t xr;  /**< Value of the X-axis of the Right Joystick */
+//     uint16_t yl;  /**< Value of the Y-axis of the Left Joytick */
+//     uint16_t yr;  /**< Value of the Y-axis of the Right Joystick */
+//     uint8_t bl;   /**< State of the Button of the Left Joystick */
+//     uint8_t br;   /**< State of the Button of the Right Joystick */
+// } joystick_value_t;
+
 /**
  * @brief Configure all inputs
  */
@@ -85,7 +97,7 @@ void CONTROLLER_init(void);
 void CONTROLLER_setup_display(void);
 
 /**
- * @brief Read 
+ * @brief Read
  */
 void CONTROLLER_read(void);
 
@@ -93,6 +105,8 @@ void CONTROLLER_read(void);
  * @brief Send movement data to the car
  */
 void CONTROLLER_write(void);
+
+void CONTROLLER_read_joystick(void);
 
 /**
  * @brief Update the atmosphere data on the display

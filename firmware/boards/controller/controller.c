@@ -1,10 +1,11 @@
-#include <packet.h>
-
 #include "controller.h"
-#include "serial.h"
+
+#define _DISPLAY_MODE 0x01
 
 controller_t g_controller;
 packet_t g_packet;
+packet_t g_packet_tx;
+// byte_t g_mode;
 
 /**
  * @brief VEMAR Radio Status
@@ -67,12 +68,12 @@ void setup(void)
     SERIAL_init();
 #endif
 
-    CONTROLLER_DEBUG(str, "start setup");
+    CONTROLLER_DEBUG(str, "start setup\r\n");
     CONTROLLER_init();
     RADIO_init(PIN_RADIO_CE, PIN_RADIO_CSN);
     TFT_init(PIN_TFT_CS, PIN_TFT_DC, PIN_TFT_RST);
     CONTROLLER_setup_display();
-    CONTROLLER_DEBUG(str, "end setup");
+    CONTROLLER_DEBUG(str, "end setup\r\n");
 }
 
 // main loop
@@ -89,6 +90,15 @@ void loop(void)
         CONTROLLER_read();
         CONTROLLER_update_connection();
     } // if RX enabled
+
+    // if (BUTTON_is_active(&(g_controller.btn1)))
+    // {
+    //     CONTROLLER_DEBUG(str, "button 1 pressed");
+    // } // button 1 pressed
+    // if (BUTTON_is_active(&(g_controller.btn2))) {
+    //     CONTROLLER_DEBUG(str, "button 2 pressed");
+    // } // button 2 pressed
+    // CONTROLLER_read_joystick();
 }
 
 // CONTROLLER_init
@@ -107,7 +117,7 @@ void CONTROLLER_init(void)
 // CONTROLLER_setup_display
 void CONTROLLER_setup_display(void)
 {
-    TFT_set_mode(TFT_LANDSCAPE, TFT_NORMAL, TFT_NORMAL);
+    TFT_set_mode(TFT_LANDSCAPE, TFT_INVERTED, TFT_INVERTED);
     TFT_setup_text(TFT_TEXT_S, 1, RGB16_WHITE, RGB16_BLACK);
     TFT_fill_screen(RGB16_BLACK);
     TFT_print_str(COL1, ROW1, "Temperature: ");
@@ -180,14 +190,67 @@ void CONTROLLER_update_connection(void)
     } // if Status Change flag is set
 }
 
+// void CONTROLLER_read_joystick(void)
+// {
+//     uint16_t pot = 1023U - ANALOG_read(g_controller.pot);
+
+//     uint16_t joy_xl = ANALOG_read(g_controller.jleft.x);
+//     uint16_t joy_yl = ANALOG_read(g_controller.jleft.y);
+//     bool_t joy_bl = BUTTON_is_active(&(g_controller.jleft.button));
+
+//     uint16_t joy_xr = 1023U - ANALOG_read(g_controller.jright.x);
+//     uint16_t joy_yr = 1023U - ANALOG_read(g_controller.jright.y);
+//     bool_t joy_br = BUTTON_is_active(&(g_controller.jright.button));
+
+//     if ((pot == g_packet_tx.car.pot) &&
+//         (joy_xl == g_packet_tx.car.lx) &&
+//         (joy_yl == g_packet_tx.car.ly) &&
+//         (joy_bl == g_packet_tx.car.lb) &&
+//         (joy_xr == g_packet_tx.car.rx) &&
+//         (joy_yr == g_packet_tx.car.ry) &&
+//         (joy_br == g_packet_tx.car.rb))
+//     {
+//         return;
+//     }
+//     g_packet_tx.car.id = PACKET_ID_CAR;
+//     g_packet_tx.car.pot = pot;
+//     g_packet_tx.car.lx = joy_xl;
+//     g_packet_tx.car.ly = joy_yl;
+//     g_packet_tx.car.lb = joy_bl;
+//     g_packet_tx.car.rx = joy_xr;
+//     g_packet_tx.car.ry = joy_yr + 30;
+//     g_packet_tx.car.rb = joy_br;
+
+//     CONTROLLER_DEBUG(str, "LX: ");
+//     CONTROLLER_DEBUG(uint, g_packet_tx.car.lx);
+//     CONTROLLER_DEBUG(str, "; LY: ");
+//     CONTROLLER_DEBUG(uint, g_packet_tx.car.ly);
+//     CONTROLLER_DEBUG(str, "; LB: ");
+//     CONTROLLER_DEBUG(bool, g_packet_tx.car.lb);
+//     CONTROLLER_DEBUG(str, "RX: ");
+//     CONTROLLER_DEBUG(uint, g_packet_tx.car.rx);
+//     CONTROLLER_DEBUG(str, "; RY: ");
+//     CONTROLLER_DEBUG(uint, g_packet_tx.car.ry);
+//     CONTROLLER_DEBUG(str, "; RB: ");
+//     CONTROLLER_DEBUG(bool, g_packet_tx.car.rb);
+//     CONTROLLER_DEBUG(str, "Potentiometer: ");
+//     CONTROLLER_DEBUG(uint, g_packet_tx.car.pot);
+//     CONTROLLER_DEBUG(str, "--------");
+
+//     if (RADIO_write(g_packet_tx.buffer, PACKET_SIZE))
+//     {
+//         CONTROLLER_DEBUG(str, "send movement");
+//     }
+//     delay(1000);
+// }
+
 // CONTROLLER_read
 void CONTROLLER_read(void)
 {
     for (uint16_t r = 0; r < _CONTROLLER_RX_DELAY; ++r)
     {
-        if (RADIO_read(g_packet.data, PACKET_SIZE))
+        if (RADIO_read(g_packet.buffer, PACKET_SIZE))
         {
-            /// TODO: add more packet handler
             if (PACKET_ID_ATM == g_packet.header.id)
             {
                 CONTROLLER_update_atmosphere();
@@ -206,12 +269,64 @@ void CONTROLLER_read(void)
 // CONTROLLER_write
 void CONTROLLER_write(void)
 {
-    g_packet.header.id = PACKET_ID_CAR;
-    g_packet.car.velocity = ANALOG_read(g_controller.pot);
-    if (RADIO_write(g_packet.data, PACKET_SIZE))
+    uint16_t pot = 1023U - ANALOG_read(g_controller.pot);
+
+    uint16_t joy_xl = ANALOG_read(g_controller.jleft.x);
+    uint16_t joy_yl = ANALOG_read(g_controller.jleft.y);
+    bool_t joy_bl = BUTTON_is_active(&(g_controller.jleft.button));
+
+    uint16_t joy_xr = 1023U - ANALOG_read(g_controller.jright.x);
+    uint16_t joy_yr = 1023U - ANALOG_read(g_controller.jright.y);
+    bool_t joy_br = BUTTON_is_active(&(g_controller.jright.button));
+
+    if ((pot == g_packet_tx.car.pot) &&
+        (joy_xl == g_packet_tx.car.lx) &&
+        (joy_yl == g_packet_tx.car.ly) &&
+        (joy_bl == g_packet_tx.car.lb) &&
+        (joy_xr == g_packet_tx.car.rx) &&
+        (joy_yr == g_packet_tx.car.ry) &&
+        (joy_br == g_packet_tx.car.rb))
+    {
+        return;
+    }
+    g_packet_tx.header.id = PACKET_ID_CAR;
+    g_packet_tx.car.pot = pot;
+    g_packet_tx.car.lx = joy_xl;
+    g_packet_tx.car.ly = joy_yl;
+    g_packet_tx.car.lb = joy_bl;
+    g_packet_tx.car.rx = joy_xr;
+    g_packet_tx.car.ry = joy_yr + 30; // offset for calibration
+    g_packet_tx.car.rb = joy_br;
+
+    CONTROLLER_DEBUG(str, "LX: ");
+    CONTROLLER_DEBUG(uint, g_packet_tx.car.lx);
+    CONTROLLER_DEBUG(str, "\r\n; LY: ");
+    CONTROLLER_DEBUG(uint, g_packet_tx.car.ly);
+    CONTROLLER_DEBUG(str, "\r\n; LB: ");
+    CONTROLLER_DEBUG(bool, g_packet_tx.car.lb);
+    CONTROLLER_DEBUG(str, "\r\nRX: ");
+    CONTROLLER_DEBUG(uint, g_packet_tx.car.rx);
+    CONTROLLER_DEBUG(str, "\r\n; RY: ");
+    CONTROLLER_DEBUG(uint, g_packet_tx.car.ry);
+    CONTROLLER_DEBUG(str, "\r\n; RB: ");
+    CONTROLLER_DEBUG(bool, g_packet_tx.car.rb);
+    CONTROLLER_DEBUG(str, "\r\nPotentiometer: ");
+    CONTROLLER_DEBUG(uint, g_packet_tx.car.pot);
+    CONTROLLER_DEBUG(str, "--------\r\n");
+
+    if (RADIO_write(g_packet_tx.buffer, PACKET_SIZE))
     {
         g_radio_status = _RADIO_DIS_TO_CON(g_radio_status);
+        CONTROLLER_DEBUG(str, "send movement\r\n");
     }
+
+    // g_packet.header.id = PACKET_ID_CAR;
+    // g_packet.car.pot = 42;
+    // // g_packet.car.velocity = 1023U - ANALOG_read(g_controller.pot);
+    // if (RADIO_write(g_packet.buffer, PACKET_SIZE))
+    // {
+    //     g_radio_status = _RADIO_DIS_TO_CON(g_radio_status);
+    // }
     else
     {
         _CONTROLLER_disconnect();
@@ -222,10 +337,12 @@ byte_t _CONTROLLER_status(void)
 {
     if (BUTTON_is_active(&(g_controller.tgl.up)))
     {
+        CONTROLLER_DEBUG(str, "TX mode\r\n");
         return ((byte_t)_CONTROLLER_TX_ENABLED);
     } // enable RX
     else if (BUTTON_is_active(&(g_controller.tgl.down)))
     {
+        CONTROLLER_DEBUG(str, "RX mode\r\n");
         return ((byte_t)_CONTROLLER_RX_ENABLED);
     } // enable TX
     return ((byte_t)(_CONTROLLER_TX_ENABLED | _CONTROLLER_RX_ENABLED));

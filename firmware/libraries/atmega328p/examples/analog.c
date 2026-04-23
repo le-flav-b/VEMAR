@@ -11,12 +11,14 @@
 #include "gpio.h"
 #include "serial.h"
 
+#define ADC_PIN ADC_CH3
+
 analog_t analog;
 
 void setup(void)
 {
 	SERIAL_init();
-	analog = ANALOG_new(ADC_CH4);
+	analog = ANALOG_new(ADC_PIN);
 }
 
 void loop(void)

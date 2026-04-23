@@ -13,12 +13,16 @@
 #include "joystick.h"
 #include "serial.h"
 
+#define JOY_X_PIN ADC_CH7
+#define JOY_Y_PIN ADC_CH6
+#define JOY_B_PIN PIN_PC2
+
 joystick_t joy;
 
 void setup(void)
 {
     SERIAL_init();
-    joy = JOYSTICK_new(ADC_CH7, ADC_CH6, PIN_PC5);
+    joy = JOYSTICK_new(JOY_X_PIN, JOY_Y_PIN, JOY_B_PIN);
 }
 
 void loop()
