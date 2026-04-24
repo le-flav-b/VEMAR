@@ -81,6 +81,21 @@ inline void TFT_fill_screen(color16_t color)
 }
 
 /**
+ * @brief Fill the defined area defined with the specific color
+ * @param x Position on X-axis
+ * @param y Position on Y-axis
+ * @param w Width
+ * @param h Height
+ * @param color Color
+ */
+inline void TFT_fill_area(uint16_t x, uint16_t y,
+						  uint16_t w, uint16_t h,
+						  color16_t color)
+{
+	ILI9341_fill_area(x, y, w, h, color);
+}
+
+/**
  * @brief Display a character
  * @param x Position X of the character (Top-Left)
  * @param y Position Y of the character (Top-Left)

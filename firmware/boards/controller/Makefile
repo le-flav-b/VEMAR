@@ -24,7 +24,7 @@ MKDIR		:=	mkdir -p
 MV			:=	mv
 
 INC_ATMEGA	=	../../libraries/atmega328p/include
-INC_PACKET	=	../../libraries/util
+INC_PACKET	=	../../libraries
 
 
 LIBRARY_DIR	=	../../libraries/atmega328p

@@ -50,5 +50,8 @@ void TFT_setup_text(tft_text_t size,
 //------------------------------------------------------------------------------
 
 extern inline void TFT_fill_screen(color16_t color);
+extern inline void TFT_fill_area(uint16_t x, uint16_t y,
+                                 uint16_t w, uint16_t h,
+                                 color16_t color);
 extern inline void TFT_print_char(uint16_t x, uint16_t y, char ch);
 extern inline void TFT_print_str(uint16_t x, uint16_t y, const char *str);

@@ -5,7 +5,7 @@
 #include <tft.h>
 #include <radio.h>
 #include <util.h>
-#include <packet.h>
+#include <util/packet.h>
 
 #define VEMAR_DEBUG_ENABLED
 
@@ -36,11 +36,11 @@
 #define PIN_TFT_DC PIN_PB0
 #define PIN_TFT_RST PIN_PB1
 
-#define _ROW_num(x) (16 * x + 4)
+#define _ROW_num(x) (16U * x + 4U)
 
-#define COL1 4
-#define COL2 140
-#define COL3 186
+#define COL1 4U
+#define COL2 140U
+#define COL3 186U
 #define ROW1 _ROW_num(0)
 #define ROW2 _ROW_num(1)
 #define ROW3 _ROW_num(2)
@@ -55,7 +55,7 @@
 #define ROW12 _ROW_num(11)
 #define ROW13 _ROW_num(12)
 #define ROW14 _ROW_num(13)
-#define ROW15 _ROW_num(14)
+#define ROW_LAST 222U
 
 /**
  * @brief Define all inputs of the controller
@@ -75,38 +75,30 @@ typedef struct
     led_t led;         /**< LED */
 } controller_t;
 
-// typedef struct
-// {
-//     uint16_t pot; /**< Value of the potentiometer */
-//     uint16_t xl;  /**< Value of the X-axis of the Left Joystick */
-//     uint16_t xr;  /**< Value of the X-axis of the Right Joystick */
-//     uint16_t yl;  /**< Value of the Y-axis of the Left Joytick */
-//     uint16_t yr;  /**< Value of the Y-axis of the Right Joystick */
-//     uint8_t bl;   /**< State of the Button of the Left Joystick */
-//     uint8_t br;   /**< State of the Button of the Right Joystick */
-// } joystick_value_t;
-
 /**
  * @brief Configure all inputs
  */
 void CONTROLLER_init(void);
 
 /**
- * @brief Configure display settings
+ * @brief Configure tft to display sensor data
  */
-void CONTROLLER_setup_display(void);
+void CONTROLLER_display_data(void);
 
 /**
- * @brief Read
+ * @brief Configure tft to display map
+ */
+void CONTROLLER_display_map(void);
+
+/**
+ * @brief Read and parse received payload
  */
 void CONTROLLER_read(void);
 
 /**
- * @brief Send movement data to the car
+ * @brief Send payload to the car
  */
 void CONTROLLER_write(void);
-
-void CONTROLLER_read_joystick(void);
 
 /**
  * @brief Update the atmosphere data on the display
@@ -117,5 +109,10 @@ void CONTROLLER_update_atmosphere(void);
  * @brief Update connection status on the display
  */
 void CONTROLLER_update_connection(void);
+
+/**
+ * @brief Update map
+ */
+void CONTROLLER_update_map(void);
 
 #endif // VEMAR_CONTROLLER_H
