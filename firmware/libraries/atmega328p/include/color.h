@@ -1,6 +1,8 @@
 #ifndef VEMAR_COLOR_H
 #define VEMAR_COLOR_H
 
+#include <stdint.h>
+
 /**
  * @brief Convert 24-bit RGB to 16-bit RGB
  * @param r 8-bit Red
@@ -39,6 +41,7 @@
 #define RGB16_GREEN 0x07E0   /**< Green */
 #define RGB16_BLUE 0x001F    /**< Blue */
 #define RGB16_BLACK 0x0000   /**< Black */
+#define RGB16_GRAY 0x9D13    /**< Gray */
 /**
  * @}
  */

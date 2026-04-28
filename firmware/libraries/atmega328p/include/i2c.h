@@ -3,12 +3,10 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
 #include <avr/sleep.h>
 #include <util/twi.h>
+
+#include "typedef.h"
 
 #define I2C_ERR_ARBLOST    (-1)   /* arbitration lost                   */
 #define I2C_ERR_BUSERR     (-2)   /* bus error (illegal START/STOP)     */
@@ -54,7 +52,7 @@ extern void i2c_switch_to_slave(void);
 /*
  * Control
  */
-extern int8_t i2c_start(uint8_t addr_rw, bool restart);
+extern int8_t i2c_start(uint8_t addr_rw, bool_t restart);
 extern void i2c_stop(void);
 
 /*
@@ -63,7 +61,7 @@ extern void i2c_stop(void);
 extern int8_t i2c_write(uint8_t data);
 extern int16_t i2c_read_ack(void);
 extern int16_t i2c_read_nack(void);
-extern int8_t i2c_write_packet(uint8_t addr, uint8_t *data, size_t len);
+extern int8_t i2c_write_packet(uint8_t addr, uint8_t *data, uint16_t len);
 extern int8_t i2c_read_packet(uint8_t addr, uint8_t *buffer);
 extern int32_t i2c_get_read_len(uint8_t addr);
 

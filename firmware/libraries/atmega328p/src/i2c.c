@@ -92,7 +92,7 @@ void i2c_switch_to_slave(void) {
 #endif
 }
 
-int8_t i2c_start(uint8_t addr_rw, bool restart) {
+int8_t i2c_start(uint8_t addr_rw, bool_t restart) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   (void)restart;
   if (i2c_wait_bus_idle() != 0) return I2C_ERR_TIMEOUT; // wait for bus idle before sending START
@@ -178,10 +178,10 @@ int16_t i2c_read_nack(void) {
 #endif
 }
 
-int8_t i2c_write_packet(uint8_t addr, uint8_t *data, size_t len) {
-  int8_t start_resp = i2c_start(addr << 1, false); // send START + address (write mode)
+int8_t i2c_write_packet(uint8_t addr, uint8_t *data, uint16_t len) {
+  int8_t start_resp = i2c_start(addr << 1, FALSE); // send START + address (write mode)
   if (start_resp != 0) return start_resp;
-  for (size_t i = 0; i < len; i++) {
+  for (uint16_t i = 0; i < len; i++) {
     int8_t write_resp = i2c_write(data[i]); // send each byte
     if (write_resp != 0) {
       i2c_stop(); // abort on error
@@ -193,7 +193,7 @@ int8_t i2c_write_packet(uint8_t addr, uint8_t *data, size_t len) {
 }
 
 int32_t i2c_get_read_len(uint8_t addr) {
-  int8_t start_resp = i2c_start((addr << 1) | (1), false); // send START + address (read mode)
+  int8_t start_resp = i2c_start((addr << 1) | (1), FALSE); // send START + address (read mode)
   if (start_resp) {
     i2c_stop();
     return start_resp;
@@ -216,7 +216,7 @@ int32_t i2c_get_read_len(uint8_t addr) {
 }
 
 int8_t i2c_read_packet(uint8_t addr, uint8_t *buffer) {
-  int8_t start_resp = i2c_start((addr << 1) | 1, false); // send START + address (read mode)
+  int8_t start_resp = i2c_start((addr << 1) | 1, FALSE); // send START + address (read mode)
   if (start_resp) {
     i2c_stop();
     return start_resp;

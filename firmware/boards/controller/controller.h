@@ -7,8 +7,6 @@
 #include <util.h>
 #include <util/packet.h>
 
-#define VEMAR_DEBUG_ENABLED
-
 #ifdef VEMAR_DEBUG_ENABLED
 #include "serial.h"
 #define CONTROLLER_DEBUG(_type, ...) \
@@ -36,25 +34,28 @@
 #define PIN_TFT_DC PIN_PB0
 #define PIN_TFT_RST PIN_PB1
 
-#define _ROW_num(x) (16U * x + 4U)
+#define _ROW_num(x) (18U * x + 6U)
 
 #define COL1 4U
 #define COL2 140U
 #define COL3 186U
-#define ROW1 _ROW_num(0)
-#define ROW2 _ROW_num(1)
-#define ROW3 _ROW_num(2)
-#define ROW4 _ROW_num(3)
-#define ROW5 _ROW_num(4)
-#define ROW6 _ROW_num(5)
-#define ROW7 _ROW_num(6)
-#define ROW8 _ROW_num(7)
-#define ROW9 _ROW_num(8)
-#define ROW10 _ROW_num(9)
-#define ROW11 _ROW_num(10)
-#define ROW12 _ROW_num(11)
-#define ROW13 _ROW_num(12)
-#define ROW14 _ROW_num(13)
+#define COL_MOD 260U
+#define COL_RXTX 240U
+#define ROW_LABEL _ROW_num(0)
+#define ROW1 _ROW_num(1)
+#define ROW2 _ROW_num(2)
+#define ROW3 _ROW_num(3)
+#define ROW4 _ROW_num(4)
+#define ROW5 _ROW_num(5)
+#define ROW6 _ROW_num(6)
+#define ROW7 _ROW_num(7)
+#define ROW8 _ROW_num(8)
+#define ROW9 _ROW_num(9)
+#define ROW10 _ROW_num(10)
+#define ROW11 _ROW_num(11)
+#define ROW12 _ROW_num(12)
+#define ROW13 _ROW_num(13)
+#define ROW14 _ROW_num(14)
 #define ROW_LAST 222U
 
 /**
@@ -80,15 +81,22 @@ typedef struct
  */
 void CONTROLLER_init(void);
 
+void CONTROLLER_interrupt(void);
+
+void CONTROLLER_display_menu(void);
 /**
  * @brief Configure tft to display sensor data
  */
-void CONTROLLER_display_data(void);
+void CONTROLLER_display_atmosphere(void);
+
+void CONTROLLER_display_gas(void);
 
 /**
  * @brief Configure tft to display map
  */
 void CONTROLLER_display_map(void);
+
+void CONTROLLER_display_radioactivity(void);
 
 /**
  * @brief Read and parse received payload
@@ -105,14 +113,20 @@ void CONTROLLER_write(void);
  */
 void CONTROLLER_update_atmosphere(void);
 
-/**
- * @brief Update connection status on the display
- */
-void CONTROLLER_update_connection(void);
+void CONTROLLER_update_gas(void);
+
+void CONTROLLER_update_radioactivity(void);
 
 /**
  * @brief Update map
  */
 void CONTROLLER_update_map(void);
+
+
+/**
+ * @brief Update connection status on the display
+ */
+void CONTROLLER_update_connection(void);
+
 
 #endif // VEMAR_CONTROLLER_H

@@ -7,6 +7,9 @@
 #error Module 'ILI9341' not defined
 #endif
 
+#define TFT_WIDTH 240
+#define TFT_HEIGHT 320
+
 /**
  * @brief Define the orientation of the display
  */
@@ -39,7 +42,8 @@ typedef enum
 	TFT_TEXT_S = 2,	 /**< Small (10x14) */
 	TFT_TEXT_M = 3,	 /**< Medium (15x21) */
 	TFT_TEXT_L = 4,	 /**< Large (20x28) */
-	TFT_TEXT_XL = 5	 /**< Extra Large (25x35) */
+	TFT_TEXT_XL = 5, /**< Extra Large (25x35) */
+	TFT_TEXT_XXL = 6 /**< Double Extra Large (30x42) */
 } tft_text_t;
 
 /**

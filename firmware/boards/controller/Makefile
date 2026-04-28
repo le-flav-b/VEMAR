@@ -68,7 +68,13 @@ FILE_BIN	=	$(addsuffix .bin, $(NAME))
 COLOR_LOG	=	"\033[96m\033[1m"
 COLOR_RESET	=	"\033[0m"
 
+ifeq ($(MAKECMDGOALS), debug)
+CFLAGS		+=	-DVEMAR_DEBUG_ENABLED
+endif
+
 all: $(NAME)
+
+debug: fclean all
 
 .PHONY: $(NAME)
 

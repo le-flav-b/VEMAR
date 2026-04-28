@@ -1,17 +1,6 @@
+#include <avr/interrupt.h>
+
 #include "controller.h"
-
-controller_t g_controller;
-packet_t g_packet;
-packet_t g_packet_tx;
-byte_t g_ctrl_mode;
-
-/**
- * @brief VEMAR Radio Status
- * - __bit-7__: Status Change, mask 0x80
- * - __bit-6__: Disconnect, mask 0x40
- * - __[5:0]__: Counter, mask 0x3F
- */
-byte_t g_radio_status;
 
 #define _CONTROLLER_ADC_MAX 1023U
 
@@ -21,8 +10,16 @@ byte_t g_radio_status;
 #define _ADC_CONVERT_RX(x) (((504 - (int)x) / 19) * 10)
 #define _ADC_CONVERT_RY(x) (((538 - (int)x) / 20) * 10)
 
-#define _CONTROLLER_MODE_DATA 0x01 /**< Display sensor data */
-#define _CONTROLLER_MODE_MAP 0x02  /**< Display map */
+#define _CONTROLLER_MODE_COUNT 5
+#define _CONTROLLER_MASK_MODE 0x0F           /**< Mask of display */
+#define _CONTROLLER_MODE_ATM PACKET_ID_ATM   /**< Display atmospheric data */
+#define _CONTROLLER_MODE_GAS PACKET_ID_GAS   /**< Display gas data */
+#define _CONTROLLER_MODE_MAP PACKET_ID_LIDAR /**< Display map */
+#define _CONTROLLER_MODE_GMC PACKET_ID_GMC   /**< Display radioactivity data */
+
+#define _CONTROLLER_MODE_RX 0x10    /**< RX mode */
+#define _CONTROLLER_MODE_TX 0x20    /**< TX mode */
+#define _CONTROLLER_MASK_RADIO 0xF0 /**< Mask of Controller transmission mode */
 
 #define _CONTROLLER_TX_ENABLED 0x02 /**< Radio Transmission is enabled */
 #define _CONTROLLER_RX_ENABLED 0x01 /**< Radio Reception is enabled */
@@ -31,47 +28,62 @@ byte_t g_radio_status;
 #define _DISPLAY_W 8U
 #define _DISPLAY_H 8U
 
-/** @brief Radio Status Change flag */
-#define _RADIO_STATUS_CHANGE(_status) BIT_read(_status, 0x80)
-
-/** @brief Radio Disconnect flag */
-#define _RADIO_DISCONNECT(_status) BIT_read(_status, 0x40)
-
-/** @brief Radio Disconnect Counter */
-#define _RADIO_COUNTER(_status) BIT_read(_status, 0x3F)
-
-/** @brief Radio is connected */
-#define _RADIO_IS_STATUS_CONNECTED(_status) BIT_is_clear(_status, 0x40)
-
-/** @brief Radio signal is lost */
-#define _RADIO_IS_STATUS_DISCONNECTED(_status) BIT_is_set(_status, 0x40)
-
-/** @brief Change radio status from Disconnected to Connected */
-#define _RADIO_DIS_TO_CON(_status) \
-    ((BIT_read(_status, 0x40) ^ 0x40) << 1)
-
-/** @brief Change radio status from Connected to Disconnected */
-#define _RADIO_CON_TO_DIS(_status) \
-    (((BIT_read(_status, 0x40) ^ 0x40) << 1) | 0x40)
-
 /** @brief Maximum retries before setting Disconnect flag */
 #define _RADIO_MAX_RETRY 0x10
+/** @brief Maximum signal strength */
+#define _RADIO_SIGNAL_MAX 0x10
+
+controller_t g_controller;
+packet_t g_packet;
+packet_t g_packet_tx;
+
+volatile byte_t g_ctrl_mode = 1;
+volatile byte_t g_module_en;
+volatile byte_t g_module_curr = 1;
 
 /**
- * @brief Return the current operation mode: RX only, TX only, or both
+ * @brief VEMAR Radio Status
+ * - __bit-7__: Status Change, mask 0x80
+ * - __bit-6__: Disconnect, mask 0x40
+ * - __[5:0]__: Counter, mask 0x3F
  */
-static inline byte_t _CONTROLLER_status(void);
+byte_t g_radio_status;
 
 /**
- * @brief Increase the disconnection counter, set the `Disconnect` flag if
- * it reaches `_RADIO_MAX_RETRY`
+ * @brief Decrease signal strength count,
+ * when it reaches to 0, the connection is lost
  */
 static inline void _CONTROLLER_disconnect(void);
 
 /**
- * @brief Reset connection
+ * @brief Increase signal strength count
+ */
+static inline void _CONTROLLER_connect(void);
+
+/**
+ * @brief Reset signal strength count
  */
 static inline void _CONTROLLER_reset_connection(void);
+
+/**
+ * @brief Display layout
+ */
+static void _CONTROLLER_display_layout(const char *label);
+
+/**
+ * @brief Display available modules
+ */
+static void _CONTROLLER_display_module(void);
+
+/**
+ * @brief Check communication mode
+ */
+static void _CONTROLLER_set_radio_mode(void);
+
+/**
+ * @brief When multiple modules are connected, switch between them
+ */
+static void _CONTROLLER_switch_display(void);
 
 //------------------------------------------------------------------------------
 // setup
@@ -88,8 +100,12 @@ void setup(void)
     TFT_init(PIN_TFT_CS, PIN_TFT_DC, PIN_TFT_RST);
     TFT_set_mode(TFT_LANDSCAPE, TFT_INVERTED, TFT_INVERTED);
     TFT_setup_text(TFT_TEXT_S, 1, RGB16_WHITE, RGB16_BLACK);
-    CONTROLLER_display_data();
+    CONTROLLER_interrupt();
+
+    // g_module_en = 0x10;
+    CONTROLLER_display_menu();
     _CONTROLLER_reset_connection();
+    _CONTROLLER_set_radio_mode();
     CONTROLLER_DEBUG(str, "end setup\r\n");
 }
 
@@ -98,29 +114,15 @@ void setup(void)
 //------------------------------------------------------------------------------
 void loop(void)
 {
-    byte_t status = _CONTROLLER_status();
-    if (BIT_is_set(status, _CONTROLLER_TX_ENABLED))
-    {
-        CONTROLLER_write();
-        CONTROLLER_update_connection();
-    } // if TX enabled
-    if (BIT_is_set(status, _CONTROLLER_RX_ENABLED))
+    if (BIT_is_set(g_ctrl_mode, _CONTROLLER_MODE_RX))
     {
         CONTROLLER_read();
-        CONTROLLER_update_connection();
-    } // if RX enabled
-
-    if (BUTTON_is_active(&(g_controller.btn1)))
+    }
+    if (BIT_is_set(g_ctrl_mode, _CONTROLLER_MODE_TX))
     {
-        CONTROLLER_display_data();
-        _CONTROLLER_reset_connection();
-    } // button 1 pressed
-    if (BUTTON_is_active(&(g_controller.btn2)))
-    {
-        CONTROLLER_display_map();
-        CONTROLLER_update_map();
-        _CONTROLLER_reset_connection();
-    } // button 2 pressed
+        CONTROLLER_write();
+    }
+    CONTROLLER_update_connection();
 }
 
 //------------------------------------------------------------------------------
@@ -138,32 +140,50 @@ void CONTROLLER_init(void)
     g_controller.led = LED_new(PIN_LED);
 }
 
+void CONTROLLER_interrupt(void)
+{
+    BIT_set(PCICR, (BIT(PCIE1) | BIT(PCIE2)));      // enable interrupt (Port C & D)
+    BIT_set(PCMSK1, (BIT(PCINT8) | BIT(PCINT9)));   // enable PC0 and PC1
+    BIT_set(PCMSK2, (BIT(PCINT19) | BIT(PCINT20))); // enable PD3 and PD4
+    sei();
+}
+
 //------------------------------------------------------------------------------
 // CONTROLLER_display_data
 //------------------------------------------------------------------------------
-void CONTROLLER_display_data(void)
+void CONTROLLER_display_atmosphere(void)
 {
-    if (_CONTROLLER_MODE_DATA != g_ctrl_mode)
+    if (_CONTROLLER_MODE_ATM != BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
     {
-        g_ctrl_mode = _CONTROLLER_MODE_DATA;
         TFT_fill_screen(RGB16_BLACK);
+        _CONTROLLER_display_layout("MODULE: Atmosphere");
         TFT_print_str(COL1, ROW1, "Temperature: ");
         TFT_print_str(COL3, ROW1, "C");
         TFT_print_str(COL1, ROW2, "Humidity   : ");
         TFT_print_str(COL3, ROW2, "%");
         TFT_print_str(COL1, ROW3, "Pressure   : ");
         TFT_print_str(COL3, ROW3, "hPa");
+        BIT_write(g_ctrl_mode, _CONTROLLER_MODE_ATM, _CONTROLLER_MASK_MODE);
+    }
+}
 
-        TFT_print_str(COL1, ROW4, "CO2        : ");
-        TFT_print_str(COL3, ROW4, "ppm");
-        TFT_print_str(COL1, ROW5, "CO         : ");
+void CONTROLLER_display_gas(void)
+{
+    if (_CONTROLLER_MODE_GAS != BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
+    {
+        TFT_fill_screen(RGB16_BLACK);
+        _CONTROLLER_display_layout("MODULE: Gas");
+        TFT_print_str(COL1, ROW1, "CO2        : ");
+        TFT_print_str(COL3, ROW1, "ppm");
+        TFT_print_str(COL1, ROW2, "CO         : ");
+        TFT_print_str(COL3, ROW2, "(raw ADC)");
+        TFT_print_str(COL1, ROW3, "NH3        : ");
+        TFT_print_str(COL3, ROW3, "(raw ADC)");
+        TFT_print_str(COL1, ROW4, "NO2        : ");
+        TFT_print_str(COL3, ROW4, "(raw ADC)");
+        TFT_print_str(COL1, ROW5, "O2         : ");
         TFT_print_str(COL3, ROW5, "(raw ADC)");
-        TFT_print_str(COL1, ROW6, "NH3        : ");
-        TFT_print_str(COL3, ROW6, "(raw ADC)");
-        TFT_print_str(COL1, ROW7, "NO2        : ");
-        TFT_print_str(COL3, ROW7, "(raw ADC)");
-        TFT_print_str(COL1, ROW8, "O2         : ");
-        TFT_print_str(COL3, ROW8, "(raw ADC)");
+        BIT_write(g_ctrl_mode, _CONTROLLER_MODE_GAS, _CONTROLLER_MASK_MODE);
     }
 }
 
@@ -172,10 +192,37 @@ void CONTROLLER_display_data(void)
 //------------------------------------------------------------------------------
 void CONTROLLER_display_map(void)
 {
-    if (_CONTROLLER_MODE_MAP != g_ctrl_mode)
+    if (_CONTROLLER_MODE_MAP != BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
     {
-        g_ctrl_mode = _CONTROLLER_MODE_MAP;
         TFT_fill_screen(RGB16_BLACK);
+        _CONTROLLER_display_layout("MODULE: LiDAR");
+        BIT_write(g_ctrl_mode, _CONTROLLER_MODE_MAP, _CONTROLLER_MASK_MODE);
+        // g_packet.lidar.line[0].row = 3;
+        // g_packet.lidar.line[0].data[0] = 0xff;
+        // g_packet.lidar.line[0].data[1] = 0x00;
+        // g_packet.lidar.line[0].data[2] = 0xff;
+        // g_packet.lidar.line[0].data[3] = 0x00;
+        // g_packet.lidar.line[0].data[4] = 0xff;
+        // CONTROLLER_update_map();
+    }
+}
+
+void CONTROLLER_display_radioactivity(void)
+{
+    if (_CONTROLLER_MODE_GMC != BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
+    {
+        TFT_fill_screen(RGB16_BLACK);
+        _CONTROLLER_display_layout("MODULE: Geiger Counter");
+        BIT_write(g_ctrl_mode, _CONTROLLER_MODE_GMC, _CONTROLLER_MASK_MODE);
+    }
+}
+
+void CONTROLLER_display_none(void)
+{
+    if (0 != g_module_en)
+    {
+        TFT_fill_screen(RGB16_BLACK);
+        _CONTROLLER_display_layout("No Module detected");
     }
 }
 
@@ -204,32 +251,45 @@ void CONTROLLER_update_gas(void)
     char *str;
 
     str = UTIL_itoa(g_packet.gas.co2, 4);
-    TFT_print_str(COL2, ROW4, str);
+    TFT_print_str(COL2, ROW1, str);
 
     str = UTIL_itoa(g_packet.gas.co, 4);
-    TFT_print_str(COL2, ROW5, str);
+    TFT_print_str(COL2, ROW2, str);
 
     str = UTIL_itoa(g_packet.gas.nh3, 4);
-    TFT_print_str(COL2, ROW6, str);
+    TFT_print_str(COL2, ROW3, str);
 
     str = UTIL_itoa(g_packet.gas.no2, 4);
-    TFT_print_str(COL2, ROW7, str);
+    TFT_print_str(COL2, ROW4, str);
 
     str = UTIL_itoa(g_packet.gas.o2, 4);
-    TFT_print_str(COL2, ROW8, str);
+    TFT_print_str(COL2, ROW5, str);
 }
 
 void CONTROLLER_update_map(void)
 {
-    uint16_t row = 0;
-    uint16_t line = 0xF001;
-    for (length_t pos = 0; pos < 16; ++pos)
+#define LINE_SIZE 8
+#define LINE_OFFSET 64
+
+    for (uint16_t row = 0; row < LIDAR_DATA_PER_PACKET; ++row)
     {
-        if (line & (1 << (15 - pos)))
+        for (uint16_t col = 0; col < LIDAR_DATA_PER_LINE; ++col)
         {
-            TFT_fill_area(pos * _DISPLAY_W, row * _DISPLAY_H, _DISPLAY_W, _DISPLAY_H, RGB16_WHITE);
+            for (length_t pos = 0; pos < LINE_SIZE; ++pos)
+            {
+                if (BIT_read((g_packet.lidar.line[row]).data[col], BIT(pos)))
+                {
+                    uint16_t x = (LINE_SIZE - 1 - pos) * _DISPLAY_W + LINE_OFFSET * col;
+                    uint16_t y = ((g_packet.lidar.line[row]).row * _DISPLAY_H) + ROW1;
+                    TFT_fill_area(x, y, _DISPLAY_W, _DISPLAY_H, RGB16_WHITE);
+                }
+            }
         }
     }
+}
+
+void CONTROLLER_update_radioactivity(void)
+{
 }
 
 //------------------------------------------------------------------------------
@@ -237,18 +297,8 @@ void CONTROLLER_update_map(void)
 //------------------------------------------------------------------------------
 void CONTROLLER_update_connection(void)
 {
-    if (_RADIO_STATUS_CHANGE(g_radio_status))
-    {
-        if (_RADIO_IS_STATUS_CONNECTED(g_radio_status))
-        {
-            TFT_print_str(COL1, ROW_LAST, "signal: GOOD");
-            g_radio_status = 0;
-        } // if Disconnected -> Connected
-        else if (_RADIO_IS_STATUS_DISCONNECTED(g_radio_status))
-        {
-            TFT_print_str(COL1, ROW_LAST, "signal: NONE");
-        } // if Connected -> Disconnected
-    } // if Status Change flag is set
+    char *signal = UTIL_itoa(g_radio_status / 4, 2);
+    TFT_print_str(86, ROW_LAST, signal);
 }
 
 //------------------------------------------------------------------------------
@@ -269,18 +319,47 @@ void CONTROLLER_read(void)
 
     if (TRUE == signal)
     {
-        if ((PACKET_ID_ATM == g_packet.header.id) &&
-            (_CONTROLLER_MODE_DATA == g_ctrl_mode))
+        if (PACKET_ID_CAR == g_packet.header.id)
         {
-            CONTROLLER_update_atmosphere();
+            g_module_en = g_packet.header.module;
         }
-        else if ((PACKET_ID_GAS == g_packet.header.id) &&
-                 (_CONTROLLER_MODE_DATA == g_ctrl_mode))
+        else if (PACKET_ID_ATM == g_packet.header.id)
         {
-            CONTROLLER_update_gas();
+            BIT_set(g_module_en, BIT(_CONTROLLER_MODE_ATM));
+            if (_CONTROLLER_MODE_ATM == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
+            {
+                CONTROLLER_update_atmosphere();
+            }
         }
-
-        g_radio_status = _RADIO_DIS_TO_CON(g_radio_status);
+        else if (PACKET_ID_GAS == g_packet.header.id)
+        {
+            BIT_set(g_module_en, BIT(_CONTROLLER_MODE_GAS));
+            if (_CONTROLLER_MODE_GAS == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
+            {
+                CONTROLLER_update_gas();
+            }
+        }
+        else if (PACKET_ID_GMC == g_packet.header.id)
+        {
+            BIT_set(g_module_en, BIT(_CONTROLLER_MODE_GMC));
+            if (_CONTROLLER_MODE_GMC == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
+            {
+                CONTROLLER_update_radioactivity();
+            }
+        }
+        else if (PACKET_ID_LIDAR == g_packet.header.id)
+        {
+            BIT_set(g_module_en, BIT(_CONTROLLER_MODE_MAP));
+            if (_CONTROLLER_MODE_MAP == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
+            {
+                CONTROLLER_display_map();
+            }
+        }
+        else
+        {
+            CONTROLLER_DEBUG(str, "unknown package\r\n");
+        }
+        _CONTROLLER_connect();
         CONTROLLER_DEBUG(str, "packet received\r\n");
     }
     else
@@ -341,55 +420,192 @@ void CONTROLLER_write(void)
 
     if (RADIO_write(g_packet_tx.buffer, PACKET_SIZE))
     {
-        g_radio_status = _RADIO_DIS_TO_CON(g_radio_status);
+        _CONTROLLER_connect();
         CONTROLLER_DEBUG(str, "send movement\r\n");
     }
     else
     {
         _CONTROLLER_disconnect();
+        CONTROLLER_DEBUG(str, "transmission failed\r\n");
     }
-}
-
-//------------------------------------------------------------------------------
-// _CONTROLLER_status
-//------------------------------------------------------------------------------
-byte_t _CONTROLLER_status(void)
-{
-    if (BUTTON_is_active(&(g_controller.tgl.up)))
-    {
-        return ((byte_t)_CONTROLLER_TX_ENABLED);
-    } // enable RX
-    else if (BUTTON_is_active(&(g_controller.tgl.down)))
-    {
-        return ((byte_t)_CONTROLLER_RX_ENABLED);
-    } // enable TX
-    return ((byte_t)(_CONTROLLER_TX_ENABLED | _CONTROLLER_RX_ENABLED));
 }
 
 //------------------------------------------------------------------------------
 // _CONTROLLER_disconnect
 //------------------------------------------------------------------------------
+void _CONTROLLER_connect(void)
+{
+    if (_RADIO_SIGNAL_MAX > g_radio_status)
+    {
+        ++g_radio_status;
+    }
+}
+
 void _CONTROLLER_disconnect(void)
 {
-    CONTROLLER_DEBUG(str, "counter: ");
-    CONTROLLER_DEBUG(int, _RADIO_COUNTER(g_radio_status));
-    CONTROLLER_DEBUG(str, "\r\n");
-    if (_RADIO_COUNTER(g_radio_status) < _RADIO_MAX_RETRY)
+    if (0 < g_radio_status)
     {
-        CONTROLLER_DEBUG(str, "################\r\n");
-        ++g_radio_status;
-    } // increase disconnection count
-    else
-    {
-        g_radio_status = _RADIO_CON_TO_DIS(g_radio_status) | _RADIO_MAX_RETRY;
-    } // disconnected and display
-    CONTROLLER_DEBUG(str, "connection register: 0x");
-    CONTROLLER_DEBUG(hex, g_radio_status, 2);
-    CONTROLLER_DEBUG(str, "\r\n");
+        --g_radio_status;
+    }
 }
 
 void _CONTROLLER_reset_connection(void)
 {
-    g_radio_status = 0;
-    TFT_print_str(COL1, ROW_LAST, "searching...");
+    g_radio_status = 8;
+}
+
+void CONTROLLER_display_menu(void)
+{
+    if (0 != g_ctrl_mode)
+    {
+        TFT_fill_screen(RGB16_BLACK);
+        TFT_setup_text(TFT_TEXT_XXL, 8, RGB16_WHITE, RGB16_BLACK);
+        TFT_print_str(60, 100, "VEMAR");
+        TFT_setup_text(TFT_TEXT_S, 1, RGB16_WHITE, RGB16_BLACK);
+        TFT_print_str(COL1, ROW_LAST, "signal: ");
+        _CONTROLLER_display_module();
+        g_ctrl_mode = 0;
+    }
+}
+
+void _CONTROLLER_display_module_intern(byte_t mod, uint16_t offset, char label)
+{
+#define _MODULE_OFFSET 12
+    if (mod != g_module_curr)
+    {
+        TFT_setup_text(TFT_TEXT_S, 1, RGB16_GRAY, RGB16_BLACK);
+        TFT_print_char(COL_MOD + _MODULE_OFFSET * offset, ROW_LABEL, label);
+        TFT_setup_text(TFT_TEXT_S, 1, RGB16_WHITE, RGB16_BLACK);
+    }
+    else
+    {
+        TFT_print_char(COL_MOD + _MODULE_OFFSET * offset, ROW_LABEL, label);
+    }
+}
+
+void _CONTROLLER_display_module(void)
+{
+    // #define _MODE_OFFSET 12
+    if (BIT_is_set(g_module_en, BIT(_CONTROLLER_MODE_ATM)))
+    {
+        _CONTROLLER_display_module_intern(_CONTROLLER_MODE_ATM, 0, '1');
+    }
+    if (BIT_is_set(g_module_en, BIT(_CONTROLLER_MODE_GAS)))
+    {
+        _CONTROLLER_display_module_intern(_CONTROLLER_MODE_GAS, 1, '2');
+    }
+    if (BIT_is_set(g_module_en, BIT(_CONTROLLER_MODE_MAP)))
+    {
+        _CONTROLLER_display_module_intern(_CONTROLLER_MODE_MAP, 2, '3');
+    }
+    if (BIT_is_set(g_module_en, BIT(_CONTROLLER_MODE_GMC)))
+    {
+        _CONTROLLER_display_module_intern(_CONTROLLER_MODE_GMC, 3, '4');
+    }
+}
+
+void _CONTROLLER_display_layout(const char *label)
+{
+    TFT_print_str(COL1, ROW_LABEL, label);
+    TFT_fill_area(0, ROW_LABEL + 14, TFT_HEIGHT, 2, RGB16_WHITE);
+
+    _CONTROLLER_display_module();
+
+    TFT_fill_area(0, ROW_LAST - 4, TFT_HEIGHT, 2, RGB16_WHITE);
+    TFT_print_str(COL1, ROW_LAST, "signal: ");
+
+    if (_CONTROLLER_MODE_RX == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_RADIO))
+    {
+        TFT_print_str(COL_RXTX, ROW_LAST, "Rx   ");
+    }
+    else if (_CONTROLLER_MODE_TX == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_RADIO))
+    {
+        TFT_print_str(COL_RXTX, ROW_LAST, "   Tx");
+    }
+    else
+    {
+        TFT_print_str(COL_RXTX, ROW_LAST, "Rx/Tx");
+    }
+}
+
+void _CONTROLLER_set_radio_mode(void)
+{
+    BIT_set(g_ctrl_mode, (_CONTROLLER_MODE_RX | _CONTROLLER_MODE_TX));
+    if (BIT_is_clear(PIND, BIT(PIND3)))
+    {
+        BIT_clear(g_ctrl_mode, _CONTROLLER_MODE_RX);
+    } // if TX enabled
+    if (BIT_is_clear(PIND, BIT(PIND4)))
+    {
+        BIT_clear(g_ctrl_mode, _CONTROLLER_MODE_TX);
+    } // if RX enabled
+
+    if (_CONTROLLER_MODE_RX == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_RADIO))
+    {
+        TFT_print_str(COL_RXTX, ROW_LAST, "Rx   ");
+    }
+    else if (_CONTROLLER_MODE_TX == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_RADIO))
+    {
+        TFT_print_str(COL_RXTX, ROW_LAST, "   Tx");
+    }
+    else
+    {
+        TFT_print_str(COL_RXTX, ROW_LAST, "Rx/Tx");
+    }
+}
+
+void _CONTROLLER_switch_display(void)
+{
+    for (length_t i = 0; i < _CONTROLLER_MODE_COUNT; ++i)
+    {
+        if (++g_module_curr > _CONTROLLER_MODE_COUNT)
+        {
+            g_module_curr = _CONTROLLER_MODE_ATM;
+        }
+
+        if (BIT_is_clear(g_module_en, BIT(g_module_curr)))
+        {
+            continue;
+        }
+
+        switch (g_module_curr)
+        {
+        case _CONTROLLER_MODE_ATM:
+            CONTROLLER_display_atmosphere();
+            return;
+        case _CONTROLLER_MODE_GAS:
+            CONTROLLER_display_gas();
+
+            return;
+        case _CONTROLLER_MODE_MAP:
+            CONTROLLER_display_map();
+
+            return;
+        case _CONTROLLER_MODE_GMC:
+            CONTROLLER_display_radioactivity();
+
+            return;
+        default:
+            return;
+        }
+    }
+    CONTROLLER_display_none();
+}
+
+ISR(PCINT1_vect)
+{
+    if (BIT_is_clear(PINC, BIT(PINC0)))
+    {
+        _CONTROLLER_switch_display();
+    } // PC0 interrupt
+
+    if (BIT_is_clear(PINC, BIT(PINC1)))
+    {
+        // Nothing to do
+    } // PC1 interrupt
+}
+
+ISR(PCINT2_vect)
+{
+    _CONTROLLER_set_radio_mode();
 }
