@@ -1,13 +1,43 @@
 #include "led.h"
+#include "motor.h"
+
 
 int main()
 {
-	led_init();
-	led_red_on();
+	motor_init();
 
 	while (1)
 	{
-		_delay_ms(1000);
-		led_green_toggle(); led_red_toggle();
+		motor_left_set(-100);
+		motor_right_set(100);
+		_delay_ms(5000);
+
+		motor_left_set(0);
+		motor_right_set(0);
+		_delay_ms(2000);
+
+		motor_left_set(-255);
+		motor_right_set(255);
+		_delay_ms(5000);
+
+		motor_left_set(0);
+		motor_right_set(0);
+		_delay_ms(2000);
+
+		motor_left_set(100);
+		motor_right_set(-100);
+		_delay_ms(5000);
+
+		motor_left_set(0);
+		motor_right_set(0);
+		_delay_ms(2000);
+
+		motor_left_set(255);
+		motor_right_set(-255);
+		_delay_ms(5000);
+
+		motor_left_set(0);
+		motor_right_set(0);
+		_delay_ms(2000);
 	}
 }

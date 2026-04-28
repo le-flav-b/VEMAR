@@ -13,6 +13,10 @@
 #define MOTOR_RIGHT_PWM_CW _PB1
 #define MOTOR_RIGHT_PWM_CCW _PB2
 
+#define DEAD_TIME_US 5000UL
+
 void motor_init(void);
+void motor_left_set(int16_t speed);
+void motor_right_set(int16_t speed);
 
 #endif
