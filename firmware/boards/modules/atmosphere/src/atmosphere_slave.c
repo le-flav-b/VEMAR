@@ -90,13 +90,14 @@ void uart_init(void) {
     const uint32_t baud = 9600UL;
     const uint32_t clk_hz = 20000000UL;
 
+
     // ATtiny1614: USART0 default pins PA1 (TX, pin 11), PA2 (RX, pin 12)
-#if defined(PORTMUX_USART0_gm) && defined(PORTMUX_USART0_DEFAULT_gc)
-    // PORTMUX.USARTROUTEA = (PORTMUX.USARTROUTEA & ~PORTMUX_USART0_gm) | PORTMUX_USART0_DEFAULT_gc;
-    PORTMUX.USARTROUTEA = 0x00;
-#elif defined(PORTMUX_USART0_bm)
-    PORTMUX.CTRLB &= (uint8_t)~PORTMUX_USART0_bm;
-#endif
+// #if defined(PORTMUX_USART0_gm) && defined(PORTMUX_USART0_DEFAULT_gc)
+//     // PORTMUX.USARTROUTEA = (PORTMUX.USARTROUTEA & ~PORTMUX_USART0_gm) | PORTMUX_USART0_DEFAULT_gc;
+//     PORTMUX.USARTROUTEA = 0x00;
+// #elif defined(PORTMUX_USART0_bm)
+//     PORTMUX.CTRLB &= (uint8_t)~PORTMUX_USART0_bm;
+// #endif
 
     USART0.BAUD = (uint16_t)((64UL * clk_hz + (8UL * baud)) / (16UL * baud));
     USART0.CTRLC = USART_CMODE_ASYNCHRONOUS_gc |
@@ -109,6 +110,9 @@ void uart_init(void) {
     PORTA.PIN2CTRL = PORT_PULLUPEN_bm;
     USART0.CTRLA = USART_RXCIE_bm;
     USART0.CTRLB = USART_TXEN_bm | USART_RXEN_bm | USART_RXMODE_NORMAL_gc;
+
+    PORTMUX.CTRLB |= PORTMUX_USART0_bm; // Move UART to alternative pins
+
 }
 
 ISR(USART0_RXC_vect) {
