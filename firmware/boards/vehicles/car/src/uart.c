@@ -1,13 +1,9 @@
-#include "main.h"
 #include "uart.h"
 
-
-#define BAUD 115200
-#define UBRR_VALUE ((int)(F_CPU / (8.0 * BAUD) - .5))
-
+#define UBRR_VALUE ((int)(F_CPU / (8.0 * UART_BAUD) - .5))
 
 /*
-Init UART 0 with :
+Init UART with :
 - receiver
 - transmitter
 - 8N1 frame format
@@ -21,13 +17,13 @@ void uart_init()
 }
 
 /*
-Wait for a character from UART0 and return it
-Block the programme till a character is received
+Wait for a byte from UART and return it
+Block the programme till a byte is received
 */
-char uart_rx()
+uint8_t uart_rx()
 {
 	while (!GET_VALUE(UCSR0A, RXC0)); // Wait for data to be received
-	char c = UDR0; // Get received data from buffer
+	uint8_t c = UDR0; // Get received data from buffer
 	if (c == 0x7F) return '\b'; // Rectify 'backspace' transmission problem
 	if (c == '\r') return '\n'; // Rectify 'new line' transmission problem
 	return c; // Return received data from buffer
@@ -38,7 +34,7 @@ Check for non-ascii key press
 Supported keys :
 - arrows
 */
-uint8_t _special_sequence(const char c)
+static uint8_t _special_sequence(const uint8_t c)
 {
 	static uint8_t seq = 0;
 	if (c == 0x1b) return seq = 1; // ESC key (beginning of a sequence)
@@ -49,16 +45,16 @@ uint8_t _special_sequence(const char c)
 }
 
 /*
-Fill 'line' with the string received from UART 0
+Fill 'line' with the string received from UART
 Does not put the '\n' in 'line'
 Return 1 if the input is larger than 'max_size', 0 otherwise
 If 'max_size' is greater than allocated space of 'line' it can segfault
 Block the programme till a '\n' is received
 */
-uint8_t uart_getline(char *line, const unsigned int max_size)
+uint8_t uart_getline(char *line, const uint8_t max_size)
 {
-	int len = 0;
-	char c;
+	uint8_t len = 0;
+	uint8_t c;
 
 	while (1)
 	{
@@ -75,9 +71,9 @@ uint8_t uart_getline(char *line, const unsigned int max_size)
 }
 
 /*
-Send the character 'c' to UART 0
+Send the byte to UART
 */
-void uart_tx(const char c)
+void uart_tx(const uint8_t c)
 {
 	static uint8_t rec = 0;
 	while (!GET_VALUE(UCSR0A, UDRE0)); // Wait for empty transmit buffer
@@ -88,7 +84,17 @@ void uart_tx(const char c)
 }
 
 /*
-Send the string 'str' to UART 0
+Send the hexa value of 'c' to UART
+*/
+void uart_tx_hexa(const uint8_t c)
+{
+    const char hex[] = "0123456789ABCDEF";
+    uart_tx(hex[(c >> 4) & 0x0F]);
+    uart_tx(hex[c & 0x0F]);
+}
+
+/*
+Send the string 'str' to UART
 */
 void uart_printstr(const char *str)
 {

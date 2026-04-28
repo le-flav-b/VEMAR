@@ -1,8 +1,12 @@
-#include "atmosphere.h"
+
 
 extern "C" {
   #include "i2c.h"
+  #include "atmosphere.h"
 }
+
+#define MAX_LEN 64
+#define PM_PACKET_SIZE 4
 
 // Read sensor data from slave and print readings
 void read_and_print_sensors(void) {
@@ -16,64 +20,51 @@ void read_and_print_sensors(void) {
         return;
     }
     
-    // Parse packet: [len_hi][len_lo][PM data (4 bytes)][compensated BME data (12 bytes)]
-    uint16_t packet_len = ((uint16_t)buffer[0] << 8) | buffer[1];
-    
-    if (packet_len != (PM_PACKET_SIZE + BME_PACKET_SIZE)) {
-        Serial.print("Invalid packet length: ");
-        Serial.println(packet_len);
-        return;
-    }
-    
-    // Extract PM data (4 bytes)
-    uint8_t *pm_data = &buffer[2];
-    uint16_t pm25 = ((uint16_t)pm_data[0] << 8) | pm_data[1];
-    uint16_t pm10 = ((uint16_t)pm_data[2] << 8) | pm_data[3];
-    
-    // Extract compensated values from BME data (4 bytes each: temperature, pressure, humidity)
-    uint8_t *bme_data = &buffer[2 + PM_PACKET_SIZE];
-    
-    int32_t temp_comp = ((int32_t)bme_data[0] << 24) | ((uint32_t)bme_data[1] << 16) | 
-                        ((uint32_t)bme_data[2] << 8) | bme_data[3];
-    uint32_t pres_comp = ((uint32_t)bme_data[4] << 24) | ((uint32_t)bme_data[5] << 16) | 
-                         ((uint32_t)bme_data[6] << 8) | bme_data[7];
-    uint32_t hum_comp = ((uint32_t)bme_data[8] << 24) | ((uint32_t)bme_data[9] << 16) | 
-                        ((uint32_t)bme_data[10] << 8) | bme_data[11];
-    
-    // Convert to human-readable units
-    // Temperature: raw value / 100 = degC
-    int16_t temp_int = temp_comp / 100;
-    int16_t temp_frac = temp_comp % 100;
-    
-    // Pressure: raw value / 256 = Pa, convert to hPa
-    uint32_t pres_pa = pres_comp / 256;
-    uint16_t pres_hpa = pres_pa / 100;
-    
-    // Humidity: raw value / 1024 = %RH
-    uint16_t hum_int = hum_comp / 1024;
-    uint16_t hum_frac = (hum_comp % 1024) / 10;
-    
-    // Print all readings
+    // i2c_read_packet already stripped the [len_hi][len_lo] header;
+    // buffer[0..3] is the raw PM payload directly.
+    // Extract PM data (4 bytes, little-endian from SDS011)
+    uint8_t *pm_data = buffer;
+    uint16_t pm25 = ((uint16_t)pm_data[1] << 8) | pm_data[0];
+    uint16_t pm10 = ((uint16_t)pm_data[3] << 8) | pm_data[2];
+    uint16_t valid_frames = ((uint16_t)buffer[5] << 8) | buffer[4];
+    uint16_t checksum_fail = ((uint16_t)buffer[7] << 8) | buffer[6];
+    uint16_t uart_errors = ((uint16_t)buffer[9] << 8) | buffer[8];
+    uint16_t rx_bytes = ((uint16_t)buffer[11] << 8) | buffer[10];
+    uint16_t aa_headers = ((uint16_t)buffer[13] << 8) | buffer[12];
+    uint16_t c0_headers = ((uint16_t)buffer[15] << 8) | buffer[14];
+    uint16_t c5_headers = ((uint16_t)buffer[17] << 8) | buffer[16];
+    uint16_t query_sent = ((uint16_t)buffer[19] << 8) | buffer[18];
+    uint16_t rx_edges = ((uint16_t)buffer[21] << 8) | buffer[20];
+    uint8_t reset_flags = buffer[22];
+
+    // Print readings
     Serial.println("=== Atmosphere Readings ===");
     Serial.print("PM2.5: ");
     Serial.print(pm25);
-    Serial.println(" µg/m³");
+    Serial.println(" ug/m3");
     Serial.print("PM10:  ");
     Serial.print(pm10);
-    Serial.println(" µg/m³");
-    Serial.print("Temp:  ");
-    Serial.print(temp_int);
-    Serial.print(".");
-    Serial.print(temp_frac);
-    Serial.println(" °C");
-    Serial.print("Pres:  ");
-    Serial.print(pres_hpa);
-    Serial.println(" hPa");
-    Serial.print("Hum:   ");
-    Serial.print(hum_int);
-    Serial.print(".");
-    Serial.print(hum_frac);
-    Serial.println(" %");
+    Serial.println(" ug/m3");
+    Serial.print("Valid frames: ");
+    Serial.println(valid_frames);
+    Serial.print("Checksum fails: ");
+    Serial.println(checksum_fail);
+    Serial.print("UART error bytes: ");
+    Serial.println(uart_errors);
+    Serial.print("RX bytes: ");
+    Serial.println(rx_bytes);
+    Serial.print("AA headers: ");
+    Serial.println(aa_headers);
+    Serial.print("C0 headers: ");
+    Serial.println(c0_headers);
+    Serial.print("C5 headers: ");
+    Serial.println(c5_headers);
+    Serial.print("Query sent: ");
+    Serial.println(query_sent);
+    Serial.print("RX edges: ");
+    Serial.println(rx_edges);
+    Serial.print("Reset flags: 0x");
+    Serial.println(reset_flags, HEX);
     Serial.println();
 }
 
