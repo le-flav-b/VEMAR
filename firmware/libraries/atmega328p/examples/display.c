@@ -1,10 +1,14 @@
 #include "tft.h"
 #include "serial.h"
 
+#define PIN_CS PIN_PB2
+#define PIN_DC PIN_PB0
+#define PIN_RST PIN_PB1
+
 void setup(void)
 {
 	SERIAL_init();
-	TFT_init(PIN_PB2, PIN_PB0, PIN_PB1);
+	TFT_init(PIN_CS, PIN_DC, PIN_RST);
 	SERIAL_println(str, "setup");
 
 	// ILI9341_set_orientation(ILI9341_PORT_TL);

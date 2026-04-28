@@ -1,8 +1,8 @@
 #include "serial.h"
 #include "radio.h"
 
-#define PIN_CE PIN_PD6
-#define PIN_CSN PIN_PD7
+#define PIN_CE PIN_PD7
+#define PIN_CSN PIN_PD6
 #define PIPE1 "11111"
 #define PIPE2 "22222"
 

@@ -21,7 +21,7 @@ union payload packet_rx;
 void setup(void)
 {
     SERIAL_init();
-    RADIO_init(PIN_PD6, PIN_PD7);
+    RADIO_init(PIN_PD7, PIN_PD6);
     button = BUTTON_new(PIN_PD4, BUTTON_ONPRESS);
     packet_tx.details.ack = 1;
 }

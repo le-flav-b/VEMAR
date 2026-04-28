@@ -11,13 +11,16 @@
 #include "gpio.h"
 #include "serial.h"
 
+#define PIN_UP PIN_PD3
+#define PIN_DOWN PIN_PD4
+
 button_t btn_down;
 button_t btn_up;
 
 void setup(void)
 {
-    btn_up = BUTTON_new(PIN_PC3, BUTTON_ONHOLD);
-    btn_down = BUTTON_new(PIN_PC2, BUTTON_ONHOLD);
+    btn_up = BUTTON_new(PIN_UP, BUTTON_ONHOLD);
+    btn_down = BUTTON_new(PIN_DOWN, BUTTON_ONHOLD);
     SERIAL_init();
 }
 

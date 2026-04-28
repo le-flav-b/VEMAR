@@ -21,10 +21,13 @@ SCREEN		:=	screen
 MAKE		:=	make -C
 ECHO		:=	echo
 MKDIR		:=	mkdir -p
+MV			:=	mv
 
-INCLUDE		=	../../include
+INC_ATMEGA	=	../../libraries/atmega328p/include
+INC_PACKET	=	../../libraries
 
-LIBRARY_DIR	=	..
+
+LIBRARY_DIR	=	../../libraries/atmega328p
 LIBRARY		=	libvemar.a
 
 CFLAGS		=	-Wall \
@@ -37,7 +40,8 @@ CFLAGS		=	-Wall \
 				-fdata-sections \
 				-mmcu=$(MCU) \
 				-DF_CPU=$(FREQUENCY) \
-				-I$(INCLUDE)
+				-I$(INC_ATMEGA) \
+				-I$(INC_PACKET)
 
 LDFLAGS		=	-Os \
 				-mmcu=$(MCU) \
@@ -64,9 +68,13 @@ FILE_BIN	=	$(addsuffix .bin, $(NAME))
 COLOR_LOG	=	"\033[96m\033[1m"
 COLOR_RESET	=	"\033[0m"
 
-EXAMPLES	=	$(foreach example, $(NAME), "  - $(example)\n")
+ifeq ($(MAKECMDGOALS), debug)
+CFLAGS		+=	-DVEMAR_DEBUG_ENABLED
+endif
 
 all: $(NAME)
+
+debug: fclean all
 
 .PHONY: $(NAME)
 
@@ -83,10 +91,11 @@ fclean: clean
 	@$(ECHO) $(COLOR_LOG) "Removing Building Directory" $(COLOR_RESET)
 	$(RM) -r $(BUILD_DIR)
 	$(RM) $(FILE_BIN) $(FILE_HEX)
+	$(RM) $(LIBRARY)
 
-%.bin: $(BUILD_DIR)/%.o $(LIBRARY_DIR)/$(LIBRARY)
+%.bin: $(BUILD_DIR)/%.o $(LIBRARY)
 	@$(ECHO) $(COLOR_LOG) "Building BIN file: '$@'" $(COLOR_RESET)
-	$(CC) $(LDFLAGS) -o $@ $< -L$(LIBRARY_DIR) -lvemar
+	$(CC) $(LDFLAGS) -o $@ $< -L. -lvemar
 
 %.hex: %.bin
 	@$(ECHO) $(COLOR_LOG) "Building HEX file: '$@'" $(COLOR_RESET)
@@ -100,9 +109,10 @@ $(BUILD_DIR):
 	@$(ECHO) $(COLOR_LOG) "Creating Build Directory: '$@'" $(COLOR_RESET)
 	mkdir -p $@
 
-$(LIBRARY_DIR)/$(LIBRARY):
+$(LIBRARY):
 	@$(ECHO) $(COLOR_LOG) "Building Library" $(COLOR_RESET)
 	$(MAKE) $(LIBRARY_DIR)
+	@$(MV) $(LIBRARY_DIR)/$(LIBRARY) .
 
 .PHONY: screen
 
@@ -113,7 +123,8 @@ screen:
 
 lib:
 	@$(ECHO) $(COLOR_LOG) "Rebuilding library" $(COLOR_RESET)
-	$(MAKE) $(LIBRARY_DIR) rebuild
+	@$(MAKE) $(LIBRARY_DIR) rebuild
+	@$(MV) $(LIBRARY_DIR)/$(LIBRARY) .
 
 .PRECIOUS: $(BUILD_DIR)/%.o %.bin
 

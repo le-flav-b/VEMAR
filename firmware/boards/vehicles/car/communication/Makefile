@@ -1,22 +1,7 @@
 SHELL		:= /bin/zsh
 SYSTEM		:= $(shell uname -s)
 
-NAME		=	blink \
-				button \
-				toggle \
-				serial \
-				analog \
-				joystick \
-				joystick2 \
-				spi \
-				transmitter \
-				receiver \
-				transmitter2 \
-				receiver2 \
-				transceiver \
-				display \
-				mock_sensor \
-				gas
+NAME		=	communication
 
 FREQUENCY	?=	16000000UL
 BAUDRATE	?=	115200
@@ -36,10 +21,13 @@ SCREEN		:=	screen
 MAKE		:=	make -C
 ECHO		:=	echo
 MKDIR		:=	mkdir -p
+MV			:=	mv
 
-INCLUDE		=	../../include
+INC_ATMEGA	=	../../../../libraries/atmega328p/include
+INC_PACKET	=	../../../../libraries
 
-LIBRARY_DIR	=	..
+
+LIBRARY_DIR	=	../../../../libraries/atmega328p
 LIBRARY		=	libvemar.a
 
 CFLAGS		=	-Wall \
@@ -52,7 +40,9 @@ CFLAGS		=	-Wall \
 				-fdata-sections \
 				-mmcu=$(MCU) \
 				-DF_CPU=$(FREQUENCY) \
-				-I$(INCLUDE)
+				-I$(INC_ATMEGA) \
+				-I$(INC_PACKET) \
+				-DI2C_MASTER
 
 LDFLAGS		=	-Os \
 				-mmcu=$(MCU) \
@@ -79,13 +69,15 @@ FILE_BIN	=	$(addsuffix .bin, $(NAME))
 COLOR_LOG	=	"\033[96m\033[1m"
 COLOR_RESET	=	"\033[0m"
 
-EXAMPLES	=	$(foreach example, $(NAME), "  - $(example)\n")
+ifeq ($(MAKECMDGOALS), debug)
+CFLAGS		+=	-DVEMAR_DEBUG_ENABLED
+endif
 
-.PHONY: help
+.PHONY: all debug
 
-help:
-	@$(ECHO) "Select an example:"
-	@$(ECHO) "" $(EXAMPLES)
+all: $(NAME)
+
+debug: fclean all
 
 .PHONY: $(NAME)
 
@@ -102,10 +94,11 @@ fclean: clean
 	@$(ECHO) $(COLOR_LOG) "Removing Building Directory" $(COLOR_RESET)
 	$(RM) -r $(BUILD_DIR)
 	$(RM) $(FILE_BIN) $(FILE_HEX)
+	$(RM) $(LIBRARY)
 
-%.bin: $(BUILD_DIR)/%.o $(LIBRARY_DIR)/$(LIBRARY)
+%.bin: $(BUILD_DIR)/%.o $(LIBRARY)
 	@$(ECHO) $(COLOR_LOG) "Building BIN file: '$@'" $(COLOR_RESET)
-	$(CC) $(LDFLAGS) -o $@ $< -L$(LIBRARY_DIR) -lvemar
+	$(CC) $(LDFLAGS) -o $@ $< -L. -lvemar
 
 %.hex: %.bin
 	@$(ECHO) $(COLOR_LOG) "Building HEX file: '$@'" $(COLOR_RESET)
@@ -119,9 +112,10 @@ $(BUILD_DIR):
 	@$(ECHO) $(COLOR_LOG) "Creating Build Directory: '$@'" $(COLOR_RESET)
 	mkdir -p $@
 
-$(LIBRARY_DIR)/$(LIBRARY):
+$(LIBRARY):
 	@$(ECHO) $(COLOR_LOG) "Building Library" $(COLOR_RESET)
 	$(MAKE) $(LIBRARY_DIR)
+	@$(MV) $(LIBRARY_DIR)/$(LIBRARY) .
 
 .PHONY: screen
 
@@ -132,23 +126,9 @@ screen:
 
 lib:
 	@$(ECHO) $(COLOR_LOG) "Rebuilding library" $(COLOR_RESET)
-	$(MAKE) $(LIBRARY_DIR) rebuild
+	@$(MAKE) $(LIBRARY_DIR) rebuild
+	@$(MV) $(LIBRARY_DIR)/$(LIBRARY) .
 
 .PRECIOUS: $(BUILD_DIR)/%.o %.bin
 
-blink: blink.hex
-analog: analog.hex
-button: button.hex
-toggle: toggle.hex
-serial: serial.hex
-joystick: joystick.hex
-joystick2: joystick2.hex
-spi: spi.hex
-transmitter: transmitter.hex
-receiver: receiver.hex
-transmitter2: transmitter2.hex
-receiver2: receiver2.hex
-transceiver: transceiver.hex
-display: display.hex
-mock_sensor: mock_sensor.hex
-gas: gas.hex
+communication: communication.hex

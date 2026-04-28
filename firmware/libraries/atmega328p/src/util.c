@@ -26,6 +26,12 @@ char *UTIL_itoa(int n, length_t width)
 
     unsigned char len = 0;
 
+    if (0 == n)
+    {
+        g_string_buffer[len] = '0';
+        ++len;
+    }
+
     while (0 != n)
     {
         char digit = (char)(n % 10);
