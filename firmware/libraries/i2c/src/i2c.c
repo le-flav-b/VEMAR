@@ -38,8 +38,8 @@ static int8_t i2c_wait_twint(void) {
 void i2c_init() {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   TWI0.MCTRLA |= TWI_ENABLE_bm;        // enable master
+  TWI0.MBAUD = TWI_BAUD;               // set baud rate after enabling (enabling may reset MBAUD on this hardware)
   TWI0.MSTATUS = TWI_BUSSTATE_IDLE_gc; // force bus state to idle
-  TWI0.MBAUD = TWI_BAUD;               // set baud rate
 #elif defined(__AVR_ATmega328P__)
   TWBR = TWBR_VAL;    // set baud rate register
   TWSR = 0;           // prescaler = 1
@@ -75,6 +75,7 @@ void i2c_switch_to_master(void) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   TWI0.SCTRLA &= ~TWI_ENABLE_bm;       // disable slave
   TWI0.MCTRLA |= TWI_ENABLE_bm;        // enable master
+  TWI0.MBAUD = TWI_BAUD;               // set baud rate after enabling (enabling may reset MBAUD on this hardware)
   TWI0.MSTATUS = TWI_BUSSTATE_IDLE_gc; // force bus state to idle
 #elif defined(__AVR_ATmega328P__)
   TWCR = (1 << TWEN); // enable TWI as master (no TWEA = no slave ACK)
