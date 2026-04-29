@@ -5,8 +5,23 @@ extern "C" {
   #include "atmosphere.h"
 }
 
-#define MAX_LEN 64
-#define PM_PACKET_SIZE 4
+static int32_t unpack_s32_be(const uint8_t *buf) {
+    return ((int32_t)buf[0] << 24) |
+           ((int32_t)buf[1] << 16) |
+           ((int32_t)buf[2] << 8) |
+           (int32_t)buf[3];
+}
+
+static uint32_t unpack_u32_be(const uint8_t *buf) {
+    return ((uint32_t)buf[0] << 24) |
+           ((uint32_t)buf[1] << 16) |
+           ((uint32_t)buf[2] << 8) |
+           (uint32_t)buf[3];
+}
+
+static uint16_t unpack_u16_le(const uint8_t *buf) {
+    return (uint16_t)buf[0] | ((uint16_t)buf[1] << 8);
+}
 
 // Read sensor data from slave and print readings
 void read_and_print_sensors(void) {
@@ -20,51 +35,48 @@ void read_and_print_sensors(void) {
         return;
     }
     
-    // i2c_read_packet already stripped the [len_hi][len_lo] header;
-    // buffer[0..3] is the raw PM payload directly.
-    // Extract PM data (4 bytes, little-endian from SDS011)
+    // i2c_read_packet strips the [len_hi][len_lo] header.
+    // Payload layout is [PM:4][BME:12][sds_valid_frames_lo][sds_rx_bytes_lo].
     uint8_t *pm_data = buffer;
-    uint16_t pm25 = ((uint16_t)pm_data[1] << 8) | pm_data[0];
-    uint16_t pm10 = ((uint16_t)pm_data[3] << 8) | pm_data[2];
-    uint16_t valid_frames = ((uint16_t)buffer[5] << 8) | buffer[4];
-    uint16_t checksum_fail = ((uint16_t)buffer[7] << 8) | buffer[6];
-    uint16_t uart_errors = ((uint16_t)buffer[9] << 8) | buffer[8];
-    uint16_t rx_bytes = ((uint16_t)buffer[11] << 8) | buffer[10];
-    uint16_t aa_headers = ((uint16_t)buffer[13] << 8) | buffer[12];
-    uint16_t c0_headers = ((uint16_t)buffer[15] << 8) | buffer[14];
-    uint16_t c5_headers = ((uint16_t)buffer[17] << 8) | buffer[16];
-    uint16_t query_sent = ((uint16_t)buffer[19] << 8) | buffer[18];
-    uint16_t rx_edges = ((uint16_t)buffer[21] << 8) | buffer[20];
-    uint8_t reset_flags = buffer[22];
+    uint8_t *bme_data = &buffer[PM_PACKET_SIZE];
+
+    uint16_t pm25_raw = unpack_u16_le(&pm_data[0]);
+    uint16_t pm10_raw = unpack_u16_le(&pm_data[2]);
+
+    float pm25_ugm3 = (float)pm25_raw / 10.0f;
+    float pm10_ugm3 = (float)pm10_raw / 10.0f;
+
+    int32_t temp_centi = unpack_s32_be(&bme_data[0]);
+    uint32_t pressure_q24_8 = unpack_u32_be(&bme_data[4]);
+    uint32_t humidity_q22_10 = unpack_u32_be(&bme_data[8]);
+
+    float temp_c = (float)temp_centi / 100.0f;
+    float pressure_pa = (float)pressure_q24_8 / 256.0f;
+    float humidity_rh = (float)humidity_q22_10 / 1024.0f;
 
     // Print readings
     Serial.println("=== Atmosphere Readings ===");
     Serial.print("PM2.5: ");
-    Serial.print(pm25);
+    Serial.print(pm25_ugm3, 1);
     Serial.println(" ug/m3");
     Serial.print("PM10:  ");
-    Serial.print(pm10);
+    Serial.print(pm10_ugm3, 1);
     Serial.println(" ug/m3");
-    Serial.print("Valid frames: ");
-    Serial.println(valid_frames);
-    Serial.print("Checksum fails: ");
-    Serial.println(checksum_fail);
-    Serial.print("UART error bytes: ");
-    Serial.println(uart_errors);
-    Serial.print("RX bytes: ");
-    Serial.println(rx_bytes);
-    Serial.print("AA headers: ");
-    Serial.println(aa_headers);
-    Serial.print("C0 headers: ");
-    Serial.println(c0_headers);
-    Serial.print("C5 headers: ");
-    Serial.println(c5_headers);
-    Serial.print("Query sent: ");
-    Serial.println(query_sent);
-    Serial.print("RX edges: ");
-    Serial.println(rx_edges);
-    Serial.print("Reset flags: 0x");
-    Serial.println(reset_flags, HEX);
+    Serial.print("Temp:  ");
+    Serial.print(temp_c, 2);
+    Serial.println(" C");
+    Serial.print("Press: ");
+    Serial.print(pressure_pa, 2);
+    Serial.println(" Pa");
+    Serial.print("Hum:   ");
+    Serial.print(humidity_rh, 2);
+    Serial.println(" %RH");
+    uint8_t sds_frames = buffer[PM_PACKET_SIZE + BME_PACKET_SIZE];
+    uint8_t sds_rx     = buffer[PM_PACKET_SIZE + BME_PACKET_SIZE + 1];
+    Serial.print("SDS frames: ");
+    Serial.print(sds_frames);
+    Serial.print("  RX bytes: ");
+    Serial.println(sds_rx);
     Serial.println();
 }
 
