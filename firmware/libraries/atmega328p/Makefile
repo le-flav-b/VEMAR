@@ -1,4 +1,4 @@
-SHELL		:=	/bin/zsh
+SHELL		?=	/bin/zsh
 SYSTEM		:=	$(shell uname -s)
 
 NAME		=	libvemar.a

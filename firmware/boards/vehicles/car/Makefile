@@ -4,13 +4,24 @@
 
 NAME			=	car_firmware
 SRC_DIR			=	src
-INC_DIRS		=	include
+INC_DIRS		=	include		${LIB_DIR}/include		${LIB_DIR}/..
 BUILD_DIR		=	build
 OBJ_DIR			=	${BUILD_DIR}/obj
 DEP_DIR			=	${BUILD_DIR}/dep
 
+
 BIN_FILE		=	${BUILD_DIR}/${NAME}.bin
 HEX_FILE		=	${BUILD_DIR}/${NAME}.hex
+
+
+#########################
+######  LIBRARIES  ######
+#########################
+
+LIB_DIR			=	../../../libraries/atmega328p
+LIB_NAME		=	${LIB_DIR}/libvemar.a
+
+INC_DIRS		+=	${LIB_DIR}/include		${LIB_DIR}/..
 
 
 #######################
@@ -46,6 +57,7 @@ CC_BUILD_FLAGS	=	-mmcu=${MCU} \
 					-c \
 					-MMD -MF ${GET_DEP_PATH} \
 					-DF_CPU=${F_CPU} \
+					-DI2C_MASTER \
 					${addprefix -I,${INC_DIRS}} \
 					-Wall \
 					-Wextra \
@@ -54,6 +66,8 @@ CC_BUILD_FLAGS	=	-mmcu=${MCU} \
 					-fdata-sections
 
 CC_LINK_FLAGS	=	-mmcu=${MCU} \
+					-L${LIB_DIR} \
+					-lvemar \
 					-Wl,--gc-sections
 
 
@@ -88,7 +102,11 @@ ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c
 	@mkdir -vp ${dir $@} ${dir ${GET_DEP_PATH}}
 	${CC} ${CC_BUILD_FLAGS} $< -o $@
 
-${BIN_FILE}: ${OBJS}
+${LIB_NAME}:
+	${MAKE} -C ${LIB_DIR}
+	@cp -v ${LIB_NAME} ${BUILD_DIR}/
+
+${BIN_FILE}: ${OBJS} ${LIB_NAME}
 	${CC} ${CC_LINK_FLAGS} $^ -o $@
 
 ${HEX_FILE}: ${BIN_FILE}
