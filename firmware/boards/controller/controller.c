@@ -21,15 +21,12 @@
 #define _CONTROLLER_MODE_TX 0x20    /**< TX mode */
 #define _CONTROLLER_MASK_RADIO 0xF0 /**< Mask of Controller transmission mode */
 
-#define _CONTROLLER_TX_ENABLED 0x02 /**< Radio Transmission is enabled */
-#define _CONTROLLER_RX_ENABLED 0x01 /**< Radio Reception is enabled */
-#define _CONTROLLER_RX_DELAY 8000U  /**< Delay for reception */
+#define _CONTROLLER_RX_DELAY 8000U /**< Delay for reception */
 
 #define _DISPLAY_W 8U
 #define _DISPLAY_H 8U
+#define _DISPLAY_MODULE_OFFSET 12
 
-/** @brief Maximum retries before setting Disconnect flag */
-#define _RADIO_MAX_RETRY 0x10
 /** @brief Maximum signal strength */
 #define _RADIO_SIGNAL_MAX 0x10
 
@@ -37,17 +34,10 @@ controller_t g_controller;
 packet_t g_packet;
 packet_t g_packet_tx;
 
-volatile byte_t g_ctrl_mode = 1;
-volatile byte_t g_module_en;
-volatile byte_t g_module_curr = 1;
-
-/**
- * @brief VEMAR Radio Status
- * - __bit-7__: Status Change, mask 0x80
- * - __bit-6__: Disconnect, mask 0x40
- * - __[5:0]__: Counter, mask 0x3F
- */
-byte_t g_radio_status;
+volatile byte_t g_ctrl_mode = 1;   /**< Controller mode flags */
+volatile byte_t g_module_curr = 1; /**< Current display mode */
+volatile byte_t g_module_en;       /**< Current enabled modules */
+volatile byte_t g_radio_status;    /**< Radio strength */
 
 /**
  * @brief Decrease signal strength count,
@@ -102,7 +92,7 @@ void setup(void)
     TFT_setup_text(TFT_TEXT_S, 1, RGB16_WHITE, RGB16_BLACK);
     CONTROLLER_interrupt();
 
-    // g_module_en = 0x10;
+    // g_module_en = BIT(_CONTROLLER_MODE_MAP);
     CONTROLLER_display_menu();
     _CONTROLLER_reset_connection();
     _CONTROLLER_set_radio_mode();
@@ -197,7 +187,7 @@ void CONTROLLER_display_map(void)
         TFT_fill_screen(RGB16_BLACK);
         _CONTROLLER_display_layout("MODULE: LiDAR");
         BIT_write(g_ctrl_mode, _CONTROLLER_MODE_MAP, _CONTROLLER_MASK_MODE);
-        // g_packet.lidar.line[0].row = 3;
+        // g_packet.lidar.line[0].row = 0;
         // g_packet.lidar.line[0].data[0] = 0xff;
         // g_packet.lidar.line[0].data[1] = 0x00;
         // g_packet.lidar.line[0].data[2] = 0xff;
@@ -213,6 +203,9 @@ void CONTROLLER_display_radioactivity(void)
     {
         TFT_fill_screen(RGB16_BLACK);
         _CONTROLLER_display_layout("MODULE: Geiger Counter");
+        TFT_print_str(COL1, ROW1, "Total      : ");
+        TFT_print_str(COL1, ROW1, "Delta      : ");
+        TFT_print_str(COL1, ROW1, "CPM        : ");
         BIT_write(g_ctrl_mode, _CONTROLLER_MODE_GMC, _CONTROLLER_MASK_MODE);
     }
 }
@@ -290,6 +283,16 @@ void CONTROLLER_update_map(void)
 
 void CONTROLLER_update_radioactivity(void)
 {
+    char *str;
+
+    str = UTIL_itoa(g_packet.geiger.total, 6);
+    TFT_print_str(COL2, ROW1, str);
+
+    str = UTIL_itoa(g_packet.geiger.delta, 6);
+    TFT_print_str(COL2, ROW2, str);
+
+    str = UTIL_itoa(g_packet.geiger.cpm, 6);
+    TFT_print_str(COL2, ROW3, str);
 }
 
 //------------------------------------------------------------------------------
@@ -297,8 +300,17 @@ void CONTROLLER_update_radioactivity(void)
 //------------------------------------------------------------------------------
 void CONTROLLER_update_connection(void)
 {
-    char *signal = UTIL_itoa(g_radio_status / 4, 2);
+    char *signal = UTIL_itoa((g_radio_status >> 2), 2);
     TFT_print_str(86, ROW_LAST, signal);
+}
+
+void _CONTROLLER_handle_packet(byte_t type, void (*callback)(void))
+{
+    BIT_set(g_module_en, BIT(type));
+    if (BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE) == type)
+    {
+        callback();
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -319,48 +331,82 @@ void CONTROLLER_read(void)
 
     if (TRUE == signal)
     {
-        if (PACKET_ID_CAR == g_packet.header.id)
-        {
-            g_module_en = g_packet.header.module;
-        }
-        else if (PACKET_ID_ATM == g_packet.header.id)
-        {
-            BIT_set(g_module_en, BIT(_CONTROLLER_MODE_ATM));
-            if (_CONTROLLER_MODE_ATM == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
-            {
-                CONTROLLER_update_atmosphere();
-            }
-        }
-        else if (PACKET_ID_GAS == g_packet.header.id)
-        {
-            BIT_set(g_module_en, BIT(_CONTROLLER_MODE_GAS));
-            if (_CONTROLLER_MODE_GAS == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
-            {
-                CONTROLLER_update_gas();
-            }
-        }
-        else if (PACKET_ID_GMC == g_packet.header.id)
-        {
-            BIT_set(g_module_en, BIT(_CONTROLLER_MODE_GMC));
-            if (_CONTROLLER_MODE_GMC == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
-            {
-                CONTROLLER_update_radioactivity();
-            }
-        }
-        else if (PACKET_ID_LIDAR == g_packet.header.id)
-        {
-            BIT_set(g_module_en, BIT(_CONTROLLER_MODE_MAP));
-            if (_CONTROLLER_MODE_MAP == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
-            {
-                CONTROLLER_display_map();
-            }
-        }
-        else
-        {
-            CONTROLLER_DEBUG(str, "unknown package\r\n");
-        }
         _CONTROLLER_connect();
-        CONTROLLER_DEBUG(str, "packet received\r\n");
+        CONTROLLER_DEBUG(str, "packet ID: ");
+        CONTROLLER_DEBUG(int, g_packet.header.id);
+        CONTROLLER_DEBUG(str, " received\r\n");
+
+        switch (g_packet.header.id)
+        {
+        case PACKET_ID_CAR:
+            g_module_en = g_packet.header.module;
+            _CONTROLLER_display_module();
+            break;
+        case PACKET_ID_ATM:
+            _CONTROLLER_handle_packet(_CONTROLLER_MODE_ATM,
+                                      CONTROLLER_update_atmosphere);
+            break;
+        case PACKET_ID_GAS:
+            _CONTROLLER_handle_packet(_CONTROLLER_MODE_GAS,
+                                      CONTROLLER_update_gas);
+            break;
+        case PACKET_ID_LIDAR:
+            _CONTROLLER_handle_packet(_CONTROLLER_MODE_MAP,
+                                      CONTROLLER_update_map);
+            break;
+        case PACKET_ID_GMC:
+            _CONTROLLER_handle_packet(_CONTROLLER_MODE_GMC,
+                                      CONTROLLER_update_radioactivity);
+            break;
+        default:
+            break;
+        }
+
+        // if (PACKET_ID_CAR == g_packet.header.id)
+        // {
+        //     g_module_en = g_packet.header.module;
+        //     _CONTROLLER_display_module();
+        // }
+        // else if (PACKET_ID_ATM == g_packet.header.id)
+        // {
+        //     BIT_set(g_module_en, BIT(_CONTROLLER_MODE_ATM));
+        //     if (_CONTROLLER_MODE_ATM == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
+        //     {
+        //         CONTROLLER_update_atmosphere();
+        //     }
+        // }
+        // else if (PACKET_ID_GAS == g_packet.header.id)
+        // {
+        //     BIT_set(g_module_en, BIT(_CONTROLLER_MODE_GAS));
+        //     if (_CONTROLLER_MODE_GAS == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
+        //     {
+        //         CONTROLLER_update_gas();
+        //     }
+        // }
+        // else if (PACKET_ID_GMC == g_packet.header.id)
+        // {
+        //     BIT_set(g_module_en, BIT(_CONTROLLER_MODE_GMC));
+        //     if (_CONTROLLER_MODE_GMC == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
+        //     {
+        //         CONTROLLER_update_radioactivity();
+        //     }
+        // }
+        // else if (PACKET_ID_LIDAR == g_packet.header.id)
+        // {
+        //     BIT_set(g_module_en, BIT(_CONTROLLER_MODE_MAP));
+        //     if (_CONTROLLER_MODE_MAP == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
+        //     {
+        //         CONTROLLER_display_map();
+        //     }
+        // }
+        // else
+        // {
+        //     CONTROLLER_DEBUG(str, "unknown package ID: ");
+        //     CONTROLLER_DEBUG(int, g_packet.header.id);
+        //     CONTROLLER_DEBUG(str, "\r\n");
+        // }
+        // _CONTROLLER_connect();
+        // CONTROLLER_DEBUG(str, "packet received\r\n");
     }
     else
     {
@@ -418,20 +464,32 @@ void CONTROLLER_write(void)
     CONTROLLER_DEBUG(uint, g_packet_tx.car.pot);
     CONTROLLER_DEBUG(str, "\r\n--------\r\n");
 
-    if (RADIO_write(g_packet_tx.buffer, PACKET_SIZE))
+    for (length_t attempt = 0; attempt < 5; ++attempt)
     {
-        _CONTROLLER_connect();
-        CONTROLLER_DEBUG(str, "send movement\r\n");
+        if (RADIO_write(g_packet_tx.buffer, PACKET_SIZE))
+        {
+            _CONTROLLER_connect();
+            CONTROLLER_DEBUG(str, "send movement\r\n");
+            return;
+        }
     }
-    else
-    {
-        _CONTROLLER_disconnect();
-        CONTROLLER_DEBUG(str, "transmission failed\r\n");
-    }
+    _CONTROLLER_disconnect();
+    CONTROLLER_DEBUG(str, "transmission failed\r\n");
+
+    // if (RADIO_write(g_packet_tx.buffer, PACKET_SIZE))
+    // {
+    //     _CONTROLLER_connect();
+    //     CONTROLLER_DEBUG(str, "send movement\r\n");
+    // }
+    // else
+    // {
+    //     _CONTROLLER_disconnect();
+    //     CONTROLLER_DEBUG(str, "transmission failed\r\n");
+    // }
 }
 
 //------------------------------------------------------------------------------
-// _CONTROLLER_disconnect
+// _CONTROLLER_connect
 //------------------------------------------------------------------------------
 void _CONTROLLER_connect(void)
 {
@@ -441,6 +499,9 @@ void _CONTROLLER_connect(void)
     }
 }
 
+//------------------------------------------------------------------------------
+// _CONTROLLER_disconnect
+//------------------------------------------------------------------------------
 void _CONTROLLER_disconnect(void)
 {
     if (0 < g_radio_status)
@@ -449,11 +510,17 @@ void _CONTROLLER_disconnect(void)
     }
 }
 
+//------------------------------------------------------------------------------
+// _CONTROLLER_reset_disconnect
+//------------------------------------------------------------------------------
 void _CONTROLLER_reset_connection(void)
 {
     g_radio_status = 8;
 }
 
+//------------------------------------------------------------------------------
+// _CONTROLLER_display_menu
+//------------------------------------------------------------------------------
 void CONTROLLER_display_menu(void)
 {
     if (0 != g_ctrl_mode)
@@ -468,42 +535,44 @@ void CONTROLLER_display_menu(void)
     }
 }
 
+//------------------------------------------------------------------------------
+// _CONTROLLER_display_module_intern
+//------------------------------------------------------------------------------
 void _CONTROLLER_display_module_intern(byte_t mod, uint16_t offset, char label)
 {
-#define _MODULE_OFFSET 12
-    if (mod != g_module_curr)
+    if (BIT_is_set(g_module_en, BIT(mod)))
     {
-        TFT_setup_text(TFT_TEXT_S, 1, RGB16_GRAY, RGB16_BLACK);
-        TFT_print_char(COL_MOD + _MODULE_OFFSET * offset, ROW_LABEL, label);
-        TFT_setup_text(TFT_TEXT_S, 1, RGB16_WHITE, RGB16_BLACK);
+        if (mod != g_module_curr)
+        {
+            TFT_setup_text(TFT_TEXT_S, 1, RGB16_GRAY, RGB16_BLACK);
+            TFT_print_char(COL_MOD + _DISPLAY_MODULE_OFFSET * offset, ROW_LABEL, label);
+            TFT_setup_text(TFT_TEXT_S, 1, RGB16_WHITE, RGB16_BLACK);
+        }
+        else
+        {
+            TFT_print_char(COL_MOD + _DISPLAY_MODULE_OFFSET * offset, ROW_LABEL, label);
+        }
     }
     else
     {
-        TFT_print_char(COL_MOD + _MODULE_OFFSET * offset, ROW_LABEL, label);
+        TFT_print_char(COL_MOD + _DISPLAY_MODULE_OFFSET * offset, ROW_LABEL, ' ');
     }
 }
 
+//------------------------------------------------------------------------------
+// _CONTROLLER_display_module
+//------------------------------------------------------------------------------
 void _CONTROLLER_display_module(void)
 {
-    // #define _MODE_OFFSET 12
-    if (BIT_is_set(g_module_en, BIT(_CONTROLLER_MODE_ATM)))
-    {
-        _CONTROLLER_display_module_intern(_CONTROLLER_MODE_ATM, 0, '1');
-    }
-    if (BIT_is_set(g_module_en, BIT(_CONTROLLER_MODE_GAS)))
-    {
-        _CONTROLLER_display_module_intern(_CONTROLLER_MODE_GAS, 1, '2');
-    }
-    if (BIT_is_set(g_module_en, BIT(_CONTROLLER_MODE_MAP)))
-    {
-        _CONTROLLER_display_module_intern(_CONTROLLER_MODE_MAP, 2, '3');
-    }
-    if (BIT_is_set(g_module_en, BIT(_CONTROLLER_MODE_GMC)))
-    {
-        _CONTROLLER_display_module_intern(_CONTROLLER_MODE_GMC, 3, '4');
-    }
+    _CONTROLLER_display_module_intern(_CONTROLLER_MODE_ATM, 0, '1');
+    _CONTROLLER_display_module_intern(_CONTROLLER_MODE_GAS, 1, '2');
+    _CONTROLLER_display_module_intern(_CONTROLLER_MODE_MAP, 2, '3');
+    _CONTROLLER_display_module_intern(_CONTROLLER_MODE_GMC, 3, '4');
 }
 
+//------------------------------------------------------------------------------
+// _CONTROLLER_display_layout
+//------------------------------------------------------------------------------
 void _CONTROLLER_display_layout(const char *label)
 {
     TFT_print_str(COL1, ROW_LABEL, label);
@@ -528,6 +597,9 @@ void _CONTROLLER_display_layout(const char *label)
     }
 }
 
+//------------------------------------------------------------------------------
+// _CONTROLLER_set_radio_mode
+//------------------------------------------------------------------------------
 void _CONTROLLER_set_radio_mode(void)
 {
     BIT_set(g_ctrl_mode, (_CONTROLLER_MODE_RX | _CONTROLLER_MODE_TX));
@@ -554,6 +626,9 @@ void _CONTROLLER_set_radio_mode(void)
     }
 }
 
+//------------------------------------------------------------------------------
+// _CONTROLLER_switch_display
+//------------------------------------------------------------------------------
 void _CONTROLLER_switch_display(void)
 {
     for (length_t i = 0; i < _CONTROLLER_MODE_COUNT; ++i)
@@ -592,6 +667,9 @@ void _CONTROLLER_switch_display(void)
     CONTROLLER_display_none();
 }
 
+//------------------------------------------------------------------------------
+// Interruption on Button A & Button B
+//------------------------------------------------------------------------------
 ISR(PCINT1_vect)
 {
     if (BIT_is_clear(PINC, BIT(PINC0)))
@@ -601,10 +679,13 @@ ISR(PCINT1_vect)
 
     if (BIT_is_clear(PINC, BIT(PINC1)))
     {
-        // Nothing to do
+        /// @todo Function assigned to button B
     } // PC1 interrupt
 }
 
+//------------------------------------------------------------------------------
+// Interruption on Toggle
+//------------------------------------------------------------------------------
 ISR(PCINT2_vect)
 {
     _CONTROLLER_set_radio_mode();
