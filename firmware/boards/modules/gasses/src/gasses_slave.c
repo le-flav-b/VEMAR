@@ -19,6 +19,18 @@ static volatile bool     co2_cmd_sent = false;
 static volatile uint16_t uptime_s = 0;
 static volatile bool     co2_preheating = true;
 
+static void clock_init_20mhz(void) {
+#if defined(__AVR_ATtiny1614__) || defined(__AVR_ATtiny412__)
+    // Select high-frequency internal oscillator as system clock source.
+    CCP = CCP_IOREG_gc;
+    CLKCTRL.MCLKCTRLA = CLKCTRL_CLKSEL_OSC20M_gc;
+    while (CLKCTRL.MCLKSTATUS & CLKCTRL_SOSC_bm) {
+    }
+
+    CCP = CCP_IOREG_gc;
+    CLKCTRL.MCLKCTRLB = 0; // Disable prescaler
+#endif
+}
 // ─── UART (MH-Z1911A CO2 sensor) ────────────────────────────────────────────
 
 static void uart_send_byte(uint8_t byte) {
@@ -199,24 +211,22 @@ static void fill_msg(void) {
 // ─── Init ────────────────────────────────────────────────────────────────────
 
 void uart_init(void) {
-    // 9600 baud, 8N1 @ 20MHz system clock.
-    // This module is built/flashed for 20MHz (see Makefile F_CPU).
+    // Bit rate: 9600, 8 data, no parity, 1 stop
+    const uint32_t baud = 9600UL;
     const uint32_t clk_hz = 20000000UL;
 
-#if defined(PORTMUX_USART0_gm)
-    PORTMUX.USARTROUTEA = (PORTMUX.USARTROUTEA & ~PORTMUX_USART0_gm) | PORTMUX_USART0_DEFAULT_gc;
-#endif
-    USART0.BAUD = (uint16_t)((64UL * clk_hz) / (16UL * 9600));
+    USART0.BAUD = (uint16_t)((64UL * clk_hz + (8UL * baud)) / (16UL * baud));
     USART0.CTRLC = USART_CMODE_ASYNCHRONOUS_gc |
                    USART_PMODE_DISABLED_gc |
                    USART_SBMODE_1BIT_gc |
                    USART_CHSIZE_8BIT_gc;
-    PORTA.DIRSET = PIN1_bm; // PA1 = AT_GAS_TX
-    PORTA.DIRCLR = PIN2_bm; // PA2 = AT_GAS_RX
-    PORTA.PIN2CTRL = PORT_ISC_BOTHEDGES_gc;
-    PORTA.INTFLAGS = PIN2_bm;
+    PORTA.OUTSET = PIN1_bm; // Set TX line high before enabling output
+    PORTA.DIRSET = PIN1_bm; // TX
+    PORTA.DIRCLR = PIN2_bm; // RX
+    PORTA.PIN2CTRL = PORT_PULLUPEN_bm;
     USART0.CTRLA = USART_RXCIE_bm;
     USART0.CTRLB = USART_TXEN_bm | USART_RXEN_bm | USART_RXMODE_NORMAL_gc;
+    PORTMUX.CTRLB |= PORTMUX_USART0_bm; // Route USART0 to alternate pins: TX=PA1, RX=PA2
 }
 
 void adc_init(void) {
@@ -227,13 +237,13 @@ void adc_init(void) {
 }
 
 void slave_init(void) {
+    clock_init_20mhz();
     PORTB.DIRSET = PIN2_bm; // PB2 = STATUS_LED output
     i2c_init_slave(SLAVE_ADDR);
     uart_init();
     adc_init();
 }
 
-// ─── Main ────────────────────────────────────────────────────────────────────
 
 int main(void) {
     slave_init();

@@ -3,7 +3,7 @@
 static volatile bool needs_fill = true;
 volatile struct i2cMessage msg = {0};
 volatile uint8_t pm_data_finished[PM_PACKET_SIZE] = {0};
-volatile uint8_t bme_data[BME_PACKET_SIZE] = {0};
+// volatile uint8_t bme_data[BME_PACKET_SIZE] = {0};  /* master reads BME280 directly */
 static volatile uint16_t sds_valid_frames = 0;
 static volatile uint16_t sds_rx_bytes = 0;
 
@@ -11,9 +11,10 @@ static volatile uint16_t sds_rx_bytes = 0;
 static volatile uint8_t sds_rx_buf[SDS011_PACKET_LEN];
 static volatile uint8_t sds_rx_idx = 0;
 
-static struct bme_calib calib = {0};
+// static struct bme_calib calib = {0};  /* master reads BME280 directly */
 
-#define BME280_ADDR           0x76
+/* BME280 register definitions - master reads BME280 directly
+#define BME280_ADDR           0x77
 #define BME280_REG_RESET      0xE0
 #define BME280_REG_CTRL_HUM   0xF2
 #define BME280_REG_STATUS     0xF3
@@ -22,6 +23,7 @@ static struct bme_calib calib = {0};
 #define BME280_REG_CALIB_00   0x88
 #define BME280_REG_CALIB_26   0xE1
 #define BME280_REG_DATA       0xF7
+*/
 
 #define UART_DEBUG_PULSE 1
 #define UART_DEBUG_EVERY_LOOPS 50
@@ -90,15 +92,6 @@ void uart_init(void) {
     const uint32_t baud = 9600UL;
     const uint32_t clk_hz = 20000000UL;
 
-
-    // ATtiny1614: USART0 default pins PA1 (TX, pin 11), PA2 (RX, pin 12)
-// #if defined(PORTMUX_USART0_gm) && defined(PORTMUX_USART0_DEFAULT_gc)
-//     // PORTMUX.USARTROUTEA = (PORTMUX.USARTROUTEA & ~PORTMUX_USART0_gm) | PORTMUX_USART0_DEFAULT_gc;
-//     PORTMUX.USARTROUTEA = 0x00;
-// #elif defined(PORTMUX_USART0_bm)
-//     PORTMUX.CTRLB &= (uint8_t)~PORTMUX_USART0_bm;
-// #endif
-
     USART0.BAUD = (uint16_t)((64UL * clk_hz + (8UL * baud)) / (16UL * baud));
     USART0.CTRLC = USART_CMODE_ASYNCHRONOUS_gc |
                    USART_PMODE_DISABLED_gc |
@@ -110,9 +103,7 @@ void uart_init(void) {
     PORTA.PIN2CTRL = PORT_PULLUPEN_bm;
     USART0.CTRLA = USART_RXCIE_bm;
     USART0.CTRLB = USART_TXEN_bm | USART_RXEN_bm | USART_RXMODE_NORMAL_gc;
-
-    PORTMUX.CTRLB |= PORTMUX_USART0_bm; // Move UART to alternative pins
-
+    PORTMUX.CTRLB |= PORTMUX_USART0_bm; // Route USART0 to alternate pins: TX=PA1, RX=PA2
 }
 
 ISR(USART0_RXC_vect) {
@@ -185,6 +176,7 @@ ISR(TWI0_TWIS_vect) {
     }
 }
 
+/* BME280 I2C functions - master reads BME280 directly
 static int8_t bme_write_reg(uint8_t reg, uint8_t value) {
     int8_t err = i2c_start((BME280_ADDR << 1), false);
     if (err != 0) {
@@ -361,24 +353,18 @@ void read_bme(void) {
 
     i2c_switch_to_slave();
 }
+*/
 
 static void fill_msg(void) {
     uint8_t sreg;
 
-    // Mark message unavailable so the ISR NACKs address matches during BME read.
-    // msg.len is uint16_t but len <= 255 here so MSB is already 0; writing 0 to
-    // the LSB is effectively atomic on AVR, but we guard it anyway.
     sreg = SREG;
     cli();
     msg.len = 0;
     SREG = sreg;
 
-    // BME read runs with interrupts enabled — TWI slave ISR can fire and NACK.
-    read_bme();
+    uint16_t len = PM_PACKET_SIZE + 2; // +2 debug bytes; BME removed, master reads directly
 
-    uint16_t len = PM_PACKET_SIZE + BME_PACKET_SIZE + 2; // +2 debug bytes
-
-    // Atomically install the new message.
     sreg = SREG;
     cli();
 
@@ -388,11 +374,13 @@ static void fill_msg(void) {
     for (uint8_t i = 0; i < PM_PACKET_SIZE; i++) {
         msg.buffer[sizeof(uint16_t) + i] = pm_data_finished[i];
     }
+    /* BME data removed - master reads BME280 directly
     for (uint8_t i = 0; i < BME_PACKET_SIZE; i++) {
         msg.buffer[sizeof(uint16_t) + PM_PACKET_SIZE + i] = bme_data[i];
     }
-    msg.buffer[sizeof(uint16_t) + PM_PACKET_SIZE + BME_PACKET_SIZE]     = (uint8_t)(sds_valid_frames & 0xFF);
-    msg.buffer[sizeof(uint16_t) + PM_PACKET_SIZE + BME_PACKET_SIZE + 1] = (uint8_t)(sds_rx_bytes & 0xFF);
+    */
+    msg.buffer[sizeof(uint16_t) + PM_PACKET_SIZE]     = (uint8_t)(sds_valid_frames & 0xFF);
+    msg.buffer[sizeof(uint16_t) + PM_PACKET_SIZE + 1] = (uint8_t)(sds_rx_bytes & 0xFF);
 
     msg.current_idx = 0;
     msg.len = len + 2;
@@ -413,30 +401,20 @@ void slave_init(void) {
 int main(void) {
     slave_init();
     _delay_ms(1000); // Wait for sensors to power up
-    calibrate_bme();
-    
-    _delay_ms(8000);
+    // calibrate_bme();  // Master reads BME280 directly now
     send_sds011_wakeup();
-    _delay_ms(1000);
     set_sds011_active_mode();
     _delay_ms(3000);  // Give sensor time to stabilize and start sending real data
 
-    read_bme();
+    // read_bme();  // Master reads BME280 directly now
     fill_msg();
     sei();
 
     while (1) {
         if (needs_fill) {
-            read_bme();
+            // read_bme();  // Master reads BME280 directly now
             fill_msg();
         }
-#if UART_DEBUG_PULSE
-        static uint16_t uart_debug_ticks = 0;
-        if (++uart_debug_ticks >= UART_DEBUG_EVERY_LOOPS) {
-            uart_debug_ticks = 0;
-            uart_send_byte(0x55);
-        }
-#endif
         // PORTA.OUTTGL = PIN1_bm;
         // _delay_ms(100);
         _delay_ms(10);

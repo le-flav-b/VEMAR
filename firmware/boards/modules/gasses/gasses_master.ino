@@ -38,7 +38,7 @@ void loop() {
         buf[idx++] = Wire.read();
     }
 
-    if (idx < PACKET_SIZE) {
+    if (idx == 0) {
         Serial.print("Read error: only got ");
         Serial.print(idx);
         Serial.println(" bytes");
