@@ -8,13 +8,22 @@
 #include <stdbool.h>
 #include <string.h>
 #include <avr/sleep.h>
+
 #include <util/twi.h>
+
+#define SLAVE_ADDR 0x09
+// #define I2C_MASTER
+#define I2C_FREQ 100000UL
+#define MT_DATA_ACK TW_MT_DATA_ACK
+#define MR_DATA_ACK TW_MR_DATA_ACK 
+#define MR_DATA_NACK TW_MR_DATA_NACK 
 
 #define I2C_ERR_ARBLOST    (-1)   /* arbitration lost                   */
 #define I2C_ERR_BUSERR     (-2)   /* bus error (illegal START/STOP)     */
 #define I2C_ERR_NACK       (-3)   /* slave sent NACK                    */
 #define I2C_ERR_INVALID_LEN (-4)  /* packet length 0 or > I2C_BUFFER_SIZE */
 #define I2C_ERR_TIMEOUT    (-5)   /* hardware flag never set            */
+
 
 /*
  * Utils
@@ -48,8 +57,6 @@ extern void i2c_init(void);
 extern void i2c_init_slave(uint8_t addr);
 // extern void i2c_set_callback(void (*func)(void)); // Handle events
 extern void i2c_stop_interface(void);
-extern void i2c_switch_to_master(void);
-extern void i2c_switch_to_slave(void);
 
 /*
  * Control
