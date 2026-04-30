@@ -202,7 +202,9 @@ static uint8_t fat_write(uint16_t cluster, uint16_t val)
     uint16_t off = (cluster % 256) * 2;
     _buf[off]     = (uint8_t)(val);
     _buf[off + 1] = (uint8_t)(val >> 8);
-    return sd_write(lba);
+    if (sd_write(lba)) return SD_ERR_IO;
+    /* Mirror to FAT2 */
+    return sd_write(lba + _fat_sectors);
 }
 
 /* Scan FAT for a free cluster, mark it EOF (0xFFFF), return cluster number.
@@ -359,8 +361,10 @@ static uint8_t fat_init(void)
     return SD_OK;
 }
 
+static uint8_t file_write(const uint8_t *data, uint8_t len);
+
 /* =========================================================================
- * SD_json_create
+ * FAT 8.3 name helper — shared by SD_json_open and SD_json_create
  * ========================================================================= */
 
 /* Build a FAT 8.3 name (11 bytes, space-padded, uppercase) from a base name.
@@ -378,6 +382,85 @@ static void make_83(const char *name, uint8_t out[11])
     out[8] = 'T'; out[9] = 'X'; out[10] = 'T';
 }
 
+/* =========================================================================
+ * SD_json_open
+ * ========================================================================= */
+
+uint8_t SD_json_open(const char *name)
+{
+    uint8_t err = fat_init();
+    if (err) return err;
+
+    uint8_t target[11];
+    make_83(name, target);
+
+    uint32_t root_sectors = _data_lba - _root_lba;
+
+    for (uint32_t s = 0; s < root_sectors; s++) {
+        uint32_t lba = _root_lba + s;
+        if (sd_read(lba)) return SD_ERR_IO;
+
+        for (uint8_t e = 0; e < 16; e++) {
+            uint8_t *ent   = _buf + (uint16_t)e * 32;
+            uint8_t  first = ent[0];
+
+            if (first == 0x00) return SD_ERR_NOTFOUND;
+            if (first == 0xE5) continue;
+            if (memcmp(ent, target, 11) != 0) continue;
+
+            uint16_t first_cluster = (uint16_t)ent[0x1A] | ((uint16_t)ent[0x1B] << 8);
+            uint32_t file_size     = (uint32_t)ent[0x1C]
+                                   | ((uint32_t)ent[0x1D] <<  8)
+                                   | ((uint32_t)ent[0x1E] << 16)
+                                   | ((uint32_t)ent[0x1F] << 24);
+
+            if (file_size < 3) return SD_ERR_FAT; /* too small to be "[\n]" */
+
+            _file_dir_lba  = lba;
+            _file_dir_idx  = e;
+            _file_cluster  = first_cluster;
+            _file_size     = file_size;
+
+            /* Reject files not created by this library */
+            if (sd_read(cluster_to_lba(first_cluster))) return SD_ERR_IO;
+            if (_buf[0] != '[') return SD_ERR_NOTFOUND;
+
+            /* Walk FAT chain to find the last cluster */
+            uint16_t cluster = first_cluster;
+            for (;;) {
+                uint16_t next = fat_read(cluster); /* clobbers _buf */
+                if (next >= 0xFFF8) break;
+                cluster = next;
+            }
+            _file_last_cluster = cluster;
+
+            /* Read the last sector and verify the file ends with \n] before
+               rewinding.  last_idx > 0 guards the rare case where \n and ]
+               straddle a sector boundary — skip rewind rather than reading
+               two sectors. */
+            uint32_t off_in_cluster = (file_size - 1) % ((uint32_t)_spc * 512);
+            uint32_t last_lba       = cluster_to_lba(_file_last_cluster)
+                                    + off_in_cluster / 512;
+            uint16_t last_idx       = (uint16_t)((file_size - 1) % 512);
+
+            if (sd_read(last_lba)) return SD_ERR_IO;
+
+            if (last_idx > 0
+                    && _buf[last_idx]     == ']'
+                    && _buf[last_idx - 1] == '\n') {
+                _file_size = file_size - 2;
+            }
+
+            return SD_OK;
+        }
+    }
+    return SD_ERR_NOTFOUND;
+}
+
+/* =========================================================================
+ * SD_json_create
+ * ========================================================================= */
+
 uint8_t SD_json_create(const char *name)
 {
     uint8_t err = fat_init();
@@ -390,8 +473,9 @@ uint8_t SD_json_create(const char *name)
     uint32_t free_lba = 0;
     uint8_t  free_idx = 0;
     uint8_t  found    = 0;
+    uint8_t  done     = 0;
 
-    for (uint32_t s = 0; s < root_sectors; s++) {
+    for (uint32_t s = 0; s < root_sectors && !done; s++) {
         uint32_t lba = _root_lba + s;
         if (sd_read(lba)) return SD_ERR_IO;
 
@@ -402,7 +486,8 @@ uint8_t SD_json_create(const char *name)
             if (first == 0x00) {
                 /* Empty slot — all subsequent entries also empty */
                 if (!free_lba) { free_lba = lba; free_idx = e; }
-                goto scan_done;
+                done = 1;
+                break;
             }
             if (first == 0xE5) {
                 /* Deleted entry — usable slot */
@@ -423,7 +508,6 @@ uint8_t SD_json_create(const char *name)
             }
         }
     }
-scan_done:
 
     if (!free_lba) return SD_ERR_FULL;
 
@@ -447,7 +531,8 @@ scan_done:
     _file_cluster      = cluster;
     _file_last_cluster = cluster;
 
-    return SD_OK;
+    uint8_t open = '[';
+    return file_write(&open, 1);
 }
 
 /* =========================================================================
@@ -505,20 +590,29 @@ static uint8_t file_write(const uint8_t *data, uint8_t len)
 
 uint8_t SD_json_append(const char *key, const char *value)
 {
-    /* Build the line:  {"key": value}\n
-       Max key: ~20 chars, max value: ~20 chars → well within 64 bytes. */
-    uint8_t line[64];
+    uint8_t line[71];
     uint8_t pos = 0;
 
+    line[pos++] = '\n';
     line[pos++] = '{';
     line[pos++] = '"';
-    for (uint8_t i = 0; key[i]   && pos < 54; i++) line[pos++] = (uint8_t)key[i];
+    for (uint8_t i = 0; key[i]   && pos < 56; i++) line[pos++] = (uint8_t)key[i];
     line[pos++] = '"';
     line[pos++] = ':';
     line[pos++] = ' ';
-    for (uint8_t i = 0; value[i] && pos < 62; i++) line[pos++] = (uint8_t)value[i];
+    for (uint8_t i = 0; value[i] && pos < 68; i++) line[pos++] = (uint8_t)value[i];
     line[pos++] = '}';
-    line[pos++] = '\n';
+    line[pos++] = ',';
 
     return file_write(line, pos);
+}
+
+/* =========================================================================
+ * SD_json_close
+ * ========================================================================= */
+
+uint8_t SD_json_close(void)
+{
+    uint8_t tail[2] = {'\n', ']'};
+    return file_write(tail, 2);
 }
