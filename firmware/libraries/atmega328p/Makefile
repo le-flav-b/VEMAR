@@ -33,10 +33,7 @@ CFLAGS		=	-Wall \
 				-mmcu=$(MCU) \
 				-DF_CPU=$(FREQUENCY) \
 				-DBAUDRATE=$(BAUDRATE) \
-				-I$(INCLUDE) \
-				-DI2C_MASTER \
-				-DI2C_FREQ=100000UL \
-				-DSLAVE_ADDR=0x10
+				-I$(INCLUDE)
 
 AVRFLAGS	=	-p $(MCU) \
 				-c $(PROGRAMMER) \

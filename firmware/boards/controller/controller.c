@@ -150,9 +150,13 @@ void CONTROLLER_display_atmosphere(void)
         TFT_print_str(COL1, ROW1, "Temperature: ");
         TFT_print_str(COL3, ROW1, "C");
         TFT_print_str(COL1, ROW2, "Humidity   : ");
-        TFT_print_str(COL3, ROW2, "%");
+        TFT_print_str(COL3, ROW2, "%RH");
         TFT_print_str(COL1, ROW3, "Pressure   : ");
         TFT_print_str(COL3, ROW3, "hPa");
+        TFT_print_str(COL1, ROW4, "PM2.5      : ");
+        TFT_print_str(COL3, ROW4, "ug/m3");
+        TFT_print_str(COL1, ROW5, "PM10       : ");
+        TFT_print_str(COL3, ROW5, "ug/m3");
         BIT_write(g_ctrl_mode, _CONTROLLER_MODE_ATM, _CONTROLLER_MASK_MODE);
     }
 }
@@ -226,14 +230,21 @@ void CONTROLLER_update_atmosphere(void)
 {
     char *str;
 
-    str = UTIL_itoa_decimal(g_packet.atmosphere.temperature, 4);
+    str = UTIL_itoa_decimal(g_packet.atmosphere.temperature, 6);
     TFT_print_str(COL2, ROW1, str);
 
-    str = UTIL_itoa_decimal(g_packet.atmosphere.humidity, 4);
+    str = UTIL_itoa_decimal(g_packet.atmosphere.humidity, 6);
     TFT_print_str(COL2, ROW2, str);
 
-    str = UTIL_itoa_decimal(g_packet.atmosphere.pressure, 4);
+    str = UTIL_itoa_decimal(g_packet.atmosphere.pressure, 6);
     TFT_print_str(COL2, ROW3, str);
+
+    str = UTIL_itoa_decimal(g_packet.atmosphere.pm25, 6);
+    TFT_print_str(COL2, ROW4, str);
+
+    str = UTIL_itoa_decimal(g_packet.atmosphere.pm10, 6);
+    TFT_print_str(COL2, ROW5, str);
+
 }
 
 //------------------------------------------------------------------------------
@@ -243,19 +254,19 @@ void CONTROLLER_update_gas(void)
 {
     char *str;
 
-    str = UTIL_itoa(g_packet.gas.co2, 4);
+    str = UTIL_itoa(g_packet.gas.co2, 6);
     TFT_print_str(COL2, ROW1, str);
 
-    str = UTIL_itoa(g_packet.gas.co, 4);
+    str = UTIL_itoa(g_packet.gas.co, 6);
     TFT_print_str(COL2, ROW2, str);
 
-    str = UTIL_itoa(g_packet.gas.nh3, 4);
+    str = UTIL_itoa(g_packet.gas.nh3, 6);
     TFT_print_str(COL2, ROW3, str);
 
-    str = UTIL_itoa(g_packet.gas.no2, 4);
+    str = UTIL_itoa(g_packet.gas.no2, 6);
     TFT_print_str(COL2, ROW4, str);
 
-    str = UTIL_itoa(g_packet.gas.o2, 4);
+    str = UTIL_itoa(g_packet.gas.o2, 6);
     TFT_print_str(COL2, ROW5, str);
 }
 

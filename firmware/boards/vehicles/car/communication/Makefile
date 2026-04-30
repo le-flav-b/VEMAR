@@ -42,7 +42,8 @@ CFLAGS		=	-Wall \
 				-DF_CPU=$(FREQUENCY) \
 				-I$(INC_ATMEGA) \
 				-I$(INC_PACKET) \
-				-DI2C_MASTER
+				-I../../../modules/atmosphere/include \
+				-I../../../../libraries/bme280/include
 
 LDFLAGS		=	-Os \
 				-mmcu=$(MCU) \
@@ -73,22 +74,23 @@ ifeq ($(MAKECMDGOALS), debug)
 CFLAGS		+=	-DVEMAR_DEBUG_ENABLED
 endif
 
-.PHONY: all debug
-
-all: $(NAME)
-
-debug: fclean all
 
 .PHONY: $(NAME)
 
 $(NAME):
 	$(AVRDUDE) $(AVRFLAGS) -U flash:w:$<:i
 
+.PHONY: all debug
+
+all: $(NAME)
+
+debug: fclean all
+
 .PHONY: clean fclean
 
 clean:
 	@$(ECHO) $(COLOR_LOG) "Removing OBJ files" $(COLOR_RESET)
-	$(RM) $(OBJECTS)
+	$(RM) $(OBJECTS) bme.o atmoshpere.o
 
 fclean: clean
 	@$(ECHO) $(COLOR_LOG) "Removing Building Directory" $(COLOR_RESET)
@@ -96,15 +98,19 @@ fclean: clean
 	$(RM) $(FILE_BIN) $(FILE_HEX)
 	$(RM) $(LIBRARY)
 
-%.bin: $(BUILD_DIR)/%.o $(LIBRARY)
+%.bin: $(BUILD_DIR)/%.o bme.o atmosphere.o $(LIBRARY)
 	@$(ECHO) $(COLOR_LOG) "Building BIN file: '$@'" $(COLOR_RESET)
-	$(CC) $(LDFLAGS) -o $@ $< -L. -lvemar
+	$(CC) $(LDFLAGS) -o $@ $< bme.o atmosphere.o -L. -lvemar
 
 %.hex: %.bin
 	@$(ECHO) $(COLOR_LOG) "Building HEX file: '$@'" $(COLOR_RESET)
 	$(OBJCOPY) -O ihex $< $@
 
 $(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
+	@$(ECHO) $(COLOR_LOG) "Building OBJ file: '$@'" $(COLOR_RESET)
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+bme.o: ../../../../libraries/bme280/src/bme.c
 	@$(ECHO) $(COLOR_LOG) "Building OBJ file: '$@'" $(COLOR_RESET)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
@@ -132,3 +138,5 @@ lib:
 .PRECIOUS: $(BUILD_DIR)/%.o %.bin
 
 communication: communication.hex
+atmosphere: atmosphere.o
+bme: bme.o

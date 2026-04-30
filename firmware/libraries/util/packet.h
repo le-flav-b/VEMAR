@@ -9,6 +9,7 @@
 #define PACKET_ID_GAS 0x03   /**< Packet ID of the gas sensor module */
 #define PACKET_ID_LIDAR 0x04 /**< Packet ID of the LiDAR */
 #define PACKET_ID_GMC 0x05   /**< Packet ID of the Geiger counter */
+#define PACKET_ID_PING 0xFF  /**< Packet ID for ping */
 
 #define LIDAR_DATA_PER_LINE 5
 #define LIDAR_DATA_PER_PACKET 5
@@ -36,36 +37,41 @@ typedef union
 
     struct
     {
-        uint8_t id;                       /**< ID */
-        uint8_t module;        
+        uint8_t id; /**< ID */
+        uint8_t module;
         uint8_t padding[PACKET_SIZE - 2]; /**< Padding */
     } header;                             /**< Header */
 
     struct
     {
         uint8_t id;                        /**< ID */
+        uint8_t reserved;
+        uint8_t lb;                        /**< Left Joystick Button */
+        uint8_t rb;                        /**< Right Joystick Button */
         uint16_t pot;                      /**< Potentiometer */
         int16_t lx;                        /**< Left Joystick X */
         int16_t rx;                        /**< Right Joystick X */
         int16_t ly;                        /**< Left Joystick Y */
         int16_t ry;                        /**< Right Joystick Y */
-        uint8_t lb;                        /**< Left Joystick Button */
-        uint8_t rb;                        /**< Right Joystick Button */
         uint8_t padding[PACKET_SIZE - 14]; /**< Padding */
     } car;                                 /**< Car */
 
     struct
     {
-        uint8_t id;                       /**< ID */
-        uint16_t temperature;             /**< Temperature */
-        uint16_t humidity;                /**< Humidity */
-        uint16_t pressure;                /**< Pressure */
-        uint8_t padding[PACKET_SIZE - 8]; /**< Padding */
-    } atmosphere;                         /**< Atmosphere sensor module */
+        uint8_t id;                        /**< ID */
+        uint8_t reserved;
+        uint16_t pm25;                     /**< PM2.5 */
+        uint16_t pm10;                     /**< PM10 */
+        int16_t temperature;               /**< Temperature */
+        uint16_t humidity;                 /**< Humidity */
+        uint16_t pressure;                 /**< Pressure */
+        uint8_t padding[PACKET_SIZE - 12]; /**< Padding */
+    } atmosphere;                          /**< Atmosphere sensor module */
 
     struct
     {
         uint8_t id;                        /**< ID */
+        uint8_t reserved;
         uint16_t header;                   /**< Header */
         uint16_t co2;                      /**< CO2 */
         uint16_t co;                       /**< CO */
@@ -87,6 +93,7 @@ typedef union
     struct
     {
         uint8_t id;
+        uint8_t reserved;
         uint16_t total;
         uint16_t delta;
         uint16_t cpm;
