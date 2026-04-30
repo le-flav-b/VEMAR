@@ -2,6 +2,7 @@
 #include <i2c.h>
 #include <util/packet.h>
 
+#include "geiger.h"
 #include "atmosphere.h"
 
 #define PIN_RADIO_CE PIN_PD2
@@ -27,6 +28,7 @@ uint8_t g_module_en;
 void CAR_handle_movement(void);
 void CAR_read_atmosphere(void);
 void CAR_read_gas(void);
+void CAR_read_radioactivity(void);
 
 static inline void CAR_enable_module(uint8_t module_id)
 {
@@ -81,10 +83,15 @@ void loop(void)
             CAR_read_atmosphere();
             data_type = 1;
         }
-        else
+        else if (1 == data_type)
         {
             // CAR_tx_module(PACKET_ID_GMC);
             CAR_read_gas();
+            data_type = 2;
+        }
+        else
+        {
+            CAR_read_radioactivity();
             data_type = 0;
         }
     }
@@ -114,32 +121,37 @@ void CAR_handle_movement(void)
 
 void CAR_read_atmosphere(void)
 {
-    if (!BME_do_read()) { VEMAR_DEBUG(str, "error while reading bme\r\n"); }
+    if (FALSE == BME_do_read())
+    {
+        VEMAR_DEBUG(str, "error while reading bme\r\n");
+        return;
+    }
 
     g_packet.atmosphere.pm25 = BME_pm25();
     g_packet.atmosphere.pm10 = BME_pm10();
 
     g_packet.atmosphere.temperature = BME_temperature();
-    g_packet.atmosphere.pressure  = BME_pressure();
+    g_packet.atmosphere.pressure = BME_pressure();
     g_packet.atmosphere.humidity = BME_humidity();
 
     g_packet.atmosphere.id = PACKET_ID_ATM;
 
     if (RADIO_write(g_packet.buffer, PACKET_SIZE))
     {
-    VEMAR_DEBUG(str, "=== Atmosphere Readings ===\r\nPM2.5: ");
-    VEMAR_DEBUG(uint, g_packet.atmosphere.pm25);
-    VEMAR_DEBUG(str, " ug/m3\r\nPM10: ");
-    VEMAR_DEBUG(uint, g_packet.atmosphere.pm10);
-    VEMAR_DEBUG(str, " ug/m3\r\nTemperature: ");
-    VEMAR_DEBUG(int, g_packet.atmosphere.temperature);
-    VEMAR_DEBUG(str, " C\r\nPressure: ");
-    VEMAR_DEBUG(uint, g_packet.atmosphere.pressure);
-    VEMAR_DEBUG(str, " Pa\r\nHumidity: ");
-    VEMAR_DEBUG(uint, g_packet.atmosphere.humidity);
-    VEMAR_DEBUG(str, " %RH\r\n");
-
-    } else {
+        VEMAR_DEBUG(str, "=== Atmosphere Readings ===\r\nPM2.5: ");
+        VEMAR_DEBUG(uint, g_packet.atmosphere.pm25);
+        VEMAR_DEBUG(str, " ug/m3\r\nPM10: ");
+        VEMAR_DEBUG(uint, g_packet.atmosphere.pm10);
+        VEMAR_DEBUG(str, " ug/m3\r\nTemperature: ");
+        VEMAR_DEBUG(int, g_packet.atmosphere.temperature);
+        VEMAR_DEBUG(str, " C\r\nPressure: ");
+        VEMAR_DEBUG(uint, g_packet.atmosphere.pressure);
+        VEMAR_DEBUG(str, " Pa\r\nHumidity: ");
+        VEMAR_DEBUG(uint, g_packet.atmosphere.humidity);
+        VEMAR_DEBUG(str, " %RH\r\n");
+    }
+    else
+    {
         VEMAR_DEBUG(str, "Atmosphere packet failed to send\r\n");
     }
 
@@ -165,7 +177,7 @@ void CAR_read_gas(void)
     if (i2c_read_packet(GAS_ADDRESS, buffer))
     {
         VEMAR_DEBUG(str, "I2C error\r\n");
-        // return;
+        return;
     }
     g_packet.header.id = PACKET_ID_GAS;
     g_packet.gas.co2 = U8HL_TO_U16BIT(buffer[IDX_CO2], buffer[IDX_CO2 + 1]);
@@ -191,8 +203,8 @@ void CAR_read_gas(void)
         VEMAR_DEBUG(str, "CO2: ");
         VEMAR_DEBUG(uint, g_packet.gas.co2);
         VEMAR_DEBUG(str, (g_packet.gas.status & STATUS_CO2_VALID)
-                                ? " ppm (CRC ok)"
-                                : " ppm (CRC pending)");
+                             ? " ppm (CRC ok)"
+                             : " ppm (CRC pending)");
         VEMAR_DEBUG(str, "\r\nCO2 status byte: 0x");
         VEMAR_DEBUG(hex, g_packet.gas.status, 2);
         VEMAR_DEBUG(str, "\r\nCO2 UART rx_seen=");
@@ -218,4 +230,27 @@ void CAR_read_gas(void)
         VEMAR_DEBUG(str, "\r\n---\r\n");
     }
 #endif
+}
+
+void CAR_read_radioactivity(void)
+{
+    VEMAR_DEBUG(str, "read geiger\r\n");
+    if (FALSE == GEIGER_do_read()) {
+        VEMAR_DEBUG(str, "error while reading geiger\r\n");
+    }
+    g_packet.geiger.id = PACKET_ID_GMC;
+    g_packet.geiger.total = GEIGER_total();
+    g_packet.geiger.delta = GEIGER_delta();
+    g_packet.geiger.cpm = GEIGER_cpm();
+    if (FALSE == RADIO_write(g_packet.buffer, PACKET_SIZE))
+    {
+        VEMAR_DEBUG(str, "radioactivity transmission failed\r\n");
+    }
+    VEMAR_DEBUG(str, "Total: ");
+    VEMAR_DEBUG(ulong, g_packet.geiger.total);
+    VEMAR_DEBUG(str, "\r\nDelta: ");
+    VEMAR_DEBUG(ulong, g_packet.geiger.delta);
+    VEMAR_DEBUG(str, "\r\nCPM: ");
+    VEMAR_DEBUG(ulong, g_packet.geiger.cpm);
+    VEMAR_DEBUG(str, "\r\n");
 }

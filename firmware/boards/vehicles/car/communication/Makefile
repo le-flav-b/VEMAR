@@ -98,9 +98,9 @@ fclean: clean
 	$(RM) $(FILE_BIN) $(FILE_HEX)
 	$(RM) $(LIBRARY)
 
-%.bin: $(BUILD_DIR)/%.o bme.o atmosphere.o $(LIBRARY)
+%.bin: $(BUILD_DIR)/%.o bme.o atmosphere.o geiger.o $(LIBRARY)
 	@$(ECHO) $(COLOR_LOG) "Building BIN file: '$@'" $(COLOR_RESET)
-	$(CC) $(LDFLAGS) -o $@ $< bme.o atmosphere.o -L. -lvemar
+	$(CC) $(LDFLAGS) -o $@ $< bme.o atmosphere.o geiger.o -L. -lvemar
 
 %.hex: %.bin
 	@$(ECHO) $(COLOR_LOG) "Building HEX file: '$@'" $(COLOR_RESET)
@@ -140,3 +140,4 @@ lib:
 communication: communication.hex
 atmosphere: atmosphere.o
 bme: bme.o
+geiger: geiger.o

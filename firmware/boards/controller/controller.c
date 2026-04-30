@@ -208,8 +208,8 @@ void CONTROLLER_display_radioactivity(void)
         TFT_fill_screen(RGB16_BLACK);
         _CONTROLLER_display_layout("MODULE: Geiger Counter");
         TFT_print_str(COL1, ROW1, "Total      : ");
-        TFT_print_str(COL1, ROW1, "Delta      : ");
-        TFT_print_str(COL1, ROW1, "CPM        : ");
+        TFT_print_str(COL1, ROW2, "Delta      : ");
+        TFT_print_str(COL1, ROW3, "CPM        : ");
         BIT_write(g_ctrl_mode, _CONTROLLER_MODE_GMC, _CONTROLLER_MASK_MODE);
     }
 }
