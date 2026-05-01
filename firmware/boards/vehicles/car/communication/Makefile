@@ -90,7 +90,7 @@ debug: fclean all
 
 clean:
 	@$(ECHO) $(COLOR_LOG) "Removing OBJ files" $(COLOR_RESET)
-	$(RM) $(OBJECTS) bme.o atmoshpere.o
+	$(RM) $(OBJECTS) atmosphere.o geiger.o gas.o
 
 fclean: clean
 	@$(ECHO) $(COLOR_LOG) "Removing Building Directory" $(COLOR_RESET)
@@ -98,19 +98,15 @@ fclean: clean
 	$(RM) $(FILE_BIN) $(FILE_HEX)
 	$(RM) $(LIBRARY)
 
-%.bin: $(BUILD_DIR)/%.o bme.o atmosphere.o geiger.o $(LIBRARY)
+%.bin: $(BUILD_DIR)/%.o atmosphere.o geiger.o gas.o $(LIBRARY)
 	@$(ECHO) $(COLOR_LOG) "Building BIN file: '$@'" $(COLOR_RESET)
-	$(CC) $(LDFLAGS) -o $@ $< bme.o atmosphere.o geiger.o -L. -lvemar
+	$(CC) $(LDFLAGS) -o $@ $< atmosphere.o geiger.o gas.o -L. -lvemar
 
 %.hex: %.bin
 	@$(ECHO) $(COLOR_LOG) "Building HEX file: '$@'" $(COLOR_RESET)
 	$(OBJCOPY) -O ihex $< $@
 
 $(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
-	@$(ECHO) $(COLOR_LOG) "Building OBJ file: '$@'" $(COLOR_RESET)
-	$(CC) $(CFLAGS) -o $@ -c $<
-
-bme.o: ../../../../libraries/bme280/src/bme.c
 	@$(ECHO) $(COLOR_LOG) "Building OBJ file: '$@'" $(COLOR_RESET)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
@@ -139,5 +135,5 @@ lib:
 
 communication: communication.hex
 atmosphere: atmosphere.o
-bme: bme.o
 geiger: geiger.o
+gas: gas.o

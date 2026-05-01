@@ -1,61 +1,31 @@
 #include <radio.h>
-#include <i2c.h>
-#include <util/packet.h>
 
-#include "geiger.h"
-#include "atmosphere.h"
+#include "module.h"
 
 #define PIN_RADIO_CE PIN_PD2
 #define PIN_RADIO_CSN PIN_PD3
-
-/**
- * @brief Combine 2 bytes into 16-bit value
- * @param _high High byte
- * @param _low Low byte
- */
-#define U8HL_TO_U16BIT(_high, _low) ((uint16_t)((_high) << 8) | (_low))
-
-#ifdef VEMAR_DEBUG_ENABLED
-#include <serial.h>
-#define VEMAR_DEBUG(_type, ...) SERIAL_print(_type, __VA_ARGS__)
-#else
-#define VEMAR_DEBUG(_type, ...)
-#endif
 
 packet_t g_packet;
 uint8_t g_module_en;
 
 void CAR_handle_movement(void);
-void CAR_read_atmosphere(void);
-void CAR_read_gas(void);
-void CAR_read_radioactivity(void);
-
-static inline void CAR_enable_module(uint8_t module_id)
-{
-    BIT_set(g_module_en, BIT(module_id));
-}
-
-static inline void CAR_disable_module(uint8_t module_id)
-{
-    BIT_clear(g_module_en, BIT(module_id));
-}
-
-void CAR_tx_module(uint8_t mod)
-{
-    g_packet.header.id = PACKET_ID_CAR;
-    g_packet.header.module = BIT(mod);
-    RADIO_write(g_packet.buffer, PACKET_SIZE);
-}
+void CAR_read_and_transmit(uint8_t id, uint8_t addr,
+    bool_t (*module)(uint8_t, packet_t*));
 
 void setup(void)
 {
 #ifdef VEMAR_DEBUG_ENABLED
     SERIAL_init();
 #endif
+
     RADIO_init(PIN_RADIO_CE, PIN_RADIO_CSN);
+
     i2c_init();
     _delay_ms(100);
-    BME_init();
+    if (!ATMOSPHERE_init())
+    {
+        VEMAR_DEBUG(str, "atmosphere module init failed\r\n");
+    }
     _delay_ms(500);
 
     VEMAR_DEBUG(str, "setup done\r\n");
@@ -79,19 +49,18 @@ void loop(void)
         count = 0;
         if (0 == data_type)
         {
-            // CAR_tx_module(PACKET_ID_GAS);
-            CAR_read_atmosphere();
+            CAR_read_and_transmit(PACKET_ID_ATM, ATMOSPHERE_ADDRESS, ATMOSPHERE_fill_packet);
+
             data_type = 1;
         }
         else if (1 == data_type)
         {
-            // CAR_tx_module(PACKET_ID_GMC);
-            CAR_read_gas();
+            CAR_read_and_transmit(PACKET_ID_GAS, GAS_ADDRESS, GAS_fill_packet);
             data_type = 2;
         }
         else
         {
-            CAR_read_radioactivity();
+            CAR_read_and_transmit(PACKET_ID_GMC, GEIGER_ADDRESS, GEIGER_fill_packet);
             data_type = 0;
         }
     }
@@ -119,138 +88,19 @@ void CAR_handle_movement(void)
     VEMAR_DEBUG(str, "\r\n--------\r\n");
 }
 
-void CAR_read_atmosphere(void)
+void CAR_read_and_transmit(uint8_t id, uint8_t addr,
+    bool_t (*module)(uint8_t, packet_t*))
 {
-    if (FALSE == BME_do_read())
-    {
-        VEMAR_DEBUG(str, "error while reading bme\r\n");
-        return;
-    }
-
-    g_packet.atmosphere.pm25 = BME_pm25();
-    g_packet.atmosphere.pm10 = BME_pm10();
-
-    g_packet.atmosphere.temperature = BME_temperature();
-    g_packet.atmosphere.pressure = BME_pressure();
-    g_packet.atmosphere.humidity = BME_humidity();
-
-    g_packet.atmosphere.id = PACKET_ID_ATM;
-
-    if (RADIO_write(g_packet.buffer, PACKET_SIZE))
-    {
-        VEMAR_DEBUG(str, "=== Atmosphere Readings ===\r\nPM2.5: ");
-        VEMAR_DEBUG(uint, g_packet.atmosphere.pm25);
-        VEMAR_DEBUG(str, " ug/m3\r\nPM10: ");
-        VEMAR_DEBUG(uint, g_packet.atmosphere.pm10);
-        VEMAR_DEBUG(str, " ug/m3\r\nTemperature: ");
-        VEMAR_DEBUG(int, g_packet.atmosphere.temperature);
-        VEMAR_DEBUG(str, " C\r\nPressure: ");
-        VEMAR_DEBUG(uint, g_packet.atmosphere.pressure);
-        VEMAR_DEBUG(str, " Pa\r\nHumidity: ");
-        VEMAR_DEBUG(uint, g_packet.atmosphere.humidity);
-        VEMAR_DEBUG(str, " %RH\r\n");
+    if (module(addr, &g_packet)) {
+        BIT_set(g_packet.header.module, BIT(id));
+        if (!RADIO_write(g_packet.buffer, PACKET_SIZE)) {
+            VEMAR_DEBUG(str, "module ID: ");
+            VEMAR_DEBUG(int, id);
+            VEMAR_DEBUG(str, " failed to transmit\r\n");
+        }
     }
     else
     {
-        VEMAR_DEBUG(str, "Atmosphere packet failed to send\r\n");
+        BIT_clear(g_packet.header.module, BIT(id));
     }
-
-    // float pm25_ugm3 = (float)pm25_raw / 10.0f;
-    // float pm10_ugm3 = (float)pm10_raw / 10.0f;
-    // float temp_c      = (float)temp_centi / 100.0f;
-    // float pressure_pa = (float)pressure_q24_8 / 25600.0f;
-    // float humidity_rh = (float)humidity_q22_10 / 1024.0f;
-
-    // VEMAR_DEBUG(str, "SDS frames: ");
-    // uint8_t sds_frames = buffer[PM_PACKET_SIZE];
-    // uint8_t sds_rx     = buffer[PM_PACKET_SIZE + 1];
-    // VEMAR_DEBUG(uint, sds_frames);
-    // VEMAR_DEBUG(str, " \r\nRX bytes: ");
-    // VEMAR_DEBUG(uint, sds_rx);
-    // VEMAR_DEBUG(str, "\r\n");
-}
-
-void CAR_read_gas(void)
-{
-    VEMAR_DEBUG(str, "read gas\r\n");
-    uint8_t buffer[I2C_BUFFER_SIZE] = {0};
-    if (i2c_read_packet(GAS_ADDRESS, buffer))
-    {
-        VEMAR_DEBUG(str, "I2C error\r\n");
-        return;
-    }
-    g_packet.header.id = PACKET_ID_GAS;
-    g_packet.gas.co2 = U8HL_TO_U16BIT(buffer[IDX_CO2], buffer[IDX_CO2 + 1]);
-    g_packet.gas.co = U8HL_TO_U16BIT(buffer[IDX_CO], buffer[IDX_CO + 1]);
-    g_packet.gas.nh3 = U8HL_TO_U16BIT(buffer[IDX_NH3], buffer[IDX_NH3 + 1]);
-    g_packet.gas.no2 = U8HL_TO_U16BIT(buffer[IDX_NO2], buffer[IDX_NO2 + 1]);
-    g_packet.gas.o2 = U8HL_TO_U16BIT(buffer[IDX_O2], buffer[IDX_O2 + 1]);
-    g_packet.gas.temp = (int8_t)(buffer[IDX_TEMP]) - CO2_TEMP_OFFSET;
-    g_packet.gas.status = buffer[IDX_STATUS];
-
-    if (!RADIO_write(g_packet.buffer, PACKET_SIZE))
-    {
-        VEMAR_DEBUG(str, "gas transmission failed\r\n");
-    }
-
-#ifdef VEMAR_DEBUG_ENABLED
-    // else
-    {
-        if (BIT_is_set(g_packet.gas.status, STATUS_CO2_PREHEATING))
-        {
-            VEMAR_DEBUG(str, "[CO2 sensor preheating - < 60s uptime]");
-        }
-        VEMAR_DEBUG(str, "CO2: ");
-        VEMAR_DEBUG(uint, g_packet.gas.co2);
-        VEMAR_DEBUG(str, (g_packet.gas.status & STATUS_CO2_VALID)
-                             ? " ppm (CRC ok)"
-                             : " ppm (CRC pending)");
-        VEMAR_DEBUG(str, "\r\nCO2 status byte: 0x");
-        VEMAR_DEBUG(hex, g_packet.gas.status, 2);
-        VEMAR_DEBUG(str, "\r\nCO2 UART rx_seen=");
-        VEMAR_DEBUG(bool, g_packet.gas.status &STATUS_CO2_RX_SEEN);
-        VEMAR_DEBUG(str, ", frame_seen=");
-        VEMAR_DEBUG(bool, g_packet.gas.status &STATUS_CO2_FRAME_SEEN);
-        VEMAR_DEBUG(str, ", uart_err=");
-        VEMAR_DEBUG(bool, g_packet.gas.status &STATUS_CO2_UART_ERR);
-        VEMAR_DEBUG(str, ", rx_edge=");
-        VEMAR_DEBUG(bool, g_packet.gas.status &STATUS_CO2_RX_EDGE);
-        VEMAR_DEBUG(str, ", cmd_send=");
-        VEMAR_DEBUG(bool, g_packet.gas.status &STATUS_CO2_CMD_SENT);
-        VEMAR_DEBUG(str, "\r\nTemp(CO2 sensor): ");
-        VEMAR_DEBUG(int, g_packet.gas.temp);
-        VEMAR_DEBUG(str, "\r\nCO:  ");
-        VEMAR_DEBUG(uint, g_packet.gas.co);
-        VEMAR_DEBUG(str, "\r\nNH3: ");
-        VEMAR_DEBUG(uint, g_packet.gas.nh3);
-        VEMAR_DEBUG(str, "\r\nNO2: ");
-        VEMAR_DEBUG(uint, g_packet.gas.no2);
-        VEMAR_DEBUG(str, "\r\nO2:  ");
-        VEMAR_DEBUG(uint, g_packet.gas.o2);
-        VEMAR_DEBUG(str, "\r\n---\r\n");
-    }
-#endif
-}
-
-void CAR_read_radioactivity(void)
-{
-    VEMAR_DEBUG(str, "read geiger\r\n");
-    if (FALSE == GEIGER_do_read()) {
-        VEMAR_DEBUG(str, "error while reading geiger\r\n");
-    }
-    g_packet.geiger.id = PACKET_ID_GMC;
-    g_packet.geiger.total = GEIGER_total();
-    g_packet.geiger.delta = GEIGER_delta();
-    g_packet.geiger.cpm = GEIGER_cpm();
-    if (FALSE == RADIO_write(g_packet.buffer, PACKET_SIZE))
-    {
-        VEMAR_DEBUG(str, "radioactivity transmission failed\r\n");
-    }
-    VEMAR_DEBUG(str, "Total: ");
-    VEMAR_DEBUG(ulong, g_packet.geiger.total);
-    VEMAR_DEBUG(str, "\r\nDelta: ");
-    VEMAR_DEBUG(ulong, g_packet.geiger.delta);
-    VEMAR_DEBUG(str, "\r\nCPM: ");
-    VEMAR_DEBUG(ulong, g_packet.geiger.cpm);
-    VEMAR_DEBUG(str, "\r\n");
 }

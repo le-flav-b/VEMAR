@@ -1,6 +1,4 @@
-#include <i2c.h>
-
-#include "geiger.h"
+#include "module.h"
 
 #define READ_INTERVAL_MS 1000
 #define CPM_MULTIPLIER (60000 / READ_INTERVAL_MS)
@@ -17,31 +15,30 @@ static uint32_t unpack_u32_be(const uint8_t *buf)
            (uint32_t)buf[3];
 }
 
-bool_t GEIGER_do_read(void)
+bool_t GEIGER_fill_packet(uint8_t addr, packet_t *packet)
 {
     uint8_t buf[4] = {0};
-    int8_t err = i2c_read_packet(GEIGER_ADDR, buf);
-    if (0 != err)
+
+    if (0 != i2c_read_packet(addr, buf))
     {
         return (FALSE);
     }
     g_count = unpack_u32_be(buf);
     g_delta = g_count - g_last_count;
     g_last_count = g_count;
+
+    packet->geiger.id = PACKET_ID_GMC;
+    packet->geiger.total = g_count;
+    packet->geiger.delta = g_delta;
+    packet->geiger.cpm = g_delta * CPM_MULTIPLIER;
+
+    VEMAR_DEBUG(str, "==Geiger Readings==\r\nTotal: ");
+    VEMAR_DEBUG(ulong, packet->geiger.total);
+    VEMAR_DEBUG(str, "\r\nDelta: ");
+    VEMAR_DEBUG(ulong, packet->geiger.delta);
+    VEMAR_DEBUG(str, "\r\nCPM: ");
+    VEMAR_DEBUG(ulong, packet->geiger.cpm);
+    VEMAR_DEBUG(str, "\r\n");
+
     return (TRUE);
-}
-
-uint32_t GEIGER_total(void)
-{
-    return (g_count);
-}
-
-uint32_t GEIGER_delta(void)
-{
-    return (g_delta);
-}
-
-uint32_t GEIGER_cpm(void)
-{
-    return (g_delta * CPM_MULTIPLIER);
 }

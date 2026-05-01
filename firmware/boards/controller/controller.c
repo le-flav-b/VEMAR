@@ -270,6 +270,9 @@ void CONTROLLER_update_gas(void)
     TFT_print_str(COL2, ROW5, str);
 }
 
+//------------------------------------------------------------------------------
+// CONTROLLER_update_map
+//------------------------------------------------------------------------------
 void CONTROLLER_update_map(void)
 {
 #define LINE_SIZE 8
@@ -292,6 +295,9 @@ void CONTROLLER_update_map(void)
     }
 }
 
+//------------------------------------------------------------------------------
+// CONTROLLER_update_radioactivity
+//------------------------------------------------------------------------------
 void CONTROLLER_update_radioactivity(void)
 {
     char *str;
@@ -315,13 +321,16 @@ void CONTROLLER_update_connection(void)
     TFT_print_str(86, ROW_LAST, signal);
 }
 
+//------------------------------------------------------------------------------
+// CONTROLLER_handle_packet
+//------------------------------------------------------------------------------
 void _CONTROLLER_handle_packet(byte_t type, void (*callback)(void))
 {
-    BIT_set(g_module_en, BIT(type));
+    g_module_en = g_packet.header.module;
     if (BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE) == type)
     {
         callback();
-    }
+    } // update if current mode and packet are the same
 }
 
 //------------------------------------------------------------------------------
@@ -372,52 +381,6 @@ void CONTROLLER_read(void)
         default:
             break;
         }
-
-        // if (PACKET_ID_CAR == g_packet.header.id)
-        // {
-        //     g_module_en = g_packet.header.module;
-        //     _CONTROLLER_display_module();
-        // }
-        // else if (PACKET_ID_ATM == g_packet.header.id)
-        // {
-        //     BIT_set(g_module_en, BIT(_CONTROLLER_MODE_ATM));
-        //     if (_CONTROLLER_MODE_ATM == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
-        //     {
-        //         CONTROLLER_update_atmosphere();
-        //     }
-        // }
-        // else if (PACKET_ID_GAS == g_packet.header.id)
-        // {
-        //     BIT_set(g_module_en, BIT(_CONTROLLER_MODE_GAS));
-        //     if (_CONTROLLER_MODE_GAS == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
-        //     {
-        //         CONTROLLER_update_gas();
-        //     }
-        // }
-        // else if (PACKET_ID_GMC == g_packet.header.id)
-        // {
-        //     BIT_set(g_module_en, BIT(_CONTROLLER_MODE_GMC));
-        //     if (_CONTROLLER_MODE_GMC == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
-        //     {
-        //         CONTROLLER_update_radioactivity();
-        //     }
-        // }
-        // else if (PACKET_ID_LIDAR == g_packet.header.id)
-        // {
-        //     BIT_set(g_module_en, BIT(_CONTROLLER_MODE_MAP));
-        //     if (_CONTROLLER_MODE_MAP == BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
-        //     {
-        //         CONTROLLER_display_map();
-        //     }
-        // }
-        // else
-        // {
-        //     CONTROLLER_DEBUG(str, "unknown package ID: ");
-        //     CONTROLLER_DEBUG(int, g_packet.header.id);
-        //     CONTROLLER_DEBUG(str, "\r\n");
-        // }
-        // _CONTROLLER_connect();
-        // CONTROLLER_DEBUG(str, "packet received\r\n");
     }
     else
     {
@@ -486,17 +449,6 @@ void CONTROLLER_write(void)
     }
     _CONTROLLER_disconnect();
     CONTROLLER_DEBUG(str, "transmission failed\r\n");
-
-    // if (RADIO_write(g_packet_tx.buffer, PACKET_SIZE))
-    // {
-    //     _CONTROLLER_connect();
-    //     CONTROLLER_DEBUG(str, "send movement\r\n");
-    // }
-    // else
-    // {
-    //     _CONTROLLER_disconnect();
-    //     CONTROLLER_DEBUG(str, "transmission failed\r\n");
-    // }
 }
 
 //------------------------------------------------------------------------------
@@ -661,15 +613,12 @@ void _CONTROLLER_switch_display(void)
             return;
         case _CONTROLLER_MODE_GAS:
             CONTROLLER_display_gas();
-
             return;
         case _CONTROLLER_MODE_MAP:
             CONTROLLER_display_map();
-
             return;
         case _CONTROLLER_MODE_GMC:
             CONTROLLER_display_radioactivity();
-
             return;
         default:
             return;
