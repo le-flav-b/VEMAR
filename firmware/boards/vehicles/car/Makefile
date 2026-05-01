@@ -57,7 +57,6 @@ CC_BUILD_FLAGS	=	-mmcu=${MCU} \
 					-c \
 					-MMD -MF ${GET_DEP_PATH} \
 					-DF_CPU=${F_CPU} \
-					-DI2C_MASTER \
 					${addprefix -I,${INC_DIRS}} \
 					-Wall \
 					-Wextra \
