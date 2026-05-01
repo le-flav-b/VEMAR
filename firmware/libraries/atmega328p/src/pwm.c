@@ -3,7 +3,7 @@
 
 void PWM_init(pwm_t pin)
 {
-    PIN_mode(pin, PIN_OUTPUT);
+    PIN_mode((pin_t)pin, PIN_OUTPUT);
     switch (pin)
     {
     case PWM_0A:
@@ -87,7 +87,7 @@ void PWM_disable(pwm_t pin)
     default:
         break;
     }
-    PIN_write(pin, PIN_LOW);
+    PIN_write((pin_t)pin, PIN_LOW);
 }
 
 void PWM_enable(pwm_t pin)
@@ -115,5 +115,5 @@ void PWM_enable(pwm_t pin)
     default:
         break;
     }
-    PIN_write(pin, PIN_LOW);
+    PIN_write((pin_t)pin, PIN_LOW);
 }
