@@ -8,7 +8,7 @@ char g_string_buffer[STRING_BUFFER_SIZE]; /**< Buffer */
  * @brief Reverse the buffer
  * @param len Length of the buffer
  */
-static void UTIL_reverse(unsigned char len);
+static void UTIL_reverse(length_t len);
 
 //------------------------------------------------------------------------------
 // UTIL_itoa
@@ -24,7 +24,7 @@ char *UTIL_itoa(int n, length_t width)
         n = -n;
     } // if is negative
 
-    unsigned char len = 0;
+    length_t len = 0;
 
     if (0 == n)
     {
@@ -46,7 +46,7 @@ char *UTIL_itoa(int n, length_t width)
         ++len;
     }
 
-    if (len < width)
+    while (len < width)
     {
         g_string_buffer[len] = ' ';
         ++len;
@@ -91,7 +91,7 @@ char *UTIL_itoa_decimal(int n, length_t width)
         ++len;
     }
 
-    if (len < width)
+    while (len < width)
     {
         g_string_buffer[len] = ' ';
         ++len;
@@ -108,7 +108,7 @@ char *UTIL_itoa_decimal(int n, length_t width)
 
 char *UTIL_append(char *str, char ch)
 {
-    unsigned char len = 0;
+    length_t len = 0;
     while ('\0' != str[len])
     {
         ++len;
@@ -122,10 +122,10 @@ char *UTIL_append(char *str, char ch)
 // UTIL_reserse
 //------------------------------------------------------------------------------
 
-void UTIL_reverse(unsigned char len)
+void UTIL_reverse(length_t len)
 {
-    unsigned char beg = 0;
-    unsigned char end = len - 1;
+    length_t beg = 0;
+    length_t end = len - 1;
     while (beg < end)
     {
         char tmp = g_string_buffer[beg];
