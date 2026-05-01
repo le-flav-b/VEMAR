@@ -15,6 +15,7 @@
 #define CONTROLLER_DEBUG(_type, ...)
 #endif
 
+// Pins
 #define PIN_TOGGLE_UP PIN_PD3
 #define PIN_TOGGLE_DOWN PIN_PD4
 #define PIN_BUTTON1 PIN_PC0
@@ -38,7 +39,7 @@
 
 #define COL1 4U
 #define COL2 140U
-#define COL3 186U
+#define COL3 212U
 #define COL_MOD 260U
 #define COL_RXTX 240U
 #define ROW_LABEL _ROW_num(0)
@@ -81,18 +82,31 @@ typedef struct
  */
 void CONTROLLER_init(void);
 
+/**
+ * @brief Setup interruptions
+ */
 void CONTROLLER_interrupt(void);
 
+/**
+ * @brief Display main menu
+ */
 void CONTROLLER_display_menu(void);
 /**
- * @brief Configure tft to display sensor data
+ * @brief Display atmospheric sensor data
  */
 void CONTROLLER_display_atmosphere(void);
 
+/**
+ * @brief Display gas sensor data
+ */
 void CONTROLLER_display_gas(void);
 
 /**
- * @brief Configure tft to display map
+ * @brief Display no sensor found
+ */
+void CONTROLLER_display_none(void);
+/**
+ * @brief D
  */
 void CONTROLLER_display_map(void);
 
