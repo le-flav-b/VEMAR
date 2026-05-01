@@ -37,7 +37,29 @@ bool_t ATMOSPHERE_fill_packet(uint8_t addr, packet_t *packet);
 // Gas
 //------------------------------------------------------------------------------
 
+#define GAS_SIZE 14 /**< 2-byte length header + 12 bytes payload */
+
+// Packet offsets
+#define IDX_CO2 2
+#define IDX_CO 4
+#define IDX_NH3 6
+#define IDX_NO2 8
+#define IDX_O2 10
+#define IDX_TEMP 12
+#define IDX_STATUS 13
+
+#define CO2_TEMP_OFFSET 44 // subtract from raw TEMP byte to get °C
+
 #define GAS_ADDRESS 0x0A /**< Default address of the GAS module */
+
+// STATUS bits
+#define STATUS_CO2_VALID 0x01
+#define STATUS_CO2_PREHEATING 0x02
+#define STATUS_CO2_RX_SEEN 0x04
+#define STATUS_CO2_FRAME_SEEN 0x08
+#define STATUS_CO2_UART_ERR 0x10
+#define STATUS_CO2_RX_EDGE 0x20
+#define STATUS_CO2_CMD_SENT 0x40
 
 /**
  * @brief Read data from the GAS module and populate the transmission packet.
