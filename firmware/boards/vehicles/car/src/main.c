@@ -11,7 +11,8 @@ uint8_t g_module_en;
 
 void CAR_handle_movement(void);
 void CAR_read_and_transmit(uint8_t id, uint8_t addr,
-    bool_t (*module)(uint8_t, packet_t*));
+    bool_t (*module)(uint8_t, packet_t*),
+    uint8_t (*append)(packet_t*));
 
 void setup(void)
 {
@@ -51,18 +52,17 @@ void loop(void)
         count = 0;
         if (0 == data_type)
         {
-            CAR_read_and_transmit(PACKET_ID_ATM, ATMOSPHERE_ADDRESS, ATMOSPHERE_fill_packet);
-
+            CAR_read_and_transmit(PACKET_ID_ATM, ATMOSPHERE_ADDRESS, ATMOSPHERE_fill_packet, sd_append_atmosphere);
             data_type = 1;
         }
         else if (1 == data_type)
         {
-            CAR_read_and_transmit(PACKET_ID_GAS, GAS_ADDRESS, GAS_fill_packet);
+            CAR_read_and_transmit(PACKET_ID_GAS, GAS_ADDRESS, GAS_fill_packet, sd_append_gas);
             data_type = 2;
         }
         else
         {
-            CAR_read_and_transmit(PACKET_ID_GMC, GEIGER_ADDRESS, GEIGER_fill_packet);
+            CAR_read_and_transmit(PACKET_ID_GMC, GEIGER_ADDRESS, GEIGER_fill_packet, sd_append_radioactivity);
             data_type = 0;
         }
     }
@@ -94,7 +94,8 @@ void CAR_handle_movement(void)
 }
 
 void CAR_read_and_transmit(uint8_t id, uint8_t addr,
-    bool_t (*module)(uint8_t, packet_t*))
+    bool_t (*module)(uint8_t, packet_t*),
+    uint8_t (*append)(packet_t*))
 {
     if (module(addr, &g_packet)) {
         BIT_set(g_packet.header.module, BIT(id));
@@ -103,6 +104,7 @@ void CAR_read_and_transmit(uint8_t id, uint8_t addr,
             VEMAR_DEBUG(int, id);
             VEMAR_DEBUG(str, " failed to transmit\r\n");
         }
+        append(&g_packet);
     }
     else
     {
