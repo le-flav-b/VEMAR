@@ -13,17 +13,11 @@ static volatile uint8_t sds_rx_idx = 0;
 
 // static struct bme_calib calib = {0};  /* master reads BME280 directly */
 
-/* BME280 register definitions - master reads BME280 directly
-#define BME280_ADDR           0x77
+#define BME280_ADDR           0x76
 #define BME280_REG_RESET      0xE0
 #define BME280_REG_CTRL_HUM   0xF2
-#define BME280_REG_STATUS     0xF3
 #define BME280_REG_CTRL_MEAS  0xF4
 #define BME280_REG_CONFIG     0xF5
-#define BME280_REG_CALIB_00   0x88
-#define BME280_REG_CALIB_26   0xE1
-#define BME280_REG_DATA       0xF7
-*/
 
 #define UART_DEBUG_PULSE 1
 #define UART_DEBUG_EVERY_LOOPS 50
@@ -176,184 +170,63 @@ ISR(TWI0_TWIS_vect) {
     }
 }
 
-/* BME280 I2C functions - master reads BME280 directly
+
 static int8_t bme_write_reg(uint8_t reg, uint8_t value) {
     int8_t err = i2c_start((BME280_ADDR << 1), false);
-    if (err != 0) {
-        i2c_stop();
-        return err;
-    }
-
+    if (err) { i2c_stop(); return err; }
     err = i2c_write(reg);
-    if (err != 0) {
-        i2c_stop();
-        return err;
-    }
-
+    if (err) { i2c_stop(); return err; }
     err = i2c_write(value);
     i2c_stop();
     return err;
 }
 
-static int8_t bme_read_regs(uint8_t reg, uint8_t *data, uint8_t len) {
-    int8_t err = i2c_start((BME280_ADDR << 1), false);
-    if (err != 0) {
-        i2c_stop();
-        return err;
+static void bme_i2c_bus_clear(void) {
+#if defined(__AVR_ATtiny1614__) || defined(__AVR_ATtiny412__)
+    // Disable TWI so we can manually toggle the bus lines.
+    TWI0.MCTRLA &= ~TWI_ENABLE_bm;
+    TWI0.SCTRLA &= ~TWI_ENABLE_bm;
+
+    // Release SCL/SDA and enable weak pull-ups during recovery.
+    PORTB.DIRCLR = PIN0_bm | PIN1_bm;
+    PORTB.OUTSET = PIN0_bm | PIN1_bm;
+    _delay_us(5);
+
+    // If SDA is stuck low, clock SCL up to 9 times to free the bus.
+    for (uint8_t i = 0; i < 9 && !(PORTB.IN & PIN1_bm); i++) {
+        PORTB.OUTCLR = PIN0_bm;
+        PORTB.DIRSET = PIN0_bm;  // Drive SCL low
+        _delay_us(5);
+        PORTB.DIRCLR = PIN0_bm;  // Release SCL high
+        _delay_us(5);
     }
 
-    err = i2c_write(reg);
-    i2c_stop();
-    if (err != 0) {
-        return err;
-    }
+    // Generate a STOP condition: SDA low -> SDA high while SCL is high.
+    PORTB.DIRCLR = PIN0_bm;     // Ensure SCL released high
+    _delay_us(5);
+    PORTB.OUTCLR = PIN1_bm;
+    PORTB.DIRSET = PIN1_bm;     // Drive SDA low
+    _delay_us(5);
+    PORTB.DIRCLR = PIN1_bm;     // Release SDA high
+    _delay_us(5);
 
-    err = i2c_start((BME280_ADDR << 1) | 1, false);
-    if (err != 0) {
-        i2c_stop();
-        return err;
-    }
-
-    for (uint8_t i = 0; i < len; i++) {
-        int16_t rx = (i == (uint8_t)(len - 1)) ? i2c_read_nack() : i2c_read_ack();
-        if (rx < 0) {
-            i2c_stop();
-            return (int8_t)rx;
-        }
-        data[i] = (uint8_t)rx;
-    }
-
-    i2c_stop();
-    return 0;
+    // Leave pins as inputs; disable pull-ups (external pull-ups in use).
+    PORTB.OUTCLR = PIN0_bm | PIN1_bm;
+    PORTB.DIRCLR = PIN0_bm | PIN1_bm;
+#endif
 }
 
-static bool bme_wait_ready(uint16_t timeout_ms) {
-    uint8_t status = 0;
-    while (timeout_ms-- > 0) {
-        if (bme_read_regs(BME280_REG_STATUS, &status, 1) == 0) {
-            if ((status & 0x09) == 0) {
-                return true;
-            }
-        }
-        _delay_ms(1);
-    }
-    return false;
-}
-
-static void blink(uint8_t n, uint16_t on_ms, uint16_t off_ms) {
-    for (uint8_t i = 0; i < n; i++) {
-        PORTB.OUTSET = PIN2_bm;
-        for (uint16_t j = 0; j < on_ms; j++) _delay_ms(1);
-        PORTB.OUTCLR = PIN2_bm;
-        for (uint16_t j = 0; j < off_ms; j++) _delay_ms(1);
-    }
-}
-
-static void calibrate_bme(void) {
-    uint8_t calib_data[28] = {0};
-    uint8_t calib_tp[26] = {0};
-    uint8_t calib_h[7] = {0};
-
+static void bme_init(void) {
+    _delay_ms(50);
+    bme_i2c_bus_clear();
     i2c_switch_to_master();
-
-    // Verify chip ID — must read 0x60 from register 0xD0.
-    // Blink count encodes the I2C error: 1=arblost 2=buserr 3=NACK(wrong addr) 5=timeout(bus stuck) 4=wrong chip ID
-    uint8_t chip_id = 0;
-    int8_t id_err = bme_read_regs(0xD0, &chip_id, 1);
-    if (id_err != 0) {
-        uint8_t n = (id_err == -3) ? 3 : (id_err == -5) ? 5 : (id_err == -1) ? 1 : 2;
-        blink(n, 200, 200);
-        blink(n, 200, 200); // repeat so it's easy to count
-        i2c_switch_to_slave();
-        return;
-    }
-    if (chip_id != 0x60) {
-        blink(4, 200, 200); // 4 blinks = wrong chip ID (got something, not BME280)
-        blink(4, 200, 200);
-        i2c_switch_to_slave();
-        return;
-    }
-
-    // Soft reset; sensor may NACK the data byte as it resets — expected.
     (void)bme_write_reg(BME280_REG_RESET, 0xB6);
-    _delay_ms(10); // 10ms > datasheet 2ms startup time
-
-    // config: t_standby=10ms (bits[7:5]=110), filter off → 0xC0
-    // ctrl_hum must be written before ctrl_meas to take effect
-    (void)bme_write_reg(BME280_REG_CTRL_HUM, 0x01);
-    (void)bme_write_reg(BME280_REG_CONFIG, 0xC0);
-    (void)bme_write_reg(BME280_REG_CTRL_MEAS, 0x27);
-
-    int8_t err1 = bme_read_regs(BME280_REG_CALIB_00, calib_tp, sizeof(calib_tp));
-    int8_t err2 = bme_read_regs(BME280_REG_CALIB_26, calib_h, sizeof(calib_h));
-
-    if (err1 != 0 || err2 != 0) {
-        // blink(3, 100, 100); // 3 fast blinks = calibration read failed
-        i2c_switch_to_slave();
-        return;
-    }
-
-    for (uint8_t i = 0; i < 24; i++) {
-        calib_data[i] = calib_tp[i];
-    }
-    calib_data[24] = calib_tp[25];
-    calib_data[25] = calib_h[0];
-    calib_data[26] = calib_h[1];
-    calib_data[27] = calib_h[2];
-
-    load_bme280_calib(calib_data, &calib);
-    calib.dig_H4 = ((int16_t)calib_h[3] << 4) | (calib_h[4] & 0x0F);
-    calib.dig_H5 = ((int16_t)calib_h[5] << 4) | (calib_h[4] >> 4);
-    calib.dig_H6 = (int8_t)calib_h[6];
-
-    blink(1, 500, 0); // 1 long blink = calibration loaded OK
-
+    _delay_ms(10);
+    (void)bme_write_reg(BME280_REG_CTRL_HUM,  0x01);
+    (void)bme_write_reg(BME280_REG_CONFIG,     0xC0);
+    (void)bme_write_reg(BME280_REG_CTRL_MEAS,  0x27);
     i2c_switch_to_slave();
 }
-
-void read_bme(void) {
-    uint8_t raw_bme_data[8] = {0};
-
-    i2c_switch_to_master();
-    if (!bme_wait_ready(50)) {
-        i2c_switch_to_slave();
-        return;
-    }
-
-    if (bme_read_regs(BME280_REG_DATA, raw_bme_data, sizeof(raw_bme_data)) == 0) {
-        BME280_S32_t adc_P = (BME280_S32_t)(((uint32_t)raw_bme_data[0] << 12) |
-                                            ((uint32_t)raw_bme_data[1] << 4) |
-                                            ((uint32_t)raw_bme_data[2] >> 4));
-        BME280_S32_t adc_T = (BME280_S32_t)(((uint32_t)raw_bme_data[3] << 12) |
-                                            ((uint32_t)raw_bme_data[4] << 4) |
-                                            ((uint32_t)raw_bme_data[5] >> 4));
-        BME280_S32_t adc_H = (BME280_S32_t)(((uint32_t)raw_bme_data[6] << 8) |
-                                             (uint32_t)raw_bme_data[7]);
-
-        int32_t temp_comp = BME280_compensate_T_int32(adc_T, &calib);
-        uint32_t pres_comp = BME280_compensate_P_int64(adc_P, &calib);
-        uint32_t hum_comp = bme280_compensate_H_int32(adc_H, &calib);
-
-        bme_data[0] = (uint8_t)((temp_comp >> 24) & 0xFF);
-        bme_data[1] = (uint8_t)((temp_comp >> 16) & 0xFF);
-        bme_data[2] = (uint8_t)((temp_comp >> 8) & 0xFF);
-        bme_data[3] = (uint8_t)(temp_comp & 0xFF);
-
-        bme_data[4] = (uint8_t)((pres_comp >> 24) & 0xFF);
-        bme_data[5] = (uint8_t)((pres_comp >> 16) & 0xFF);
-        bme_data[6] = (uint8_t)((pres_comp >> 8) & 0xFF);
-        bme_data[7] = (uint8_t)(pres_comp & 0xFF);
-
-        bme_data[8] = (uint8_t)((hum_comp >> 24) & 0xFF);
-        bme_data[9] = (uint8_t)((hum_comp >> 16) & 0xFF);
-        bme_data[10] = (uint8_t)((hum_comp >> 8) & 0xFF);
-        bme_data[11] = (uint8_t)(hum_comp & 0xFF);
-        // toggle_led();
-    }
-
-    i2c_switch_to_slave();
-}
-*/
 
 static void fill_msg(void) {
     uint8_t sreg;
@@ -363,7 +236,7 @@ static void fill_msg(void) {
     msg.len = 0;
     SREG = sreg;
 
-    uint16_t len = PM_PACKET_SIZE + 2; // +2 debug bytes; BME removed, master reads directly
+    uint16_t len = PM_PACKET_SIZE + 2;
 
     sreg = SREG;
     cli();
@@ -374,11 +247,6 @@ static void fill_msg(void) {
     for (uint8_t i = 0; i < PM_PACKET_SIZE; i++) {
         msg.buffer[sizeof(uint16_t) + i] = pm_data_finished[i];
     }
-    /* BME data removed - master reads BME280 directly
-    for (uint8_t i = 0; i < BME_PACKET_SIZE; i++) {
-        msg.buffer[sizeof(uint16_t) + PM_PACKET_SIZE + i] = bme_data[i];
-    }
-    */
     msg.buffer[sizeof(uint16_t) + PM_PACKET_SIZE]     = (uint8_t)(sds_valid_frames & 0xFF);
     msg.buffer[sizeof(uint16_t) + PM_PACKET_SIZE + 1] = (uint8_t)(sds_rx_bytes & 0xFF);
 
@@ -401,22 +269,18 @@ void slave_init(void) {
 int main(void) {
     slave_init();
     _delay_ms(1000); // Wait for sensors to power up
-    // calibrate_bme();  // Master reads BME280 directly now
+    bme_init();
     send_sds011_wakeup();
     set_sds011_active_mode();
     _delay_ms(3000);  // Give sensor time to stabilize and start sending real data
 
-    // read_bme();  // Master reads BME280 directly now
     fill_msg();
     sei();
 
     while (1) {
         if (needs_fill) {
-            // read_bme();  // Master reads BME280 directly now
             fill_msg();
         }
-        // PORTA.OUTTGL = PIN1_bm;
-        // _delay_ms(100);
         _delay_ms(10);
     }
     return 0;
