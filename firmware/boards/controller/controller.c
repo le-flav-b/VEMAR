@@ -21,7 +21,7 @@
 #define _CONTROLLER_MODE_TX 0x20    /**< TX mode */
 #define _CONTROLLER_MASK_RADIO 0xF0 /**< Mask of Controller transmission mode */
 
-#define _CONTROLLER_RX_DELAY 10000U /**< Delay for reception */
+#define _CONTROLLER_RX_DELAY 8000U /**< Delay for reception */
 
 #define _DISPLAY_W 8U
 #define _DISPLAY_H 8U
@@ -336,6 +336,7 @@ void _CONTROLLER_handle_packet(byte_t type, void (*callback)(void))
 //------------------------------------------------------------------------------
 void CONTROLLER_read(void)
 {
+    static uint8_t rx_retry;
     bool_t signal = FALSE;
 
     for (uint16_t r = 0; r < _CONTROLLER_RX_DELAY; ++r)
@@ -385,10 +386,14 @@ void CONTROLLER_read(void)
     }
     else
     {
-        _CONTROLLER_disconnect();
-        CONTROLLER_DEBUG(str, "receive fail - signal: ");
-        CONTROLLER_DEBUG(int, g_radio_status);
-        CONTROLLER_DEBUG(str, "\r\n");
+        if (10 < ++rx_retry)
+        {
+            rx_retry = 0;
+            _CONTROLLER_disconnect();
+            CONTROLLER_DEBUG(str, "receive fail - signal: ");
+            CONTROLLER_DEBUG(int, g_radio_status);
+            CONTROLLER_DEBUG(str, "\r\n");
+        }
     }
 }
 
@@ -646,13 +651,16 @@ ISR(PCINT1_vect)
 {
     if (BIT_is_clear(PINC, BIT(PINC0)))
     {
-        if (0 != g_radio_status)
+        if (0 == g_radio_status)
         {
-            _CONTROLLER_switch_display();
+            CONTROLLER_display_none();
         }
         else
         {
-            CONTROLLER_display_none();
+            if (BIT_is_set(g_ctrl_mode, _CONTROLLER_MODE_RX))
+            {
+                _CONTROLLER_switch_display();
+            }
         }
     } // PC0 interrupt
 
