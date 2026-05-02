@@ -6,7 +6,7 @@ uint8_t file_valid = 0; // flag for file validity
 
 // Check if SD card is present by trying to initialize it.  Returns 1 if present, 0 if not.
 uint8_t sd_check(void) {    
-    uint8_t res = SD_init(&DDRB, &PORTB, (1 << PB2));
+    uint8_t res = SD_init(&DDRD, &PORTD, (1 << PD4));
     sd_valid = (res == SD_OK);
     return sd_valid;
 }

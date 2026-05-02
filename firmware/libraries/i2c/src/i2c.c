@@ -106,6 +106,7 @@ void i2c_switch_to_slave(void) {
   TWCR = (1 << TWEA) | (1 << TWEN);
 #endif
 }
+
 int8_t i2c_start(uint8_t addr_rw, bool restart) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   (void)restart;

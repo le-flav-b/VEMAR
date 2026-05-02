@@ -1,4 +1,5 @@
 #include <radio.h>
+#include <spi.h>
 
 #include "module.h"
 #include "motor.h"
@@ -20,10 +21,21 @@ void setup(void)
 #ifdef VEMAR_DEBUG_ENABLED
     SERIAL_init();
 #endif
+    _delay_ms(500);
+    /* Hold radio CSN high before any SPI activity — prevents NRF24L01 from
+       latching SD card MISO traffic while its CSN is not yet configured */
+    DDRD  |= (1 << PD3);
+    PORTD |= (1 << PD3);
+    uint8_t sd_res = 1;
+    for (uint8_t i = 0; i < 5 && sd_res != 0; i++) {
+        sd_res = sd_prepare();
+    }
+    /* SD_init leaves SPI enabled; SPI_init skips if SPE is set, so reset
+       first so RADIO_init gets the correct clock speed (F_CPU/4) */
+    SPI_reset();
     RADIO_init(PIN_RADIO_CE, PIN_RADIO_CSN);
     motor_init();
     i2c_init();
-    _delay_ms(500);
     VEMAR_DEBUG(str, "setup done\r\n");
 }
 
