@@ -22,6 +22,8 @@ static volatile uint8_t sds_rx_idx = 0;
 #define UART_DEBUG_PULSE 1
 #define UART_DEBUG_EVERY_LOOPS 50
 
+uint8_t bme_init = 0;
+
 static void clock_init_20mhz(void) {
 #if defined(__AVR_ATtiny1614__) || defined(__AVR_ATtiny412__)
     // Select high-frequency internal oscillator as system clock source.
@@ -128,6 +130,7 @@ ISR(USART0_RXC_vect) {
         pm_data_finished[1] = sds_rx_buf[3]; // PM2.5 high
         pm_data_finished[2] = sds_rx_buf[4]; // PM10 low
         pm_data_finished[3] = sds_rx_buf[5]; // PM10 high
+        pm_data_finished[4] = bme_init;
         sds_valid_frames++;
         // toggle_led();
     }
@@ -167,66 +170,73 @@ ISR(TWI0_TWIS_vect) {
                 needs_fill = true;
             }
         }
+        else {
+            uint8_t rec = TWI0.SDATA;
+            if (rec == 1) {
+                bme_init = 1;
+                i2c_slave_ack();
+            }
+        }
     }
 }
 
 
-static int8_t bme_write_reg(uint8_t reg, uint8_t value) {
-    int8_t err = i2c_start((BME280_ADDR << 1), false);
-    if (err) { i2c_stop(); return err; }
-    err = i2c_write(reg);
-    if (err) { i2c_stop(); return err; }
-    err = i2c_write(value);
-    i2c_stop();
-    return err;
-}
+// static int8_t bme_write_reg(uint8_t reg, uint8_t value) {
+//     int8_t err = i2c_start((BME280_ADDR << 1), false);
+//     if (err) { i2c_stop(); return err; }
+//     err = i2c_write(reg);
+//     if (err) { i2c_stop(); return err; }
+//     err = i2c_write(value);
+//     i2c_stop();
+//     return err;
+// }
 
-static void bme_i2c_bus_clear(void) {
-#if defined(__AVR_ATtiny1614__) || defined(__AVR_ATtiny412__)
-    // Disable TWI so we can manually toggle the bus lines.
-    TWI0.MCTRLA &= ~TWI_ENABLE_bm;
-    TWI0.SCTRLA &= ~TWI_ENABLE_bm;
+// static void bme_i2c_bus_clear(void) {
+// #if defined(__AVR_ATtiny1614__) || defined(__AVR_ATtiny412__)
+//     // Disable TWI so we can manually toggle the bus lines.
+//     TWI0.MCTRLA &= ~TWI_ENABLE_bm;
+//     TWI0.SCTRLA &= ~TWI_ENABLE_bm;
 
-    // Release SCL/SDA and enable weak pull-ups during recovery.
-    PORTB.DIRCLR = PIN0_bm | PIN1_bm;
-    PORTB.OUTSET = PIN0_bm | PIN1_bm;
-    _delay_us(5);
+//     // Release SCL/SDA and enable weak pull-ups during recovery.
+//     PORTB.DIRCLR = PIN0_bm | PIN1_bm;
+//     PORTB.OUTSET = PIN0_bm | PIN1_bm;
+//     _delay_us(5);
 
-    // If SDA is stuck low, clock SCL up to 9 times to free the bus.
-    for (uint8_t i = 0; i < 9 && !(PORTB.IN & PIN1_bm); i++) {
-        PORTB.OUTCLR = PIN0_bm;
-        PORTB.DIRSET = PIN0_bm;  // Drive SCL low
-        _delay_us(5);
-        PORTB.DIRCLR = PIN0_bm;  // Release SCL high
-        _delay_us(5);
-    }
+//     // If SDA is stuck low, clock SCL up to 9 times to free the bus.
+//     for (uint8_t i = 0; i < 9 && !(PORTB.IN & PIN1_bm); i++) {
+//         PORTB.OUTCLR = PIN0_bm;
+//         PORTB.DIRSET = PIN0_bm;  // Drive SCL low
+//         _delay_us(5);
+//         PORTB.DIRCLR = PIN0_bm;  // Release SCL high
+//         _delay_us(5);
+//     }
 
-    // Generate a STOP condition: SDA low -> SDA high while SCL is high.
-    PORTB.DIRCLR = PIN0_bm;     // Ensure SCL released high
-    _delay_us(5);
-    PORTB.OUTCLR = PIN1_bm;
-    PORTB.DIRSET = PIN1_bm;     // Drive SDA low
-    _delay_us(5);
-    PORTB.DIRCLR = PIN1_bm;     // Release SDA high
-    _delay_us(5);
+//     // Generate a STOP condition: SDA low -> SDA high while SCL is high.
+//     PORTB.DIRCLR = PIN0_bm;     // Ensure SCL released high
+//     _delay_us(5);
+//     PORTB.OUTCLR = PIN1_bm;
+//     PORTB.DIRSET = PIN1_bm;     // Drive SDA low
+//     _delay_us(5);
+//     PORTB.DIRCLR = PIN1_bm;     // Release SDA high
+//     _delay_us(5);
 
-    // Leave pins as inputs; disable pull-ups (external pull-ups in use).
-    PORTB.OUTCLR = PIN0_bm | PIN1_bm;
-    PORTB.DIRCLR = PIN0_bm | PIN1_bm;
-#endif
-}
+//     // Leave pins as inputs; disable pull-ups (external pull-ups in use).
+//     PORTB.OUTCLR = PIN0_bm | PIN1_bm;
+//     PORTB.DIRCLR = PIN0_bm | PIN1_bm;
+// #endif
+// }
 
-static void bme_init(void) {
-    _delay_ms(50);
-    bme_i2c_bus_clear();
-    i2c_switch_to_master();
-    (void)bme_write_reg(BME280_REG_RESET, 0xB6);
-    _delay_ms(10);
-    (void)bme_write_reg(BME280_REG_CTRL_HUM,  0x01);
-    (void)bme_write_reg(BME280_REG_CONFIG,     0xC0);
-    (void)bme_write_reg(BME280_REG_CTRL_MEAS,  0x27);
-    i2c_switch_to_slave();
-}
+// static void bme_init(void) {
+//     _delay_ms(50);
+//     bme_i2c_bus_clear();
+//     i2c_switch_to_master();
+//     (void)bme_write_reg(BME280_REG_RESET, 0xB6);
+//     _delay_ms(10);
+//     (void)bme_write_reg(BME280_REG_CTRL_HUM,  0x01);
+//     (void)bme_write_reg(BME280_REG_CONFIG,     0xC0);
+//     (void)bme_write_reg(BME280_REG_CTRL_MEAS,  0x27);
+//     i2c_switch_to_slave();
+// }
 
 static void fill_msg(void) {
     uint8_t sreg;
@@ -269,7 +279,7 @@ void slave_init(void) {
 int main(void) {
     slave_init();
     _delay_ms(1000); // Wait for sensors to power up
-    bme_init();
+    // bme_init();
     send_sds011_wakeup();
     set_sds011_active_mode();
     _delay_ms(3000);  // Give sensor time to stabilize and start sending real data

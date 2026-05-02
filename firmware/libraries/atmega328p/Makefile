@@ -51,6 +51,7 @@ SOURCES		=	main.c \
 				joystick.c \
 				nrf24l01.c \
 				radio.c \
+				sd.c \
 				ili9341.c \
 				tft.c \
 				util.c \
