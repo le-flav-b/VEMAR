@@ -298,5 +298,12 @@ bool_t ATMOSPHERE_fill_packet(uint8_t addr, packet_t *packet)
     VEMAR_DEBUG(uint, packet->atmosphere.humidity);
     VEMAR_DEBUG(str, " %RH\r\n");
 
+    if (buffer[4] == 0) {
+        ATMOSPHERE_init();
+        _delay_ms(50);
+        uint8_t cmd = 1;
+        i2c_write_packet(addr, &cmd, 1);
+    }
+
     return (TRUE);
 }

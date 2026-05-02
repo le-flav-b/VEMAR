@@ -2,6 +2,7 @@
 
 #include "module.h"
 #include "motor.h"
+#include "data_save.h"
 
 #define PIN_RADIO_CE PIN_PD2
 #define PIN_RADIO_CSN PIN_PD3
@@ -19,18 +20,10 @@ void setup(void)
 #ifdef VEMAR_DEBUG_ENABLED
     SERIAL_init();
 #endif
-
     RADIO_init(PIN_RADIO_CE, PIN_RADIO_CSN);
     motor_init();
-
     i2c_init();
-    _delay_ms(100);
-    if (!ATMOSPHERE_init())
-    {
-        VEMAR_DEBUG(str, "atmosphere module init failed\r\n");
-    }
     _delay_ms(500);
-
     VEMAR_DEBUG(str, "setup done\r\n");
 }
 
