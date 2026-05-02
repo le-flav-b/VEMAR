@@ -11,7 +11,7 @@
 
 #include <util/twi.h>
 
-#define SLAVE_ADDR 0x09
+// #define SLAVE_ADDR 0x09
 // #define I2C_MASTER
 #define I2C_FREQ 100000UL
 #define MT_DATA_ACK TW_MT_DATA_ACK
