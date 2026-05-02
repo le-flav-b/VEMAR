@@ -34,10 +34,10 @@ controller_t g_controller;
 packet_t g_packet;
 packet_t g_packet_tx;
 
-volatile byte_t g_ctrl_mode = 1;   /**< Controller mode flags */
-volatile byte_t g_module_curr = 1; /**< Current display mode */
-volatile byte_t g_module_en;       /**< Current enabled modules */
-volatile byte_t g_radio_status;    /**< Radio strength */
+volatile byte_t g_ctrl_mode = 0x01; /**< Controller mode flags */
+volatile byte_t g_module_curr = 1;  /**< Current display mode */
+volatile byte_t g_module_en;        /**< Current enabled modules */
+volatile byte_t g_radio_status;     /**< Radio strength */
 
 /**
  * @brief Decrease signal strength count,
@@ -91,8 +91,6 @@ void setup(void)
     TFT_set_mode(TFT_LANDSCAPE, TFT_INVERTED, TFT_INVERTED);
     TFT_setup_text(TFT_TEXT_S, 1, RGB16_WHITE, RGB16_BLACK);
     CONTROLLER_interrupt();
-
-    // g_module_en = BIT(_CONTROLLER_MODE_MAP);
     CONTROLLER_display_menu();
     _CONTROLLER_reset_connection();
     _CONTROLLER_set_radio_mode();
@@ -216,11 +214,11 @@ void CONTROLLER_display_radioactivity(void)
 
 void CONTROLLER_display_none(void)
 {
-    if (0 != g_module_en)
-    {
-        TFT_fill_screen(RGB16_BLACK);
-        _CONTROLLER_display_layout("No Module detected");
-    }
+    g_ctrl_mode &= 0xF1; // reset display mode
+    g_module_curr = 1;   // reset current module
+    g_module_en = 0;     // reset all module enable flags
+    TFT_fill_screen(RGB16_BLACK);
+    _CONTROLLER_display_layout("No Module detected");
 }
 
 //------------------------------------------------------------------------------
@@ -244,7 +242,6 @@ void CONTROLLER_update_atmosphere(void)
 
     str = UTIL_itoa_decimal(g_packet.atmosphere.pm10, 6);
     TFT_print_str(COL2, ROW5, str);
-
 }
 
 //------------------------------------------------------------------------------
@@ -327,6 +324,7 @@ void CONTROLLER_update_connection(void)
 void _CONTROLLER_handle_packet(byte_t type, void (*callback)(void))
 {
     g_module_en = g_packet.header.module;
+    _CONTROLLER_display_module();
     if (BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE) == type)
     {
         callback();
@@ -351,11 +349,6 @@ void CONTROLLER_read(void)
 
     if (TRUE == signal)
     {
-        _CONTROLLER_connect();
-        CONTROLLER_DEBUG(str, "packet ID: ");
-        CONTROLLER_DEBUG(int, g_packet.header.id);
-        CONTROLLER_DEBUG(str, " received\r\n");
-
         switch (g_packet.header.id)
         {
         case PACKET_ID_CAR:
@@ -371,20 +364,30 @@ void CONTROLLER_read(void)
                                       CONTROLLER_update_gas);
             break;
         case PACKET_ID_LIDAR:
-            _CONTROLLER_handle_packet(_CONTROLLER_MODE_MAP,
-                                      CONTROLLER_update_map);
+            /// @todo: implement LiDAR
+            // _CONTROLLER_handle_packet(_CONTROLLER_MODE_MAP,
+            //                           CONTROLLER_update_map);
             break;
         case PACKET_ID_GMC:
             _CONTROLLER_handle_packet(_CONTROLLER_MODE_GMC,
                                       CONTROLLER_update_radioactivity);
             break;
         default:
-            break;
+            return;
         }
+        _CONTROLLER_connect();
+        CONTROLLER_DEBUG(str, "packet ID: ");
+        CONTROLLER_DEBUG(int, g_packet.header.id);
+        CONTROLLER_DEBUG(str, " received - signal: ");
+        CONTROLLER_DEBUG(int, g_radio_status);
+        CONTROLLER_DEBUG(str, "\r\n");
     }
     else
     {
         _CONTROLLER_disconnect();
+        CONTROLLER_DEBUG(str, "receive fail - signal: ");
+        CONTROLLER_DEBUG(int, g_radio_status);
+        CONTROLLER_DEBUG(str, "\r\n");
     }
 }
 
@@ -443,12 +446,17 @@ void CONTROLLER_write(void)
         if (RADIO_write(g_packet_tx.buffer, PACKET_SIZE))
         {
             _CONTROLLER_connect();
-            CONTROLLER_DEBUG(str, "send movement\r\n");
+            _CONTROLLER_connect();
+            CONTROLLER_DEBUG(str, "transmit success - signal: ");
+            CONTROLLER_DEBUG(int, g_radio_status);
+            CONTROLLER_DEBUG(str, "\r\n");
             return;
         }
     }
     _CONTROLLER_disconnect();
-    CONTROLLER_DEBUG(str, "transmission failed\r\n");
+    CONTROLLER_DEBUG(str, "transmit fail - signal: ");
+    CONTROLLER_DEBUG(int, g_radio_status);
+    CONTROLLER_DEBUG(str, "\r\n");
 }
 
 //------------------------------------------------------------------------------
@@ -478,7 +486,7 @@ void _CONTROLLER_disconnect(void)
 //------------------------------------------------------------------------------
 void _CONTROLLER_reset_connection(void)
 {
-    g_radio_status = 8;
+    g_radio_status = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -604,7 +612,7 @@ void _CONTROLLER_switch_display(void)
         if (BIT_is_clear(g_module_en, BIT(g_module_curr)))
         {
             continue;
-        }
+        } // if current module is not available, continue
 
         switch (g_module_curr)
         {
@@ -634,7 +642,14 @@ ISR(PCINT1_vect)
 {
     if (BIT_is_clear(PINC, BIT(PINC0)))
     {
-        _CONTROLLER_switch_display();
+        if (0 != g_radio_status)
+        {
+            _CONTROLLER_switch_display();
+        }
+        else
+        {
+            CONTROLLER_display_none();
+        }
     } // PC0 interrupt
 
     if (BIT_is_clear(PINC, BIT(PINC1)))
