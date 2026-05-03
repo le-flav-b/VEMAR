@@ -37,7 +37,17 @@ uint8_t sd_prepare(void) {
 }
 
 static uint8_t sd_open(void) {
-    if (!sd_save_enabled || !sd_valid) {
+    if (!sd_save_enabled) {
+        return 0;
+    }
+    if (!sd_valid && sd_check() == 0) {
+        return 0;
+    }
+    if (SD_json_open("SENSORS") == SD_OK) {
+        return 1;
+    }
+    /* Retry after re-initializing SPI/SD. */
+    if (sd_check() == 0) {
         return 0;
     }
     return (SD_json_open("SENSORS") == SD_OK);
