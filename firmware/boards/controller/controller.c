@@ -422,8 +422,6 @@ void CONTROLLER_write(void)
     int16_t joy_yr = _ADC_CONVERT_RY(ANALOG_read(g_controller.jright.y));
     bool_t joy_br = BUTTON_is_active(&(g_controller.jright.button));
 
-    bool_t btn = BUTTON_is_active(&(g_controller.btn2));
-
     if ((pot == g_packet_tx.car.pot) &&
         (joy_xl == g_packet_tx.car.lx) &&
         (joy_yl == g_packet_tx.car.ly) &&
