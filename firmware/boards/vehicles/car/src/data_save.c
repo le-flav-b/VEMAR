@@ -31,6 +31,7 @@ uint8_t sd_prepare(void) {
         if (sd_file_create("SENSORS") == 0) {
             return 1;
         }
+        SD_json_close();
     }
     return 0;
 }
@@ -55,7 +56,6 @@ uint8_t sd_append_atmosphere(packet_t *packet) {
     led_green_off();
     return 0;
 fail:
-    SD_json_close();
     led_green_off();
     return 1;
 }
@@ -73,7 +73,6 @@ uint8_t sd_append_gas(packet_t *packet) {
     led_green_off();
     return 0;
 fail:
-    SD_json_close();
     led_green_off();
     return 1;
 }
@@ -89,7 +88,6 @@ uint8_t sd_append_radioactivity(packet_t *packet) {
     led_green_off();
     return 0;
 fail:
-    SD_json_close();
     led_green_off();
     return 1;
 }
