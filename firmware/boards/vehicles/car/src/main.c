@@ -4,6 +4,7 @@
 #include "module.h"
 #include "motor.h"
 #include "data_save.h"
+#include "led.h"
 
 #define PIN_RADIO_CE PIN_PD2
 #define PIN_RADIO_CSN PIN_PD3
@@ -34,6 +35,7 @@ void setup(void)
        first so RADIO_init gets the correct clock speed (F_CPU/4) */
     SPI_reset();
     RADIO_init(PIN_RADIO_CE, PIN_RADIO_CSN);
+    led_init();
     motor_init();
     i2c_init();
     VEMAR_DEBUG(str, "setup done\r\n");
@@ -96,6 +98,7 @@ void CAR_handle_movement(void)
 
 	motor_left_set(g_packet.car.ly);
 	motor_right_set(g_packet.car.ry);
+	sd_set_save(g_packet.car.save);
 }
 
 void CAR_read_and_transmit(uint8_t id, uint8_t addr,
