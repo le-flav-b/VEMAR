@@ -65,6 +65,8 @@ static void _CONTROLLER_display_layout(const char *label);
  */
 static void _CONTROLLER_display_module(void);
 
+static void _CONTROLLER_display_save(bool_t save);
+
 /**
  * @brief Check communication mode
  */
@@ -199,6 +201,9 @@ void CONTROLLER_display_map(void)
     }
 }
 
+//------------------------------------------------------------------------------
+// CONTROLLER_display_radioactivity
+//------------------------------------------------------------------------------
 void CONTROLLER_display_radioactivity(void)
 {
     if (_CONTROLLER_MODE_GMC != BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
@@ -212,6 +217,9 @@ void CONTROLLER_display_radioactivity(void)
     }
 }
 
+//------------------------------------------------------------------------------
+// CONTROLLER_display_none
+//------------------------------------------------------------------------------
 void CONTROLLER_display_none(void)
 {
     g_ctrl_mode &= 0xF1; // reset display mode
@@ -324,6 +332,7 @@ void CONTROLLER_update_connection(void)
 void _CONTROLLER_handle_packet(byte_t type, void (*callback)(void))
 {
     g_module_en = g_packet.header.module;
+    _CONTROLLER_display_save(BIT_is_set(g_module_en, BIT(PACKET_ID_SAVE)));
     _CONTROLLER_display_module();
     if (BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE) == type)
     {
@@ -412,40 +421,49 @@ void CONTROLLER_write(void)
     int16_t joy_yr = _ADC_CONVERT_RY(ANALOG_read(g_controller.jright.y));
     bool_t joy_br = BUTTON_is_active(&(g_controller.jright.button));
 
+    bool_t btn = BUTTON_is_active(&(g_controller.btn2));
+
     if ((pot == g_packet_tx.car.pot) &&
         (joy_xl == g_packet_tx.car.lx) &&
         (joy_yl == g_packet_tx.car.ly) &&
         (joy_bl == g_packet_tx.car.lb) &&
         (joy_xr == g_packet_tx.car.rx) &&
         (joy_yr == g_packet_tx.car.ry) &&
-        (joy_br == g_packet_tx.car.rb))
+        (joy_br == g_packet_tx.car.rb) &&
+        (btn == g_packet_tx.car.button))
     {
-        return;
+        g_packet.header.id = PACKET_ID_PING;
     }
-    g_packet_tx.header.id = PACKET_ID_CAR;
-    g_packet_tx.car.pot = pot;
-    g_packet_tx.car.lx = joy_xl;
-    g_packet_tx.car.ly = joy_yl;
-    g_packet_tx.car.lb = joy_bl;
-    g_packet_tx.car.rx = joy_xr;
-    g_packet_tx.car.ry = joy_yr;
-    g_packet_tx.car.rb = joy_br;
+    else
+    {
+        g_packet_tx.header.id = PACKET_ID_CAR;
+        g_packet_tx.car.pot = pot;
+        g_packet_tx.car.lx = joy_xl;
+        g_packet_tx.car.ly = joy_yl;
+        g_packet_tx.car.lb = joy_bl;
+        g_packet_tx.car.rx = joy_xr;
+        g_packet_tx.car.ry = joy_yr;
+        g_packet_tx.car.rb = joy_br;
+        g_packet_tx.car.button = btn;
 
-    CONTROLLER_DEBUG(str, "LX: ");
-    CONTROLLER_DEBUG(int, g_packet_tx.car.lx);
-    CONTROLLER_DEBUG(str, "; LY: ");
-    CONTROLLER_DEBUG(int, g_packet_tx.car.ly);
-    CONTROLLER_DEBUG(str, "; LB: ");
-    CONTROLLER_DEBUG(bool, g_packet_tx.car.lb);
-    CONTROLLER_DEBUG(str, "\r\nRX: ");
-    CONTROLLER_DEBUG(int, g_packet_tx.car.rx);
-    CONTROLLER_DEBUG(str, "; RY: ");
-    CONTROLLER_DEBUG(int, g_packet_tx.car.ry);
-    CONTROLLER_DEBUG(str, "; RB: ");
-    CONTROLLER_DEBUG(bool, g_packet_tx.car.rb);
-    CONTROLLER_DEBUG(str, "\r\nPotentiometer: ");
-    CONTROLLER_DEBUG(uint, g_packet_tx.car.pot);
-    CONTROLLER_DEBUG(str, "\r\n--------\r\n");
+        CONTROLLER_DEBUG(str, "LX: ");
+        CONTROLLER_DEBUG(int, g_packet_tx.car.lx);
+        CONTROLLER_DEBUG(str, "; LY: ");
+        CONTROLLER_DEBUG(int, g_packet_tx.car.ly);
+        CONTROLLER_DEBUG(str, "; LB: ");
+        CONTROLLER_DEBUG(bool, g_packet_tx.car.lb);
+        CONTROLLER_DEBUG(str, "\r\nRX: ");
+        CONTROLLER_DEBUG(int, g_packet_tx.car.rx);
+        CONTROLLER_DEBUG(str, "; RY: ");
+        CONTROLLER_DEBUG(int, g_packet_tx.car.ry);
+        CONTROLLER_DEBUG(str, "; RB: ");
+        CONTROLLER_DEBUG(bool, g_packet_tx.car.rb);
+        CONTROLLER_DEBUG(str, "\r\nPotentiometer: ");
+        CONTROLLER_DEBUG(uint, g_packet_tx.car.pot);
+        CONTROLLER_DEBUG(str, "; Button B: ");
+        CONTROLLER_DEBUG(bool, g_packet_tx.car.button);
+        CONTROLLER_DEBUG(str, "\r\n--------\r\n");
+    }
 
     for (length_t attempt = 0; attempt < 5; ++attempt)
     {
@@ -574,6 +592,15 @@ void _CONTROLLER_display_layout(const char *label)
     else
     {
         TFT_print_str(COL_RXTX, ROW_LAST, "Rx/Tx");
+    }
+}
+
+void _CONTROLLER_display_save(bool_t save)
+{
+    if (FALSE == save) {
+        TFT_print_char(300, ROW_LAST, ' ');
+    } else {
+        TFT_print_char(300, ROW_LAST, 'S');
     }
 }
 
