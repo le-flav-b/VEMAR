@@ -564,7 +564,7 @@ static uint8_t file_write(const uint8_t *data, uint8_t len)
         uint32_t write_lba      = cluster_to_lba(_file_last_cluster) + sec_in_cluster;
 
         uint16_t space    = 512 - byte_in_sector;
-        uint8_t  to_write = (uint8_t)((len - written) < space ? (len - written) : space);
+        uint8_t  to_write = (uint8_t)((len - written) < (int16_t)space ? (len - written) : (int16_t)space);
 
         if (sd_read(write_lba)) return SD_ERR_IO;
         memcpy(_buf + byte_in_sector, data + written, to_write);
