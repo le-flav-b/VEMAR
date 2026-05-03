@@ -39,8 +39,60 @@ static void _motor_right_set_pwm_ccw(uint8_t speed) { OCR1B = speed; }
 
 static uint8_t _motor_left_direction = 0;  // 0 = stopped, 1 = cw, 2 = ccw
 static uint8_t _motor_right_direction = 0;  // 0 = stopped, 1 = cw, 2 = ccw
-static uint8_t _motor_left_old_speed = 0;
-static uint8_t _motor_right_old_speed = 0;
+static int16_t _motor_left_old_speed = 0;
+static int16_t _motor_right_old_speed = 0;
+
+static void _motor_left_ramp_down(void)
+{
+    uint8_t pwm = (_motor_left_direction == 1) ? (uint8_t)(-_motor_left_old_speed) : (uint8_t)_motor_left_old_speed;
+    while (pwm > MOTOR_RAMP_STEP) {
+        pwm -= MOTOR_RAMP_STEP;
+        if (_motor_left_direction == 1) _motor_left_set_pwm_cw(pwm);
+        else _motor_left_set_pwm_ccw(pwm);
+        _delay_ms(MOTOR_RAMP_MS);
+    }
+    if (_motor_left_direction == 1) _motor_left_set_pwm_cw(0);
+    else _motor_left_set_pwm_ccw(0);
+}
+
+static void _motor_left_ramp_up(uint8_t target)
+{
+    uint8_t pwm = 0;
+    while (pwm + MOTOR_RAMP_STEP < target) {
+        pwm += MOTOR_RAMP_STEP;
+        if (_motor_left_direction == 1) _motor_left_set_pwm_cw(pwm);
+        else _motor_left_set_pwm_ccw(pwm);
+        _delay_ms(MOTOR_RAMP_MS);
+    }
+    if (_motor_left_direction == 1) _motor_left_set_pwm_cw(target);
+    else _motor_left_set_pwm_ccw(target);
+}
+
+static void _motor_right_ramp_down(void)
+{
+    uint8_t pwm = (_motor_right_direction == 1) ? (uint8_t)(-_motor_right_old_speed) : (uint8_t)_motor_right_old_speed;
+    while (pwm > MOTOR_RAMP_STEP) {
+        pwm -= MOTOR_RAMP_STEP;
+        if (_motor_right_direction == 1) _motor_right_set_pwm_cw(pwm);
+        else _motor_right_set_pwm_ccw(pwm);
+        _delay_ms(MOTOR_RAMP_MS);
+    }
+    if (_motor_right_direction == 1) _motor_right_set_pwm_cw(0);
+    else _motor_right_set_pwm_ccw(0);
+}
+
+static void _motor_right_ramp_up(uint8_t target)
+{
+    uint8_t pwm = 0;
+    while (pwm + MOTOR_RAMP_STEP < target) {
+        pwm += MOTOR_RAMP_STEP;
+        if (_motor_right_direction == 1) _motor_right_set_pwm_cw(pwm);
+        else _motor_right_set_pwm_ccw(pwm);
+        _delay_ms(MOTOR_RAMP_MS);
+    }
+    if (_motor_right_direction == 1) _motor_right_set_pwm_cw(target);
+    else _motor_right_set_pwm_ccw(target);
+}
 
 void motor_init(void)
 {
@@ -70,14 +122,38 @@ void motor_left_set(int16_t speed)
 	}
 	if (speed > 0) // ccw
 	{
-		_motor_left_set_pwm_ccw(_motor_left_old_speed = speed);
-		if (_motor_left_direction != 2) _motor_left_enable_ccw();
-		_motor_left_direction = 2;
+		_motor_left_old_speed = speed;
+		if (_motor_left_direction == 1)
+		{
+			_motor_left_ramp_down();
+			_motor_left_set_pwm_ccw(0);
+			_motor_left_enable_ccw();
+			_motor_left_direction = 2;
+			_motor_left_ramp_up((uint8_t)speed);
+		}
+		else
+		{
+			_motor_left_set_pwm_ccw((uint8_t)speed);
+			if (_motor_left_direction != 2) _motor_left_enable_ccw();
+			_motor_left_direction = 2;
+		}
 		return;
 	} // else speed < 0, cw
-	_motor_left_set_pwm_cw(_motor_left_old_speed = -speed);
-	if (_motor_left_direction != 1) _motor_left_enable_cw();
-	_motor_left_direction = 1;
+	_motor_left_old_speed = speed;
+	if (_motor_left_direction == 2)
+	{
+		_motor_left_ramp_down();
+		_motor_left_set_pwm_cw(0);
+		_motor_left_enable_cw();
+		_motor_left_direction = 1;
+		_motor_left_ramp_up((uint8_t)(-speed));
+	}
+	else
+	{
+		_motor_left_set_pwm_cw((uint8_t)(-speed));
+		if (_motor_left_direction != 1) _motor_left_enable_cw();
+		_motor_left_direction = 1;
+	}
 }
 
 // -255 to 255 : negative = ccw, positive = cw, 0 = stop
@@ -93,12 +169,36 @@ void motor_right_set(int16_t speed)
 	}
 	if (speed > 0) // cw
 	{
-		_motor_right_set_pwm_cw(_motor_right_old_speed = speed);
-		if (_motor_right_direction != 1) _motor_right_enable_cw();
-		_motor_right_direction = 1;
+		_motor_right_old_speed = speed;
+		if (_motor_right_direction == 2)
+		{
+			_motor_right_ramp_down();
+			_motor_right_set_pwm_cw(0);
+			_motor_right_enable_cw();
+			_motor_right_direction = 1;
+			_motor_right_ramp_up((uint8_t)speed);
+		}
+		else
+		{
+			_motor_right_set_pwm_cw((uint8_t)speed);
+			if (_motor_right_direction != 1) _motor_right_enable_cw();
+			_motor_right_direction = 1;
+		}
 		return;
 	} // else speed < 0, ccw
-	_motor_right_set_pwm_ccw(_motor_right_old_speed = -speed);
-	if (_motor_right_direction != 2) _motor_right_enable_ccw();
-	_motor_right_direction = 2;
+	_motor_right_old_speed = speed;
+	if (_motor_right_direction == 1)
+	{
+		_motor_right_ramp_down();
+		_motor_right_set_pwm_ccw(0);
+		_motor_right_enable_ccw();
+		_motor_right_direction = 2;
+		_motor_right_ramp_up((uint8_t)(-speed));
+	}
+	else
+	{
+		_motor_right_set_pwm_ccw((uint8_t)(-speed));
+		if (_motor_right_direction != 2) _motor_right_enable_ccw();
+		_motor_right_direction = 2;
+	}
 }

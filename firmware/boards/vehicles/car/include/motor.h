@@ -13,7 +13,9 @@
 #define MOTOR_RIGHT_PWM_CW _PB1
 #define MOTOR_RIGHT_PWM_CCW _PB2
 
-#define DEAD_TIME_US 5000UL
+#define DEAD_TIME_US    5000UL
+#define MOTOR_RAMP_STEP 16      // PWM units per ramp step
+#define MOTOR_RAMP_MS   4       // ms per ramp step (~64ms for full-speed reversal)
 
 void motor_init(void);
 void motor_left_set(int16_t speed);
