@@ -39,6 +39,7 @@ volatile byte_t g_module_curr = 1;    /**< Current display mode */
 volatile byte_t g_module_en;          /**< Current enabled modules */
 volatile byte_t g_radio_status;       /**< Radio strength */
 volatile byte_t g_save_enabled = 0;   /**< SD save enabled flag */
+volatile bool_t g_save_toggle = FALSE; /**< Pending save toggle from ISR */
 
 /**
  * @brief Decrease signal strength count,
@@ -105,6 +106,12 @@ void setup(void)
 //------------------------------------------------------------------------------
 void loop(void)
 {
+    if (g_save_toggle)
+    {
+        g_save_toggle = FALSE;
+        g_save_enabled ^= 1;
+        _CONTROLLER_display_save(g_save_enabled);
+    }
     if (BIT_is_set(g_ctrl_mode, _CONTROLLER_MODE_RX))
     {
         CONTROLLER_read();
@@ -333,7 +340,7 @@ void CONTROLLER_update_connection(void)
 void _CONTROLLER_handle_packet(byte_t type, void (*callback)(void))
 {
     g_module_en = g_packet.header.module;
-    _CONTROLLER_display_save(BIT_is_set(g_module_en, BIT(PACKET_ID_SAVE)));
+    // _CONTROLLER_display_save(BIT_is_set(g_module_en, BIT(PACKET_ID_SAVE)));
     _CONTROLLER_display_module();
     if (BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE) == type)
     {
@@ -431,7 +438,8 @@ void CONTROLLER_write(void)
         (joy_br == g_packet_tx.car.rb) &&
         (g_save_enabled == g_packet_tx.car.save))
     {
-        g_packet.header.id = PACKET_ID_PING;
+        // g_packet_tx.header.id = PACKET_ID_PING;
+        return;
     }
     else
     {
@@ -486,13 +494,10 @@ void CONTROLLER_write(void)
 //------------------------------------------------------------------------------
 void _CONTROLLER_connect(void)
 {
-    if (_RADIO_SIGNAL_MAX > g_radio_status)
+    g_radio_status += 2;
+    if (_RADIO_SIGNAL_MAX < g_radio_status)
     {
-        ++g_radio_status;
-    }
-    if (_RADIO_SIGNAL_MAX > g_radio_status)
-    {
-        ++g_radio_status;
+        g_radio_status = _RADIO_SIGNAL_MAX;
     }
 }
 
@@ -592,6 +597,7 @@ void _CONTROLLER_display_layout(const char *label)
     {
         TFT_print_str(COL_RXTX, ROW_LAST, "Rx/Tx");
     }
+    _CONTROLLER_display_save(g_save_enabled);
 }
 
 void _CONTROLLER_display_save(bool_t save)
@@ -692,7 +698,7 @@ ISR(PCINT1_vect)
 
     if (BIT_is_clear(PINC, BIT(PINC1)))
     {
-        g_save_enabled ^= 1;
+        g_save_toggle = TRUE;
     } // PC1 interrupt
 }
 

@@ -112,6 +112,9 @@ void CAR_read_and_transmit(uint8_t id, uint8_t addr,
             VEMAR_DEBUG(int, id);
             VEMAR_DEBUG(str, " failed to transmit\r\n");
         }
+        /* Switch to RX before SD write so the nRF24L01 FIFO buffers incoming
+           controller packets and auto-ACKs them while SPI is busy with SD. */
+        NRF24L01_mode_rx();
         append(&g_packet);
     }
     else

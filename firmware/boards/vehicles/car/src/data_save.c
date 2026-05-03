@@ -3,28 +3,20 @@
 
 uint32_t idx = 0;
 uint8_t sd_valid = 0;
-uint8_t file_valid = 0;
 uint8_t sd_save_enabled = 0;
 
-// Check if SD card is present by trying to initialize it.  Returns 1 if present, 0 if not.
-uint8_t sd_check(void) {    
+uint8_t sd_check(void) {
     uint8_t res = SD_init(&DDRD, &PORTD, (1 << PD4));
     sd_valid = (res == SD_OK);
     return sd_valid;
 }
 
-// Check if file exists by trying to open it.  Returns 1 if exists, 0 if not.
 uint8_t sd_file_exists(const char *name) {
-    uint8_t res = SD_json_open(name);
-    file_valid = (res == SD_OK);
-    return file_valid;
+    return (SD_json_open(name) == SD_OK);
 }
 
-// Create a new file with the given name, containing an empty JSON array "[]\n".  Returns 1 on success, 0 on failure.
 uint8_t sd_file_create(const char *name) {
-    uint8_t res = SD_json_create(name);
-    file_valid = (res == SD_OK);
-    return file_valid;
+    return (SD_json_create(name) == SD_OK);
 }
 
 void sd_set_save(uint8_t enabled) {
@@ -33,77 +25,71 @@ void sd_set_save(uint8_t enabled) {
 
 uint8_t sd_prepare(void) {
     if (sd_check() == 0) {
-        return 1; // SD card not present
+        return 1;
     }
     if (sd_file_exists("SENSORS") == 0) {
         if (sd_file_create("SENSORS") == 0) {
-            return 1; // Failed to create file
+            return 1;
         }
     }
-    return 0; // SD card and file are ready
+    return 0;
 }
 
-// Append atmosphere data to json
+static uint8_t sd_open(void) {
+    if (!sd_save_enabled || !sd_valid) {
+        return 0;
+    }
+    return (SD_json_open("SENSORS") == SD_OK);
+}
+
 uint8_t sd_append_atmosphere(packet_t *packet) {
-    if (!sd_save_enabled || !sd_valid || !file_valid) {
-        return 0; // SD card or file not valid, cannot append
-    }
-    char *str;
-    uint8_t res = 0; // need to review this error approach
+    if (!sd_open()) return 0;
     led_green_on();
-    res += SD_json_append("idx", UTIL_itoa(idx++, 0));
-    str = UTIL_itoa_decimal(packet->atmosphere.temperature, 0);
-    res += SD_json_append("temp", str);
-    str = UTIL_itoa_decimal(packet->atmosphere.humidity, 0);
-    res += SD_json_append("hum", str);
-    str = UTIL_itoa_decimal(packet->atmosphere.pressure, 0);
-    res += SD_json_append("press", str);
-    str = UTIL_itoa_decimal(packet->atmosphere.pm25, 0);
-    res += SD_json_append("pm25", str);
-    str = UTIL_itoa_decimal(packet->atmosphere.pm10, 0);
-    res += SD_json_append("pm10", str);
+    if (SD_json_append("idx",   UTIL_itoa(idx++, 0)))                             goto fail;
+    if (SD_json_append("temp",  UTIL_itoa_decimal(packet->atmosphere.temperature, 0))) goto fail;
+    if (SD_json_append("hum",   UTIL_itoa_decimal(packet->atmosphere.humidity, 0)))    goto fail;
+    if (SD_json_append("press", UTIL_itoa_decimal(packet->atmosphere.pressure, 0)))    goto fail;
+    if (SD_json_append("pm25",  UTIL_itoa_decimal(packet->atmosphere.pm25, 0)))        goto fail;
+    if (SD_json_append("pm10",  UTIL_itoa_decimal(packet->atmosphere.pm10, 0)))        goto fail;
+    SD_json_close();
     led_green_off();
-    return res;
+    return 0;
+fail:
+    SD_json_close();
+    led_green_off();
+    return 1;
 }
 
-// Append gas data to json
 uint8_t sd_append_gas(packet_t *packet) {
-    if (!sd_save_enabled || !sd_valid || !file_valid) {
-        return 0; // SD card or file not valid, cannot append
-    }
-    char *str;
-    uint8_t res = 0; // need to review this error approach
+    if (!sd_open()) return 0;
     led_green_on();
-    res += SD_json_append("idx", UTIL_itoa(idx++, 0));
-    str = UTIL_itoa(packet->gas.co2, 0);
-    res += SD_json_append("co2", str);
-    str = UTIL_itoa(packet->gas.co, 0);
-    res += SD_json_append("co", str);
-    str = UTIL_itoa(packet->gas.nh3, 0);
-    res += SD_json_append("nh3", str);
-    str = UTIL_itoa(packet->gas.no2, 0);
-    res += SD_json_append("no2", str);
-    str = UTIL_itoa(packet->gas.o2, 0);
-    res += SD_json_append("o2", str);
+    if (SD_json_append("idx", UTIL_itoa(idx++, 0)))           goto fail;
+    if (SD_json_append("co2", UTIL_itoa(packet->gas.co2, 0))) goto fail;
+    if (SD_json_append("co",  UTIL_itoa(packet->gas.co, 0)))  goto fail;
+    if (SD_json_append("nh3", UTIL_itoa(packet->gas.nh3, 0))) goto fail;
+    if (SD_json_append("no2", UTIL_itoa(packet->gas.no2, 0))) goto fail;
+    if (SD_json_append("o2",  UTIL_itoa(packet->gas.o2, 0)))  goto fail;
+    SD_json_close();
     led_green_off();
-    return res;
+    return 0;
+fail:
+    SD_json_close();
+    led_green_off();
+    return 1;
 }
 
-// Append radioactivity data to json
 uint8_t sd_append_radioactivity(packet_t *packet) {
-    if (!sd_save_enabled || !sd_valid || !file_valid) {
-        return 0; // SD card or file not valid, cannot append
-    }
-    char *str;
-    uint8_t res = 0; // need to review this error approach
+    if (!sd_open()) return 0;
     led_green_on();
-    res += SD_json_append("idx", UTIL_itoa(idx++, 0));
-    str = UTIL_itoa(packet->geiger.total, 0);
-    res += SD_json_append("total", str);
-    str = UTIL_itoa(packet->geiger.delta, 0);
-    res += SD_json_append("delta", str);
-    str = UTIL_itoa(packet->geiger.cpm, 0);
-    res += SD_json_append("cpm", str);
+    if (SD_json_append("idx",   UTIL_itoa(idx++, 0)))               goto fail;
+    if (SD_json_append("total", UTIL_itoa(packet->geiger.total, 0))) goto fail;
+    if (SD_json_append("delta", UTIL_itoa(packet->geiger.delta, 0))) goto fail;
+    if (SD_json_append("cpm",   UTIL_itoa(packet->geiger.cpm, 0)))   goto fail;
+    SD_json_close();
     led_green_off();
-    return res;
+    return 0;
+fail:
+    SD_json_close();
+    led_green_off();
+    return 1;
 }
