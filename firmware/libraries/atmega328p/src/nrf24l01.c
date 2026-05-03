@@ -343,6 +343,17 @@ void NRF24L01_read_payload(byte_t *buff, length_t len)
     SPI_transmit(R_RX_PAYLOAD);
     SPI_read(buff, len);
     NRF24L01_spi_stop();
+
+    byte_t status = NRF24L01_get_register(STATUS);
+    if (BIT_is_set(status, NRF24L01_RX_DR))
+    {
+        BIT_set(status, NRF24L01_RX_DR);
+        NRF24L01_set_register(STATUS, status);
+    } // clear RX_DR flag
+    if (BIT_is_clear(NRF24L01_get_register(FIFO_STATUS), RX_EMPTY))
+    {
+        NRF24L01_flush_rx();
+    } // flush rx buffer
 }
 
 //------------------------------------------------------------------------------
