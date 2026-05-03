@@ -53,7 +53,8 @@ typedef union
         int16_t rx;                        /**< Right Joystick X */
         int16_t ly;                        /**< Left Joystick Y */
         int16_t ry;                        /**< Right Joystick Y */
-        uint8_t padding[PACKET_SIZE - 14]; /**< Padding */
+        uint8_t save;                      /**< SD save enabled */
+        uint8_t padding[PACKET_SIZE - 15]; /**< Padding */
     } car;                                 /**< Car */
 
     struct

@@ -34,10 +34,11 @@ controller_t g_controller;
 packet_t g_packet;
 packet_t g_packet_tx;
 
-volatile byte_t g_ctrl_mode = 1;   /**< Controller mode flags */
-volatile byte_t g_module_curr = 1; /**< Current display mode */
-volatile byte_t g_module_en;       /**< Current enabled modules */
-volatile byte_t g_radio_status;    /**< Radio strength */
+volatile byte_t g_ctrl_mode = 1;      /**< Controller mode flags */
+volatile byte_t g_module_curr = 1;    /**< Current display mode */
+volatile byte_t g_module_en;          /**< Current enabled modules */
+volatile byte_t g_radio_status;       /**< Radio strength */
+volatile byte_t g_save_enabled = 0;   /**< SD save enabled flag */
 
 /**
  * @brief Decrease signal strength count,
@@ -409,7 +410,8 @@ void CONTROLLER_write(void)
         (joy_bl == g_packet_tx.car.lb) &&
         (joy_xr == g_packet_tx.car.rx) &&
         (joy_yr == g_packet_tx.car.ry) &&
-        (joy_br == g_packet_tx.car.rb))
+        (joy_br == g_packet_tx.car.rb) &&
+        (g_save_enabled == g_packet_tx.car.save))
     {
         return;
     }
@@ -421,6 +423,7 @@ void CONTROLLER_write(void)
     g_packet_tx.car.rx = joy_xr;
     g_packet_tx.car.ry = joy_yr;
     g_packet_tx.car.rb = joy_br;
+    g_packet_tx.car.save = g_save_enabled;
 
     CONTROLLER_DEBUG(str, "LX: ");
     CONTROLLER_DEBUG(int, g_packet_tx.car.lx);
@@ -639,7 +642,7 @@ ISR(PCINT1_vect)
 
     if (BIT_is_clear(PINC, BIT(PINC1)))
     {
-        /// @todo Function assigned to button B
+        g_save_enabled ^= 1;
     } // PC1 interrupt
 }
 
