@@ -9,6 +9,7 @@
 #define PACKET_ID_GAS 0x03   /**< Packet ID of the gas sensor module */
 #define PACKET_ID_LIDAR 0x04 /**< Packet ID of the LiDAR */
 #define PACKET_ID_GMC 0x05   /**< Packet ID of the Geiger counter */
+#define PACKET_ID_SAVE 0x07
 #define PACKET_ID_PING 0xFF  /**< Packet ID for ping */
 
 #define LIDAR_DATA_PER_LINE 5
