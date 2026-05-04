@@ -67,15 +67,24 @@ void onReceive(int len) {
 HardwareSerial LidarSerial(1);
 LDS_YDLIDAR_X2_X2L lidar;
 
-int tab_dist_deg_cm[360]; // motor is 0°, CW
+uint16_t tab_dist_deg_cm[360]; // motor is 0°, CW
 
 void onRequest() {
-	Wire.write(tab_dist_deg_cm[180]); // TODO
+	uint8_t buf[8];
+	buf[0] = tab_dist_deg_cm[0] >> 8;
+	buf[1] = tab_dist_deg_cm[0] & 0xFF;
+	buf[2] = tab_dist_deg_cm[90] >> 8;
+	buf[3] = tab_dist_deg_cm[90] & 0xFF;
+	buf[4] = tab_dist_deg_cm[180] >> 8;
+	buf[5] = tab_dist_deg_cm[180] & 0xFF;
+	buf[6] = tab_dist_deg_cm[270] >> 8;
+	buf[7] = tab_dist_deg_cm[270] & 0xFF;
+	Wire.write(buf, 8);
 }
 
 void setup() {
 	for (int i = 0; i < 360; i++) tab_dist_deg_cm[i] = 0;
-	Serial.begin(115200);
+	//Serial.begin(115200);
 
 	pinMode(LIDAR_EN_PIN, OUTPUT); digitalWrite(LIDAR_EN_PIN, LOW);
 	LidarSerial.begin(115200, SERIAL_8N1, LIDAR_RX_PIN);
@@ -115,7 +124,7 @@ void lidar_packet_callback(uint8_t * packet, uint16_t length, bool scan_complete
 void loop()
 {
 	lidar.loop();
-	if (Serial.available()) {
+	/* if (Serial.available()) {
 		for (int i = 0; i < 360; i++) {
 			Serial.print(i);
 			Serial.print("°: ");
@@ -123,5 +132,5 @@ void loop()
 			Serial.print("cm | ");
 		}
 		Serial.println();
-	}
+	} */
 }
