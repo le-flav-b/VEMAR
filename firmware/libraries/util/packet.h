@@ -101,6 +101,16 @@ typedef union
         uint16_t cpm;
         uint8_t padding[PACKET_SIZE - 8];
     } geiger;
+
+    struct {
+        uint8_t id;
+        uint8_t module;
+        int16_t up;
+        int16_t down;
+        int16_t left;
+        int16_t right;
+        uint8_t padding[PACKET_SIZE - 10];
+    } distance;
 } packet_t;
 
 #endif // VEMAR_PACKET_H
