@@ -6,7 +6,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <string.h>
 #include <avr/sleep.h>
 
 #include <util/twi.h>
