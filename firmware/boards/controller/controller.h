@@ -41,7 +41,7 @@
 #define COL2 140U
 #define COL3 212U
 #define COL_MOD 260U
-#define COL_RXTX 240U
+#define COL_RXTX 220U
 #define ROW_LABEL _ROW_num(0)
 #define ROW1 _ROW_num(1)
 #define ROW2 _ROW_num(2)

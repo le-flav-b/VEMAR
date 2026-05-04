@@ -1,8 +1,10 @@
 #include <radio.h>
+#include <spi.h>
 
 #include "module.h"
 #include "motor.h"
 #include "data_save.h"
+#include "led.h"
 
 #define PIN_RADIO_CE PIN_PD2
 #define PIN_RADIO_CSN PIN_PD3
@@ -20,10 +22,22 @@ void setup(void)
 #ifdef VEMAR_DEBUG_ENABLED
     SERIAL_init();
 #endif
+    _delay_ms(500);
+    /* Hold radio CSN high before any SPI activity — prevents NRF24L01 from
+       latching SD card MISO traffic while its CSN is not yet configured */
+    DDRD  |= (1 << PD3);
+    PORTD |= (1 << PD3);
+    uint8_t sd_res = 1;
+    for (uint8_t i = 0; i < 5 && sd_res != 0; i++) {
+        sd_res = sd_prepare();
+    }
+    /* SD_init leaves SPI enabled; SPI_init skips if SPE is set, so reset
+       first so RADIO_init gets the correct clock speed (F_CPU/4) */
+    SPI_reset();
     RADIO_init(PIN_RADIO_CE, PIN_RADIO_CSN);
+    led_init();
     motor_init();
     i2c_init();
-    _delay_ms(500);
     VEMAR_DEBUG(str, "setup done\r\n");
 }
 
@@ -84,6 +98,7 @@ void CAR_handle_movement(void)
 
 	motor_left_set(g_packet.car.ly);
 	motor_right_set(g_packet.car.ry);
+	sd_set_save(g_packet.car.save);
 }
 
 void CAR_read_and_transmit(uint8_t id, uint8_t addr,
@@ -97,7 +112,10 @@ void CAR_read_and_transmit(uint8_t id, uint8_t addr,
             VEMAR_DEBUG(int, id);
             VEMAR_DEBUG(str, " failed to transmit\r\n");
         }
+        /* Hold radio idle during SD SPI to avoid bus contention on MISO. */
+        NRF24L01_standby();
         append(&g_packet);
+        NRF24L01_mode_rx();
     }
     else
     {

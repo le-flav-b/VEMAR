@@ -9,6 +9,7 @@
 #define PACKET_ID_GAS 0x03   /**< Packet ID of the gas sensor module */
 #define PACKET_ID_LIDAR 0x04 /**< Packet ID of the LiDAR */
 #define PACKET_ID_GMC 0x05   /**< Packet ID of the Geiger counter */
+#define PACKET_ID_SAVE 0x07
 #define PACKET_ID_PING 0xFF  /**< Packet ID for ping */
 
 #define LIDAR_DATA_PER_LINE 5
@@ -53,7 +54,8 @@ typedef union
         int16_t rx;                        /**< Right Joystick X */
         int16_t ly;                        /**< Left Joystick Y */
         int16_t ry;                        /**< Right Joystick Y */
-        uint8_t padding[PACKET_SIZE - 14]; /**< Padding */
+        uint8_t save;                      /**< SD save enabled */
+        uint8_t padding[PACKET_SIZE - 15]; /**< Padding */
     } car;                                 /**< Car */
 
     struct

@@ -3,8 +3,6 @@
 	(generator "pcbnew")
 	(generator_version "9.0")
 	(layer "F.Cu")
-	(descr "SMD capacitor, aluminum electrolytic, Vishay 0810, 8.0x10.5mm, http://www.vishay.com/docs/28395/150crz.pdf")
-	(tags "capacitor electrolytic")
 	(property "Reference" "REF**"
 		(at 0 -5.3 0)
 		(layer "F.SilkS")

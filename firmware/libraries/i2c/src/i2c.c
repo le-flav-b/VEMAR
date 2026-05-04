@@ -23,7 +23,7 @@ static int8_t i2c_wait_mstatus(uint8_t flag) {
 #endif
 
 
-#if defined(__AVR_ATmega328P__)
+#if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
 static int8_t i2c_wait_twint(void) {
   uint32_t guard = 0;
   while (!(TWCR & (1 << TWINT))) {
@@ -45,7 +45,7 @@ void i2c_init() {
   TWI0.MBAUD = TWI_BAUD;
   TWI0.MSTATUS = TWI_BUSSTATE_IDLE_gc;
   TWI0.MCTRLA |= TWI_ENABLE_bm;
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
   // Configure I2C pins as inputs for open-drain operation
   // A4 (SDA) = PC4, A5 (SCL) = PC5
   DDRC &= ~(1 << DDC4 | 1 << DDC5);  // Set PC4 and PC5 as inputs
@@ -66,7 +66,7 @@ void i2c_init_slave(uint8_t addr) {
   // Configure TWI in slave mode
   TWI0.SADDR = addr << 1;
   TWI0.SCTRLA |= TWI_ENABLE_bm | TWI_APIEN_bm | TWI_DIEN_bm;
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
   TWAR = (addr << 1) | (0 << TWGCE);
   TWCR = (1 << TWEA) | (1 << TWEN);
 #endif
@@ -80,7 +80,7 @@ void i2c_stop_interface(void) {
   #ifdef I2C_SLAVE
     TWI0.SCTRLA &= ~TWI_ENABLE_bm;
   #endif
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
   TWCR &= ~(1 << TWEN);
 #endif
 }
@@ -91,7 +91,7 @@ void i2c_switch_to_master(void) {
   TWI0.SCTRLA &= ~TWI_ENABLE_bm;
   TWI0.MCTRLA |= TWI_ENABLE_bm;
   TWI0.MSTATUS = TWI_BUSSTATE_IDLE_gc;
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
   TWCR = (1 << TWEN);
 #endif
 }
@@ -101,11 +101,12 @@ void i2c_switch_to_slave(void) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   TWI0.MCTRLA &= ~TWI_ENABLE_bm;
   TWI0.SCTRLA |= TWI_ENABLE_bm | TWI_APIEN_bm | TWI_DIEN_bm;
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
   TWAR = (SLAVE_ADDR << 1) | (0 << TWGCE);
   TWCR = (1 << TWEA) | (1 << TWEN);
 #endif
 }
+
 int8_t i2c_start(uint8_t addr_rw, bool restart) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   (void)restart;
@@ -113,7 +114,8 @@ int8_t i2c_start(uint8_t addr_rw, bool restart) {
   TWI0.MADDR = addr_rw;
   if (TWI0.MSTATUS & TWI_ARBLOST_bm) return I2C_ERR_ARBLOST; // arbitration lost
   if (TWI0.MSTATUS & TWI_BUSERR_bm) return I2C_ERR_BUSERR; // bus error
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
+  (void)restart;
   uint8_t expected_addr_ack = (addr_rw & 0x01) ? TW_MR_SLA_ACK : TW_MT_SLA_ACK;
 
   TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);
@@ -135,7 +137,7 @@ int8_t i2c_start(uint8_t addr_rw, bool restart) {
 void i2c_stop(void) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   TWI0.MCTRLB |= TWI_MCMD_STOP_gc;
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
   TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);
 #endif
 }
@@ -147,7 +149,7 @@ int8_t i2c_write(uint8_t data) {
   if (TWI0.MSTATUS & TWI_ARBLOST_bm) return -1; // arbitration lost
   if (TWI0.MSTATUS & TWI_BUSERR_bm) return -2; // bus error
   if (TWI0.MSTATUS & TWI_RXACK_bm) return -3; // NACK
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
   TWDR = data;
   TWCR = (1<<TWINT) | (1 << TWEN);
   if (i2c_wait_twint() != 0) return -5;
@@ -163,7 +165,7 @@ int16_t i2c_read_ack(void) {
   if (TWI0.MSTATUS & TWI_ARBLOST_bm) return -1; // arbitration lost
   if (TWI0.MSTATUS & TWI_BUSERR_bm) return -2; // bus error
   return TWI0.MDATA;
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
   TWCR = (1 << TWINT) | (1 << TWEA) | (1 << TWEN);
   if (i2c_wait_twint() != 0) return -5;
   if ((TWSR & 0xF8) != MR_DATA_ACK)  return -1; // not data+ACK
@@ -183,7 +185,7 @@ int16_t i2c_read_nack(void) {
   if (TWI0.MSTATUS & TWI_BUSERR_bm) return I2C_ERR_BUSERR; // bus error
   TWI0.MCTRLB  = TWI_MCMD_STOP_gc;
   return TWI0.MDATA;
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
   TWCR = (1 << TWINT) | (1 << TWEN);
   if (i2c_wait_twint() != 0) return I2C_ERR_TIMEOUT;
   if ((TWSR & 0xF8) != MR_DATA_NACK)  return I2C_ERR_ARBLOST; // not NACK
@@ -277,7 +279,7 @@ uint8_t i2c_slave_receive(void) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   i2c_slave_ack();
   return TWI0.SDATA;
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
   i2c_slave_ack();
   return TWDR;
 #endif
@@ -288,7 +290,7 @@ void i2c_slave_transmit(uint8_t byte) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   TWI0.SDATA = byte;
   i2c_slave_ack();
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
   TWDR = byte;
   i2c_slave_ack();
 #endif
@@ -298,7 +300,7 @@ void i2c_slave_transmit(uint8_t byte) {
 void i2c_slave_ack(void) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   TWI0.SCTRLB = TWI_SCMD_RESPONSE_gc;
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
   TWCR = (1 << TWINT) | (1 << TWEA) | (1 << TWEN);
 #endif
 }
@@ -307,7 +309,7 @@ void i2c_slave_ack(void) {
 void i2c_slave_nack(void) {
 #if defined(__AVR_ATtiny412__) || defined(__AVR_ATtiny1614__)
   TWI0.SCTRLB = TWI_ACKACT_NACK_gc | TWI_SCMD_RESPONSE_gc;
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128A__)
   TWCR = (1 << TWINT) | (1 << TWEN);
 #endif
 }

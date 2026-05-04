@@ -34,10 +34,12 @@ controller_t g_controller;
 packet_t g_packet;
 packet_t g_packet_tx;
 
-volatile byte_t g_ctrl_mode = 1;   /**< Controller mode flags */
-volatile byte_t g_module_curr = 1; /**< Current display mode */
-volatile byte_t g_module_en;       /**< Current enabled modules */
-volatile byte_t g_radio_status;    /**< Radio strength */
+volatile byte_t g_ctrl_mode = 1;      /**< Controller mode flags */
+volatile byte_t g_module_curr = 1;    /**< Current display mode */
+volatile byte_t g_module_en;          /**< Current enabled modules */
+volatile byte_t g_radio_status;       /**< Radio strength */
+volatile byte_t g_save_enabled = 0;   /**< SD save enabled flag */
+volatile bool_t g_save_toggle = FALSE; /**< Pending save toggle from ISR */
 
 /**
  * @brief Decrease signal strength count,
@@ -65,6 +67,8 @@ static void _CONTROLLER_display_layout(const char *label);
  */
 static void _CONTROLLER_display_module(void);
 
+static void _CONTROLLER_display_save(bool_t save);
+
 /**
  * @brief Check communication mode
  */
@@ -91,8 +95,6 @@ void setup(void)
     TFT_set_mode(TFT_LANDSCAPE, TFT_INVERTED, TFT_INVERTED);
     TFT_setup_text(TFT_TEXT_S, 1, RGB16_WHITE, RGB16_BLACK);
     CONTROLLER_interrupt();
-
-    // g_module_en = BIT(_CONTROLLER_MODE_MAP);
     CONTROLLER_display_menu();
     _CONTROLLER_reset_connection();
     _CONTROLLER_set_radio_mode();
@@ -104,6 +106,12 @@ void setup(void)
 //------------------------------------------------------------------------------
 void loop(void)
 {
+    if (g_save_toggle)
+    {
+        g_save_toggle = FALSE;
+        g_save_enabled ^= 1;
+        _CONTROLLER_display_save(g_save_enabled);
+    }
     if (BIT_is_set(g_ctrl_mode, _CONTROLLER_MODE_RX))
     {
         CONTROLLER_read();
@@ -201,6 +209,9 @@ void CONTROLLER_display_map(void)
     }
 }
 
+//------------------------------------------------------------------------------
+// CONTROLLER_display_radioactivity
+//------------------------------------------------------------------------------
 void CONTROLLER_display_radioactivity(void)
 {
     if (_CONTROLLER_MODE_GMC != BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE))
@@ -214,13 +225,16 @@ void CONTROLLER_display_radioactivity(void)
     }
 }
 
+//------------------------------------------------------------------------------
+// CONTROLLER_display_none
+//------------------------------------------------------------------------------
 void CONTROLLER_display_none(void)
 {
-    if (0 != g_module_en)
-    {
-        TFT_fill_screen(RGB16_BLACK);
-        _CONTROLLER_display_layout("No Module detected");
-    }
+    g_ctrl_mode &= 0xF1; // reset display mode
+    g_module_curr = 1;   // reset current module
+    g_module_en = 0;     // reset all module enable flags
+    TFT_fill_screen(RGB16_BLACK);
+    _CONTROLLER_display_layout("No Module detected");
 }
 
 //------------------------------------------------------------------------------
@@ -244,7 +258,6 @@ void CONTROLLER_update_atmosphere(void)
 
     str = UTIL_itoa_decimal(g_packet.atmosphere.pm10, 6);
     TFT_print_str(COL2, ROW5, str);
-
 }
 
 //------------------------------------------------------------------------------
@@ -327,6 +340,8 @@ void CONTROLLER_update_connection(void)
 void _CONTROLLER_handle_packet(byte_t type, void (*callback)(void))
 {
     g_module_en = g_packet.header.module;
+    // _CONTROLLER_display_save(BIT_is_set(g_module_en, BIT(PACKET_ID_SAVE)));
+    _CONTROLLER_display_module();
     if (BIT_read(g_ctrl_mode, _CONTROLLER_MASK_MODE) == type)
     {
         callback();
@@ -338,6 +353,7 @@ void _CONTROLLER_handle_packet(byte_t type, void (*callback)(void))
 //------------------------------------------------------------------------------
 void CONTROLLER_read(void)
 {
+    static uint8_t rx_retry;
     bool_t signal = FALSE;
 
     for (uint16_t r = 0; r < _CONTROLLER_RX_DELAY; ++r)
@@ -354,7 +370,9 @@ void CONTROLLER_read(void)
         _CONTROLLER_connect();
         CONTROLLER_DEBUG(str, "packet ID: ");
         CONTROLLER_DEBUG(int, g_packet.header.id);
-        CONTROLLER_DEBUG(str, " received\r\n");
+        CONTROLLER_DEBUG(str, " received - signal: ");
+        CONTROLLER_DEBUG(int, g_radio_status);
+        CONTROLLER_DEBUG(str, "\r\n");
 
         switch (g_packet.header.id)
         {
@@ -371,8 +389,9 @@ void CONTROLLER_read(void)
                                       CONTROLLER_update_gas);
             break;
         case PACKET_ID_LIDAR:
-            _CONTROLLER_handle_packet(_CONTROLLER_MODE_MAP,
-                                      CONTROLLER_update_map);
+            /// @todo: implement LiDAR
+            // _CONTROLLER_handle_packet(_CONTROLLER_MODE_MAP,
+            //                           CONTROLLER_update_map);
             break;
         case PACKET_ID_GMC:
             _CONTROLLER_handle_packet(_CONTROLLER_MODE_GMC,
@@ -384,7 +403,14 @@ void CONTROLLER_read(void)
     }
     else
     {
-        _CONTROLLER_disconnect();
+        if (10 < ++rx_retry)
+        {
+            rx_retry = 0;
+            _CONTROLLER_disconnect();
+            CONTROLLER_DEBUG(str, "receive fail - signal: ");
+            CONTROLLER_DEBUG(int, g_radio_status);
+            CONTROLLER_DEBUG(str, "\r\n");
+        }
     }
 }
 
@@ -409,46 +435,58 @@ void CONTROLLER_write(void)
         (joy_bl == g_packet_tx.car.lb) &&
         (joy_xr == g_packet_tx.car.rx) &&
         (joy_yr == g_packet_tx.car.ry) &&
-        (joy_br == g_packet_tx.car.rb))
+        (joy_br == g_packet_tx.car.rb) &&
+        (g_save_enabled == g_packet_tx.car.save))
     {
+        // g_packet_tx.header.id = PACKET_ID_PING;
         return;
     }
-    g_packet_tx.header.id = PACKET_ID_CAR;
-    g_packet_tx.car.pot = pot;
-    g_packet_tx.car.lx = joy_xl;
-    g_packet_tx.car.ly = joy_yl;
-    g_packet_tx.car.lb = joy_bl;
-    g_packet_tx.car.rx = joy_xr;
-    g_packet_tx.car.ry = joy_yr;
-    g_packet_tx.car.rb = joy_br;
+    else
+    {
+        g_packet_tx.header.id = PACKET_ID_CAR;
+        g_packet_tx.car.pot = pot;
+        g_packet_tx.car.lx = joy_xl;
+        g_packet_tx.car.ly = joy_yl;
+        g_packet_tx.car.lb = joy_bl;
+        g_packet_tx.car.rx = joy_xr;
+        g_packet_tx.car.ry = joy_yr;
+        g_packet_tx.car.rb = joy_br;
+        g_packet_tx.car.save = g_save_enabled;
 
-    CONTROLLER_DEBUG(str, "LX: ");
-    CONTROLLER_DEBUG(int, g_packet_tx.car.lx);
-    CONTROLLER_DEBUG(str, "; LY: ");
-    CONTROLLER_DEBUG(int, g_packet_tx.car.ly);
-    CONTROLLER_DEBUG(str, "; LB: ");
-    CONTROLLER_DEBUG(bool, g_packet_tx.car.lb);
-    CONTROLLER_DEBUG(str, "\r\nRX: ");
-    CONTROLLER_DEBUG(int, g_packet_tx.car.rx);
-    CONTROLLER_DEBUG(str, "; RY: ");
-    CONTROLLER_DEBUG(int, g_packet_tx.car.ry);
-    CONTROLLER_DEBUG(str, "; RB: ");
-    CONTROLLER_DEBUG(bool, g_packet_tx.car.rb);
-    CONTROLLER_DEBUG(str, "\r\nPotentiometer: ");
-    CONTROLLER_DEBUG(uint, g_packet_tx.car.pot);
-    CONTROLLER_DEBUG(str, "\r\n--------\r\n");
+        CONTROLLER_DEBUG(str, "LX: ");
+        CONTROLLER_DEBUG(int, g_packet_tx.car.lx);
+        CONTROLLER_DEBUG(str, "; LY: ");
+        CONTROLLER_DEBUG(int, g_packet_tx.car.ly);
+        CONTROLLER_DEBUG(str, "; LB: ");
+        CONTROLLER_DEBUG(bool, g_packet_tx.car.lb);
+        CONTROLLER_DEBUG(str, "\r\nRX: ");
+        CONTROLLER_DEBUG(int, g_packet_tx.car.rx);
+        CONTROLLER_DEBUG(str, "; RY: ");
+        CONTROLLER_DEBUG(int, g_packet_tx.car.ry);
+        CONTROLLER_DEBUG(str, "; RB: ");
+        CONTROLLER_DEBUG(bool, g_packet_tx.car.rb);
+        CONTROLLER_DEBUG(str, "\r\nPotentiometer: ");
+        CONTROLLER_DEBUG(uint, g_packet_tx.car.pot);
+        CONTROLLER_DEBUG(str, "; Button B: ");
+        CONTROLLER_DEBUG(bool, g_packet_tx.car.button);
+        CONTROLLER_DEBUG(str, "\r\n--------\r\n");
+    }
 
     for (length_t attempt = 0; attempt < 5; ++attempt)
     {
         if (RADIO_write(g_packet_tx.buffer, PACKET_SIZE))
         {
             _CONTROLLER_connect();
-            CONTROLLER_DEBUG(str, "send movement\r\n");
+            CONTROLLER_DEBUG(str, "transmit success - signal: ");
+            CONTROLLER_DEBUG(int, g_radio_status);
+            CONTROLLER_DEBUG(str, "\r\n");
             return;
         }
     }
     _CONTROLLER_disconnect();
-    CONTROLLER_DEBUG(str, "transmission failed\r\n");
+    CONTROLLER_DEBUG(str, "transmit fail - signal: ");
+    CONTROLLER_DEBUG(int, g_radio_status);
+    CONTROLLER_DEBUG(str, "\r\n");
 }
 
 //------------------------------------------------------------------------------
@@ -456,9 +494,10 @@ void CONTROLLER_write(void)
 //------------------------------------------------------------------------------
 void _CONTROLLER_connect(void)
 {
-    if (_RADIO_SIGNAL_MAX > g_radio_status)
+    g_radio_status += 2;
+    if (_RADIO_SIGNAL_MAX < g_radio_status)
     {
-        ++g_radio_status;
+        g_radio_status = _RADIO_SIGNAL_MAX;
     }
 }
 
@@ -478,7 +517,7 @@ void _CONTROLLER_disconnect(void)
 //------------------------------------------------------------------------------
 void _CONTROLLER_reset_connection(void)
 {
-    g_radio_status = 8;
+    g_radio_status = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -558,6 +597,16 @@ void _CONTROLLER_display_layout(const char *label)
     {
         TFT_print_str(COL_RXTX, ROW_LAST, "Rx/Tx");
     }
+    _CONTROLLER_display_save(g_save_enabled);
+}
+
+void _CONTROLLER_display_save(bool_t save)
+{
+    if (FALSE == save) {
+        TFT_print_char(300, ROW_LAST, ' ');
+    } else {
+        TFT_print_char(300, ROW_LAST, 'S');
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -604,7 +653,7 @@ void _CONTROLLER_switch_display(void)
         if (BIT_is_clear(g_module_en, BIT(g_module_curr)))
         {
             continue;
-        }
+        } // if current module is not available, continue
 
         switch (g_module_curr)
         {
@@ -634,12 +683,22 @@ ISR(PCINT1_vect)
 {
     if (BIT_is_clear(PINC, BIT(PINC0)))
     {
-        _CONTROLLER_switch_display();
+        if (0 == g_radio_status)
+        {
+            CONTROLLER_display_none();
+        }
+        else
+        {
+            if (BIT_is_set(g_ctrl_mode, _CONTROLLER_MODE_RX))
+            {
+                _CONTROLLER_switch_display();
+            }
+        }
     } // PC0 interrupt
 
     if (BIT_is_clear(PINC, BIT(PINC1)))
     {
-        /// @todo Function assigned to button B
+        g_save_toggle = TRUE;
     } // PC1 interrupt
 }
 

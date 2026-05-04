@@ -9,4 +9,5 @@
   (lib (name "regulator")(type "KiCad")(uri "${KIPRJMOD}/../../../libraries/symbols/regulator.kicad_sym")(options "")(descr ""))
   (lib (name "transceiver")(type "KiCad")(uri "${KIPRJMOD}/../../../libraries/symbols/transceiver.kicad_sym")(options "")(descr ""))
   (lib (name "air_sens_lib")(type "KiCad")(uri "${KIPRJMOD}/../../../libraries/symbols/air_sens_lib.kicad_sym")(options "")(descr ""))
+  (lib (name "transistor")(type "KiCad")(uri "/Users/chris/Documents/VEMAR/hardware/libraries/symbols/transistor.kicad_sym")(options "")(descr ""))
 )
