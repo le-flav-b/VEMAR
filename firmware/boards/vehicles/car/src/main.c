@@ -23,16 +23,13 @@ void setup(void)
     SERIAL_init();
 #endif
     _delay_ms(500);
-    /* Hold radio CSN high before any SPI activity — prevents NRF24L01 from
-       latching SD card MISO traffic while its CSN is not yet configured */
+    // Hold radio CSN high - prevents radio from latching SD card MISO
     DDRD  |= (1 << PD3);
     PORTD |= (1 << PD3);
     uint8_t sd_res = 1;
     for (uint8_t i = 0; i < 5 && sd_res != 0; i++) {
         sd_res = sd_prepare();
     }
-    /* SD_init leaves SPI enabled; SPI_init skips if SPE is set, so reset
-       first so RADIO_init gets the correct clock speed (F_CPU/4) */
     SPI_reset();
     RADIO_init(PIN_RADIO_CE, PIN_RADIO_CSN);
     led_init();
@@ -137,9 +134,11 @@ void CAR_read_and_transmit(uint8_t id, uint8_t addr,
             VEMAR_DEBUG(int, id);
             VEMAR_DEBUG(str, " failed to transmit\r\n");
         }
-        /* Hold radio idle during SD SPI to avoid bus contention on MISO. */
+        // Hold radio idle during SD SPI to avoid bus contention on MISO.
         NRF24L01_standby();
         append(&g_packet);
+        // restore prescaler before resuming radio SPI. 
+        SPI_set_prescaler(SPI_PS4);
         NRF24L01_mode_rx();
     }
     else
