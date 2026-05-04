@@ -105,10 +105,10 @@ typedef union
     struct {
         uint8_t id;
         uint8_t module;
-        int16_t up;
-        int16_t down;
-        int16_t left;
-        int16_t right;
+        uint16_t up;
+        uint16_t down;
+        uint16_t left;
+        uint16_t right;
         uint8_t padding[PACKET_SIZE - 10];
     } distance;
 } packet_t;

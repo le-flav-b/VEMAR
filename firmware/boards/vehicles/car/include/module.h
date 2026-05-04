@@ -57,6 +57,33 @@ bool_t ATMOSPHERE_fill_packet(uint8_t addr, packet_t *packet);
  */
 bool_t GAS_fill_packet(uint8_t addr, packet_t *packet);
 
+//------------------------------------------------------------------------------
+// Lidar
+//------------------------------------------------------------------------------
+
+#define LIDAR_BUF_SIZE 8 /**< 2-byte length header + 10 bytes payload */
+
+#define LIDAR_ADDRESS 0x0C /**< Default address of the Lidar module */
+
+/**
+ * @brief Read data from the Lidar module and populate the transmission packet.
+ * @param addr I2C address of the target Lidar module
+ * @param packet Pointer to the packet structure to fill
+ * @return `TRUE` if the reading from the Lidar module was successful and
+ * packet is filled, otherwise `FALSE`
+ */
+bool_t LIDAR_fill_packet(uint8_t addr, packet_t *packet);
+
+void lidar_toggle(void);
+void lidar_mv_a_l1(void);
+void lidar_mv_a_l2(void);
+void lidar_mv_a_r1(void);
+void lidar_mv_a_r2(void);
+void lidar_mv_b_l1(void);
+void lidar_mv_b_l2(void);
+void lidar_mv_b_r1(void);
+void lidar_mv_b_r2(void);
+
 
 //------------------------------------------------------------------------------
 // Geiger counter

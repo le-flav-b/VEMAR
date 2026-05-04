@@ -67,6 +67,11 @@ void loop(void)
             CAR_read_and_transmit(PACKET_ID_GAS, GAS_ADDRESS, GAS_fill_packet, sd_append_gas);
             data_type = 2;
         }
+        else if (2 == data_type)
+        {
+            CAR_read_and_transmit(PACKET_ID_LIDAR, LIDAR_ADDRESS, LIDAR_fill_packet, sd_append_lidar);
+            data_type = 3;
+        }
         else
         {
             CAR_read_and_transmit(PACKET_ID_GMC, GEIGER_ADDRESS, GEIGER_fill_packet, sd_append_radioactivity);
@@ -96,9 +101,29 @@ void CAR_handle_movement(void)
     VEMAR_DEBUG(uint, g_packet.car.pot);
     VEMAR_DEBUG(str, "\r\n--------\r\n");
 
-	motor_left_set(g_packet.car.ly);
-	motor_right_set(g_packet.car.ry);
-	sd_set_save(g_packet.car.save);
+	if (g_packet.car.lb || g_packet.car.rb)
+	{
+		if (g_packet.car.rb)
+			lidar_toggle();
+		else
+		{
+			if (g_packet.car.rx > 0 && g_packet.car.rx < 100) lidar_mv_a_l1();
+			else if (g_packet.car.rx >= 100) lidar_mv_a_l2();
+			else if (g_packet.car.rx < 0 && g_packet.car.rx > -100) lidar_mv_a_r1();
+			else if (g_packet.car.rx <= -100) lidar_mv_a_r2();
+			if (g_packet.car.ry > 0 && g_packet.car.ry < 100) lidar_mv_b_l1();
+			else if (g_packet.car.ry >= 100) lidar_mv_b_l2();
+			else if (g_packet.car.ry < 0 && g_packet.car.ry > -100) lidar_mv_b_r1();
+			else if (g_packet.car.ry <= -100) lidar_mv_b_r2();
+		}
+		return;
+	}
+	else
+	{	
+		motor_left_set(g_packet.car.ly);
+		motor_right_set(g_packet.car.ry);
+		sd_set_save(g_packet.car.save);
+	}
 }
 
 void CAR_read_and_transmit(uint8_t id, uint8_t addr,

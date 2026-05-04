@@ -87,6 +87,22 @@ fail:
     return 1;
 }
 
+uint8_t sd_append_lidar(packet_t *packet) {
+    if (!sd_open()) return 0;
+    led_green_on();
+    if (SD_json_append("idx", UTIL_itoa(idx++, 0)))           goto fail;
+    if (SD_json_append("up",  UTIL_itoa_decimal2(packet->distance.up, 0)))  goto fail;
+    if (SD_json_append("down",  UTIL_itoa_decimal2(packet->distance.down, 0)))  goto fail;
+    if (SD_json_append("left",  UTIL_itoa_decimal2(packet->distance.left, 0)))  goto fail;
+    if (SD_json_append("right",  UTIL_itoa_decimal2(packet->distance.right, 0)))  goto fail;
+    SD_json_close();
+    led_green_off();
+    return 0;
+fail:
+    led_green_off();
+    return 1;
+}
+
 uint8_t sd_append_radioactivity(packet_t *packet) {
     if (!sd_open()) return 0;
     led_green_on();

@@ -12,6 +12,7 @@ uint8_t sd_prepare(void);
 void    sd_set_save(uint8_t enabled);
 uint8_t sd_append_atmosphere(packet_t *packet);
 uint8_t sd_append_gas(packet_t *packet);
+uint8_t sd_append_lidar(packet_t *packet);
 uint8_t sd_append_radioactivity(packet_t *packet);
 
 #endif
