@@ -102,6 +102,50 @@ char *UTIL_itoa_decimal(int n, length_t width)
     return (g_string_buffer);
 }
 
+char *UTIL_itoa_decimal2(int n, length_t width)
+{
+    bool_t is_neg = FALSE;
+
+    if (0 > n)
+    {
+        is_neg = TRUE;
+        n = -n;
+    } // if is negative
+
+    char digit = (char)(n % 10);
+    n = n / 10;
+    g_string_buffer[0] = digit + '0';
+    digit = (char)(n % 10);
+    n = n / 10;
+    g_string_buffer[1] = digit + '0';
+    g_string_buffer[2] = '.';
+
+    unsigned char len = 3;
+    do
+    {
+        digit = (char)(n % 10);
+        n = n / 10;
+        g_string_buffer[len] = digit + '0';
+        ++len;
+    } while (0 != n);
+
+    if (is_neg)
+    {
+        g_string_buffer[len] = '-';
+        ++len;
+    }
+
+    while (len < width)
+    {
+        g_string_buffer[len] = ' ';
+        ++len;
+    }
+
+    g_string_buffer[len] = '\0';
+    UTIL_reverse(len);
+    return (g_string_buffer);
+}
+
 //------------------------------------------------------------------------------
 // UTIL_append
 //------------------------------------------------------------------------------

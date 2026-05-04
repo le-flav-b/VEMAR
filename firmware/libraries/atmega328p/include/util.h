@@ -16,7 +16,7 @@
 char *UTIL_itoa(int n, length_t width);
 
 /**
- * @brief Divide the number by 10 then convert to string
+ * @brief Divide the number by 10 then convert as string
  * @param n Number to convert
  * @param width Minimum width of the string
  * @return Null-terminated string as a decimal
@@ -25,6 +25,17 @@ char *UTIL_itoa(int n, length_t width);
  * @warning Undefined behavior if overflow/underflow occurs
  */
 char *UTIL_itoa_decimal(int n, length_t width);
+
+/**
+ * @brief Divide the number by 100 and then convert as string
+ * @param n Number to convert
+ * @param width Minimum width of the string
+ * @return Null-terminated string as a decimal
+ * @details
+ * For instance: 100 will become "1.00", 6 will become "0.06"
+ * @warning Undefined behavior if overflow/underflow occurs
+ */
+char *UTIL_itoa_decimal2(int n, length_t width);
 
 /**
  * @brief Append a character at the end of a string
