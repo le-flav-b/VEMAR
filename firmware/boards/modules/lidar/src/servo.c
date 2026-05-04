@@ -1,5 +1,16 @@
 #include "servo.h"
 
+extern inline void servo_init(void);
+extern inline void servo_a_l1(void);
+extern inline void servo_a_l2(void);
+extern inline void servo_a_r1(void);
+extern inline void servo_a_r2(void);
+extern inline void servo_b_l1(void);
+extern inline void servo_b_l2(void);
+extern inline void servo_b_r1(void);
+extern inline void servo_b_r2(void);
+
+/*
 #define SERVO_TIMER_PRESCALER 8UL
 #define SERVO_TIMER_TOP ((F_CPU / SERVO_TIMER_PRESCALER / SERVO_PWM_FREQ) - 1UL)
 #define SERVO_TICKS_PER_US (F_CPU / SERVO_TIMER_PRESCALER / 1000000UL)
@@ -11,7 +22,7 @@ static void _servo_config_pwm(void)
 	TCCR1B = (1 << WGM13)  | (1 << WGM12)  | (1 << CS11);
 
 	// Frequency configuration
-	ICR1  = SERVO_TIMER_TOP;
+	ICR1 = SERVO_TIMER_TOP;
 
 	// Set to middle position
 	servo_a_set(90);
@@ -49,3 +60,4 @@ void servo_init(void)
 
 void servo_a_set(uint8_t deg) { _servo_a_set_us(_servo_deg_to_us(deg)); }
 void servo_b_set(uint8_t deg) { _servo_b_set_us(_servo_deg_to_us(deg)); }
+ */

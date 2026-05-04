@@ -1,4 +1,4 @@
-#include "lidar.h"
+/* #include "lidar.h"
 
 static void _lidar_config_pwm(void)
 {
@@ -11,8 +11,6 @@ static void _lidar_config_pwm(void)
     OCR3A = (ICR3 + 1) * LIDAR_MOTOR_PWM_DUTY_CYCLE / 100UL - 1;
 }
 
-static void _lidar_config_uart(void) {} // TODO
-
 void lidar_init(void)
 {
 	GPIO_OUTPUT(LIDAR_EN); lidar_off();
@@ -22,3 +20,4 @@ void lidar_init(void)
 
 void lidar_on(void) { GPIO_SET(LIDAR_EN); }
 void lidar_off(void) { GPIO_CLEAR(LIDAR_EN); }
+ */

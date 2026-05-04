@@ -1,4 +1,4 @@
-#include "led.h"
+/* #include "led.h"
 
 void led_init(void)
 {
@@ -12,3 +12,4 @@ void led_green_toggle(void) { GPIO_TOGGLE(LED_GREEN); }
 void led_red_on(void) { GPIO_SET(LED_RED); }
 void led_red_off(void) { GPIO_CLEAR(LED_RED); }
 void led_red_toggle(void) { GPIO_TOGGLE(LED_RED); }
+ */
