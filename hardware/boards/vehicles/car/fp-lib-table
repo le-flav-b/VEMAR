@@ -9,4 +9,5 @@
   (lib (name "switch")(type "KiCad")(uri "${KIPRJMOD}/../../../libraries/footprints/switch.pretty")(options "")(descr ""))
   (lib (name "transceiver")(type "KiCad")(uri "${KIPRJMOD}/../../../libraries/footprints/transceiver.pretty")(options "")(descr ""))
   (lib (name "air_sens_foots")(type "KiCad")(uri "${KIPRJMOD}/../../../libraries/footprints/air_sens_foots.pretty")(options "")(descr ""))
+  (lib (name "transistor")(type "KiCad")(uri "/Users/chris/Documents/VEMAR/hardware/libraries/footprints/transistor.pretty")(options "")(descr ""))
 )

@@ -2689,6 +2689,72 @@
 		)
 	)
 	(symbol
+		(lib_id "pwr:PWR_FLAG")
+		(at 173.99 97.79 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "59942fd3-333f-40f5-b0e0-7c994fec46c3")
+		(property "Reference" "#FLAG04"
+			(at 173.99 102.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 173.99 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 173.99 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 173.99 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power Flag"
+			(at 173.99 85.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "cd0259e8-c153-426b-9751-a6a1481216b1")
+		)
+		(instances
+			(project ""
+				(path "/beaf00ba-d60c-407c-adfe-9d518bae0b16/c4e35d3f-6040-4882-878d-1a95fa713f03"
+					(reference "#FLAG04")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "pwr:GND")
 		(at 152.4 110.49 0)
 		(unit 1)
@@ -2934,6 +3000,72 @@
 			(project ""
 				(path "/beaf00ba-d60c-407c-adfe-9d518bae0b16/c4e35d3f-6040-4882-878d-1a95fa713f03"
 					(reference "U3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "pwr:PWR_FLAG")
+		(at 172.72 66.04 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7a893994-a75b-4b0a-87db-d8f9f7cf4d90")
+		(property "Reference" "#FLAG03"
+			(at 172.72 70.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 172.72 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 172.72 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 172.72 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power Flag"
+			(at 172.72 53.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "04294c6d-fc48-4a94-b5bf-c4963d951b73")
+		)
+		(instances
+			(project ""
+				(path "/beaf00ba-d60c-407c-adfe-9d518bae0b16/c4e35d3f-6040-4882-878d-1a95fa713f03"
+					(reference "#FLAG03")
 					(unit 1)
 				)
 			)
